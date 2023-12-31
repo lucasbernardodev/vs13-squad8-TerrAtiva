@@ -14,7 +14,9 @@ public class detalhesPropriedade {
     public detalhesPropriedade() {
     }
 
-    public detalhesPropriedade(String titulo, String descricao, String localizacao, String tamanho, double preco, Locatario locatario, Locador locador) {
+    public detalhesPropriedade(String titulo, String descricao, String localizacao, String tamanho,
+                               double preco, Locatario locatario, Locador locador)
+    {
         this.id = contador;
         contador++;
         this.titulo = titulo;
@@ -24,6 +26,17 @@ public class detalhesPropriedade {
         this.preco = preco;
         this.locatario = locatario;
         this.locador = locador;
+    }
+
+    public void editar(String titulo, String descricao, String localizacao, String tamanho,
+                       double preco, boolean anuncioAtivo)
+    {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.localizacao = localizacao;
+        this.tamanho = tamanho;
+        this.preco = preco;
+        this.anuncioAtivo = anuncioAtivo;
     }
 
     public int getId() {
@@ -102,7 +115,9 @@ public class detalhesPropriedade {
         return arrentado;
     }
 
-    public void setArrentado(boolean arrentado) {
+    public void setArrentado(boolean arrentado)
+    {
+        if (arrentado) { this.anuncioAtivo = false; }
         this.arrentado = arrentado;
     }
 }
