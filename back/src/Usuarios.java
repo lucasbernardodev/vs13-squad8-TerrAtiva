@@ -1,8 +1,9 @@
 import java.util.Date;
 
-public class Usuarios {
+public class Usuarios implements IAcessoConta{
     static int contador = 1;
-    int id;
+    int id,
+    tipo;
     String email,
     senha,
     nome;
@@ -12,7 +13,7 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public Usuarios(String email, String senha, String nome, Date nascimento) {
+    public Usuarios(String email, String senha, String nome, Date nascimento, int tipo) {
         this.id = contador;
         contador++;
         this.email = email;
@@ -21,6 +22,20 @@ public class Usuarios {
         this.nascimento = nascimento;
     }
 
+    @Override
+    public void cadastrar() {
+
+    }
+
+    @Override
+    public void logar() {
+
+    }
+
+    @Override
+    public void recuperarSenha() {
+
+    }
     public int getId() {
         return id;
     }
@@ -62,5 +77,13 @@ public class Usuarios {
 
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 }
