@@ -1,4 +1,7 @@
 
+![Logo](https://i.ibb.co/28k8rQj/p2.png)
+
+
 # TerrAtiva ♻️🌱
 
 A plataforma proposta é uma solução online que facilita o arrendamento de terras, conectando proprietários a interessados em utilizá-las. Focada na sustentabilidade, a plataforma promove a agricultura responsável, reduz custos para agricultores e gera renda adicional para proprietários. Além de evitar a ociosidade de terras, a iniciativa fortalece a colaboração entre comunidades agrícolas, incentivando práticas sustentáveis e combatendo a desertificação.
