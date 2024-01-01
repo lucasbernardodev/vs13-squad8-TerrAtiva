@@ -30,6 +30,7 @@ Entre no diretório do projeto
 ### [Benefícios Fiscais para Desenvolvimento Sustentável](https://www.conjur.com.br/2023-jun-12/elaise-sestrem-beneficios-fiscais-desenvolvimento-sustentavel/)
 ### [Política Tributária e Incentivo a Tecnologias Sustentáveis](https://www.ipea.gov.br/cts/pt/central-de-conteudo/artigos/artigos/309-politica-tributaria-e-incentivo-a-tecnologias-sustentaveis-o-brasil-na-contramao)
 ### [Proposta de Emissão de Debêntures Verdes (Câmara dos Deputados)](https://www.camara.leg.br/noticias/852063-proposta-permite-a-emissao-de-debentures-incentivadas-para-projetos-sus%20tentaveis/)
+### [53 Cidades do Brasil com mais Residências Vazias do que Ocupadas](https://www.nsctotal.com.br/noticias/conheca-as-53-cidades-do-brasil-com-mais-residencias-vazias-do-que-ocupadas#:~:text=Arroio%20do%20Sal%20%28RS%29%20%E2%80%93%2076%2C2%25%20Xangri-l%C3%A1%20%28RS%29,%E2%80%93%2068%2C3%25%20Pontal%20do%20Paran%C3%A1%20%28PR%29%20%E2%80%93%2068%2C1%25)
  
 ## Integrantes do Projeto 👨‍💻
 
