@@ -27,6 +27,9 @@ Entre no diretório do projeto
 
 ### [Os Objetivos de Desenvolvimento Sustentável no Brasil](https://brasil.un.org/pt-br)
 ### [Objetivo de Desenvolvimento Sustentável - 15 - Vida Terrestre](https://www.ipea.gov.br/ods/ods15.html)
+### [Benefícios Fiscais para Desenvolvimento Sustentável](https://www.conjur.com.br/2023-jun-12/elaise-sestrem-beneficios-fiscais-desenvolvimento-sustentavel/)
+### [Política Tributária e Incentivo a Tecnologias Sustentáveis](https://www.ipea.gov.br/cts/pt/central-de-conteudo/artigos/artigos/309-politica-tributaria-e-incentivo-a-tecnologias-sustentaveis-o-brasil-na-contramao)
+### [Proposta de Emissão de Debêntures Verdes (Câmara dos Deputados)](https://www.camara.leg.br/noticias/852063-proposta-permite-a-emissao-de-debentures-incentivadas-para-projetos-sus%20tentaveis/)
  
 ## Integrantes do Projeto 👨‍💻
 
