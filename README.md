@@ -25,8 +25,8 @@ Entre no diretório do projeto
 
 ## Referências 🗞️📰
 
- - [Os Objetivos de Desenvolvimento Sustentável no Brasil](https://brasil.un.org/pt-br)
- - [Objetivo de Desenvolvimento Sustentável - 15 - Vida Terrestre](https://www.ipea.gov.br/ods/ods15.html)
+### [Os Objetivos de Desenvolvimento Sustentável no Brasil](https://brasil.un.org/pt-br)
+### [Objetivo de Desenvolvimento Sustentável - 15 - Vida Terrestre](https://www.ipea.gov.br/ods/ods15.html)
  
 ## Integrantes do Projeto 👨‍💻
 
