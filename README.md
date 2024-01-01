@@ -34,14 +34,33 @@ Entre no diretório do projeto
 ### [IBGE: Áreas Urbanizadas](https://www.ibge.gov.br/geociencias/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html)
  
 ## Integrantes do Projeto 👨‍💻
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/DavidKirsch-DBC"><img src="https://avatars.githubusercontent.com/u/153624310?v=4" width="100px;" alt="David Kirsch"/><br /><sub><b>David Kirsch</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Leonardo-Rauber"><img src="https://media.licdn.com/dms/image/D4D03AQEK6cgB9dALFw/profile-displayphoto-shrink_800_800/0/1673825154756?e=1709769600&v=beta&t=3ShzbURNX_-bUH-OR4-jj1jaSRite3cMR4W2JhqYaIA" width="100px;" alt="Leonardo Rauber"/><br /><sub><b>Leonardo Rauber</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/lucasbernardodev"><img src="https://media.licdn.com/dms/image/D4D03AQGlVZDL_zXGYw/profile-displayphoto-shrink_800_800/0/1701705256375?e=1709769600&v=beta&t=aLGO9J147YOI3TA_LCHP0zq9bd-iq1mLEI0g-bDs79o" width="100px;" alt="Lucas Lima"/><br /><sub><b>Lucas Lima</b></sub></a><br /></td>
+    </tr>
+        <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/ItaloLacerda"><img src="https://media.licdn.com/dms/image/D4D03AQHKAd_8nQK77Q/profile-displayphoto-shrink_800_800/0/1691340581250?e=1709769600&v=beta&t=fLatK97mTsH1QTaNnJpt655mJiYiDxlng6wDC71-2po" width="100px;" alt="Italo Lacerda"/><br /><sub><b>Italo Lacerda</b></sub></a><br /></td>
+          <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Jessica-Garcia"><img src="https://avatars.githubusercontent.com/u/53917707?v=4" width="100px;" alt="Jéssica Garcia"/><br /><sub><b>Jéssica Garcia</b></sub></a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/PedroBersch"><img src="https://avatars.githubusercontent.com/u/113629864?v=4" width="100px;" alt="Pedro Leotte Bersch"/><br /><sub><b>Pedro Leotte Bersch
+</b></sub></a><br /></td>
+    </tr>
+        <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/pedrohpdo"><img src="https://avatars.githubusercontent.com/u/113143071?v=4" width="100px;" alt="Pedro Henrique Pereira"/><br /><sub><b>Pedro Henrique Pereira</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/rogervargass"><img src="https://avatars.githubusercontent.com/u/70342776?v=4" width="100px;" alt="Roger Vargas"/><br /><sub><b>Roger Vargas
+</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Shaienne23"><img src="https://avatars.githubusercontent.com/u/137116404?v=4" width="100px;" alt="Shaienne Oliveira"/><br /><sub><b>Shaienne Oliveira</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
 
- ### [David Kirsch](https://www.github.com/DavidKirsch-DBC)
- ### [Leonardo Daniel Rauber](https://www.github.com/Leonardo-Rauber)
- ### [Lucas Lima](https://www.github.com/lucasbernardodev)
- ### [Italo Lacerda](https://www.github.com/ItaloLacerda)
- ### [Jéssica Garcia](https://www.github.com/Jessica-Garcia)
- ### [Pedro Bersch](https://www.github.com/PedroBersch)
- ### [Pedro Henrique](https://www.github.com/pedrohpdo)
- ### [Roger Vargas](https://www.github.com/rogervargass)
- ### [Shaienne Oliveira](https://www.github.com/Shaienne23)
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
