@@ -11,7 +11,7 @@ A plataforma proposta é uma solução online que facilita o arrendamento de ter
 
 ## Acessando os Arquivos 📚
 
-<a href="https://github.com/lucasbernardodev/vs13-squad8-TerrAtiva/blob/main/Relat%C3%B3rio%20Final.pdf"><img src="https://img.shields.io/badge/Download-Relat%C3%B3rio_Final-blue"/></a>
+<a href="https://github.com/lucasbernardodev/vs13-squad8-TerrAtiva/blob/main/Relat%C3%B3rio%20(Squad8).pdf"><img src="https://img.shields.io/badge/Download-Relat%C3%B3rio_Final-blue"/></a>
 
 Clone o Repositório
 
