@@ -1,5 +1,6 @@
 public class Usuario {
 
+    private static int contadorDeIdUsuario = 1;
     private int id;
     private String nomeUsuario;
     private String email;
@@ -8,6 +9,7 @@ public class Usuario {
     private String nascimento;
 
     public Usuario(String nomeUsuario, String email, String senha, String nome, String nascimento) {
+        this.id = contadorDeIdUsuario++;
         this.nomeUsuario = nomeUsuario;
         this.email = email;
         this.senha = senha;
@@ -17,10 +19,6 @@ public class Usuario {
 
     public int getId(){
         return this.id;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public String getNomeUsuario(){
