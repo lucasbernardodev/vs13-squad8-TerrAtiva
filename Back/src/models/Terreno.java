@@ -1,3 +1,5 @@
+package models;
+
 public class Terreno {
     private static int contadorDeId = 1;
     private int id;

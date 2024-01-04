@@ -1,4 +1,9 @@
+package services;
+
 import interfaces.CrudConta;
+import models.Locatario;
+import models.Terreno;
+import java.util.List;
 
 public class LocatarioService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
@@ -7,8 +12,7 @@ public class LocatarioService implements CrudConta {
 
     }
     public final boolean atualizarPerfil(String nomeUsuario, String email,
-                                         String senha, String nome, String nascimento)
-    {
+                                         String senha, String nome, String nascimento) {
         return true;
     }
     public final void deletarPerfil(int id) {
@@ -19,6 +23,6 @@ public class LocatarioService implements CrudConta {
     }
 
     public final List<Terreno> resgatarTerrenosArrendados() {
-
+        return null;
     }
 }
