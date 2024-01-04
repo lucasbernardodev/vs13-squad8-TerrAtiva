@@ -1,4 +1,10 @@
+package services;
+
 import interfaces.CrudConta;
+import models.Locador;
+import models.Terreno;
+
+import java.util.List;
 
 public class LocadorService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
@@ -24,7 +30,7 @@ public class LocadorService implements CrudConta {
     }
 
     public final List<Terreno> resgatarTerrenosArrendados() {
-
+        return null;
     }
 
 }
