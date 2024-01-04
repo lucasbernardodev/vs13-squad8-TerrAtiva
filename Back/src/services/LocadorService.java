@@ -12,9 +12,14 @@ public class LocadorService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
     //TODO: Jogar em pasta de services
     public void cadastrar(Locador novoUsuario) {
-
-        novoUsuario.setId(ValoresRandomicos.gerarValorPositivo());
-
+        boolean existeId;
+        int id;
+        do{
+            id = ValoresRandomicos.gerarValorPositivo();
+            int finalId = id;
+            existeId = BancoDeDados.locadoresDataBase.stream().anyMatch(locador -> locador.getId() == finalId);
+        } while (existeId);
+        novoUsuario.setId(id);
         BancoDeDados.locadoresDataBase.add(novoUsuario);
 
     }
