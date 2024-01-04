@@ -1,4 +1,5 @@
 public class Terreno {
+    private static int contadorDeId = 1;
     private int id;
     private String titulo;
     private String descricao;
@@ -9,25 +10,23 @@ public class Terreno {
     private Locador locador;
     private boolean disponivel;
 
-   public Terreno(int id, String titulo, String descricao, String localizacao,
-                  String tamanho, double preco, Locatario proprietario,
-                  Locador locador, boolean disponivel){
-            this.id = id;
-            this.titulo = titulo;
-            this.descricao = descricao;
-            this.localizacao = localizacao;
-            this.tamanho = tamanho;
-            this.preco = preco;
-            this.proprietario = proprietario;
-            this.locador = locador;
-            this.disponivel = disponivel;
-   }
+    public Terreno(String titulo, String descricao, String localizacao,
+                   String tamanho, double preco, Locatario proprietario,
+                   Locador locador, boolean disponivel) {
+
+        this.id = contadorDeId++;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.localizacao = localizacao;
+        this.tamanho = tamanho;
+        this.preco = preco;
+        this.proprietario = proprietario;
+        this.locador = locador;
+        this.disponivel = disponivel;
+    }
 
    public int getId(){
        return id;
-   }
-   public void setId(int id){
-       this.id = id;
    }
    public String getTitulo(){
        return titulo;
@@ -76,11 +75,13 @@ public class Terreno {
         this.locador = locador;
     }
 
-    public boolean getDisponivel(){
+    public boolean isDisponivel(){
        return disponivel;
     }
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
    }
+    public Terreno() {}
+
 }
