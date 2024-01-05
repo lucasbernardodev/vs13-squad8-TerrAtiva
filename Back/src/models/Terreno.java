@@ -1,7 +1,8 @@
 package models;
 
+import database.BancoDeDados;
+
 public class Terreno {
-    private static int contadorDeId = 1;
     private int id;
     private String titulo;
     private String descricao;
@@ -16,7 +17,7 @@ public class Terreno {
                    String tamanho, double preco, Locatario proprietario,
                    Locador locador, boolean disponivel) {
 
-        this.id = contadorDeId++;
+        this.id = BancoDeDados.novoTerrenoID();
         this.titulo = titulo;
         this.descricao = descricao;
         this.localizacao = localizacao;

@@ -16,13 +16,13 @@ public class BancoDeDados {
     private static int quantidadeLocadoresCadastrados = 1;
     private static int quantidadeLocatariosCadastrados = 1;
 
-    public static int novoLocador(){
+    public static int novoLocadorID(){
         return quantidadeLocadoresCadastrados++;
     }
-    public static int novoLocatario(){
+    public static int novoLocatarioID(){
         return quantidadeLocatariosCadastrados++;
     }
-    public static int novoTerreno(){
+    public static int novoTerrenoID(){
         return quantidadeTerrenosCadastrados++;
     }
 
