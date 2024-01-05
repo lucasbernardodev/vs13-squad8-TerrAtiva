@@ -1,5 +1,7 @@
 package models;
 
+import database.BancoDeDados;
+
 public class Locador extends Usuario{
 
 
@@ -10,7 +12,7 @@ public class Locador extends Usuario{
             String nome,
             String nascimento
     ) {
-        super(nomeUsuario, email, senha, nome, nascimento);
+        super(BancoDeDados.novoLocadorID(), nomeUsuario, email, senha, nome, nascimento);
     }
 
     @Override

@@ -8,14 +8,12 @@ import models.Terreno;
 public class TerrenoService {
 
     public void cadastrarTerreno(String titulo, String descricao, String localizacao,
-                                 String tamanho, double preco, Locatario proprietario,
-                                 Locador locador, boolean disponivel) {
+                                 String tamanho, double preco, Locatario proprietario) {
 
         // TODO: VALIDAR PARAMETROS;
 
         BancoDeDados.terrenosDataBase.add(new Terreno(titulo, descricao, localizacao,
-                tamanho, preco, proprietario,
-                locador, disponivel));
+                tamanho, preco, proprietario));
 
     }
 
@@ -26,12 +24,12 @@ public class TerrenoService {
                 .filter(terreno -> terreno.getId() == idTerreno)
                 .findFirst()
                 .map(terreno -> {
-                    terreno.setTitulo(terreno.getTitulo());
-                    terreno.setDescricao(terreno.getDescricao());
-                    terreno.setLocalizacao(terreno.getLocalizacao());
-                    terreno.setPreco(terreno.getPreco());
-                    terreno.setLocador(terreno.getLocador());
-                    terreno.setDisponivel(terreno.isDisponivel());
+                    terreno.setTitulo(terrenoAtualizado.getTitulo());
+                    terreno.setDescricao(terrenoAtualizado.getDescricao());
+                    terreno.setLocalizacao(terrenoAtualizado.getLocalizacao());
+                    terreno.setPreco(terrenoAtualizado.getPreco());
+                    terreno.setLocador(terrenoAtualizado.getLocador());
+                    terreno.setDisponivel(terrenoAtualizado.isDisponivel());
                     return true;
                 }).orElse(false);
 

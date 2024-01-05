@@ -13,9 +13,11 @@ public class Terreno {
     private Locador locador;
     private boolean disponivel;
 
+    public Terreno() {}
+
+
     public Terreno(String titulo, String descricao, String localizacao,
-                   String tamanho, double preco, Locatario proprietario,
-                   Locador locador, boolean disponivel) {
+                   String tamanho, double preco, Locatario proprietario) {
 
         this.id = BancoDeDados.novoTerrenoID();
         this.titulo = titulo;
@@ -24,11 +26,23 @@ public class Terreno {
         this.tamanho = tamanho;
         this.preco = preco;
         this.proprietario = proprietario;
-        this.locador = locador;
-        this.disponivel = disponivel;
+        this.locador = null;
+        this.disponivel = true;
     }
 
-   public int getId(){
+    @Override
+    public String toString() {
+        return String.format("""
+                Terreno: %d
+                Descrição: %s
+                Localização: %s
+                Tamanho: %s
+                Preço: %.2f
+                Proprietário: %s
+                """, this.id, this.descricao, this.localizacao, this.tamanho, this.preco, this.proprietario.getNome());
+    }
+
+    public int getId(){
        return id;
    }
    public String getTitulo(){
@@ -85,6 +99,5 @@ public class Terreno {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
    }
-    public Terreno() {}
 
 }
