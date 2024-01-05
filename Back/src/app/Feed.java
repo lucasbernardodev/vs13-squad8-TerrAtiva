@@ -3,7 +3,6 @@ package app;
 import database.BancoDeDados;
 import models.Terreno;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,10 +47,10 @@ public class Feed {
                 .collect(Collectors.toList());
     }
 
-
-
-
-
-
-
+    public List<Terreno> mostrarTerrenosPorTamanho(String tamanhoTerreno) {
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getTamanho().equals(tamanhoTerreno))
+                .collect(Collectors.toList());
+    }
 }
