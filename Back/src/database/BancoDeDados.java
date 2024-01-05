@@ -12,4 +12,19 @@ public class BancoDeDados {
     public static List<Locador> locadoresDataBase = new ArrayList<>();
     public static List<Locatario> locatariosDataBase = new ArrayList<>();
 
+    private static int quantidadeTerrenosCadastrados = 1;
+    private static int quantidadeLocadoresCadastrados = 1;
+    private static int quantidadeLocatariosCadastrados = 1;
+
+    public static int novoLocador(){
+        return quantidadeLocadoresCadastrados++;
+    }
+    public static int novoLocatario(){
+        return quantidadeLocatariosCadastrados++;
+    }
+    public static int novoTerreno(){
+        return quantidadeTerrenosCadastrados++;
+    }
+
+
 }
