@@ -8,16 +8,15 @@ import java.util.List;
 public class LocadorService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
     //TODO: editarSenha()
+
     public void cadastrar(String nomeUsuario,
                           String email,
                           String senha,
                           String nome,
                           String nascimento) {
 
-        BancoDeDados.locadoresDataBase.add(new Locador(BancoDeDados.novoLocadorID(), nomeUsuario,
+        BancoDeDados.locadoresDataBase.add(new Locador(nomeUsuario,
                 email, senha, nome, nascimento));
-    //TODO:    BancoDeDados.locadoresDataBase.add(new Locador(BancoDeDados.novoLocadorID(), nomeUsuario,
-    //            email, senha, nome, nascimento));
 
     }
     @Override
@@ -46,7 +45,6 @@ public class LocadorService implements CrudConta {
 
     }
     public final Locador resgatarLocadores(int id) {
-//        List<Locador> listaDeLocadoresDb = BancoDeDados.locadoresDataBase;
 
         Locador perfilAtual = BancoDeDados.locadoresDataBase
                 .stream()

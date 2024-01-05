@@ -1,16 +1,17 @@
 package models;
 
+import database.BancoDeDados;
+
 public class Locatario extends Usuario {
 
     public Locatario(
-            int id,
             String nomeUsuario,
             String email,
             String senha,
             String nome,
             String nascimento
     ) {
-        super(id, nomeUsuario, email, senha, nome, nascimento);
+        super(BancoDeDados.novoLocatarioID(), nomeUsuario, email, senha, nome, nascimento);
     }
 
     @Override

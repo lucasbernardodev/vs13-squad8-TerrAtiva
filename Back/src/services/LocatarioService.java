@@ -15,10 +15,8 @@ public class LocatarioService implements CrudConta {
                           String nome,
                           String nascimento) {
 
-        BancoDeDados.locatariosDataBase.add(new Locatario(BancoDeDados.novoLocatarioID(), nomeUsuario,
+        BancoDeDados.locatariosDataBase.add(new Locatario(nomeUsuario,
                 email, senha, nome, nascimento));
-        //TODO:    BancoDeDados.locatariosDataBase.add(new Locatario(BancoDeDados.novoLocatarioID(), nomeUsuario,
-        //            email, senha, nome, nascimento));
 
     }
     @Override
@@ -47,7 +45,6 @@ public class LocatarioService implements CrudConta {
 
     }
     public final Locatario resgatarLocatarios(int id) {
-//        List<Locatario> listaDeLocatariosDb = BancoDeDados.locatariosDataBase;
 
         Locatario perfilAtual = BancoDeDados.locatariosDataBase
                 .stream()

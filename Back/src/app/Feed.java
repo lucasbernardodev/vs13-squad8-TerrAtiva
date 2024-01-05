@@ -22,7 +22,7 @@ public class Feed {
     public List<Terreno> mostrarTerrenosPorLocalizacao(String localizacao){
         return BancoDeDados.terrenosDataBase
                 .stream()
-                .filter(terreno -> terreno.getLocalizacao().equals(localizacao))
+                .filter(terreno -> terreno.getLocalizacao().toLowerCase().equals(localizacao.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
