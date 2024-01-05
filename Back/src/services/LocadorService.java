@@ -4,52 +4,56 @@ import database.BancoDeDados;
 import interfaces.CrudConta;
 import models.Locador;
 import models.Terreno;
-import util.ValoresRandomicos;
-
 import java.util.List;
-
 public class LocadorService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
-    //TODO: Jogar em pasta de services
-    public void cadastrar(Locador novoUsuario) {
-        boolean existeId;
-        int id;
-        do{
-            id = ValoresRandomicos.gerarValorPositivo();
-            int finalId = id;
-            existeId = BancoDeDados.locadoresDataBase.stream().anyMatch(locador -> locador.getId() == finalId);
-        } while (existeId);
-        novoUsuario.setId(id);
-        BancoDeDados.locadoresDataBase.add(novoUsuario);
+    //TODO: editarSenha()
+    public void cadastrar(String nomeUsuario,
+                          String email,
+                          String senha,
+                          String nome,
+                          String nascimento) {
+
+        BancoDeDados.locadoresDataBase.add(new Locador(BancoDeDados.novoLocadorID(), nomeUsuario,
+                email, senha, nome, nascimento));
+    //TODO:    BancoDeDados.locadoresDataBase.add(new Locador(BancoDeDados.novoLocadorID(), nomeUsuario,
+    //            email, senha, nome, nascimento));
 
     }
-    public final boolean atualizarPerfil(int id, String nomeUsuario, String email,
+    @Override
+    public final boolean atualizarPerfil(int id, String nomeUsuario, String email, String senha,
                                          String nome, String nascimento)
     {
-        List<Locador> listaDeLocadoresDb = BancoDeDados.locadoresDataBase;
-
-        Locador perfilAtual = listaDeLocadoresDb
-                .stream()
-                .filter(locador -> locador.getId() == id)
-                .toList()
-                .get(0);
-
+        Locador perfilAtual = resgatarLocadores(id);
         perfilAtual.setNomeUsuario(nomeUsuario);
         perfilAtual.setEmail(email);
+        perfilAtual.setSenha(senha);
         perfilAtual.setNome(nome);
         perfilAtual.setNascimento(nascimento);
 
-
-       return true;
+        return true;
     };
-
-    @Override
-    public boolean atualizarPerfil(String nomeUsuario, String email, String senha, String nome, String nascimento) {
-        return false;
-    }
-
     public final void deletarPerfil(int id) {
+        BancoDeDados.locadoresDataBase.remove(resgatarLocadores(id));
+    }
+    public final void imprimirPerfil (int id) {
+        Locador locadorAtual = resgatarLocadores(id);
+        System.out.println("### PERFIL DE LOCATÁRIO ###");
+        System.out.println("Usuário: " + locadorAtual.getNomeUsuario());
+        System.out.println("Nome: " + locadorAtual.getNome());
+        System.out.println("Email: " + locadorAtual.getEmail());
+        System.out.println("Nascimento: " + locadorAtual.getNascimento());
 
+    }
+    public final Locador resgatarLocadores(int id) {
+//        List<Locador> listaDeLocadoresDb = BancoDeDados.locadoresDataBase;
+
+        Locador perfilAtual = BancoDeDados.locadoresDataBase
+                .stream()
+                .filter(locador -> locador.getId() == id)
+                .findFirst().get();
+
+        return perfilAtual;
     }
     public final void arrendarTerreno(int idTerreno) {
 
@@ -60,6 +64,7 @@ public class LocadorService implements CrudConta {
     }
 
     public final List<Terreno> resgatarTerrenosArrendados() {
+
         return null;
     }
 

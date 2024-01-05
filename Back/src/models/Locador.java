@@ -3,14 +3,14 @@ package models;
 public class Locador extends Usuario{
 
 
-    public Locador(
+    public Locador(int id,
             String nomeUsuario,
             String email,
             String senha,
             String nome,
             String nascimento
     ) {
-        super(nomeUsuario, email, senha, nome, nascimento);
+        super(id, nomeUsuario, email, senha, nome, nascimento);
     }
 
     @Override
