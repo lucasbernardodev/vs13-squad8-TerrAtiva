@@ -53,11 +53,9 @@ public class LocadorController {
             service.atualizarPerfil(locador);
             return "Dados Atualizados com Sucesso!";
 
-        } catch (EmptyDataException e) {
+        } catch (EmptyDataException | DataNotFoundException e) {
             return e.getMessage();
 
-        } catch (DataNotFoundException e) {
-            return e.getMessage();
         }
     }
 
@@ -123,5 +121,14 @@ public class LocadorController {
      */
     public String resgatarTerrenosArrendados(Locador locador) {
         return Formatador.readerListTerrenos(service.resgatarTerrenosArrendados(locador));
+    }
+
+    public String imprimirPerfil(int id) {
+        try {
+            return service.imprimirPerfil(id);
+
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        }
     }
 }

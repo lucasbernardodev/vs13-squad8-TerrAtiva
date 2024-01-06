@@ -11,17 +11,9 @@ A plataforma proposta é uma solução online que facilita o arrendamento de ter
 
 ## Acessando os Arquivos 📚
 
-Clone o Repositório
+Clique no botão abaixo para acessar o Relatório em formato de PDF através do nevagador. Na página há também um botão no canto superior direito, logo acima do relatório, para realizar download do arquivo para sua máquina.
 
-```bash
-  git clone https://github.com/lucasbernardodev/vs13-squad8-TerrAtiva.git
-```
-
-Entre no diretório do projeto
-
-```bash
-  cd vs13-squad8-TerrAtiva
-```
+<a href="https://github.com/lucasbernardodev/vs13-squad8-TerrAtiva/blob/main/Relat%C3%B3rio%20(Squad8).pdf"><img src="https://img.shields.io/badge/Download-Relat%C3%B3rio_Final-blue"/></a>
 
 ## Referências 🗞️📰
 

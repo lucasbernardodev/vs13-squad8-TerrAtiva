@@ -1,9 +1,12 @@
 package services;
 
 import database.BancoDeDados;
+import infra.exceptions.EmptyDataException;
 import interfaces.CrudConta;
 import models.Locatario;
 import models.Terreno;
+import util.Validacao;
+
 import java.util.List;
 
 public class LocatarioService implements CrudConta<Locatario> {
@@ -18,13 +21,17 @@ public class LocatarioService implements CrudConta<Locatario> {
                           String nome,
                           String nascimento) {
 
+        Validacao.validarInfoUsuario(nomeUsuario, email, senha, nome, nascimento);
+
         BancoDeDados.locatariosDataBase.add(new Locatario(nomeUsuario,
                 email, senha, nome, nascimento));
 
     }
+
     @Override
-    public final void atualizarPerfil(Locatario locatario)
-    {
+    public final void atualizarPerfil(Locatario locatario) {
+        Validacao.validarInfoUsuario(locatario.getNomeUsuario(), locatario.getEmail(), locatario.getSenha(), locatario.getNome(), locatario.getNascimento());
+
         Locatario perfilAtual = resgatarLocatarios(locatario.getId());
         perfilAtual.setNomeUsuario(locatario.getNomeUsuario());
         perfilAtual.setEmail(locatario.getEmail());
@@ -32,19 +39,18 @@ public class LocatarioService implements CrudConta<Locatario> {
         perfilAtual.setNascimento(locatario.getNascimento());
 
     }
+
     public final void deletarPerfil(int id) {
 
         BancoDeDados.locatariosDataBase.remove(resgatarLocatarios(id));
     }
-    public final void imprimirPerfil (int id) {
+
+    public final String imprimirPerfil(int id) {
         Locatario locatarioAtual = resgatarLocatarios(id);
-        System.out.println("### PERFIL DE LOCATÁRIO ###");
-        System.out.println("Usuário: " + locatarioAtual.getNomeUsuario());
-        System.out.println("Nome: " + locatarioAtual.getNome());
-        System.out.println("Email: " + locatarioAtual.getEmail());
-        System.out.println("Nascimento: " + locatarioAtual.getNascimento());
+        return locatarioAtual.toString();
 
     }
+
     public final Locatario resgatarLocatarios(int id) {
 
         return BancoDeDados.locatariosDataBase
@@ -57,18 +63,17 @@ public class LocatarioService implements CrudConta<Locatario> {
     public final Locatario resgatarLocatarios(String email) {
 
         try {
-        return BancoDeDados.locatariosDataBase
-                .stream()
-                .filter(locatario -> locatario.getEmail().equals(email))
-                .findFirst().get();
-        }
-            catch (Exception e) {
+            return BancoDeDados.locatariosDataBase
+                    .stream()
+                    .filter(locatario -> locatario.getEmail().equals(email))
+                    .findFirst().get();
+        } catch (Exception e) {
             System.err.println("Email não existente!");
         }
-            return null;
+        return null;
     }
 
-//    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
+    //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final boolean criarAnuncio(
             String titulo,
             String descricao,
@@ -77,7 +82,7 @@ public class LocatarioService implements CrudConta<Locatario> {
             double preco,
             Locatario proprietario
     ) {
-        terrenoService.cadastrarTerreno(titulo, descricao,localizacao, tamanho, preco, proprietario);
+        terrenoService.cadastrarTerreno(titulo, descricao, localizacao, tamanho, preco, proprietario);
         return true;
     }
 
@@ -105,6 +110,7 @@ public class LocatarioService implements CrudConta<Locatario> {
             return false;
         }
     }
+
     //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locatario proprietario) {
         return terrenoService.buscarTerreno(proprietario);
