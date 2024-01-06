@@ -6,7 +6,7 @@ import models.Locatario;
 import models.Terreno;
 import java.util.List;
 
-public class LocatarioService implements CrudConta {
+public class LocatarioService implements CrudConta<Locatario> {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
     //TODO: Jogar em pasta de services
 
@@ -23,16 +23,14 @@ public class LocatarioService implements CrudConta {
 
     }
     @Override
-    public final boolean atualizarPerfil(int id, String nomeUsuario, String email,
-                                         String nome, String nascimento)
+    public final void atualizarPerfil(Locatario locatario)
     {
-        Locatario perfilAtual = resgatarLocatarios(id);
-        perfilAtual.setNomeUsuario(nomeUsuario);
-        perfilAtual.setEmail(email);
-        perfilAtual.setNome(nome);
-        perfilAtual.setNascimento(nascimento);
+        Locatario perfilAtual = resgatarLocatarios(locatario.getId());
+        perfilAtual.setNomeUsuario(locatario.getNomeUsuario());
+        perfilAtual.setEmail(locatario.getEmail());
+        perfilAtual.setNome(locatario.getNome());
+        perfilAtual.setNascimento(locatario.getNascimento());
 
-        return true;
     }
     public final void deletarPerfil(int id) {
         BancoDeDados.locatariosDataBase.remove(resgatarLocatarios(id));
@@ -54,6 +52,20 @@ public class LocatarioService implements CrudConta {
                 .findFirst().get();
     }
 
+    public final Locatario resgatarLocatarios(String email) {
+
+        try {
+        return BancoDeDados.locatariosDataBase
+                .stream()
+                .filter(locatario -> locatario.getEmail().equals(email))
+                .findFirst().get();
+        }
+            catch (Exception e) {
+            System.err.println("Email não existente!");
+        }
+            return null;
+    }
+
 //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final boolean criarAnuncio(
             String titulo,
@@ -68,7 +80,7 @@ public class LocatarioService implements CrudConta {
     }
 
     public final boolean removerAnuncio(int id) {
-        Terreno anuncio = terrenoService.buscarTerrenos(id);
+        Terreno anuncio = terrenoService.buscarTerreno(id);
 
         if (anuncio.isDisponivel()) {
             terrenoService.deletarTerreno(id);
@@ -82,7 +94,7 @@ public class LocatarioService implements CrudConta {
     }
 
     public final boolean cancelarcontrato(int idTerreno, Locatario proprietario) {
-        Terreno contratoAtual = terrenoService.buscarTerrenos(idTerreno);
+        Terreno contratoAtual = terrenoService.buscarTerreno(idTerreno);
         if (contratoAtual != null && contratoAtual.getProprietario() == proprietario) {
             contratoAtual.setLocador(null);
             contratoAtual.setDisponivel(true);
@@ -93,6 +105,6 @@ public class LocatarioService implements CrudConta {
     }
     //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locatario proprietario) {
-        return terrenoService.buscarTerrenos(proprietario);
+        return terrenoService.buscarTerreno(proprietario);
     }
 }

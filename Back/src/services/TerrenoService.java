@@ -1,6 +1,7 @@
 package services;
 
 import database.BancoDeDados;
+import infra.exceptions.DataNotFoundException;
 import models.Locador;
 import models.Locatario;
 import models.Terreno;
@@ -37,24 +38,24 @@ public class TerrenoService {
 
     }
 
-    public Terreno buscarTerrenos(int idTerreno) {
-        List<Terreno> buscandoTerreno = BancoDeDados.terrenosDataBase
+    public Terreno buscarTerreno(int idTerreno) {
+        Terreno buscandoTerreno = BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getId() == idTerreno)
-                .toList();
+                .findFirst()
+                .orElseThrow(() -> new DataNotFoundException("Terreno não Encontrado na base de dados"));
 
-        return buscandoTerreno.get(0);
-
+        return buscandoTerreno;
     }
 
-    public List<Terreno> buscarTerrenos(Locador locador) {
+    public List<Terreno> buscarTerreno(Locador locador) {
         return BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getLocador() == locador)
                 .toList();
     }
 
-    public List<Terreno> buscarTerrenos(Locatario proprietario) {
+    public List<Terreno> buscarTerreno(Locatario proprietario) {
 
         return BancoDeDados.terrenosDataBase
                 .stream()

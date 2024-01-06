@@ -1,11 +1,10 @@
 package database;
 
-import models.Locador;
 import models.Locatario;
 import models.Terreno;
-import services.TerrenoService;
 import services.LocadorService;
 import services.LocatarioService;
+import services.TerrenoService;
 
 public class DadosMocados {
     public static void databaseOn() {
@@ -22,48 +21,51 @@ public class DadosMocados {
                 "123456", "David", "02/10/97");
         locadorService.cadastrar("diuli", "diuli@gmail.com",
                 "qwe123", "Diuliano", "01/05/98");
-        locadorService.atualizarPerfil(1, "davidtesteee", "david@gmail.com",
-                "David", "02/10/97");
-
+        locadorService.cadastrar("bersch", "pedrobersch@hotmail.com", "123456", "Pedro Bersch", "16/04/2003");
+        locadorService.cadastrar("shai", "shaienne@gmail.com", "123456", "Shaianne", "01/01/2000");
+        locadorService.cadastrar("italo", "italo@gmail.com", "123456", "Italo Lacerda", "01/01/2000");
         /**
          * DADOS MOCADOS LOCATARIOS
          */
 
         locatarioService.cadastrar("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
-        locatarioService.cadastrar("maria", "maria@gmail.com",
-                "abc123", "maria madalena", "01/05/91");
-
-        locatarioService.atualizarPerfil(1, "cleito", "luquinhas@gmail.com",
-                "Lucas", "01/01/01");
+        locatarioService.cadastrar("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
+        locatarioService.cadastrar("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
+        locatarioService.cadastrar("pedroH","pedrohenrique@gmail.com","123456","Pedro Henrique","01/01/2000");
 
         /**
          * DADOS MOCADOS TERRENOS
          */
-        Locatario locatario1 = new Locatario("lucas", "lucas@gmail.com",
+        Locatario locatarioUm = new Locatario("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
+        Locatario locatarioDois = new Locatario("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
+        Locatario locatarioTres = new Locatario("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
+        Locatario locatarioQuatro = new Locatario("pedroH","pedrohenrique@gmail.com","123456","Pedro Henrique","01/01/2000");
 
+        terrenoService.cadastrarTerreno("Campo de Futebol Abandonado", "Baixada Fluminense", "Terra do nunca",
+                "Gigantesco", 285000.0, locatarioUm);
 
-        terrenoService.cadastrarTerreno("Campo de Futebol Abandonado", "Baixada Fluminense ", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
+        terrenoService.cadastrarTerreno("Terreno Baldio", "Proximo: Posto de Saúde, Farmácia", "Eldorado do Sul",
+                "Grande", 180000.0, locatarioDois);
 
-        terrenoService.cadastrarTerreno("Campo 2", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
+        terrenoService.cadastrarTerreno("Sitio", "Fazenda", "Triunfo",
+                "Grande", 690000.0, locatarioDois);
 
-        terrenoService.cadastrarTerreno("Campo 3", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
+        terrenoService.cadastrarTerreno("Chácara", "Completo frutífera, poço artesiano", "Palmares do Sul",
+                "Médio", 290.0000, locatarioTres);
 
-        terrenoService.cadastrarTerreno("Campo 4", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
+        terrenoService.cadastrarTerreno("Fazenda Rural", "30 Hectares", "Charquedas",
+                "Gigantesco", 1850000.0, locatarioQuatro);
 
-        terrenoService.cadastrarTerreno("Campo 5", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
-
-        terrenoService.cadastrarTerreno("Campo 6", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
-
-        Terreno t1 = new Terreno("Campo minha nossa", "Arco Iris", "Terra do nunca",
-                "Gigantesco", 1000.23, locatario1);
+        terrenoService.cadastrarTerreno("Terreno Aterrado", "Terreno limpo, aterrado", "Cachoeirinha",
+                "Pequeno", 78000.0, locatarioUm);
+        terrenoService.cadastrarTerreno("Fazenda", "Terras fértil", "Bagé",
+                "Gigantesco", 3200000.0, locatarioDois);
+        terrenoService.cadastrarTerreno("Terreno com Lago", "Linda vista para lago", "Eldorado do Sul",
+                "Pequeno", 40000.0, locatarioTres);
+        terrenoService.cadastrarTerreno("Mata Nativa", "Terreno com vista para vale", "Triunfo",
+                "Gigantesco", 60000.0, locatarioQuatro);
 
     }
 }

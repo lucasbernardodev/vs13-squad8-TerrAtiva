@@ -37,7 +37,7 @@ public class Terreno {
                 Descrição: %s
                 Localização: %s
                 Tamanho: %s
-                Preço: %.2f
+                Preço: R$%.2f
                 Proprietário: %s
                 """, this.id, this.descricao, this.localizacao, this.tamanho, this.preco, this.proprietario.getNome());
     }
