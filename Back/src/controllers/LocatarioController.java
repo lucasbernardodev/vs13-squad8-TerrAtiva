@@ -72,5 +72,14 @@ public class LocatarioController {
     public String resgatarTerrenosArrendados(Locatario proprietario) {
         return Formatador.readerListTerrenos(service.resgatarTerrenosArrendados(proprietario));
     }
+
+    public String imprimirPerfil(int id) {
+        try {
+            return service.imprimirPerfil(id);
+
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        }
+    }
 }
 

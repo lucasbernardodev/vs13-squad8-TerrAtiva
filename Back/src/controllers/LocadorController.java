@@ -123,7 +123,7 @@ public class LocadorController {
         return Formatador.readerListTerrenos(service.resgatarTerrenosArrendados(locador));
     }
 
-    public String resgatarInfo(int id) {
+    public String imprimirPerfil(int id) {
         try {
             return service.imprimirPerfil(id);
 
