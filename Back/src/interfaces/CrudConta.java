@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface CrudConta {
-    boolean atualizarPerfil(int id, String nomeUsuario, String email, String nome, String nascimento);
+public interface CrudConta<T> {
+    void atualizarPerfil(T data);
     void deletarPerfil(int id);
 }
