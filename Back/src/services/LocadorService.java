@@ -56,7 +56,7 @@ public class LocadorService implements CrudConta {
     // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
 
     public final boolean arrendarTerreno(int idTerreno, Locador locador) {
-        Terreno novoContrato = terrenoService.busrcarTerrenos(idTerreno);
+        Terreno novoContrato = terrenoService.buscarTerrenos(idTerreno);
         if (novoContrato != null) {
             novoContrato.setLocador(locador);
             novoContrato.setDisponivel(false);
@@ -69,7 +69,7 @@ public class LocadorService implements CrudConta {
 
     // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
     public final boolean cancelarcontrato(int idTerreno,  Locador locador) {
-        Terreno contratoAtual = terrenoService.busrcarTerrenos(idTerreno);
+        Terreno contratoAtual = terrenoService.buscarTerrenos(idTerreno);
         if (contratoAtual != null && contratoAtual.getLocador() == locador) {
             contratoAtual.setLocador(null);
             contratoAtual.setDisponivel(true);
@@ -82,7 +82,7 @@ public class LocadorService implements CrudConta {
     // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locador locador) {
 
-        return terrenoService.busrcarTerrenos(locador);
+        return terrenoService.buscarTerrenos(locador);
     }
 
 }

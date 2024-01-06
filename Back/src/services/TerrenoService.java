@@ -37,7 +37,7 @@ public class TerrenoService {
 
     }
 
-    public Terreno busrcarTerrenos(int idTerreno) {
+    public Terreno buscarTerrenos(int idTerreno) {
         List<Terreno> buscandoTerreno = BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getId() == idTerreno)
@@ -47,14 +47,14 @@ public class TerrenoService {
 
     }
 
-    public List<Terreno> busrcarTerrenos(Locador locador) {
+    public List<Terreno> buscarTerrenos(Locador locador) {
         return BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getLocador() == locador)
                 .toList();
     }
 
-    public List<Terreno> busrcarTerrenos(Locatario proprietario) {
+    public List<Terreno> buscarTerrenos(Locatario proprietario) {
 
         return BancoDeDados.terrenosDataBase
                 .stream()

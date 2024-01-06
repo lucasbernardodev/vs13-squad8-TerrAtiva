@@ -68,20 +68,21 @@ public class LocatarioService implements CrudConta {
     }
 
     public final boolean removerAnuncio(int id) {
-        Terreno anuncio = terrenoService.busrcarTerrenos(id);
+        Terreno anuncio = terrenoService.buscarTerrenos(id);
 
         if (anuncio.isDisponivel()) {
             terrenoService.deletarTerreno(id);
             return true;
         }
 
-        System.out.println("Terrenos Arrendados Não Podem Ser Removidos, Por Favor Realizar Cancelamento Do Contrato Para Seguir Com a Ação");
+        System.out.println("Terrenos arrendados não podem ser removidos, " +
+                "por favor realizar cancelamento do contrato para seguir com a ação");
         return false;
 
     }
 
     public final boolean cancelarcontrato(int idTerreno, Locatario proprietario) {
-        Terreno contratoAtual = terrenoService.busrcarTerrenos(idTerreno);
+        Terreno contratoAtual = terrenoService.buscarTerrenos(idTerreno);
         if (contratoAtual != null && contratoAtual.getProprietario() == proprietario) {
             contratoAtual.setLocador(null);
             contratoAtual.setDisponivel(true);
@@ -92,6 +93,6 @@ public class LocatarioService implements CrudConta {
     }
     //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locatario proprietario) {
-        return terrenoService.busrcarTerrenos(proprietario);
+        return terrenoService.buscarTerrenos(proprietario);
     }
 }
