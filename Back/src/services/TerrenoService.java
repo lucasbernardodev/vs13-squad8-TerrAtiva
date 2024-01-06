@@ -51,7 +51,7 @@ public class TerrenoService {
     public List<Terreno> buscarTerreno(Locador locador) {
         return BancoDeDados.terrenosDataBase
                 .stream()
-                .filter(terreno -> terreno.getLocador() == locador)
+                .filter(terreno -> terreno.getLocador().getId() == locador.getId())
                 .toList();
     }
 

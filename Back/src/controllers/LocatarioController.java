@@ -1,6 +1,12 @@
 package controllers;
 
+import infra.exceptions.DataNotFoundException;
+import infra.exceptions.EmptyDataException;
+import models.Locador;
+import models.Locatario;
 import models.Terreno;
+import services.LocadorService;
+import services.LocatarioService;
 
 import java.util.List;
 
@@ -15,37 +21,46 @@ import java.util.List;
  */
 public class LocatarioController {
 
-    public void cadastrar() {
+    private LocatarioService service = new LocatarioService();
+    public String cadastrar(String nomeUsuario, String email, String senha, String nome, String nascimento) {
         try {
-
-        } catch (Exception e) {
-
+            service.cadastrar(nomeUsuario, email, senha, nome, nascimento);
+            return "Usuário Cadastrado com Sucesso!";
+        } catch (EmptyDataException e) {
+            return e.getMessage();
         }
     }
 
-    public boolean atualizarPerfil(String nomeUsuario, String email,
-                                   String senha, String nome, String nascimento) {
+    public String atualizarPerfil(Locatario locatario) {
         try {
+            service.atualizarPerfil(locatario);
+            return "Dados Atualizados com Sucesso!";
 
-        } catch (Exception e) {
+        } catch (EmptyDataException e) {
+            return e.getMessage();
 
-        }
-        return true;
-    }
-
-    public void deletarPerfil(int id) {
-        try {
-
-        } catch (Exception e) {
-
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
         }
     }
 
-    public void cancelarcontrato(int idTerreno) {
+    public String deletarPerfil(int id) {
         try {
+            service.deletarPerfil(id);
+            return "Perfil deletado com Sucesso!";
 
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        }
+
+    }
+
+    public String cancelarcontrato(int idTerreno, Locatario proprietario) {
+        try {
+            service.cancelarcontrato(idTerreno, proprietario);
+            return String.format("Contrato N°%d Cancelado | Locador: %s", idTerreno, proprietario.getNome());
         } catch (Exception e) {
-
+            return e.getMessage();
         }
     }
 

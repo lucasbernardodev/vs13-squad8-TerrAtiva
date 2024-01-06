@@ -6,6 +6,7 @@ import infra.exceptions.EmptyDataException;
 import interfaces.CrudConta;
 import models.Locador;
 import models.Terreno;
+import util.Validacao;
 
 import java.util.List;
 
@@ -21,11 +22,7 @@ public class LocadorService implements CrudConta<Locador> {
                           String nome,
                           String nascimento) {
 
-        if (nomeUsuario.isBlank()) throw new EmptyDataException("Seu NOME DE USUÁRIO não pode estar vazio!");
-        if (email.isBlank()) throw new EmptyDataException("Seu EMAIL não pode estar vazio!");
-        if (senha.isBlank()) throw new EmptyDataException("Sua SENHA não pode estar vazio!");
-        if (nome.isBlank()) throw new EmptyDataException("Seu NOME não pode estar vazio!");
-        if (nascimento.isBlank()) throw new EmptyDataException("Sua DATA DE NASCIMENTO não pode estar vazio!");
+        Validacao.validarInfoUsuario(nomeUsuario, email, senha, nome, nascimento);
 
         BancoDeDados.locadoresDataBase.add(new Locador(nomeUsuario,
                 email, senha, nome, nascimento));
@@ -35,10 +32,7 @@ public class LocadorService implements CrudConta<Locador> {
     @Override
     public final void atualizarPerfil(Locador locador) {
 
-        if (locador.getNomeUsuario().isBlank()) throw new EmptyDataException("Seu NOME DE USUÁRIO não pode estar vazio!");
-        if (locador.getEmail().isBlank()) throw new EmptyDataException("Seu EMAIL não pode estar vazio!");
-        if (locador.getNome().isBlank()) throw new EmptyDataException("Seu NOME não pode estar vazio!");
-        if (locador.getNascimento().isBlank()) throw new EmptyDataException("Sua DATA DE NASCIMENTO não pode estar vazio!");
+        Validacao.validarInfoUsuario(locador.getNomeUsuario(), locador.getEmail(), locador.getSenha(), locador.getNome(), locador.getNascimento());
 
         Locador perfilAtual = resgatarLocador(locador.getId());
         perfilAtual.setNomeUsuario(locador.getNomeUsuario());
