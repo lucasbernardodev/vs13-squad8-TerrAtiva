@@ -10,22 +10,17 @@ public class ConferenciaDeUsuario {
     public Boolean conferencia(int area, String nome, String senha) {
         if (area == 1) {
             for (Locador locador : BancoDeDados.locadoresDataBase) {
-                String nomeUsuario = locador.getNomeUsuario();
-                String senhaUsuario = locador.getSenha();
-                if (nome.equals(nomeUsuario) && senha.equals(senhaUsuario)) {
+                if (nome.equals(locador.getNomeUsuario())
+                        && senha.equals(locador.getSenha()))
                     return true;
-                }
-
             }
         }
-        if (area == 2) for (Locatario locatario : BancoDeDados.locatariosDataBase) {
-            String nomeUsuario = locatario.getNomeUsuario();
-            String senhaUsuario = locatario.getSenha();
-            if (nome.equals(nomeUsuario) && senha.equals(senhaUsuario)) {
-                return true;
+        else if (area == 2) {
+            for (Locatario locatario : BancoDeDados.locatariosDataBase) {
+                if (nome.equals(locatario.getNomeUsuario())
+                        && senha.equals(locatario.getSenha()))
+                    return true;
             }
-        }else{
-            return false;
         }
         return false;
     }

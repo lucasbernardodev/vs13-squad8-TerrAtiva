@@ -6,32 +6,40 @@ import models.Terreno;
 import services.TerrenoService;
 import services.LocadorService;
 import services.LocatarioService;
+import controllers.LocadorController;
+import controllers.LocatarioController;
+import controllers.TerrenoController;
 
 public class DadosMocados {
     public static void databaseOn() {
 
-        LocadorService locadorService = new LocadorService();
         LocatarioService locatarioService = new LocatarioService();
         TerrenoService terrenoService = new TerrenoService();
+        LocadorController locadorController = new LocadorController();
+        LocatarioController locatarioController = new LocatarioController();
+        TerrenoController terrenoController = new TerrenoController();
 
 
         /**
          * DADOS MOCADOS LOCADORES
          */
-        locadorService.cadastrar("davidk", "david@gmail.com",
+        locadorController.cadastrar("davidk", "david@gmail.com",
                 "123456", "David", "02/10/97");
-        locadorService.cadastrar("diuli", "diuli@gmail.com",
+        locadorController.cadastrar("diuli", "diuli@gmail.com",
                 "qwe123", "Diuliano", "01/05/98");
-
+        locadorController.cadastrar("Leonardo", "dasdsad",
+                "12345", "lkfkj", "040158");
+        locadorController.cadastrar("Mariana", "dasdsad",
+                "123", "lkfkj", "040158");
         /**
          * DADOS MOCADOS LOCATARIOS
          */
 
-        locatarioService.cadastrar("lucas", "lucas@gmail.com",
+        locatarioController.cadastrar("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
-        locatarioService.cadastrar("maria", "maria@gmail.com",
+        locatarioController.cadastrar("maria", "maria@gmail.com",
                 "abc123", "maria madalena", "01/05/91");
-
+        locatarioController.cadastrar("Mariana", "dfdf", "12345", "dff", "fsdfdsf");
 
         /**
          * DADOS MOCADOS TERRENOS
