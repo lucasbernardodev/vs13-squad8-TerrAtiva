@@ -53,6 +53,21 @@ public class LocadorService implements CrudConta {
                 .findFirst().get();
     }
 
+    public final Locador resgatarLocadores(String email) {
+
+        try {
+            return BancoDeDados.locadoresDataBase
+                    .stream()
+                    .filter(locador -> locador.getEmail().equals(email))
+                    .findFirst().get();
+        }
+        catch (Exception e) {
+            System.err.println("Email não existente!");
+        }
+        return null;
+
+    }
+
     // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
 
     public final boolean arrendarTerreno(int idTerreno, Locador locador) {
