@@ -20,13 +20,12 @@ public class LocadorService implements CrudConta {
 
     }
     @Override
-    public final boolean atualizarPerfil(int id, String nomeUsuario, String email, String senha,
+    public final boolean atualizarPerfil(int id, String nomeUsuario, String email,
                                          String nome, String nascimento)
     {
         Locador perfilAtual = resgatarLocadores(id);
         perfilAtual.setNomeUsuario(nomeUsuario);
         perfilAtual.setEmail(email);
-        perfilAtual.setSenha(senha);
         perfilAtual.setNome(nome);
         perfilAtual.setNascimento(nascimento);
 
