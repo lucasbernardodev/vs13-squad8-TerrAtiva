@@ -1,9 +1,10 @@
 package services;
 
 import database.BancoDeDados;
-import models.Locador;
 import models.Locatario;
 import models.Terreno;
+
+import java.util.List;
 
 public class TerrenoService {
 
@@ -32,6 +33,25 @@ public class TerrenoService {
                     terreno.setDisponivel(terrenoAtualizado.isDisponivel());
                     return true;
                 }).orElse(false);
+
+    }
+
+    public Terreno busrcarTerrenos(int idTerreno) {
+        List<Terreno> buscandoTerreno = BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getId() == idTerreno)
+                .toList();
+
+        return buscandoTerreno.get(0);
+
+    }
+
+    public List<Terreno> busrcarTerrenos(Locatario proprietario) {
+
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getProprietario() == proprietario)
+                .toList();
 
     }
 
