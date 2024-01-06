@@ -37,7 +37,7 @@ public class LocadorService implements CrudConta {
     }
     public final void imprimirPerfil (int id) {
         Locador locadorAtual = resgatarLocadores(id);
-        System.out.println("### PERFIL DE LOCATÁRIO ###");
+        System.out.println("### PERFIL DE LOCADOR ###");
         System.out.println("Usuário: " + locadorAtual.getNomeUsuario());
         System.out.println("Nome: " + locadorAtual.getNome());
         System.out.println("Email: " + locadorAtual.getEmail());
