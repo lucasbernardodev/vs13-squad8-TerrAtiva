@@ -9,6 +9,8 @@ public class LocadorService implements CrudConta {
     //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
     //TODO: editarSenha()
 
+    TerrenoService terrenoService = new TerrenoService();
+
     public void cadastrar(String nomeUsuario,
                           String email,
                           String senha,
@@ -30,7 +32,7 @@ public class LocadorService implements CrudConta {
         perfilAtual.setNascimento(nascimento);
 
         return true;
-    };
+    }
     public final void deletarPerfil(int id) {
         BancoDeDados.locadoresDataBase.remove(resgatarLocadores(id));
     }
@@ -45,24 +47,42 @@ public class LocadorService implements CrudConta {
     }
     public final Locador resgatarLocadores(int id) {
 
-        Locador perfilAtual = BancoDeDados.locadoresDataBase
+        return BancoDeDados.locadoresDataBase
                 .stream()
                 .filter(locador -> locador.getId() == id)
                 .findFirst().get();
-
-        return perfilAtual;
-    }
-    public final void arrendarTerreno(int idTerreno) {
-
     }
 
-    public final void cancelarcontrato(int idTerreno) {
+    // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
 
+    public final boolean arrendarTerreno(int idTerreno, Locador locador) {
+        Terreno novoContrato = terrenoService.busrcarTerrenos(idTerreno);
+        if (novoContrato != null) {
+            novoContrato.setLocador(locador);
+            novoContrato.setDisponivel(false);
+            return true;
+        } else {
+            System.out.println("Não foi possível concluir o contrato. Por favor, selecione um terreno válido.");
+            return false;
+        }
     }
 
-    public final List<Terreno> resgatarTerrenosArrendados() {
+    // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
+    public final boolean cancelarcontrato(int idTerreno,  Locador locador) {
+        Terreno contratoAtual = terrenoService.busrcarTerrenos(idTerreno);
+        if (contratoAtual != null && contratoAtual.getLocador() == locador) {
+            contratoAtual.setLocador(null);
+            contratoAtual.setDisponivel(true);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        return null;
+    // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
+    public final List<Terreno> resgatarTerrenosArrendados(Locador locador) {
+
+        return terrenoService.busrcarTerrenos(locador);
     }
 
 }

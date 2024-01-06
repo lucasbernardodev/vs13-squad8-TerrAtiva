@@ -33,7 +33,7 @@ public class LocatarioService implements CrudConta {
         perfilAtual.setNascimento(nascimento);
 
         return true;
-    };
+    }
     public final void deletarPerfil(int id) {
         BancoDeDados.locatariosDataBase.remove(resgatarLocatarios(id));
     }
@@ -48,12 +48,10 @@ public class LocatarioService implements CrudConta {
     }
     public final Locatario resgatarLocatarios(int id) {
 
-        Locatario perfilAtual = BancoDeDados.locatariosDataBase
+        return BancoDeDados.locatariosDataBase
                 .stream()
                 .filter(locatario -> locatario.getId() == id)
                 .findFirst().get();
-
-        return perfilAtual;
     }
 
 //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
@@ -82,9 +80,9 @@ public class LocatarioService implements CrudConta {
 
     }
 
-    public final boolean cancelarcontrato(int idTerreno) {
+    public final boolean cancelarcontrato(int idTerreno, Locatario proprietario) {
         Terreno contratoAtual = terrenoService.busrcarTerrenos(idTerreno);
-        if (contratoAtual != null) {
+        if (contratoAtual != null && contratoAtual.getProprietario() == proprietario) {
             contratoAtual.setLocador(null);
             contratoAtual.setDisponivel(true);
             return true;
