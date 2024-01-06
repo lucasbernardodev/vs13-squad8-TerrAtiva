@@ -1,8 +1,12 @@
 import app.Feed;
 import database.DadosMocados;
+import models.Locador;
+import models.Locatario;
 import services.LoginService;
 
 public class MainTest {
+
+
     public static void main(String[] args) {
         DadosMocados.databaseOn();
         LoginService login = new LoginService();
