@@ -15,6 +15,15 @@ public class Locador extends Usuario{
         super(BancoDeDados.novoLocadorID(), nomeUsuario, email, senha, nome, nascimento);
     }
 
+    public Locador(int id,
+            String nomeUsuario,
+            String email,
+            String nome,
+            String nascimento
+    ) {
+        super(id, nomeUsuario, email, nome, nascimento);
+    }
+
     @Override
     public String toString() {
         return "\n" + " Locador{" + "\n" +
