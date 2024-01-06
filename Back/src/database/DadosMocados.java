@@ -22,7 +22,7 @@ public class DadosMocados {
                 "123456", "David", "02/10/97");
         locadorService.cadastrar("diuli", "diuli@gmail.com",
                 "qwe123", "Diuliano", "01/05/98");
-        locadorService.atualizarPerfil(1, "davidtesteee", "david@gmail.com", "novaSenha",
+        locadorService.atualizarPerfil(1, "davidtesteee", "david@gmail.com",
                 "David", "02/10/97");
 
         /**
@@ -34,7 +34,7 @@ public class DadosMocados {
         locatarioService.cadastrar("maria", "maria@gmail.com",
                 "abc123", "maria madalena", "01/05/91");
 
-        locatarioService.atualizarPerfil(1, "cleito", "luquinhas@gmail.com", "novaSenha",
+        locatarioService.atualizarPerfil(1, "cleito", "luquinhas@gmail.com",
                 "Lucas", "01/01/01");
 
         /**
