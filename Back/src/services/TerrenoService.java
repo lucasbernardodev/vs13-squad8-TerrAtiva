@@ -5,6 +5,7 @@ import infra.exceptions.DataNotFoundException;
 import models.Locador;
 import models.Locatario;
 import models.Terreno;
+import util.Validacao;
 
 import java.util.List;
 
@@ -20,21 +21,29 @@ public class TerrenoService {
 
     }
 
-    public boolean atualizarDadosTerreno(int idTerreno, Terreno terrenoAtualizado) {
-        // TODO: VALIDAR PARAMETROS;
-        return BancoDeDados.terrenosDataBase
+    public void atualizarDadosTerreno(int idTerreno, Terreno terrenoAtualizado) {
+        Validacao.ValidarInfoTerreno(terrenoAtualizado.getTitulo(),
+                terrenoAtualizado.getDescricao(),
+                terrenoAtualizado.getLocalizacao(),
+                terrenoAtualizado.getTitulo(),
+                terrenoAtualizado.getPreco(),
+                terrenoAtualizado.getProprietario()
+        );
+
+        BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getId() == idTerreno)
                 .findFirst()
-                .map(terreno -> {
+                .ifPresentOrElse(terreno -> {
+
                     terreno.setTitulo(terrenoAtualizado.getTitulo());
                     terreno.setDescricao(terrenoAtualizado.getDescricao());
                     terreno.setLocalizacao(terrenoAtualizado.getLocalizacao());
                     terreno.setPreco(terrenoAtualizado.getPreco());
                     terreno.setLocador(terrenoAtualizado.getLocador());
                     terreno.setDisponivel(terrenoAtualizado.isDisponivel());
-                    return true;
-                }).orElse(false);
+
+                }, () -> new DataNotFoundException("Terreno não encontrado!"));
 
     }
 
@@ -64,16 +73,14 @@ public class TerrenoService {
 
     }
 
-    public boolean deletarTerreno(int idTerreno) {
-        // TODO: VALIDAR PARAMETROS;
+    public void deletarTerreno(int idTerreno) {
 
-        return BancoDeDados.terrenosDataBase
-                .stream()
-                .filter(terreno -> terreno.getId() == idTerreno)
-                .findFirst()
-                .map(terreno -> {
-                    BancoDeDados.terrenosDataBase.remove(terreno);
-                    return true;
-                }).orElse(false);
+        BancoDeDados.terrenosDataBase
+            .stream()
+            .filter(terreno -> terreno.getId() == idTerreno)
+            .findFirst()
+            .ifPresentOrElse(terreno -> {
+                BancoDeDados.terrenosDataBase.remove(terreno);
+            }, () -> new DataNotFoundException("Terreno não encontrado"));
     }
 }

@@ -3,11 +3,8 @@ package controllers;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.EmptyDataException;
 import models.Locatario;
-import models.Terreno;
 import services.LocatarioService;
 import util.Formatador;
-
-import java.util.List;
 
 /**
  * Classe Locatario Controller implementada visando o tratamento de exceptions que possam ser lançadas
@@ -46,11 +43,9 @@ public class LocatarioController {
             service.atualizarPerfil(locatario);
             return "Dados Atualizados com Sucesso!";
 
-        } catch (EmptyDataException e) {
+        } catch (EmptyDataException | DataNotFoundException e) {
             return e.getMessage();
 
-        } catch (DataNotFoundException e) {
-            return e.getMessage();
         }
     }
 

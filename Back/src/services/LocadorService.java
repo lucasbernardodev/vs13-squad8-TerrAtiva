@@ -39,21 +39,15 @@ public class LocadorService implements CrudConta<Locador> {
         perfilAtual.setEmail(locador.getEmail());
         perfilAtual.setNome(locador.getNome());
         perfilAtual.setNascimento(locador.getNascimento());
-
     }
 
     public final void deletarPerfil(int id) {
         BancoDeDados.locadoresDataBase.remove(resgatarLocador(id));
     }
 
-    public final void imprimirPerfil(int id) {
+    public final String imprimirPerfil(int id) {
         Locador locadorAtual = resgatarLocador(id);
-        System.out.println("### PERFIL DE LOCADOR ###");
-        System.out.println("Usuário: " + locadorAtual.getNomeUsuario());
-        System.out.println("Nome: " + locadorAtual.getNome());
-        System.out.println("Email: " + locadorAtual.getEmail());
-        System.out.println("Nascimento: " + locadorAtual.getNascimento());
-
+        return locadorAtual.toString();
     }
 
 

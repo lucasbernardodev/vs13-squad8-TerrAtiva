@@ -1,6 +1,7 @@
 package util;
 
 import infra.exceptions.EmptyDataException;
+import models.Locatario;
 import models.Usuario;
 
 import java.util.NoSuchElementException;
@@ -79,5 +80,15 @@ public class Validacao {
         if (senha.isBlank()) throw new EmptyDataException("Sua SENHA não pode estar vazio!");
         if (nome.isBlank()) throw new EmptyDataException("Seu NOME não pode estar vazio!");
         if (nascimento.isBlank()) throw new EmptyDataException("Sua DATA DE NASCIMENTO não pode estar vazio!");
+    }
+
+    public static void ValidarInfoTerreno(String titulo, String descricao, String localizacao,
+                                          String tamanho, double preco, Locatario proprietario) {
+        if(titulo.isBlank()) throw new EmptyDataException("O TITULO do terreno deve ser obrigatório!");
+        if(descricao.isBlank()) throw new EmptyDataException("A DESCRIÇÃO do terreno deve ser obrigatório!");
+        if(localizacao.isBlank()) throw new EmptyDataException("A LOCALIZAÇÃO do terreno deve ser obrigatório!");
+        if(tamanho.isBlank()) throw new EmptyDataException("O TAMANHO do terreno deve ser obrigatório!");
+        if(preco == 0) throw new EmptyDataException("O PREÇO do terreno deve ser maior que R$0,00");
+        if(proprietario.equals(null)) throw new EmptyDataException("O PROPRIETARIO do terreno deve ser obrigatório!");
     }
 }

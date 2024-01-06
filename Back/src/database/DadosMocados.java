@@ -1,8 +1,6 @@
 package database;
 
 import models.Locatario;
-import models.Terreno;
-import services.LocadorService;
 import services.LocatarioService;
 import controllers.LocadorController;
 import controllers.LocatarioController;
@@ -12,31 +10,25 @@ import services.TerrenoService;
 public class DadosMocados {
     public static void databaseOn() {
 
-        LocatarioService locatarioService = new LocatarioService();
         TerrenoService terrenoService = new TerrenoService();
         LocadorController locadorController = new LocadorController();
         LocatarioController locatarioController = new LocatarioController();
-        TerrenoController terrenoController = new TerrenoController();
 
 
         /**
          * DADOS MOCADOS LOCADORES
          */
-        locadorController.cadastrar("davidk", "david@gmail.com",
-                "123456", "David", "02/10/97");
-        locadorController.cadastrar("diuli", "diuli@gmail.com",
-                "qwe123", "Diuliano", "01/05/98");
-        locadorController.cadastrar("Leonardo", "dasdsad",
-                "12345", "lkfkj", "040158");
-        locadorController.cadastrar("Mariana", "dasdsad",
-                "123", "lkfkj", "040158");
+        locadorController.cadastrar("davidk", "david@gmail.com", "123456", "David", "02/10/97");
+        locadorController.cadastrar("diuli", "diuli@gmail.com", "qwe123", "Diuliano", "01/05/98");
+        locadorController.cadastrar("Leonardo", "dasdsad", "12345", "lkfkj", "040158");
+        locadorController.cadastrar("Mariana", "dasdsad", "123", "lkfkj", "040158");
         locadorController.cadastrar("bersch", "pedrobersch@hotmail.com", "123456", "Pedro Bersch", "16/04/2003");
         locadorController.cadastrar("shai", "shaienne@gmail.com", "123456", "Shaianne", "01/01/2000");
         locadorController.cadastrar("italo", "italo@gmail.com", "123456", "Italo Lacerda", "01/01/2000");
+
         /**
          * DADOS MOCADOS LOCATARIOS
          */
-
         locatarioController.cadastrar("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
         locatarioController.cadastrar("maria", "maria@gmail.com",
@@ -44,7 +36,7 @@ public class DadosMocados {
         locatarioController.cadastrar("Mariana", "dfdf", "12345", "dff", "fsdfdsf");
         locatarioController.cadastrar("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
         locatarioController.cadastrar("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
-        locatarioController.cadastrar("pedroH","pedrohenrique@gmail.com","123456","Pedro Henrique","01/01/2000");
+        locatarioController.cadastrar("pedroH", "pedrohenrique@gmail.com", "123456", "Pedro Henrique", "01/01/2000");
 
         /**
          * DADOS MOCADOS TERRENOS
@@ -53,7 +45,7 @@ public class DadosMocados {
                 "qwerty", "Lucas Silva", "11/22/97");
         Locatario locatarioDois = new Locatario("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
         Locatario locatarioTres = new Locatario("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
-        Locatario locatarioQuatro = new Locatario("pedroH","pedrohenrique@gmail.com","123456","Pedro Henrique","01/01/2000");
+        Locatario locatarioQuatro = new Locatario("pedroH", "pedrohenrique@gmail.com", "123456", "Pedro Henrique", "01/01/2000");
 
         terrenoService.cadastrarTerreno("Campo de Futebol Abandonado", "Baixada Fluminense", "Terra do nunca",
                 "Gigantesco", 285000.0, locatarioUm);

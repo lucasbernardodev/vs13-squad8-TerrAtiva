@@ -1,5 +1,11 @@
 package controllers;
 
+import infra.exceptions.DataNotFoundException;
+import infra.exceptions.EmptyDataException;
+import models.Locatario;
+import models.Terreno;
+import services.TerrenoService;
+
 /**
  * Classe Locador Controller implementada visando o tratamento de exceptions que possam ser lançadas
  * nos serviços da aplicação.
@@ -11,24 +17,36 @@ package controllers;
  */
 public class TerrenoController {
 
-    public void cadastrarTerreno() {
+    TerrenoService service = new TerrenoService();
+
+    public String cadastrarTerreno(String titulo, String descricao, String localizacao,
+                                   String tamanho, double preco, Locatario proprietario) {
         try {
-        } catch (Exception e) {
+            service.cadastrarTerreno(titulo, descricao, localizacao, tamanho, preco, proprietario);
+            return "Terreno cadastrado com sucesso!";
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String atualizarDados(int idTerreno, Terreno data) {
+        try {
+            service.atualizarDadosTerreno(idTerreno, data);
+            return "Dados do Terreno atualizados com Sucesso!";
+
+        } catch (EmptyDataException | DataNotFoundException e) {
+            return e.getMessage();
 
         }
     }
 
-    public void atualizarDados() {
+    public String deletarDados(int idTerreno) {
         try {
-        } catch (Exception e) {
+            service.deletarTerreno(idTerreno);
+            return "Terreno deletado com Sucesso";
 
-        }
-    }
-
-    public void deletarDados() {
-        try {
-        } catch (Exception e) {
-
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
         }
     }
 }
