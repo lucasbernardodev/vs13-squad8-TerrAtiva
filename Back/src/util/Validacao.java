@@ -25,7 +25,6 @@ public class Validacao {
 
 
     /**
-     *
      * Método que valida a entrada de Strings fornecidas para o usuário. Caso o
      * usuário forneça dados vazios ou nulos, o método imprimirá uma mensagem
      * alegando a entrada errônea de dados e irá pedir a inserção de novas
@@ -34,7 +33,7 @@ public class Validacao {
      * @param placeholder mensagem que será mostrada ao usuário antes dele entrar
      *                    com dados
      * @return a String validada pelo método, que poderá ser usada ao longo do
-     *         sistema
+     * sistema
      */
 
     public static String validarString(String placeholder) {
@@ -48,7 +47,7 @@ public class Validacao {
                     System.out.printf("%sDIGITE UM VALOR VÁLIDO!%s" + System.lineSeparator(), ANSI_RED, ANSI_RESET);
 
                 } else {
-                    return stringToRead.trim();
+                    return stringToRead;
                 }
 
             } catch (NoSuchElementException e) {
@@ -57,11 +56,23 @@ public class Validacao {
         }
     }
 
+    public static int validarInt() {
+
+        while (true) {
+            try {
+                int tempInt = Integer.parseInt(input.nextLine());
+                return tempInt;
+            } catch (NumberFormatException e) {
+                System.err.println("Comando inválido! Por favor digite um número válido!");
+            }
+        }
+    }
+
     public static void validarInfoUsuario(String nomeUsuario,
-                                   String email,
-                                   String senha,
-                                   String nome,
-                                   String nascimento) throws EmptyDataException {
+                                          String email,
+                                          String senha,
+                                          String nome,
+                                          String nascimento) throws EmptyDataException {
 
         if (nomeUsuario.isBlank()) throw new EmptyDataException("Seu NOME DE USUÁRIO não pode estar vazio!");
         if (email.isBlank()) throw new EmptyDataException("Seu EMAIL não pode estar vazio!");

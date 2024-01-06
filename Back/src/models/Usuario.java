@@ -18,6 +18,14 @@ public abstract class Usuario {
         this.nascimento = nascimento;
     }
 
+    public Usuario(int id, String nomeUsuario, String email, String nome, String nascimento) {
+        this.id = id;
+        this.nomeUsuario = nomeUsuario;
+        this.email = email;
+        this.nome = nome;
+        this.nascimento = nascimento;
+    }
+
     public int getId(){
         return this.id;
     }

@@ -2,11 +2,10 @@ package controllers;
 
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.EmptyDataException;
-import models.Locador;
 import models.Locatario;
 import models.Terreno;
-import services.LocadorService;
 import services.LocatarioService;
+import util.Formatador;
 
 import java.util.List;
 
@@ -20,8 +19,19 @@ import java.util.List;
  * @author Pedro Henrique Pereira
  */
 public class LocatarioController {
-
     private LocatarioService service = new LocatarioService();
+
+    /**
+     * Cadastro de um novo locatario dentro do sistema;
+     *
+     * @param nomeUsuario String username
+     * @param email       String email do usuário
+     * @param senha       String senha do usuário
+     * @param nome        String nome do usuário
+     * @param nascimento  String data de nascimento do usuário
+     * @return Mensagem de Sucesso de cadastro
+     * @throws EmptyDataException caso algum parâmetro esteja em branco
+     */
     public String cadastrar(String nomeUsuario, String email, String senha, String nome, String nascimento) {
         try {
             service.cadastrar(nomeUsuario, email, senha, nome, nascimento);
@@ -64,13 +74,8 @@ public class LocatarioController {
         }
     }
 
-    public List<Terreno> resgatarTerrenosArrendados() {
-        try {
-
-        } catch (Exception e) {
-
-        }
-        return null;
+    public String resgatarTerrenosArrendados(Locatario proprietario) {
+        return Formatador.readerListTerrenos(service.resgatarTerrenosArrendados(proprietario));
     }
 }
 

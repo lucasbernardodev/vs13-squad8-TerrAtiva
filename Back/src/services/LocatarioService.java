@@ -41,6 +41,7 @@ public class LocatarioService implements CrudConta<Locatario> {
     }
 
     public final void deletarPerfil(int id) {
+
         BancoDeDados.locatariosDataBase.remove(resgatarLocatarios(id));
     }
 
@@ -56,6 +57,7 @@ public class LocatarioService implements CrudConta<Locatario> {
                 .stream()
                 .filter(locatario -> locatario.getId() == id)
                 .findFirst().get();
+
     }
 
     public final Locatario resgatarLocatarios(String email) {
