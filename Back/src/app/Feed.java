@@ -32,12 +32,23 @@ public class Feed {
                 .filter(terreno -> terreno.getPreco() <= valor)
                 .collect(Collectors.toList());
     }
-    public Terreno mostrarTerrenosPorTitulo(String titulo){
-        return BancoDeDados.terrenosDataBase
+    
+    public List<Terreno> mostrarTerrenosPorTitulo(String titulo){
+        List<Terreno> tituloExato = 
+                BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getTitulo().toLowerCase().equals(titulo.toLowerCase()))
-                .findFirst()
-                .get();
+                .collect(Collectors.toList());
+
+        if (!tituloExato.isEmpty())
+        {
+            return tituloExato;
+        }
+
+        return BancoDeDados.terrenosDataBase
+                    .stream()
+                    .filter(terreno -> terreno.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+                    .collect(Collectors.toList());
     }
 
     public List<Terreno> mostrarTerrenosPorLocatario(String nomeLocatario) {
