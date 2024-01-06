@@ -5,6 +5,8 @@ import models.Locador;
 import models.Locatario;
 import models.Terreno;
 
+import java.util.List;
+
 public class TerrenoService {
 
     public void cadastrarTerreno(String titulo, String descricao, String localizacao,
@@ -32,6 +34,32 @@ public class TerrenoService {
                     terreno.setDisponivel(terrenoAtualizado.isDisponivel());
                     return true;
                 }).orElse(false);
+
+    }
+
+    public Terreno buscarTerrenos(int idTerreno) {
+        List<Terreno> buscandoTerreno = BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getId() == idTerreno)
+                .toList();
+
+        return buscandoTerreno.get(0);
+
+    }
+
+    public List<Terreno> buscarTerrenos(Locador locador) {
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getLocador() == locador)
+                .toList();
+    }
+
+    public List<Terreno> buscarTerrenos(Locatario proprietario) {
+
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getProprietario() == proprietario)
+                .toList();
 
     }
 
