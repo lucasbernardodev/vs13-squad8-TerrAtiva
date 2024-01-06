@@ -1,6 +1,7 @@
 package services;
 
 import database.BancoDeDados;
+import models.Locador;
 import models.Locatario;
 import models.Terreno;
 
@@ -44,6 +45,13 @@ public class TerrenoService {
 
         return buscandoTerreno.get(0);
 
+    }
+
+    public List<Terreno> busrcarTerrenos(Locador locador) {
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> terreno.getLocador() == locador)
+                .toList();
     }
 
     public List<Terreno> busrcarTerrenos(Locatario proprietario) {
