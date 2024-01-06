@@ -45,11 +45,23 @@ public class Validacao {
                     System.out.printf("%sDIGITE UM VALOR VÁLIDO!%s" + System.lineSeparator(), ANSI_RED, ANSI_RESET);
 
                 } else {
-                    return stringToRead.trim();
+                    return stringToRead;
                 }
 
             } catch (NoSuchElementException e) {
                 System.err.println("Comando inválido! Por favor digite um texto válido!");
+            }
+        }
+    }
+
+    public static int validarInt() {
+
+        while (true) {
+            try {
+                int tempInt = Integer.parseInt(input.nextLine());
+                return tempInt;
+            } catch (NumberFormatException e) {
+                System.err.println("Comando inválido! Por favor digite um número válido!");
             }
         }
     }
