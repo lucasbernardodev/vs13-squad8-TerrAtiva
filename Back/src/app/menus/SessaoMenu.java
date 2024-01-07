@@ -2,21 +2,19 @@ package app.menus;
 
 import controllers.LocadorController;
 import controllers.LocatarioController;
-import controllers.TerrenoController;
+import controllers.LoginController;
 import models.Locador;
 import models.Locatario;
 import services.LocadorService;
 import services.LocatarioService;
-import services.TerrenoService;
 import util.ConferenciaDeUsuario;
 import util.RetornaId;
 import util.Validacao;
 
-import java.util.Scanner;
-
 public class SessaoMenu {
     private static final LocadorController locadorController = new LocadorController();
     private static final LocatarioController locatarioController = new LocatarioController();
+    private  static  final  LoginController loginController = new LoginController();
     private static final LocadorService locadorService = new LocadorService();
     private static final LocatarioService locatarioService = new LocatarioService();
     private static final ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
@@ -240,13 +238,11 @@ public class SessaoMenu {
 
             } else {
                 if (area == 1) {
-                    locadorLogado = locadorService.resgatarLocador(
-                            retornaId.retornaId(area, nome, senha));
+                    loginController.loginLocador(area, nome, senha);
                     System.out.println("Logado!");
                 }
                 if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nome, senha));
+                    loginController.loginLocatario(area, nome, senha);
                     System.out.println("Logado!");
                 }
             }

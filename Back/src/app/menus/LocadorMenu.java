@@ -1,5 +1,7 @@
 package app.menus;
 
-public class LocadorMenu {
+import models.Locador;
 
+public class LocadorMenu {
+    public static Locador locadorLogado = new Locador(0, "","","","");
 }
