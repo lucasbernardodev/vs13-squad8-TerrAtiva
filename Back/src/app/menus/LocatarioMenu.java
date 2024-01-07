@@ -110,7 +110,6 @@ public class LocatarioMenu {
                         System.out.println("Digite o número do id do contrato que deseja cancelar: ");
                         int cadastro = Validacao.validarInt();
                         System.out.println(locatarioController.cancelarcontrato(cadastro, usuarioLogado));
-                        menuTerrenos = 0;
                         break;
                     case 3:
                         String tituloAnuncio = Validacao.validarString("Digite o título do anúncio");
@@ -118,10 +117,9 @@ public class LocatarioMenu {
                         String localizacaoAnuncio = Validacao.validarString("Digite a localização do anúncio");
                         String tamanhoAnuncio = Validacao.validarString("Digite o tamanho da área:");
                         double precoAnuncio = Validacao.validarInt();
-                        Locatario locatarioAnuncio = usuarioLogado;
                         try {
-                            Validacao.ValidarInfoTerreno(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, locatarioAnuncio);
-                            boolean criarAnuncio = locatarioService.criarAnuncio(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, locatarioAnuncio);
+                            Validacao.ValidarInfoTerreno(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, usuarioLogado);
+                            boolean criarAnuncio = locatarioService.criarAnuncio(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, usuarioLogado);
                             if (criarAnuncio){
                                 System.out.println("Cadastro realizado com sucesso");
                             } else {
@@ -130,13 +128,12 @@ public class LocatarioMenu {
                         } catch (EmptyDataException e){
                             System.err.println(e.getMessage());
                         }
-                        // Pedir Ajuda
+
                     case 4:
                         System.out.println(locatarioController.resgatarTerrenosArrendados(usuarioLogado));
                         System.out.println("Digite o número do id do anúncio que deseja deletar: ");
                         int deletar = Validacao.validarInt();
                         locatarioService.deletarPerfil(deletar);
-                        menuTerrenos = 0;
                         break;
                     case 0:
                         break;
