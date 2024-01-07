@@ -1,5 +1,7 @@
 package app.menus;
+import controllers.FeedController;
 import controllers.LocatarioController;
+import models.Locador;
 import models.Locatario;
 import services.LocatarioService;
 import util.ConferenciaDeUsuario;
@@ -19,52 +21,9 @@ public class LocatarioMenu {
     static int cadastro;
     private static int area;
 
-    static Locatario locatarioLogado = new Locatario(0, "","","","");
-    public static void menuLocatario() {
-        do {
-            System.out.println("Selecione uma opção: ");
-            System.out.println("1 - Login");
-            System.out.println("2 - Cadastrar-se");
+    static Locatario usuarioLogado = new Locatario("", "","","","");
 
-            cadastro = Validacao.validarInt();
-
-            switch (cadastro) {
-                case 1:
-                    menuLogin();
-                    break;
-                case 2:
-                    menuCadastro();
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, insira um valor válido.");
-            }
-
-        } while (cadastro < 1 || cadastro > 2);
-
-        boolean retorno;
-
-        int area;
-
-        Locatario locatarioLogado = new Locatario(0, "", "", "", "");
-        do {
-            System.out.println("Área de Login");
-            System.out.println("Selecione uma opção: ");
-            System.out.println("2 - Locatario");
-            area = Validacao.validarInt();
-            String nomeLocatario = Validacao.validarString("Digite seu nome de usuário:");
-            String senhaLocatario = Validacao.validarString("Digite sua senha:");
-            retorno = conferenciaDeUsuario.conferencia(area, nomeLocatario, senhaLocatario);
-            if (!retorno) {
-                System.out.println("Dados incorretos, tente novamente");
-            } else {
-                if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nomeLocatario, senhaLocatario));
-                    System.err.println("Logado!");
-                }
-            }
-        } while (!retorno);
-
+    public static void menuIncial(Locatario usuarioLogado) {
         int menuAreaLogada;
         if (area == 2) {
             do {
@@ -72,27 +31,23 @@ public class LocatarioMenu {
                 System.out.println("O que você deseja fazer");
                 System.out.println("1 - Imprimir Perfil");
                 System.out.println("2 - Atualizar Perfil");
-                //preciso verificar opções específicas para o Locatário
+                System.out.println("3 - Acessar meus terreno");
+                System.out.println("4 - Acessar feed");
+                System.out.println("5 - Deletar Perfil");
                 System.out.println("0 - Sair");
-                menuAreaLogada = Integer.parseInt(scanner.nextLine());
+
+                menuAreaLogada = Validacao.validarInt();
                 switch (menuAreaLogada) {
                     case 1:
-                        locatarioService.imprimirPerfil(locatarioLogado.getId());
+                        imprimirUsuario();
+                        menuAreaLogada = 0;
                         break;
                     case 2:
-                        System.out.println("Vamos atualizar seu perfil:");
-                        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
-                        String emailAtualizar = Validacao.validarString("E-mail novo:");
-                        String nomeAtualizar = Validacao.validarString("Nome novo:");
-                        String dataAtualizar = Validacao.validarString("Data de nascimento:");
-                        locatarioController.atualizarPerfil(
-                                new Locatario(
-                                        locatarioLogado.getId(),
-                                        nomeUsuarioAtualizar,
-                                        emailAtualizar,
-                                        nomeAtualizar,
-                                        dataAtualizar));
+                        menuAtualizarPerfil();
+                        menuAreaLogada = 0;
                         break;
+                    case 3:
+                        menuTerreno();
                     // Adicione aqui mais opções específicas para o Locatário
                     case 0:
                         System.out.println("Saindo...");
@@ -104,69 +59,60 @@ public class LocatarioMenu {
         }
     }
 
-    public static void menuCadastro() {
-        System.out.println("Bem vindo a área de cadastro!");
-        System.out.println("""
-                2 - Quero arrendar para alguém
-                0 - Digite zero para retornar a etapa anterior.
-                """);
-
-        int locatarioOuLocador = Validacao.validarInt();
-
-        switch (locatarioOuLocador) {
-            case 2:
-                System.out.println("Vamos precisar de alguns dados para seu cadastro");
-                System.out.println(
-                        locatarioController.cadastrar(
-                                Validacao.validarString("Nome de usuário: "),
-                                Validacao.validarString("E-mail: "),
-                                Validacao.validarString("Senha: "),
-                                Validacao.validarString("Nome completo: "),
-                                Validacao.validarString("Data de nascimento: ")));
-                cadastro = 1;
-                break;
-            case 0:
-                break;
-            default:
-                System.out.println("Valor digitado inválido, vamos recomeçar");
-        }
-    }
-    private static void menuLogin() {
-        boolean retorno;
-
-        do {
-            System.out.println("Área de Login");
-            System.out.println("Selecione uma opção: ");
-            System.out.println("1 - Locador");
-            System.out.println("2 - Locatario");
-            area = Validacao.validarInt();
-            if (area < 1 || area > 2) System.out.println("Opção inválida. Por favor, insira um valor válido.");
-        } while (area < 1 || area > 2);
-
-        do {
-
-            String nomeLocador = Validacao.validarString("Digite seu nome de usuário:");
-            String senhaLocador = Validacao.validarString("Digite sua senha:");
-            retorno = conferenciaDeUsuario.conferencia(area, nomeLocador, senhaLocador);
-            if (!retorno)
-            {
-                System.out.println("Dados incorretos, tente novamente");
-            }
-            else
-            {
-                if (area == 1) {
-                    Object locadorLogado = locadorService.resgatarLocador(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-                if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-            }
-        } while (!retorno);
+    private void imprimirUsuario(Locatario usuarioLogado){
+        String usuario = locatarioService.imprimirPerfil(usuarioLogado.getId());
+        System.out.println(usuario);
     }
 
+    private void menuAtualizarPerfil(Locatario usuarioLogado){
+        System.out.println("Vamos atualizar seu perfil:");
+        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
+        String emailAtualizar = Validacao.validarString("E-mail novo:");
+        String nomeAtualizar = Validacao.validarString("Nome novo:");
+        String dataAtualizar = Validacao.validarString("Data de nascimento:");
+        String atualizandoPerfil = locatarioController.atualizarPerfil(
+                new Locatario(
+                        usuarioLogado.getId(),
+                        nomeUsuarioAtualizar,
+                        emailAtualizar,
+                        usuarioLogado.getSenha(),
+                        nomeAtualizar,
+                        dataAtualizar)
+        );
+        System.out.println(atualizandoPerfil);
+    }
 
-}
+    private void menuTerreno(Locatario usuarioLogado){
+        int menuTerrenos;
+        do {
+            System.out.println("Bem-vindo ao menu dos terrenos do locador");
+            System.out.println("O que você deseja fazer!");
+            System.out.println("1 - Vizualizar terrenos arrendados");
+            System.out.println("2 - Cancelar Contratos");
+            System.out.println("3 - Criar anúncio de terrenos");
+            System.out.println("0 - Voltar ao menu Anterior");
+            System.out.println("Digite a opção desejada: ");
+            menuTerrenos = Validacao.validarInt();
+            switch (menuTerrenos) {
+                case 1:
+                    locatarioController.resgatarTerrenosArrendados(usuarioLogado);
+                    menuTerrenos = 0;
+                    break;
+                case 2:
+                    System.out.println(locatarioController.resgatarTerrenosArrendados(usuarioLogado));
+                    System.out.println("Digite o número do id do contrato que deseja cancelar: ");
+                    int cadastro = Validacao.validarInt();
+                    System.out.println(locatarioController.cancelarcontrato(cadastro, usuarioLogado));
+                case 3:
+                    String tituloAnuncio = Validacao.validarString("Digite o título do anúncio");
+                    String descricaoAnuncio = Validacao.validarString("Digite a descrição do anúncio");
+                    String localizacaoAnuncio = Validacao.validarString("Digite a localização do anúncio");
+                    String tamanhoAnuncio = Validacao.validarString("Digite o tamanho da área:");
+                    double precoAnuncio = Validacao.validarInt();
+                    Locatario locatarioAnuncio = usuarioLogado;
+                    Validacao.ValidarInfoTerreno(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, locatarioAnuncio);
+                    // Pedir Ajuda
+                case 4:
+
+
+            }
