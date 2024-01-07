@@ -26,12 +26,12 @@ public class Locador extends Usuario{
 
     @Override
     public String toString() {
-        return "\n" + " Locador{" + "\n" +
-                "   id: " + this.getId() + "," + "\n" +
-                "   nomeUsuario: " + this.getNomeUsuario() + "," + "\n" +
-                "   email: " + this.getEmail() + "," + "\n" +
-                "   nome: " + this.getNome() + "," + "\n" +
-                "   dataDeNascimento: "  + this.getNascimento() + "\n" +
-                " };" + "\n";
+        return String.format("""
+                ### PERFIL DE LOCATÁRIO ###;
+                    Usuário: %s
+                    Nome: %s
+                    Email: %s;
+                    Nascimento: %s
+                """, super.getNomeUsuario(), super.getNome(), super.getEmail(), super.getNascimento());
     }
 }

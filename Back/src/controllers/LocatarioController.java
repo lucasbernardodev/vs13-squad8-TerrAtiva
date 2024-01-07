@@ -1,11 +1,10 @@
 package controllers;
 
+import infra.exceptions.DataNotFoundException;
 import infra.exceptions.EmptyDataException;
-import models.Terreno;
-import services.LocadorService;
+import models.Locatario;
 import services.LocatarioService;
-
-import java.util.List;
+import util.Formatador;
 
 /**
  * Classe Locatario Controller implementada visando o tratamento de exceptions que possam ser lançadas
@@ -34,45 +33,53 @@ public class LocatarioController {
         try {
             service.cadastrar(nomeUsuario, email, senha, nome, nascimento);
             return "Usuário Cadastrado com Sucesso!";
-
         } catch (EmptyDataException e) {
             return e.getMessage();
         }
     }
 
-    public boolean atualizarPerfil(String nomeUsuario, String email,
-                                   String senha, String nome, String nascimento) {
+    public String atualizarPerfil(Locatario locatario) {
         try {
+            service.atualizarPerfil(locatario);
+            return "Dados Atualizados com Sucesso!";
 
-        } catch (Exception e) {
-
-        }
-        return true;
-    }
-
-    public void deletarPerfil(int id) {
-        try {
-
-        } catch (Exception e) {
+        } catch (EmptyDataException | DataNotFoundException e) {
+            return e.getMessage();
 
         }
     }
 
-    public void cancelarcontrato(int idTerreno) {
+    public String deletarPerfil(int id) {
         try {
+            service.deletarPerfil(id);
+            return "Perfil deletado com Sucesso!";
 
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        }
+
+    }
+
+    public String cancelarcontrato(int idTerreno, Locatario proprietario) {
+        try {
+            service.cancelarcontrato(idTerreno, proprietario);
+            return String.format("Contrato N°%d Cancelado | Locador: %s", idTerreno, proprietario.getNome());
         } catch (Exception e) {
-
+            return e.getMessage();
         }
     }
 
-    public List<Terreno> resgatarTerrenosArrendados() {
+    public String resgatarTerrenosArrendados(Locatario proprietario) {
+        return Formatador.readerListTerrenos(service.resgatarTerrenosArrendados(proprietario));
+    }
+
+    public String imprimirPerfil(int id) {
         try {
+            return service.imprimirPerfil(id);
 
-        } catch (Exception e) {
-
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
         }
-        return null;
     }
 }
 

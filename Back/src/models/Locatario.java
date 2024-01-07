@@ -4,13 +4,7 @@ import database.BancoDeDados;
 
 public class Locatario extends Usuario {
 
-    public Locatario(
-            String nomeUsuario,
-            String email,
-            String senha,
-            String nome,
-            String nascimento
-    ) {
+    public Locatario(String nomeUsuario, String email, String senha, String nome, String nascimento) {
         super(BancoDeDados.novoLocatarioID(), nomeUsuario, email, senha, nome, nascimento);
     }
     public Locatario(int id,
@@ -24,12 +18,12 @@ public class Locatario extends Usuario {
 
     @Override
     public String toString() {
-        return "\n" + " Locatario{" + "\n" +
-                "   id: " + this.getId() + "," + "\n" +
-                "   nomeUsuario: " + this.getNomeUsuario() + "," + "\n" +
-                "   email: " + this.getEmail() + "," + "\n" +
-                "   nome: " + this.getNome() + "," + "\n" +
-                "   dataDeNascimento: "  + this.getNascimento() + "\n" +
-                " };" + "\n";
+        return String.format("""
+                ### PERFIL DE LOCATÁRIO ###;
+                    Usuário: %s
+                    Nome: %s
+                    Email: %s;
+                    Nascimento: %s
+                """, super.getNomeUsuario(), super.getNome(), super.getEmail(), super.getNascimento());
     }
 }
