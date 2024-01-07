@@ -15,16 +15,21 @@ import util.Validacao;
 import java.util.Scanner;
 
 public class SessaoMenu {
-    static Scanner scanner = new Scanner(System.in);
-    static LocadorController locadorController = new LocadorController();
-    static LocatarioController locatarioController = new LocatarioController();
-    static TerrenoController terrenoController = new TerrenoController();
-    static LocadorService locadorService = new LocadorService();
-    static LocatarioService locatarioService = new LocatarioService();
-    static TerrenoService terrenoService = new TerrenoService();
-    static ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
-    static RetornaId retornaId = new RetornaId();
-    static int cadastro;
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final LocadorController locadorController = new LocadorController();
+    private static final LocatarioController locatarioController = new LocatarioController();
+    private static final TerrenoController terrenoController = new TerrenoController();
+    private static final LocadorService locadorService = new LocadorService();
+    private static final LocatarioService locatarioService = new LocatarioService();
+    private static final TerrenoService terrenoService = new TerrenoService();
+    private static final ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
+    private static final RetornaId retornaId = new RetornaId();
+    private static int cadastro;
+    private static int area;
+
+    //TODO: Verificar forma de salvar usuario logado globalmente na aplicação
+    static Locador locadorLogado = new Locador(0, "","","","");
+    static Locatario locatarioLogado = new Locatario(0, "","","","");
 
     public static void menuInicial(){
 
@@ -37,44 +42,16 @@ public class SessaoMenu {
 
             switch (cadastro){
                 case 1:
+                    menuLogin();
                     break;
                 case 2:
                     menuCadastro();
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, insira um valor válido.");
             }
 
         } while (cadastro < 1 || cadastro > 2);
-
-        boolean retorno;
-        int area;
-        Locador locadorLogado = new Locador(0, "","","","");
-        Locatario locatarioLogado = new Locatario(0, "","","","");
-        do {
-            System.out.println("Área de Login");
-            System.out.println("Selecione uma opção: ");
-            System.out.println("1 - Locador");
-            System.out.println("2 - Locatario");
-            area = Validacao.validarInt();
-            String nomeLocador = Validacao.validarString("Digite seu nome de usuário:");
-            String senhaLocador = Validacao.validarString("Digite sua senha:");
-            retorno = conferenciaDeUsuario.conferencia(area, nomeLocador, senhaLocador);
-            if (!retorno)
-            {
-                System.out.println("Dados incorretos, tente novamente");
-            }
-            else
-            {
-                if (area == 1) {
-                    locadorLogado = locadorService.resgatarLocador(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-                if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-            }
-        } while (!retorno);
 
 
         int menuAreaLogada;
@@ -229,6 +206,44 @@ public class SessaoMenu {
                 System.out.println("Valor digitado inválido, vamos recomeçar");
     }
 }
+
+    private static void menuLogin() {
+        boolean retorno;
+
+        do {
+            System.out.println("Área de Login");
+            System.out.println("Selecione uma opção: ");
+            System.out.println("1 - Locador");
+            System.out.println("2 - Locatario");
+            area = Validacao.validarInt();
+            if (area < 1 || area > 2) System.out.println("Opção inválida. Por favor, insira um valor válido.");
+        } while (area < 1 || area > 2);
+
+        do {
+
+            String nomeLocador = Validacao.validarString("Digite seu nome de usuário:");
+            String senhaLocador = Validacao.validarString("Digite sua senha:");
+            retorno = conferenciaDeUsuario.conferencia(area, nomeLocador, senhaLocador);
+            if (!retorno)
+            {
+                System.out.println("Dados incorretos, tente novamente");
+            }
+            else
+            {
+                if (area == 1) {
+                    locadorLogado = locadorService.resgatarLocador(
+                            retornaId.retornaId(area, nomeLocador, senhaLocador));
+                    System.err.println("Logado!");
+                }
+                if (area == 2) {
+                    locatarioLogado = locatarioService.resgatarLocatarios(
+                            retornaId.retornaId(area, nomeLocador, senhaLocador));
+                    System.err.println("Logado!");
+                }
+            }
+        } while (!retorno);
+    }
+
 
 }
 
