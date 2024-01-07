@@ -8,12 +8,12 @@ import util.Validacao;
 
 import java.util.Scanner;
 
-import static app.menus.SessaoMenu.locadorLogado;
-
 public class LocadorMenu {
+        public static Locador locadorLogado = new Locador("", "","","","");
+
         private static final Scanner scanner = new Scanner(System.in);
-        private  LocadorController locadorController = new LocadorController();
-        private  LocadorService locadorService = new LocadorService();
+        private static LocadorController locadorController = new LocadorController();
+        private static LocadorService locadorService = new LocadorService();
         private static int cadastro;
         private static int area;
 
@@ -25,8 +25,7 @@ public class LocadorMenu {
                 System.out.println("1 - Imprimir Perfil");
                 System.out.println("2 - Atualizar Perfil");
                 System.out.println("3 - Acessar meus terreno");
-                System.out.println("4 - Acessar feed");
-                System.out.println("5 - Deletar Perfil");
+                System.out.println("4 - Deletar Perfil");
                 System.out.println("0 - Sair");
 
                 menuAreaLogada = Validacao.validarInt();
@@ -41,7 +40,7 @@ public class LocadorMenu {
                         menuAreaLogada = -1;
                         break;
                     case 3:
-                        menuTerreno();
+                        menuTerreno(usuarioLogado);
                         //menuAreaLogada = -1;
                         break;
                     case 4:
@@ -51,11 +50,11 @@ public class LocadorMenu {
             } while (menuAreaLogada < 0 || menuAreaLogada > 5);
         }
 
-        private void buscarUsuario(){
+        private static void buscarUsuario(){
             String usuario = locadorService.imprimirPerfil(locadorLogado.getId());
             System.out.println(usuario);
         }
-        private void menuAtualizarPerfil(Locador usuarioLogado){
+        private static void menuAtualizarPerfil(Locador usuarioLogado){
             System.out.println("Vamos atualizar seu perfil:");
             String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
             String emailAtualizar = Validacao.validarString("E-mail novo:");
@@ -72,7 +71,7 @@ public class LocadorMenu {
             );
             System.out.println(atualizandoPerfil);
         }
-        private void menuTerreno(Locador usuarioLogado){
+        private static void menuTerreno(Locador usuarioLogado){
             int menuTerrenos;
             do {
                 System.out.println("Bem-vindo ao menu dos terrenos do locador");
@@ -90,25 +89,27 @@ public class LocadorMenu {
                     case 2:
                         System.out.println(locadorController.resgatarTerrenosArrendados(usuarioLogado));
 
-                        System.out.println("Digite o Contrato a ser cancelado: ");
-                        System.out.println(locadorController.cancelarcontrato());
-
-
-
-                //TODO: Precisa Continuar
-            } while (menuTerrenos == 0);
+                        System.out.println("Digite o número do contrato a ser cancelado: ");
+                        int numeroContrato = Validacao.validarInt();
+                        String resultadoCancelamento = locadorController.cancelarcontrato(numeroContrato, usuarioLogado);
+                        System.out.println(resultadoCancelamento);
+                        break;
+                    case 0:
+                        menuInicial(usuarioLogado);
+                        break;
+                }
+            } while (menuTerrenos != 0);
         }
-        private static void menuDeletar(){
+        private static void menuDeletar (){
             System.out.println("Tem certeza que deseja deletar seu perfil?");
             System.out.println("1 - Sim");
             System.out.println("2 - Não");
+
             int i = Validacao.validarInt();
+
             if (i == 1) {
-                locadorController.deletarPerfil(locadorLogado.getId());
-                System.out.println("Perfil deletado");
+                String deletar = locadorController.deletarPerfil(locadorLogado.getId());
+                System.out.println(deletar);
             }
-            int menuAreaLogada = 0;
         }
-
-
-    }
+}
