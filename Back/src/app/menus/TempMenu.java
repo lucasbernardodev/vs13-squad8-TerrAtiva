@@ -15,18 +15,19 @@ import util.Validacao;
 import java.util.Scanner;
 
 public class TempMenu {
-    public static void menuTemp(){
-        Scanner scanner = new Scanner(System.in);
-        LocadorController locadorController = new LocadorController();
-        LocatarioController locatarioController = new LocatarioController();
-        TerrenoController terrenoController = new TerrenoController();
-        LocadorService locadorService = new LocadorService();
-        LocatarioService locatarioService = new LocatarioService();
-        TerrenoService terrenoService = new TerrenoService();
-        ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
-        RetornaId retornaId = new RetornaId();
+    static Scanner scanner = new Scanner(System.in);
+    static LocadorController locadorController = new LocadorController();
+    static LocatarioController locatarioController = new LocatarioController();
+    static TerrenoController terrenoController = new TerrenoController();
+    static LocadorService locadorService = new LocadorService();
+    static LocatarioService locatarioService = new LocatarioService();
+    static TerrenoService terrenoService = new TerrenoService();
+    static ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
+    static RetornaId retornaId = new RetornaId();
+    static int cadastro;
 
-        int cadastro;
+    public static void menuTemp(){
+
         do{
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Login");
@@ -36,42 +37,9 @@ public class TempMenu {
                 case 1:
                     break;
                 case 2:
-                    System.out.println("Bem vindo a área de cadastro!");
-                    System.out.println("""
-                            1 - Quero arrentar de alguém
-                            2 - Quero arrentar para alguém
-                            0 - Digite zero para retornar a etapa anterior.""");
-                    int locadorOuLocatario = Integer.parseInt(scanner.nextLine());
-                    switch (locadorOuLocatario){
-                        case 1:
-                            System.out.println("Vamos precisar de alguns dados para seu cadastro");
-                            System.out.println(
-                                    locadorController.cadastrar(
-                                            Validacao.validarString("Nome de usuário: "),
-                                            Validacao.validarString("E-mail: "),
-                                            Validacao.validarString("Senha: "),
-                                            Validacao.validarString("Nome completo: "),
-                                            Validacao.validarString("Data de nascimento: ")));
-                            cadastro = 1;
-                            break;
-                        case 2:
-                            System.out.println("Vamos precisar de alguns dados para seu cadastro");
-                            System.out.println(
-                                    locatarioController.cadastrar(
-                                            Validacao.validarString("Nome de usuário: "),
-                                            Validacao.validarString("E-mail: "),
-                                            Validacao.validarString("Senha: "),
-                                            Validacao.validarString("Nome completo: "),
-                                            Validacao.validarString("Data de nascimento: ")));
-                            cadastro = 1;
-                            break;
-                        case 0:
-                            break;
-                        default:
-                            System.out.println("Valor digitado inválido, vamos recomeçar");
+                    menuCadastro();
                     }
 
-            }
         } while (cadastro !=1);
 
         boolean retorno;
@@ -219,4 +187,47 @@ public class TempMenu {
             } while (menuAreaLogada != 0);
         }
     }
+
+    public static void menuCadastro(){
+        System.out.println("Bem vindo a área de cadastro!");
+        System.out.println("""
+                            1 - Quero arrentar de alguém
+                            2 - Quero arrentar para alguém
+                            0 - Digite zero para retornar a etapa anterior.
+                            """);
+
+        int locadorOuLocatario = Validacao.validarInt();
+
+        switch (locadorOuLocatario){
+            case 1:
+                System.out.println("Vamos precisar de alguns dados para seu cadastro");
+                System.out.println(
+                        locadorController.cadastrar(
+                                Validacao.validarString("Nome de usuário: "),
+                                Validacao.validarString("E-mail: "),
+                                Validacao.validarString("Senha: "),
+                                Validacao.validarString("Nome completo: "),
+                                Validacao.validarString("Data de nascimento: ")));
+                cadastro = 1;
+                break;
+            case 2:
+                System.out.println("Vamos precisar de alguns dados para seu cadastro");
+                System.out.println(
+                        locatarioController.cadastrar(
+                                Validacao.validarString("Nome de usuário: "),
+                                Validacao.validarString("E-mail: "),
+                                Validacao.validarString("Senha: "),
+                                Validacao.validarString("Nome completo: "),
+                                Validacao.validarString("Data de nascimento: ")));
+                cadastro = 1;
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("Valor digitado inválido, vamos recomeçar");
+    }
 }
+
+}
+
+

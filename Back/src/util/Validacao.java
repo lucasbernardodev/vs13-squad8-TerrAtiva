@@ -61,8 +61,7 @@ public class Validacao {
 
         while (true) {
             try {
-                int tempInt = Integer.parseInt(input.nextLine());
-                return tempInt;
+                return Integer.parseInt(input.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println("Comando inválido! Por favor digite um número válido!");
             }
