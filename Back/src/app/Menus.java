@@ -12,12 +12,14 @@ import util.ConferenciaDeUsuario;
 import util.RetornaId;
 import models.Locador;
 import util.Validacao;
+import util.Status;
 
 
 public class Menus {
 
 
     public static void menuTemp(){
+        Status status = Status.ATIVO;
         Scanner scanner = new Scanner(System.in);
         LocadorController locadorController = new LocadorController();
         LocatarioController locatarioController = new LocatarioController();
@@ -220,6 +222,7 @@ public class Menus {
                 }
             } while (menuAreaLogada != 0);
         }
+        status = Status.INATIVO;
     }
     public static void menuPrincipal() {
         //ir para o feed
