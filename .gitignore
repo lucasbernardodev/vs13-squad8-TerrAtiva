@@ -3,6 +3,7 @@ out/*
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/
+vs13-squad8-TerrAtiva.iml
 
 ### Eclipse ###
 .apt_generated
