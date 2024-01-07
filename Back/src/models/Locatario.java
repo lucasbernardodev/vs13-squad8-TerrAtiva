@@ -10,6 +10,7 @@ public class Locatario extends Usuario {
     public Locatario(int id,
                    String nomeUsuario,
                    String email,
+                   String senha,
                    String nome,
                    String nascimento
     ) {
