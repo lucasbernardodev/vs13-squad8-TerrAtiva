@@ -15,23 +15,20 @@ import util.Validacao;
 import java.util.Scanner;
 
 public class SessaoMenu {
-    private static final Scanner scanner = new Scanner(System.in);
     private static final LocadorController locadorController = new LocadorController();
     private static final LocatarioController locatarioController = new LocatarioController();
-    private static final TerrenoController terrenoController = new TerrenoController();
     private static final LocadorService locadorService = new LocadorService();
     private static final LocatarioService locatarioService = new LocatarioService();
-    private static final TerrenoService terrenoService = new TerrenoService();
     private static final ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
     private static final RetornaId retornaId = new RetornaId();
     private static int cadastro;
     private static int area;
 
-    //TODO: Verificar forma de salvar usuario logado globalmente na aplicação
+    //TODO: Verificar forma de salvar usuario logado globalmente na aplicação.
     static Locador locadorLogado = new Locador(0, "","","","");
     static Locatario locatarioLogado = new Locatario(0, "","","","");
 
-    public static void menuInicial(){
+    public static void menuInicial() {
 
         do{
             System.out.println("Selecione uma opção: ");
@@ -46,6 +43,9 @@ public class SessaoMenu {
                     break;
                 case 2:
                     menuCadastro();
+                    System.out.println("|-------------------------------------------|");
+                    System.out.println("Bem vindo de volta! Selecione uma opção: ");
+                    menuLogin();
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, insira um valor válido.");
@@ -53,117 +53,122 @@ public class SessaoMenu {
 
         } while (cadastro < 1 || cadastro > 2);
 
-
-        int menuAreaLogada;
         if (area == 1){
-            do {
-                System.out.println("Bem-vindo a área logada");
-                System.out.println("O que você deseja fazer");
-                System.out.println("1 - Imprimir Perfil");
-                System.out.println("2 - Atualizar Perfil");
-                System.out.println("3 - Entrar no menu de terrenos");
-                System.out.println("4 - Deletar Perfil");
-                System.out.println("0 - Sair");
-                menuAreaLogada = Integer.parseInt(scanner.nextLine());
-                switch (menuAreaLogada){
-                    case 1:
-                        locadorService.imprimirPerfil(locadorLogado.getId());
-                        break;
-                    case 2:
-                        System.out.println("Vamos atualizar seu perfil:");
-                        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
-                        String emailAtualizar = Validacao.validarString("E-mail novo:");
-                        String nomeAtualizar = Validacao.validarString("Nome novo:");
-                        String dataAtualizar = Validacao.validarString("Data de nascimento:");
-                        locadorController.atualizarPerfil(
-                                new Locador(
-                                        locadorLogado.getId(),
-                                        nomeUsuarioAtualizar,
-                                        emailAtualizar,
-                                        nomeAtualizar,
-                                        dataAtualizar));
-                        break;
-                    case 3:
-                        int menuTerrenos;
-                        do {
-                            System.out.println("Bem-vindo ao menu dos terrenos do locador");
-                            System.out.println("O que você deseja fazer!");
-                            System.out.println("1 - Cadastrar terreno");
-                            System.out.println("2 - Atualizar dados dos terrenos");
-                            System.out.println("3 - Deletar terreno");
-                            System.out.println("0 - Sair");
-                            menuTerrenos = Integer.parseInt(scanner.nextLine());
-
-                            //TODO: Precisa Continuar
-                        } while (menuTerrenos == 0);
-                    case 4:
-                        System.out.println("Tem certeza que seja deletar seu perfil?");
-                        System.out.println("1 - Sim");
-                        System.out.println("2 - Não");
-                        int i = Validacao.validarInt();
-                        if (i == 1) {
-                            locadorController.deletarPerfil(locadorLogado.getId());
-                            System.out.println("Perfil deletado");
-                        }
-                        menuAreaLogada = 0;
-                        break;
-                }
-            } while (menuAreaLogada != 0);
+            //TODO: Chamar menur inicial do LocadorMenu
+            System.err.println("Stop App");
+            System.err.println("Menu Em Construção");
+//            do {
+//                System.out.println("Bem-vindo a área logada");
+//                System.out.println("O que você deseja fazer");
+//                System.out.println("1 - Imprimir Perfil");
+//                System.out.println("2 - Atualizar Perfil");
+//                System.out.println("3 - Entrar no menu de terrenos");
+//                System.out.println("4 - Deletar Perfil");
+//                System.out.println("0 - Sair");
+//                menuAreaLogada = Integer.parseInt(scanner.nextLine());
+//                switch (menuAreaLogada){
+//                    case 1:
+//                        locadorService.imprimirPerfil(locadorLogado.getId());
+//                        break;
+//                    case 2:
+//                        System.out.println("Vamos atualizar seu perfil:");
+//                        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
+//                        String emailAtualizar = Validacao.validarString("E-mail novo:");
+//                        String nomeAtualizar = Validacao.validarString("Nome novo:");
+//                        String dataAtualizar = Validacao.validarString("Data de nascimento:");
+//                        locadorController.atualizarPerfil(
+//                                new Locador(
+//                                        locadorLogado.getId(),
+//                                        nomeUsuarioAtualizar,
+//                                        emailAtualizar,
+//                                        nomeAtualizar,
+//                                        dataAtualizar));
+//                        break;
+//                    case 3:
+//                        int menuTerrenos;
+//                        do {
+//                            System.out.println("Bem-vindo ao menu dos terrenos do locador");
+//                            System.out.println("O que você deseja fazer!");
+//                            System.out.println("1 - Cadastrar terreno");
+//                            System.out.println("2 - Atualizar dados dos terrenos");
+//                            System.out.println("3 - Deletar terreno");
+//                            System.out.println("0 - Sair");
+//                            menuTerrenos = Integer.parseInt(scanner.nextLine());
+//
+//                            //TODO: Precisa Continuar
+//                        } while (menuTerrenos == 0);
+//                    case 4:
+//                        System.out.println("Tem certeza que seja deletar seu perfil?");
+//                        System.out.println("1 - Sim");
+//                        System.out.println("2 - Não");
+//                        int i = Validacao.validarInt();
+//                        if (i == 1) {
+//                            locadorController.deletarPerfil(locadorLogado.getId());
+//                            System.out.println("Perfil deletado");
+//                        }
+//                        menuAreaLogada = 0;
+//                        break;
+//                }
+//            } while (menuAreaLogada != 0);
         }
         if (area == 2){
-            do {
-                System.out.println("Bem-vindo a área logada");
-                System.out.println("O que você deseja fazer");
-                System.out.println("1 - Imprimir Perfil");
-                System.out.println("2 - Atualizar Perfil");
-                System.out.println("3 - Entrar no menu de terrenos");
-                System.out.println("4 - Deletar Perfil");
-                System.out.println("0 - Sair");
-                menuAreaLogada = Integer.parseInt(scanner.nextLine());
-                switch (menuAreaLogada){
-                    case 1:
-                        locatarioService.imprimirPerfil(locatarioLogado.getId());
-                        break;
-                    case 2:
-                        System.out.println("Vamos atualizar seu perfil:");
-                        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
-                        String emailAtualizar = Validacao.validarString("E-mail novo:");
-                        String nomeAtualizar = Validacao.validarString("Nome novo:");
-                        String dataAtualizar = Validacao.validarString("Data de nascimento:");
-                        locadorController.atualizarPerfil(
-                                new Locador(
-                                        locadorLogado.getId(),
-                                        nomeUsuarioAtualizar,
-                                        emailAtualizar,
-                                        nomeAtualizar,
-                                        dataAtualizar));
-                        break;
-                    case 3:
-                        int menuTerrenos;
-                        do {
-                            System.out.println("Bem-vindo ao menu dos terrenos do locador");
-                            System.out.println("O que você deseja fazer!");
-                            System.out.println("1 - Cadastrar terreno");
-                            System.out.println("2 - Atualizar dados dos terrenos");
-                            System.out.println("3 - Deletar terreno");
-                            System.out.println("0 - Sair");
-                            menuTerrenos = Integer.parseInt(scanner.nextLine());
+            //TODO: Chamar menur inicial do LocadorMenu
+            System.err.println("Stop App");
+            System.err.println("Menu Em Construção");
 
-                            //TODO: Precisa Continuar
-                        } while (menuTerrenos == 0);
-                    case 4:
-                        System.out.println("Tem certeza que seja deletar seu perfil?");
-                        System.out.println("1 - Sim");
-                        System.out.println("2 - Não");
-                        int i = Validacao.validarInt();
-                        if (i == 1) {
-                            locadorController.deletarPerfil(locadorLogado.getId());
-                            System.out.println("Perfil deletado");
-                        }
-                        menuAreaLogada = 0;
-                        break;
-                }
-            } while (menuAreaLogada != 0);
+//            do {
+//                System.out.println("Bem-vindo a área logada");
+//                System.out.println("O que você deseja fazer");
+//                System.out.println("1 - Imprimir Perfil");
+//                System.out.println("2 - Atualizar Perfil");
+//                System.out.println("3 - Entrar no menu de terrenos");
+//                System.out.println("4 - Deletar Perfil");
+//                System.out.println("0 - Sair");
+//                menuAreaLogada = Integer.parseInt(scanner.nextLine());
+//                switch (menuAreaLogada){
+//                    case 1:
+//                        locatarioService.imprimirPerfil(locatarioLogado.getId());
+//                        break;
+//                    case 2:
+//                        System.out.println("Vamos atualizar seu perfil:");
+//                        String nomeUsuarioAtualizar = Validacao.validarString("Usuário novo:");
+//                        String emailAtualizar = Validacao.validarString("E-mail novo:");
+//                        String nomeAtualizar = Validacao.validarString("Nome novo:");
+//                        String dataAtualizar = Validacao.validarString("Data de nascimento:");
+//                        locadorController.atualizarPerfil(
+//                                new Locador(
+//                                        locadorLogado.getId(),
+//                                        nomeUsuarioAtualizar,
+//                                        emailAtualizar,
+//                                        nomeAtualizar,
+//                                        dataAtualizar));
+//                        break;
+//                    case 3:
+//                        int menuTerrenos;
+//                        do {
+//                            System.out.println("Bem-vindo ao menu dos terrenos do locador");
+//                            System.out.println("O que você deseja fazer!");
+//                            System.out.println("1 - Cadastrar terreno");
+//                            System.out.println("2 - Atualizar dados dos terrenos");
+//                            System.out.println("3 - Deletar terreno");
+//                            System.out.println("0 - Sair");
+//                            menuTerrenos = Integer.parseInt(scanner.nextLine());
+//
+//                            //TODO: Precisa Continuar
+//                        } while (menuTerrenos == 0);
+//                    case 4:
+//                        System.out.println("Tem certeza que seja deletar seu perfil?");
+//                        System.out.println("1 - Sim");
+//                        System.out.println("2 - Não");
+//                        int i = Validacao.validarInt();
+//                        if (i == 1) {
+//                            locadorController.deletarPerfil(locadorLogado.getId());
+//                            System.out.println("Perfil deletado");
+//                        }
+//                        menuAreaLogada = 0;
+//                        break;
+//                }
+//            } while (menuAreaLogada != 0);
         }
     }
 
@@ -201,6 +206,7 @@ public class SessaoMenu {
                 cadastro = 1;
                 break;
             case 0:
+                menuInicial();
                 break;
             default:
                 System.out.println("Valor digitado inválido, vamos recomeçar");
@@ -210,38 +216,53 @@ public class SessaoMenu {
     private static void menuLogin() {
         boolean retorno;
 
+        escolheAreaDeLogin();
+
+        if (area == 0) menuInicial();
+
+        do {
+
+            String nome = Validacao.validarString("Digite seu nome de usuário:");
+            String senha = Validacao.validarString("Digite sua senha:");
+
+            retorno = conferenciaDeUsuario.conferencia(area, nome, senha);
+
+            if (!retorno) {
+                System.err.println("Dados incorretos, tente novamente");
+                int opcao;
+                do {
+                    System.out.println("Escolha uma das opções abaixo:");
+                    System.out.println("1 - Tentar novamente");
+                    System.out.println("0 - Voltar ao menu anterior");
+                    opcao = Validacao.validarInt();
+                    if (opcao == 0) escolheAreaDeLogin();
+                } while (opcao < 0 || opcao > 1);
+
+            } else {
+                if (area == 1) {
+                    locadorLogado = locadorService.resgatarLocador(
+                            retornaId.retornaId(area, nome, senha));
+                    System.out.println("Logado!");
+                }
+                if (area == 2) {
+                    locatarioLogado = locatarioService.resgatarLocatarios(
+                            retornaId.retornaId(area, nome, senha));
+                    System.out.println("Logado!");
+                }
+            }
+        } while (!retorno);
+    }
+
+    private static void escolheAreaDeLogin() {
         do {
             System.out.println("Área de Login");
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Locador");
             System.out.println("2 - Locatario");
+            System.out.println("0 - Voltar ao menu anterior");
             area = Validacao.validarInt();
-            if (area < 1 || area > 2) System.out.println("Opção inválida. Por favor, insira um valor válido.");
-        } while (area < 1 || area > 2);
-
-        do {
-
-            String nomeLocador = Validacao.validarString("Digite seu nome de usuário:");
-            String senhaLocador = Validacao.validarString("Digite sua senha:");
-            retorno = conferenciaDeUsuario.conferencia(area, nomeLocador, senhaLocador);
-            if (!retorno)
-            {
-                System.out.println("Dados incorretos, tente novamente");
-            }
-            else
-            {
-                if (area == 1) {
-                    locadorLogado = locadorService.resgatarLocador(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-                if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nomeLocador, senhaLocador));
-                    System.err.println("Logado!");
-                }
-            }
-        } while (!retorno);
+            if (area < 0 || area > 2) System.out.println("Opção inválida. Por favor, insira um valor válido.");
+        } while (area < 0 || area > 2);
     }
 
 

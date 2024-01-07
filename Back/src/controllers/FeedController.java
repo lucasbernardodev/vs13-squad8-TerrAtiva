@@ -4,28 +4,28 @@ import app.Feed;
 import util.Formatador;
 
 public class FeedController {
-    Feed app = new Feed();
-    public String mostrarTerrenosDisponveis() {
+    static Feed app = new Feed();
+    public static String mostrarTerrenosDisponveis() {
         return Formatador.readerListTerrenos(app.mostrarTerrenosDisponveis());
     }
 
-    public String mostrarTerrenosPorLocalizacao(String localizacao) {
+    public static String mostrarTerrenosPorLocalizacao(String localizacao) {
         return Formatador.readerListTerrenos(app.mostrarTerrenosPorLocalizacao(localizacao));
     }
 
-    public String mostrarTerrenosPorPrecoMenor(double valor) {
+    public static String mostrarTerrenosPorPrecoMenor(double valor) {
         return Formatador.readerListTerrenos(app.mostrarTerrenosPorPrecoMenor(valor));
     }
 
-    public String mostrarTerrenosPorTitulo(String titulo) {
+    public static String mostrarTerrenosPorTitulo(String titulo) {
         return Formatador.readerListTerrenos(app.mostrarTerrenosPorTitulo(titulo));
     }
 
-    public String mostrarTerrenosPorLocatario(String nomeLocatario) {
+    public static String mostrarTerrenosPorLocatario(String nomeLocatario) {
         return Formatador.readerListTerrenos(app.mostrarTerrenosPorLocatario(nomeLocatario));
     }
 
-    public String mostrarTerrenosPorTamanho(String tamanho) {
+    public static String mostrarTerrenosPorTamanho(String tamanho) {
         return Formatador.readerListTerrenos(app.mostrarTerrenosPorTamanho(tamanho));
     }
 }
