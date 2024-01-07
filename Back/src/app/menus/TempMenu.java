@@ -40,7 +40,7 @@ public class TempMenu {
                     menuCadastro();
                     }
 
-        } while (cadastro !=1);
+        } while (cadastro !=1); // VERIFICAR ESSA PARTE POIS ITALO MUDOU NA CALL
 
         boolean retorno;
         int area;
