@@ -24,7 +24,14 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
 ### [Proposta de Emissão de Debêntures Verdes (Câmara dos Deputados)](https://www.camara.leg.br/noticias/852063-proposta-permite-a-emissao-de-debentures-incentivadas-para-projetos-sus%20tentaveis/)
 ### [53 Cidades do Brasil com mais Residências Vazias do que Ocupadas](https://www.nsctotal.com.br/noticias/conheca-as-53-cidades-do-brasil-com-mais-residencias-vazias-do-que-ocupadas#:~:text=Arroio%20do%20Sal%20%28RS%29%20%E2%80%93%2076%2C2%25%20Xangri-l%C3%A1%20%28RS%29,%E2%80%93%2068%2C3%25%20Pontal%20do%20Paran%C3%A1%20%28PR%29%20%E2%80%93%2068%2C1%25)
 ### [IBGE: Áreas Urbanizadas](https://www.ibge.gov.br/geociencias/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html)
- 
+
+## Pré-Requisitos ⚙️
+- [IntelliJ Idea](https://www.jetbrains.com/idea/)
+- [JDK17](https://www.oracle.com/java/technologies/downloads/)
+
+## Diagrama UML
+  ![uml](assets/terrativa-uml.png)
+
 ## Integrantes do Projeto 👨‍💻
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
