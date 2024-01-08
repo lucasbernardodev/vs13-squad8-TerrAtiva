@@ -174,6 +174,6 @@ public class LocatarioService implements CrudConta<Locatario> {
      */
     //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locatario proprietario) {
-        return terrenoService.buscarTerreno(proprietario);
+        return terrenoService.buscarTerrenoArrendado(proprietario);
     }
 }

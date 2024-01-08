@@ -3,28 +3,18 @@ package app.menus;
 import controllers.LocadorController;
 import controllers.LocatarioController;
 import controllers.LoginController;
-import models.Locador;
-import models.Locatario;
-import services.LocadorService;
-import services.LocatarioService;
 import util.ConferenciaDeUsuario;
-import util.RetornaId;
 import util.Validacao;
+
 
 public class SessaoMenu {
     private static final LocadorController locadorController = new LocadorController();
     private static final LocatarioController locatarioController = new LocatarioController();
-    private static final LocadorService locadorService = new LocadorService();
     private static final LoginController loginController = new LoginController();
-    private static final LocatarioService locatarioService = new LocatarioService();
     private static final ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
-    private static final RetornaId retornaId = new RetornaId();
     private static int cadastro;
     private static int area;
 
-    //TODO: Verificar forma de salvar usuario logado globalmente na aplicação.
-    static Locador locadorLogado = new Locador("", "","","","");
-    static Locatario locatarioLogado = new Locatario("", "","","","");
 
     public static void menuInicial() {
         do{
@@ -52,10 +42,10 @@ public class SessaoMenu {
 
         if (area == 1){
             System.out.println();
-            LocadorMenu.menuInicial(locadorLogado);
+            LocadorMenu.menuInicial();
         }
         if (area == 2){
-            LocatarioMenu.menuIncial(locatarioLogado);
+            LocatarioMenu.menuInicial();
 
         }
     }
@@ -128,13 +118,11 @@ public class SessaoMenu {
 
             } else {
                 if (area == 1) {
-                    locadorLogado = locadorService.resgatarLocador(
-                            retornaId.retornaId(area, nome, senha));
+                    loginController.loginLocador(area, nome, senha);
                     System.out.println("Logado!");
                 }
                 if (area == 2) {
-                    locatarioLogado = locatarioService.resgatarLocatarios(
-                            retornaId.retornaId(area, nome, senha));
+                    loginController.loginLocatario(area, nome, senha);
                     System.out.println("Logado!");
                 }
             }
@@ -152,7 +140,6 @@ public class SessaoMenu {
             if (area < 0 || area > 2) System.out.println("Opção inválida. Por favor, insira um valor válido.");
         } while (area < 0 || area > 2);
     }
-
 
 }
 

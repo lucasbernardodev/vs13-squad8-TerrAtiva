@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Feed {
-    public List<Terreno> mostrarTerrenosDisponveis(){
+    public static List<Terreno> mostrarTerrenosDisponveis(){
         ArrayList<Terreno> terrenosDisponiveis= new ArrayList<Terreno>();
 
         for (Terreno terreno : BancoDeDados.terrenosDataBase) {

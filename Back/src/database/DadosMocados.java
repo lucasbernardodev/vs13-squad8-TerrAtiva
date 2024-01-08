@@ -1,5 +1,6 @@
 package database;
 
+import models.Locador;
 import models.Locatario;
 import services.LocatarioService;
 import controllers.LocadorController;
@@ -10,7 +11,7 @@ import services.TerrenoService;
 public class DadosMocados {
     public static void databaseOn() {
 
-        TerrenoService terrenoService = new TerrenoService();
+        TerrenoController terrenoController = new TerrenoController();
         LocadorController locadorController = new LocadorController();
         LocatarioController locatarioController = new LocatarioController();
 
@@ -43,33 +44,37 @@ public class DadosMocados {
          */
         Locatario locatarioUm = new Locatario("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
+        BancoDeDados.locatariosDataBase.add(locatarioUm);
         Locatario locatarioDois = new Locatario("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
         Locatario locatarioTres = new Locatario("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
         Locatario locatarioQuatro = new Locatario("pedroH", "pedrohenrique@gmail.com", "123456", "Pedro Henrique", "01/01/2000");
 
-        terrenoService.cadastrarTerreno("Campo de Futebol Abandonado", "Baixada Fluminense", "Terra do nunca",
+        terrenoController.cadastrarTerreno("Campo de Futebol Abandonado", "Baixada Fluminense", "Terra do nunca",
                 "Gigantesco", 285000.0, locatarioUm);
 
-        terrenoService.cadastrarTerreno("Terreno Baldio", "Proximo: Posto de Saúde, Farmácia", "Eldorado do Sul",
+        terrenoController.cadastrarTerreno("Terreno Baldio", "Proximo: Posto de Saúde, Farmácia", "Eldorado do Sul",
                 "Grande", 180000.0, locatarioDois);
 
-        terrenoService.cadastrarTerreno("Sitio", "Fazenda", "Triunfo",
+        terrenoController.cadastrarTerreno("Sitio", "Fazenda", "Triunfo",
                 "Grande", 690000.0, locatarioDois);
 
-        terrenoService.cadastrarTerreno("Chácara", "Completo frutífera, poço artesiano", "Palmares do Sul",
+        terrenoController.cadastrarTerreno("Chácara", "Completo frutífera, poço artesiano", "Palmares do Sul",
                 "Médio", 290.0000, locatarioTres);
 
-        terrenoService.cadastrarTerreno("Fazenda Rural", "30 Hectares", "Charquedas",
+        terrenoController.cadastrarTerreno("Fazenda Rural", "30 Hectares", "Charquedas",
                 "Gigantesco", 1850000.0, locatarioQuatro);
 
-        terrenoService.cadastrarTerreno("Terreno Aterrado", "Terreno limpo, aterrado", "Cachoeirinha",
+        terrenoController.cadastrarTerreno("Terreno Aterrado", "Terreno limpo, aterrado", "Cachoeirinha",
                 "Pequeno", 78000.0, locatarioUm);
-        terrenoService.cadastrarTerreno("Fazenda", "Terras fértil", "Bagé",
+        terrenoController.cadastrarTerreno("Fazenda", "Terras fértil", "Bagé",
                 "Gigantesco", 3200000.0, locatarioDois);
-        terrenoService.cadastrarTerreno("Terreno com Lago", "Linda vista para lago", "Eldorado do Sul",
+        terrenoController.cadastrarTerreno("Terreno com Lago", "Linda vista para lago", "Eldorado do Sul",
                 "Pequeno", 40000.0, locatarioTres);
-        terrenoService.cadastrarTerreno("Mata Nativa", "Terreno com vista para vale", "Triunfo",
+        terrenoController.cadastrarTerreno("Mata Nativa", "Terreno com vista para vale", "Triunfo",
                 "Gigantesco", 60000.0, locatarioQuatro);
+
+        Locador locadorteste = new Locador("davidk", "david@gmail.com", "123456", "David", "02/10/97");
+        locadorController.arrendarTerreno(1, locadorteste);
 
     }
 }
