@@ -3,6 +3,7 @@ package app.menus;
 import controllers.FeedController;
 import controllers.LocadorController;
 import models.Locador;
+import models.Locatario;
 import services.LocadorService;
 import util.Validacao;
 
@@ -18,6 +19,7 @@ public class LocadorMenu {
         private static int area;
 
         public static void menuInicial(Locador usuarioLogado) {
+            locadorLogado = usuarioLogado;
             int menuAreaLogada;
             do {
                 System.out.println("Bem-vindo a área logada");
@@ -32,7 +34,7 @@ public class LocadorMenu {
 
                 switch (menuAreaLogada) {
                     case 1:
-                        buscarUsuario();
+                        buscarUsuario(usuarioLogado);
                         menuAreaLogada = -1;
                         break;
                     case 2:
@@ -50,9 +52,10 @@ public class LocadorMenu {
             } while (menuAreaLogada < 0 || menuAreaLogada > 5);
         }
 
-        private static void buscarUsuario(){
-            String usuario = locadorService.imprimirPerfil(locadorLogado.getId());
+        private static void buscarUsuario(Locador usuarioLogado){
+            String usuario = locadorService.imprimirPerfil(usuarioLogado.getId());
             System.out.println(usuario);
+            menuInicial(locadorLogado);
         }
         private static void menuAtualizarPerfil(Locador usuarioLogado){
             System.out.println("Vamos atualizar seu perfil:");
@@ -110,6 +113,9 @@ public class LocadorMenu {
             if (i == 1) {
                 String deletar = locadorController.deletarPerfil(locadorLogado.getId());
                 System.out.println(deletar);
+                SessaoMenu.menuInicial();
+            } else {
+                menuInicial(locadorLogado);
             }
         }
 }
