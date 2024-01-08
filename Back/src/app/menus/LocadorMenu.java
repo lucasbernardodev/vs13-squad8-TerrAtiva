@@ -3,7 +3,6 @@ package app.menus;
 import controllers.FeedController;
 import controllers.LocadorController;
 import models.Locador;
-import models.Locatario;
 import services.LocadorService;
 import util.Validacao;
 
@@ -79,7 +78,7 @@ public class LocadorMenu {
             do {
                 System.out.println("Bem-vindo ao menu dos terrenos do locador");
                 System.out.println("O que você deseja fazer!");
-                System.out.println("1 - Vizualizar terrenos");
+                System.out.println("1 - Arrendar Terrenos");
                 System.out.println("2 - Cancelar Contratos");
                 System.out.println("0 - Voltar ao menu Anterior");
                 System.out.println("Digite a opção desejada: ");
@@ -88,8 +87,24 @@ public class LocadorMenu {
                 switch (menuTerrenos) {
                     case 1:
                         System.out.println(FeedController.mostrarTerrenosDisponveis());
+                        System.out.println("Deseja Arrendar um novo Terreno: ");
+                        System.out.println("1 | SIM");
+                        System.out.println("Outro | NÃO");
+                        System.out.println("Digite: ");
+                        int arrendarTerreno = Validacao.validarInt();
+
+                        switch (arrendarTerreno) {
+                            case 1:
+                                System.out.println("Digite o ID do terreno: ");
+                                int terrenoID = Validacao.validarInt();
+                                System.out.println(locadorController.arrendarTerreno(terrenoID, usuarioLogado));
+                                break;
+                            case 2:
+                                break;
+                        }
                         break;
                     case 2:
+                        System.out.println("entrou aqui");
                         System.out.println(locadorController.resgatarTerrenosArrendados(usuarioLogado));
 
                         System.out.println("Digite o número do contrato a ser cancelado: ");

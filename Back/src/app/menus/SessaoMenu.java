@@ -51,7 +51,8 @@ public class SessaoMenu {
         } while (cadastro < 1 || cadastro > 2);
 
         if (area == 1){
-        LocadorMenu.menuInicial(locadorLogado);
+            System.out.println();
+            LocadorMenu.menuInicial(locadorLogado);
         }
         if (area == 2){
             LocatarioMenu.menuIncial(locatarioLogado);
@@ -62,8 +63,8 @@ public class SessaoMenu {
     private static void menuCadastro(){
         System.out.println("Bem vindo a área de cadastro!");
         System.out.println("""
-                            1 - Quero arrentar de alguém
-                            2 - Quero arrentar para alguém
+                            1 - Quero me cadastrar como Locador
+                            2 - Quero me cadastrar como Locatário
                             0 - Digite zero para retornar a etapa anterior.
                             """);
 
