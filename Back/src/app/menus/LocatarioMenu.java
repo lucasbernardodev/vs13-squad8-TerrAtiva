@@ -115,7 +115,8 @@ public class LocatarioMenu {
                         String localizacaoAnuncio = Validacao.validarString("Digite a localização do anúncio: ");
                         String tamanhoAnuncio = Validacao.validarString("Digite o tamanho da área: ");
                         System.out.println("Digite o valor: ");
-                        double precoAnuncio = Validacao.validarInt();
+                        double precoAnuncio = Validacao.validarDouble();
+
                         try {
                             Validacao.ValidarInfoTerreno(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, LoginController.getLocatarioLogado());
                             boolean criarAnuncio = locatarioService.criarAnuncio(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, LoginController.getLocatarioLogado());

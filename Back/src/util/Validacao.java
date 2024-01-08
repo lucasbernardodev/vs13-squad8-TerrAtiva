@@ -68,6 +68,17 @@ public class Validacao {
         }
     }
 
+    public static double validarDouble() {
+
+        while (true) {
+            try {
+                return Double.parseDouble(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Comando inválido! Por favor digite um número válido!");
+            }
+        }
+    }
+
     public static void validarInfoUsuario(String nomeUsuario,
                                           String email,
                                           String senha,
