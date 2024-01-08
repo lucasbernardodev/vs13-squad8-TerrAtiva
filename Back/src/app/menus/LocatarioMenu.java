@@ -1,6 +1,7 @@
 package app.menus;
 import controllers.FeedController;
 import controllers.LocatarioController;
+import controllers.TerrenoController;
 import infra.exceptions.EmptyDataException;
 import models.Locador;
 import models.Locatario;
@@ -12,23 +13,25 @@ import util.Validacao;
 import java.util.Scanner;
 
 import static app.menus.SessaoMenu.locadorLogado;
-import static app.menus.TempMenu.locadorService;
+import static app.menus.SessaoMenu.menuInicial;
 
 public class LocatarioMenu {
+
+        public static Locatario locatarioLogado = new Locatario("", "", "", "", "");
 
         static Scanner scanner = new Scanner(System.in);
         static LocatarioController locatarioController = new LocatarioController();
         static LocatarioService locatarioService = new LocatarioService();
+        static TerrenoController terrenoController = new TerrenoController();
         static ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
         static RetornaId retornaId = new RetornaId();
         static int cadastro;
         private static int area;
 
-        static Locatario usuarioLogado = new Locatario("", "", "", "", "");
 
         public static void menuIncial (Locatario usuarioLogado){
+            locatarioLogado = usuarioLogado;
             int menuAreaLogada;
-            if (area == 2) {
                 do {
                     System.out.println("Bem-vindo a área logada");
                     System.out.println("O que você deseja fazer");
@@ -45,15 +48,15 @@ public class LocatarioMenu {
                             menuAreaLogada = 0;
                             break;
                         case 2:
-                            menuAtualizarPerfil(usuarioLogado);
+                            menuAtualizarPerfil(locatarioLogado);
                             menuAreaLogada = 0;
                             break;
                         case 3:
-                            menuTerreno(usuarioLogado);
+                            menuTerreno(locatarioLogado);
                             menuAreaLogada = 0;
                             break;
                         case 4:
-                            menuDeletar(usuarioLogado);
+                            menuDeletar(locatarioLogado);
                             menuAreaLogada = 0;
                         case 0:
                             System.out.println("Saindo...");
@@ -62,12 +65,13 @@ public class LocatarioMenu {
                             System.out.println("Opção inválida");
                     }
                 } while (menuAreaLogada != 0);
-            }
+
         }
 
-        private static void imprimirUsuario (Locatario usuarioLogado){
-            String usuario = locatarioService.imprimirPerfil(usuarioLogado.getId());
+        private static void imprimirUsuario (Locatario locatarioLogado){
+            String usuario = locatarioService.imprimirPerfil(locatarioLogado.getId());
             System.out.println(usuario);
+            menuIncial(locatarioLogado);
         }
 
         private static void menuAtualizarPerfil (Locatario usuarioLogado){
@@ -86,6 +90,7 @@ public class LocatarioMenu {
                             dataAtualizar)
             );
             System.out.println(atualizandoPerfil);
+            LocatarioMenu.menuIncial(locatarioLogado);
         }
 
         private static void menuTerreno (Locatario usuarioLogado){
@@ -102,8 +107,7 @@ public class LocatarioMenu {
                 menuTerrenos = Validacao.validarInt();
                 switch (menuTerrenos) {
                     case 1:
-                        locatarioController.resgatarTerrenosArrendados(usuarioLogado);
-                        menuTerrenos = 0;
+                        System.out.println(locatarioController.resgatarTerrenosArrendados(usuarioLogado));
                         break;
                     case 2:
                         System.out.println(locatarioController.resgatarTerrenosArrendados(usuarioLogado));
@@ -112,10 +116,11 @@ public class LocatarioMenu {
                         System.out.println(locatarioController.cancelarcontrato(cadastro, usuarioLogado));
                         break;
                     case 3:
-                        String tituloAnuncio = Validacao.validarString("Digite o título do anúncio");
-                        String descricaoAnuncio = Validacao.validarString("Digite a descrição do anúncio");
-                        String localizacaoAnuncio = Validacao.validarString("Digite a localização do anúncio");
-                        String tamanhoAnuncio = Validacao.validarString("Digite o tamanho da área:");
+                        String tituloAnuncio = Validacao.validarString("Digite o título do anúncio: ");
+                        String descricaoAnuncio = Validacao.validarString("Digite a descrição do anúncio: ");
+                        String localizacaoAnuncio = Validacao.validarString("Digite a localização do anúncio: ");
+                        String tamanhoAnuncio = Validacao.validarString("Digite o tamanho da área: ");
+                        System.out.println("Digite o valor: ");
                         double precoAnuncio = Validacao.validarInt();
                         try {
                             Validacao.ValidarInfoTerreno(tituloAnuncio, descricaoAnuncio, localizacaoAnuncio, tamanhoAnuncio, precoAnuncio, usuarioLogado);
@@ -128,27 +133,31 @@ public class LocatarioMenu {
                         } catch (EmptyDataException e){
                             System.err.println(e.getMessage());
                         }
-
+                        break;
                     case 4:
                         System.out.println(locatarioController.resgatarTerrenosArrendados(usuarioLogado));
                         System.out.println("Digite o número do id do anúncio que deseja deletar: ");
                         int deletar = Validacao.validarInt();
-                        locatarioService.deletarPerfil(deletar);
+                        terrenoController.deletarDados(deletar);
                         break;
                     case 0:
+                        LocatarioMenu.menuIncial(locatarioLogado);
                         break;
                 }
             } while (menuTerrenos != 0);
         }
 
-        private static void menuDeletar (Locatario usuarioLogado){
+        private static void menuDeletar (Locatario locatarioLogado){
             System.out.println("Tem certeza que deseja deletar seu perfil?");
             System.out.println("1 - Sim");
             System.out.println("2 - Não");
             int i = Validacao.validarInt();
             if (i == 1) {
-                locatarioController.deletarPerfil(usuarioLogado.getId());
+                locatarioController.deletarPerfil(locatarioLogado.getId());
                 System.out.println("Perfil deletado");
+                menuInicial();
+            } else {
+                menuIncial(locatarioLogado);
             }
             int menuAreaLogada = 0;
         }
