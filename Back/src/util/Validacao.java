@@ -76,7 +76,6 @@ public class Validacao {
 
         if (nomeUsuario.isBlank()) throw new EmptyDataException("Seu NOME DE USUÁRIO não pode estar vazio!");
         if (email.isBlank()) throw new EmptyDataException("Seu EMAIL não pode estar vazio!");
-        if (senha.isBlank()) throw new EmptyDataException("Sua SENHA não pode estar vazio!");
         if (nome.isBlank()) throw new EmptyDataException("Seu NOME não pode estar vazio!");
         if (nascimento.isBlank()) throw new EmptyDataException("Sua DATA DE NASCIMENTO não pode estar vazio!");
     }
