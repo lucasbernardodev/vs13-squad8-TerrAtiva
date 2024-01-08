@@ -10,12 +10,12 @@ public class FeedMenu {
     public static void feedMenu() {
         int opcao;
         do {
-            System.out.println("### Feed ###");
+            System.out.println("### FEED ###");
             System.out.println("Seleciona uma opção: ");
             System.out.println("1 - Listar todos anúncios");
             System.out.println("2 - Selecionar filtros");
             System.out.println("3 - Meu perfil");
-            System.out.println("0 - Sair");
+            System.out.println("0 - Voltar");
             opcao = Validacao.validarInt();
 
             switch (opcao) {

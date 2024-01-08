@@ -28,6 +28,7 @@ public class LocatarioMenu {
                     System.out.println("2 - Atualizar Perfil");
                     System.out.println("3 - Gerenciar terrenos");
                     System.out.println("4 - Deletar Perfil");
+                    System.out.println("5 - Acessar Feed");
                     System.out.println("0 - Sair");
 
                     menuAreaLogada = Validacao.validarInt();

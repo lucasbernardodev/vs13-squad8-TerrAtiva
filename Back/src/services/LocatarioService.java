@@ -10,8 +10,6 @@ import util.Validacao;
 import java.util.List;
 
 public class LocatarioService implements CrudConta<Locatario> {
-    //TODO: Lógica dos métodos (faltava o banco de dados no momento pra fazer)
-    //TODO: Jogar em pasta de services
     /**
      * Cadastra um novo locatário para o banco de dados
      *
@@ -106,7 +104,6 @@ public class LocatarioService implements CrudConta<Locatario> {
         return null;
     }
 
-    //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     /***
      * Cria um anúncio no sistema.
      * Utiliza o metodo "cadastrarTerreno" para da cadastrar um terreno com as informações passadas como parâmetro para o anúncio.
@@ -159,10 +156,12 @@ public class LocatarioService implements CrudConta<Locatario> {
      */
     public final boolean cancelarcontrato(int idTerreno, Locatario proprietario) {
         Terreno contratoAtual = terrenoService.buscarTerreno(idTerreno);
-        if (contratoAtual != null && contratoAtual.getProprietario() == proprietario) {
+
+        if (contratoAtual.getProprietario().getNome().equals(proprietario.getNome())) {
             contratoAtual.setLocador(null);
             contratoAtual.setDisponivel(true);
             return true;
+
         } else {
             return false;
         }
@@ -172,7 +171,6 @@ public class LocatarioService implements CrudConta<Locatario> {
      * @param proprietario Locatário na qual deseja encontrar os terrenos
      * @return Lista de terrenos arredados pelo locatário
      */
-    //    TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber proprietario por parametro.
     public final List<Terreno> resgatarTerrenosArrendados(Locatario proprietario) {
         return terrenoService.buscarTerrenoArrendado(proprietario);
     }
