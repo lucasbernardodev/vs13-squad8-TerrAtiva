@@ -2,6 +2,7 @@ package app.menus;
 
 import controllers.LocadorController;
 import controllers.LocatarioController;
+import controllers.LoginController;
 import models.Locador;
 import models.Locatario;
 import services.LocadorService;
@@ -14,6 +15,7 @@ public class SessaoMenu {
     private static final LocadorController locadorController = new LocadorController();
     private static final LocatarioController locatarioController = new LocatarioController();
     private static final LocadorService locadorService = new LocadorService();
+    private static final LoginController loginController = new LoginController();
     private static final LocatarioService locatarioService = new LocatarioService();
     private static final ConferenciaDeUsuario conferenciaDeUsuario = new ConferenciaDeUsuario();
     private static final RetornaId retornaId = new RetornaId();
@@ -21,11 +23,10 @@ public class SessaoMenu {
     private static int area;
 
     //TODO: Verificar forma de salvar usuario logado globalmente na aplicação.
-    static Locador locadorLogado = new Locador(0, "","","","");
-    static Locatario locatarioLogado = new Locatario(0, "","","","");
+    static Locador locadorLogado = new Locador("", "","","","");
+    static Locatario locatarioLogado = new Locatario("", "","","","");
 
     public static void menuInicial() {
-
         do{
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Login");
@@ -50,10 +51,10 @@ public class SessaoMenu {
         } while (cadastro < 1 || cadastro > 2);
 
         if (area == 1){
-        LocadorMenu.menuInicial();
+        LocadorMenu.menuInicial(locadorLogado);
         }
         if (area == 2){
-           // LocatarioMenu.menuInicial();
+            LocatarioMenu.menuIncial(locatarioLogado);
 
         }
     }
