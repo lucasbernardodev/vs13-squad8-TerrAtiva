@@ -34,12 +34,14 @@ public class Terreno {
     public String toString() {
         return String.format("""
                 Terreno: %d
+                Título: %s
                 Descrição: %s
                 Localização: %s
                 Tamanho: %s
                 Preço: R$%.2f
                 Proprietário: %s
-                """, this.id, this.descricao, this.localizacao, this.tamanho, this.preco, this.proprietario.getNome());
+                """, this.id, this.titulo, this.descricao, this.localizacao,
+                this.tamanho, this.preco, this.proprietario.getNome());
     }
 
     public int getId(){
