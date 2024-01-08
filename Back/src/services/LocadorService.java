@@ -1,5 +1,6 @@
 package services;
 
+import controllers.TerrenoController;
 import database.BancoDeDados;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.EmptyDataException;
@@ -111,12 +112,13 @@ public class LocadorService implements CrudConta<Locador> {
      * @param locador   Objeto Locador que arredara o terreno
      */
     public final void arrendarTerreno(int idTerreno, Locador locador) {
-        Terreno novoContrato = terrenoService.buscarTerreno(idTerreno);
-        novoContrato.setLocador(locador);
-        novoContrato.setDisponivel(false);
+//        Terreno novoContrato = terrenoService.buscarTerreno(idTerreno);
+        terrenoService.buscarTerreno(idTerreno).setLocador(locador);
+        terrenoService.buscarTerreno(idTerreno).setDisponivel(false);
+//        novoContrato.setLocador(locador);
+//        novoContrato.setDisponivel(false);
     }
 
-    // TODO: Definir forma de login e atrelar usuario logado atomaticamente ao inves de receber locador por parametro.
     /**
      * Cancela o contrato de arrendamento da terra <p>
      * Busca o terreno com base no Id recebido por parâmetro e remove o relacionamento de arrendamento com o locador recebido por parametro.

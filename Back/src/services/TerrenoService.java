@@ -8,6 +8,7 @@ import models.Terreno;
 import util.Validacao;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TerrenoService {
     /***
@@ -22,8 +23,6 @@ public class TerrenoService {
      */
     public void cadastrarTerreno(String titulo, String descricao, String localizacao,
                                  String tamanho, double preco, Locatario proprietario) {
-
-        // TODO: VALIDAR PARAMETROS;
 
         BancoDeDados.terrenosDataBase.add(new Terreno(titulo, descricao, localizacao,
                 tamanho, preco, proprietario));
@@ -71,13 +70,12 @@ public class TerrenoService {
      * @throws DataNotFoundException Lança erro caso Id de terreno não for encontrado no banco de dados
      */
     public Terreno buscarTerreno(int idTerreno) {
-        Terreno buscandoTerreno = BancoDeDados.terrenosDataBase
+
+        return BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getId() == idTerreno)
                 .findFirst()
                 .orElseThrow(() -> new DataNotFoundException("Terreno não Encontrado na base de dados"));
-
-        return buscandoTerreno;
     }
 
     /***
@@ -89,8 +87,7 @@ public class TerrenoService {
     public List<Terreno> buscarTerreno(Locador locador) {
         return BancoDeDados.terrenosDataBase
                 .stream()
-                .filter(terreno -> terreno.getLocador() != null)
-                .filter(terreno -> terreno.getLocador().getId() == locador.getId())
+                .filter(terreno -> terreno.getLocador() == locador)
                 .toList();
     }
 
@@ -105,6 +102,16 @@ public class TerrenoService {
         return BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getProprietario() == proprietario)
+                .toList();
+
+    }
+
+    public List<Terreno> buscarTerrenoArrendado(Locatario proprietario) {
+
+        return BancoDeDados.terrenosDataBase
+                .stream()
+                .filter(terreno -> Objects.equals(terreno.getProprietario().getNome(), proprietario.getNome()))
+                .filter(terreno -> !terreno.isDisponivel())
                 .toList();
 
     }
