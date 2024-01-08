@@ -29,6 +29,7 @@ public class TerrenoService {
                 tamanho, preco, proprietario));
 
     }
+
     /***
      * Atualiza informações do Terreno do Id referente
      * Busca o id de terreno passado por parametro e atualiza o terreno de mesmo Id
@@ -62,6 +63,7 @@ public class TerrenoService {
                 }, () -> new DataNotFoundException("Terreno não encontrado!"));
 
     }
+
     /***
      * Busca Terreno refente ao ID fornecido
      * @param idTerreno Id para ser procurado
@@ -77,6 +79,7 @@ public class TerrenoService {
 
         return buscandoTerreno;
     }
+
     /***
      * Busca Terreno do locador referente
      *
@@ -86,9 +89,11 @@ public class TerrenoService {
     public List<Terreno> buscarTerreno(Locador locador) {
         return BancoDeDados.terrenosDataBase
                 .stream()
+                .filter(terreno -> terreno.getLocador() != null)
                 .filter(terreno -> terreno.getLocador().getId() == locador.getId())
                 .toList();
     }
+
     /***
      * Busca um terreno associado a um locatário (proprietário do terreno)
      *
@@ -103,6 +108,7 @@ public class TerrenoService {
                 .toList();
 
     }
+
     /***
      * Deleta Terreno associado ao ID
      * Busca no banco de dados pelo terreno de ID especifíco e o remove.
@@ -113,11 +119,11 @@ public class TerrenoService {
     public void deletarTerreno(int idTerreno) {
 
         BancoDeDados.terrenosDataBase
-            .stream()
-            .filter(terreno -> terreno.getId() == idTerreno)
-            .findFirst()
-            .ifPresentOrElse(terreno -> {
-                BancoDeDados.terrenosDataBase.remove(terreno);
-            }, () -> new DataNotFoundException("Terreno não encontrado"));
+                .stream()
+                .filter(terreno -> terreno.getId() == idTerreno)
+                .findFirst()
+                .ifPresentOrElse(terreno -> {
+                    BancoDeDados.terrenosDataBase.remove(terreno);
+                }, () -> new DataNotFoundException("Terreno não encontrado"));
     }
 }

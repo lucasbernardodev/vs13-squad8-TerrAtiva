@@ -18,16 +18,17 @@ public class Locador extends Usuario{
     public Locador(int id,
             String nomeUsuario,
             String email,
+            String senha,
             String nome,
             String nascimento
     ) {
-        super(id, nomeUsuario, email, nome, nascimento);
+        super(id, nomeUsuario, email, senha, nome, nascimento);
     }
 
     @Override
     public String toString() {
         return String.format("""
-                ### PERFIL DE LOCATÁRIO ###;
+                ### PERFIL DE LOCADOR ###;
                     Usuário: %s
                     Nome: %s
                     Email: %s;
