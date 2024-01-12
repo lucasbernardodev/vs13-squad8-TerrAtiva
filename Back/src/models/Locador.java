@@ -24,7 +24,9 @@ public class Locador extends Usuario{
     ) {
         super(id, nomeUsuario, email, senha, nome, nascimento);
     }
-
+    public Locador(){
+        super();
+    }
     @Override
     public String toString() {
         return String.format("""

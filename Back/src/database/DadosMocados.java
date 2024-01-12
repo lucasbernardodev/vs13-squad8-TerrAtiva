@@ -44,7 +44,7 @@ public class DadosMocados {
          */
         Locatario locatarioUm = new Locatario("lucas", "lucas@gmail.com",
                 "qwerty", "Lucas Silva", "11/22/97");
-        BancoDeDados.locatariosDataBase.add(locatarioUm);
+        //BancoDeDados.locatariosDataBase.add(locatarioUm);
         Locatario locatarioDois = new Locatario("roger", "roger@gmail.com", "123456", "Roger", "01/01/2000");
         Locatario locatarioTres = new Locatario("jessica", "jessica@gmail.com", "123456", "Jessica", "01/01/2000");
         Locatario locatarioQuatro = new Locatario("pedroH", "pedrohenrique@gmail.com", "123456", "Pedro Henrique", "01/01/2000");
