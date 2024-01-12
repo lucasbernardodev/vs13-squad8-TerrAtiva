@@ -156,8 +156,6 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
-            BancoDeDados.fechaResultSet(rs);
-            BancoDeDados.fechaStatment(st);
             BancoDeDados.fechaConexao(conn);
         }
     }
