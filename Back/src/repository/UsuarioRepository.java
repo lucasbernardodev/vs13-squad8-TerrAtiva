@@ -8,17 +8,17 @@ import models.Usuario;
 
 import java.sql.*;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioRepository implements DaoRepository<Usuario> {
+
     Connection conn;
 
     @Override
     public void adicionar(Usuario obj) {
         try {
-            conn = BancoDeDados.criaConeccao();
+            conn = BancoDeDados.criaConexao();
 
             Integer proximoId = GeradorID.getProximoUsuarioId(conn);
             obj.setUsuarioId(proximoId);
@@ -58,10 +58,19 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     @Override
     public void alterar(int id, Usuario obj) {
         try {
-            conn = BancoDeDados.criaConeccao();
+            conn = BancoDeDados.criaConexao();
             String sqlQuery = """
                     update USUARIOS
-                    set  (NOME= ?, SOBRENOME= ?, EMAIL= ?, SENHA= ?, CPF= ?, DATA_NASCIMENTO= ?, SEXO= ?, CELULAR= ?, TELEFONE_FIXO= ?, EDITADO= ?)
+                    set  NOME= ?,
+                         SOBRENOME= ?,
+                         EMAIL= ?,
+                         SENHA= ?,
+                         CPF= ?,
+                         DATA_NASCIMENTO= ?,
+                         SEXO= ?,
+                         CELULAR= ?,
+                         TELEFONE_FIXO= ?,
+                         EDITADO= ?
                     where USUARIO_ID = ?
                     """;
 
@@ -91,11 +100,9 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     @Override
     public void deletar(int id) {
         try {
-            conn = BancoDeDados.criaConeccao();
+            conn = BancoDeDados.criaConexao();
 
-            String sqlQuery = """
-            UPDATE FROM USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?
-            """;
+            String sqlQuery = "UPDATE FROM USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             stmt.setInt(1,id);
@@ -114,24 +121,13 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     public Usuario resgatarDadosPorId(int id) {
         try {
 
-            conn = BancoDeDados.criaConeccao();
+            conn = BancoDeDados.criaConexao();
 
             String sqlQuery = " SELECT * FROM USUARIOS WHERE Id = " + id;
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sqlQuery);
             if (rs.next()) {
-                Usuario res = new Usuario();
-                res.setUsuarioId(rs.getInt("USUARIO_ID"));
-                res.setNome(rs.getString("NOME"));
-                res.setSobrenome(rs.getString("SOBRENOME"));
-                res.setEmail(rs.getString("EMAIL"));
-                res.setCpf(rs.getString("CPF"));
-                res.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
-                res.setSexo(rs.getString("SEXO"));
-                res.setAtivo(rs.getString("ATIVO"));
-                res.setCelular(rs.getString("CELULAR"));
-                res.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
-                return res;
+                return mapperUsuario(rs);
             }
             return null;
         } catch (SQLException e) {
@@ -145,33 +141,37 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         ResultSet rs = null;
         Statement st = null;
         try {
-            conn = BancoDeDados.criaConeccao();
+            conn = BancoDeDados.criaConexao();
 
             String sqlQuery = " SELECT * FROM LOCADOR WHERE ATIVO = 'S'";
             st = conn.createStatement();
             rs = st.executeQuery(sqlQuery);
             List<Usuario> usuarioLista = new ArrayList<>();
+
             while (rs.next()) {
-                Usuario res = new Usuario();
-                res.setUsuarioId(rs.getInt("USUARIO_ID"));
-                res.setNome(rs.getString("NOME"));
-                res.setSobrenome(rs.getString("SOBRENOME"));
-                res.setEmail(rs.getString("EMAIL"));
-                res.setCpf(rs.getString("CPF"));
-                res.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
-                res.setSexo(rs.getString("SEXO"));
-                res.setAtivo(rs.getString("ATIVO"));
-                res.setCelular(rs.getString("CELULAR"));
-                res.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
-                usuarioLista.add(res);
+                usuarioLista.add(mapperUsuario(rs));
             }
+
             return usuarioLista;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
-            BancoDeDados.fechaResultSet(rs);
-            BancoDeDados.fechaStatment(st);
             BancoDeDados.fechaConexao(conn);
         }
+    }
+
+    private Usuario mapperUsuario(ResultSet rs) throws SQLException {
+        Usuario usuarioResponse = new Usuario();
+        usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
+        usuarioResponse.setNome(rs.getString("NOME"));
+        usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
+        usuarioResponse.setEmail(rs.getString("EMAIL"));
+        usuarioResponse.setCpf(rs.getString("CPF"));
+        usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
+        usuarioResponse.setSexo(rs.getString("SEXO"));
+        usuarioResponse.setAtivo(rs.getString("ATIVO"));
+        usuarioResponse.setCelular(rs.getString("CELULAR"));
+        usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
+        return usuarioResponse;
     }
 }

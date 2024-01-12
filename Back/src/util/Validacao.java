@@ -1,8 +1,6 @@
 package util;
 
 import infra.exceptions.EmptyDataException;
-import models.Locatario;
-import models.Usuario;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

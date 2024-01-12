@@ -2,8 +2,6 @@ package controllers;
 
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.EmptyDataException;
-import models.Locador;
-import models.Locatario;
 import models.Terreno;
 import services.TerrenoService;
 import util.Formatador;

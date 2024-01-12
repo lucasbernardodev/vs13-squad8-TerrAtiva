@@ -1,13 +1,6 @@
 package controllers;
 
 import app.enums.TipoUsuario;
-import app.menus.LocadorMenu;
-import app.menus.LocatarioMenu;
-import models.Locador;
-import models.Locatario;
-import services.LocadorService;
-import services.LocatarioService;
-import util.RetornaId;
 
 public class LoginController {
 
