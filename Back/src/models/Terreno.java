@@ -2,104 +2,112 @@ package models;
 
 import database.BancoDeDados;
 
+import java.time.Instant;
+
 public class Terreno {
-    private int id;
+    private Integer id;
     private String titulo;
     private String descricao;
-    private String localizacao;
-    private String tamanho;
+    private Integer proprietarioID;
+    private Integer enderecoID;
     private double preco;
-    private Locatario proprietario;
-    private Locador locador;
-    private boolean disponivel;
+    private String tamanho;
+    private String disponivel;
+    private Instant criado;
+    private Instant editado;
 
     public Terreno() {}
 
-
-    public Terreno(String titulo, String descricao, String localizacao,
-                   String tamanho, double preco, Locatario proprietario) {
-
-        this.id = BancoDeDados.novoTerrenoID();
+    public Terreno(String titulo, String descricao, Integer proprietarioID,
+                   Integer enderecoID, double preco, String tamanho) {
         this.titulo = titulo;
         this.descricao = descricao;
-        this.localizacao = localizacao;
-        this.tamanho = tamanho;
+        this.proprietarioID = proprietarioID;
+        this.enderecoID = enderecoID;
         this.preco = preco;
-        this.proprietario = proprietario;
-        this.locador = null;
-        this.disponivel = true;
+        this.tamanho = tamanho;
+        this.disponivel = "S";
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
 
-    @Override
-    public String toString() {
-        return String.format("""
-                Terreno: %d
-                Título: %s
-                Descrição: %s
-                Localização: %s
-                Tamanho: %s
-                Preço: R$%.2f
-                Proprietário: %s
-                """, this.id, this.titulo, this.descricao, this.localizacao,
-                this.tamanho, this.preco, this.proprietario.getNome());
+    public Integer getId() {
+        return id;
     }
 
-    public int getId(){
-       return id;
-   }
-   public String getTitulo(){
-       return titulo;
-   }
-   public void setTitulo(String titulo){
-       this.titulo = titulo;
-   }
-   public String getDescricao(){
-       return descricao;
-   }
-   public void setDescricao( String descricao){
-       this.descricao = descricao;
-   }
-   public String getLocalizacao(){
-       return localizacao;
-   }
-    public void setLocalizacao(String localizacao){
-       this.localizacao = localizacao;
+    public void setId(Integer id) {
+        this.id = id;
     }
-    public String getTamanho(){
-       return tamanho;
+
+    public String getTitulo() {
+        return titulo;
     }
-    public void setTamanho(String tamanho){
-       this.tamanho = tamanho;
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
-    public double getPreco(){
-       return preco;
+
+    public String getDescricao() {
+        return descricao;
     }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Integer getProprietarioID() {
+        return proprietarioID;
+    }
+
+    public void setProprietarioID(Integer proprietarioID) {
+        this.proprietarioID = proprietarioID;
+    }
+
+    public Integer getEnderecoID() {
+        return enderecoID;
+    }
+
+    public void setEnderecoID(Integer enderecoID) {
+        this.enderecoID = enderecoID;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
     public void setPreco(double preco) {
         this.preco = preco;
     }
 
-    public Locatario getProprietario() {
-        return proprietario;
+    public String getTamanho() {
+        return tamanho;
     }
 
-    public void setProprietario(Locatario proprietario) {
-        this.proprietario = proprietario;
+    public void setTamanho(String tamanho) {
+        this.tamanho = tamanho;
     }
 
-    public Locador getLocador() {
-        return locador;
+    public String getDisponivel() {
+        return disponivel;
     }
 
-    public void setLocador(Locador locador) {
-        this.locador = locador;
-    }
-
-    public boolean isDisponivel(){
-       return disponivel;
-    }
-
-    public void setDisponivel(boolean disponivel) {
+    public void setDisponivel(String disponivel) {
         this.disponivel = disponivel;
-   }
+    }
 
+    public Instant getCriado() {
+        return criado;
+    }
+
+    public void setCriado(Instant criado) {
+        this.criado = criado;
+    }
+
+    public Instant getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Instant editado) {
+        this.editado = editado;
+    }
 }

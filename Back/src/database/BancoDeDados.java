@@ -11,7 +11,7 @@ public class BancoDeDados {
 
     private static Connection conn = null;
 
-    public static Connection criaConeccao(){
+    public static Connection criaConexao(){
             try {
 
                 Properties props = carregaPropriedades();

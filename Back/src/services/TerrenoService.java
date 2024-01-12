@@ -2,8 +2,6 @@ package services;
 
 import database.BancoDeDados;
 import infra.exceptions.DataNotFoundException;
-import models.Locador;
-import models.Locatario;
 import models.Terreno;
 import util.Validacao;
 

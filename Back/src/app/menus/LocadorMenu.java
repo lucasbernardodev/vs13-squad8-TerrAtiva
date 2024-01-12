@@ -1,10 +1,7 @@
 package app.menus;
 
 import controllers.FeedController;
-import controllers.LocadorController;
 import controllers.LoginController;
-import models.Locador;
-import services.LocadorService;
 import util.Validacao;
 
 import java.util.Scanner;
