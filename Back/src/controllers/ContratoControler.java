@@ -8,11 +8,11 @@ import java.sql.Date;
 public class ContratoControler {
     private ContratoService contratoService = new ContratoService();
 
-    public String cadastrarContrato(Integer proprietarioID, Integer terrenoID, String ativo,
+    public String cadastrarContrato(Integer proprietarioID, Integer terrenoID,
                                     Date dataAssinatura, Date dataInicio, Date dataFinal,
                                     Date dataVencimentoAluguel) {
         try {
-            contratoService.alterar( proprietarioID, terrenoID, ativo, dataAssinatura,
+            contratoService.alterar( proprietarioID, terrenoID, dataAssinatura,
                     dataInicio, dataFinal, dataVencimentoAluguel);
             return "Contrato Cadastrado Com Sucesso!";
         } catch (InvalidParamException e) {
@@ -26,11 +26,11 @@ public class ContratoControler {
         }
     }
 
-    public String atualizarContrato(Integer proprietarioID, Integer terrenoID, String ativo,
+    public String atualizarContrato(Integer proprietarioID, Integer terrenoID,
                                     Date dataAssinatura, Date dataInicio, Date dataFinal,
                                     Date dataVencimentoAluguel) {
         try {
-            contratoService.alterar( proprietarioID, terrenoID, ativo, dataAssinatura,
+            contratoService.alterar( proprietarioID, terrenoID, dataAssinatura,
                     dataInicio, dataFinal, dataVencimentoAluguel);
             return "Contrato Atualizado Com Sucesso!";
         } catch (InvalidParamException e) {
@@ -57,7 +57,7 @@ public class ContratoControler {
     public String deletarContrato(Integer id) {
         try {
             contratoService.deletar(id);
-            return "Endereço deletado com Sucesso";
+            return "Contrato deletado com Sucesso";
         } catch (DbException e) {
             return e.getMessage();
         } catch (UnauthorizedOperationException e){

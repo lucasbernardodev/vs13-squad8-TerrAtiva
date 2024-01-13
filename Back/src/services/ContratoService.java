@@ -6,23 +6,22 @@ import util.validar.ValidarModelContrato;
 
 import java.sql.Date;
 
-
 public class ContratoService {
     private ContratoRepository contratoRepository = new ContratoRepository();
 
     public void adicionarContrato(Integer proprietarioID, Integer terrenoID, String ativo,
                                   Date dataAssinatura, Date dataInicio, Date dataFinal,
                                   Date dataVencimentoAluguel)  {
-        ValidarModelContrato.CONTRATO( proprietarioID, terrenoID, ativo, dataAssinatura.toLocalDate(),
+        ValidarModelContrato.CONTRATO( proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel.toLocalDate());
         contratoRepository.adicionar(new Contrato(proprietarioID, terrenoID, ativo, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel.toLocalDate()));
     }
 
-    public void alterar(Integer proprietarioID, Integer terrenoID, String ativo,
+    public void alterar(Integer proprietarioID, Integer terrenoID,
                         Date dataAssinatura, Date dataInicio, Date dataFinal,
                         Date dataVencimentoAluguel)  {
-        ValidarModelContrato.CONTRATO( proprietarioID, terrenoID, ativo, dataAssinatura.toLocalDate(),
+        ValidarModelContrato.CONTRATO( proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel.toLocalDate());
     }
 
