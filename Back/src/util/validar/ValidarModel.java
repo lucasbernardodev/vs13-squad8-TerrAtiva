@@ -18,4 +18,11 @@ public class ValidarModel {
         if (cep == null) throw new InvalidParamException("O cep deve ser obrigatório!");
         if (cep.toString().length() != 9) throw new DataFormatInvalidException("Seu CEP deve conter 9 dígitos");
     }
+
+    public static final void MENSALIDADE(Integer contratoID, Double valorMensal, Integer anoExercicio) {
+
+        if (contratoID == null) throw new InvalidParamException("ID do Contrato não pode ser Nulo!");
+        if (valorMensal == null) throw new InvalidParamException("Valor não pode ser nulo");
+        if (anoExercicio == null) throw new InvalidParamException("O ano de exercício não pode ser nulo");
+    }
 }
