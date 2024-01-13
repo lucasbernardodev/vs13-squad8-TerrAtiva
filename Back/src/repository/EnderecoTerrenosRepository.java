@@ -14,25 +14,25 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     Connection connection;
 
     @Override
-    public void adicionar(EnderecoTerrenos enderecoRequest) {
+    public void adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = BancoDeDados.criaConexao();
             String sqlQuery = """
                     INSERT INTO ENDERECO_TERRENOS
-                        (ENDERECO_TERRENO_ID, USUARIO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
-                           BAIRRO, MUNICIPIO_COD_IBGE, CEP, CRIADO, EDITADO)
+                        (ENDERECO_TERRENO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
+                           BAIRRO, MUNICIPIO_COD_IBGE, CEP, LOCALIZACAO, CRIADO, EDITADO)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
             stmt.setInt(1, enderecoTerrenosRequest.getId());
-            stmt.setInt(2, enderecoTerrenosRequest.getUsuarioID());
-            stmt.setString(3, enderecoTerrenosRequest.getLogradouro());
-            stmt.setInt(4, enderecoTerrenosRequest.getNumero());
-            stmt.setString(5, enderecoTerrenosRequest.getComplemento());
-            stmt.setString(6, enderecoTerrenosRequest.getBairro());
-            stmt.setInt(7, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
-            stmt.setInt(8, enderecoTerrenosRequest.getCep());
+            stmt.setString(2, enderecoTerrenosRequest.getLogradouro());
+            stmt.setInt(3, enderecoTerrenosRequest.getNumero());
+            stmt.setString(4, enderecoTerrenosRequest.getComplemento());
+            stmt.setString(5, enderecoTerrenosRequest.getBairro());
+            stmt.setInt(6, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
+            stmt.setInt(7, enderecoTerrenosRequest.getCep());
+            stmt.setString(8, enderecoTerrenosRequest.getLocalizacao());
             stmt.setString(9, Instant.now().toString());
             stmt.setString(10, Instant.now().toString());
 
@@ -46,7 +46,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     }
 
     @Override
-    public void alterar(int id, EnderecoTerrenos enderecoRequest) {
+    public void alterar(int id, EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = BancoDeDados.criaConexao();
             String sqlQuery = """
@@ -64,13 +64,13 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setInt(1, enderecoTerrenosRequest.getUsuarioID());
-            stmt.setString(2, enderecoTerrenosRequest.getLogradouro());
-            stmt.setInt(3, enderecoTerrenosRequest.getNumero());
-            stmt.setString(4, enderecoTerrenosRequest.getComplemento());
-            stmt.setString(5, enderecoTerrenosRequest.getBairro());
-            stmt.setInt(6, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
-            stmt.setInt(7, enderecoTerrenosRequest.getCep());
+            stmt.setString(1, enderecoTerrenosRequest.getLogradouro());
+            stmt.setInt(2, enderecoTerrenosRequest.getNumero());
+            stmt.setString(3, enderecoTerrenosRequest.getComplemento());
+            stmt.setString(4, enderecoTerrenosRequest.getBairro());
+            stmt.setInt(5, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
+            stmt.setInt(6, enderecoTerrenosRequest.getCep());
+            stmt.setString(7, enderecoTerrenosRequest.getLocalizacao());
             stmt.setString(8, Instant.now().toString());
             stmt.setInt(9, enderecoTerrenosRequest.getId());
 

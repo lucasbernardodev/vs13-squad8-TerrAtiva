@@ -2,12 +2,11 @@ package util.validar;
 
 import infra.exceptions.DataFormatInvalidException;
 import infra.exceptions.InvalidParamException;
-import interfaces.Validacoes;
 
-public class ValidarModel implements Validacoes {
+public class ValidarModel {
 
-    @Override
-    public final void ENDERECO(Integer usuarioID, String logradouro,
+    
+    public static final void ENDERECO(Integer usuarioID, String logradouro,
                                Integer numero, String complemento,
                                String bairro, Integer codigoMunicipioIBGE,
                                Integer cep) {
@@ -22,8 +21,8 @@ public class ValidarModel implements Validacoes {
         if (cep.toString().length() != 9) throw new DataFormatInvalidException("Seu CEP deve conter 9 dígitos");
     }
 
-    @Override
-    public final void ENDERECO_TERRENOS(String logradouro,
+    
+    public static final void ENDERECO_TERRENOS(String logradouro,
                                       Integer numero, String complemento,
                                       String bairro, Integer codigoMunicipioIBGE,
                                       Integer cep, String localizacao) {
@@ -39,28 +38,28 @@ public class ValidarModel implements Validacoes {
     }
 
 
-    @Override
+    
     public void ALUGUEL_PAGAMENTOS() {
 
     }
 
-    @Override
+    
     public void CONTRATOS() {
 
     }
 
-    @Override
+    
     public void MENSALIDADES() {
 
     }
 
-    @Override
+    
     public void TERRENOS() {
 
     }
 
-    @Override
+    
     public void USUARIOS() {
-        
+
     }
 }

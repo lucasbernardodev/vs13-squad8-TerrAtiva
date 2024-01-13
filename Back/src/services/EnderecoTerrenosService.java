@@ -7,12 +7,12 @@ import util.validar.ValidarModel;
 public class EnderecoTerrenosService {
     private EnderecoTerrenosRepository enderecoTerrenosRepository = new EnderecoTerrenosRepository();
 
-    public void adicionarEnderecoTerrenos(Integer usuarioID, String logradouro,
+    public void adicionarEnderecoTerrenos(String logradouro,
                                   Integer numero, String complemento,
                                   String bairro, Integer codigoMunicipioIBGE,
-                                  Integer cep) {
-        ValidarModel.ENDERECO(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
-        enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep));
+                                  Integer cep, String localizacao) {
+        ValidarModel.ENDERECO_TERRENOS(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
+        enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
     }
 
     public void alterar(String logradouro,
