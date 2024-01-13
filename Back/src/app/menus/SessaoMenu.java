@@ -1,7 +1,5 @@
 package app.menus;
 
-import controllers.LocadorController;
-import controllers.LocatarioController;
 import controllers.LoginController;
 import util.ConferenciaDeUsuario;
 import util.Validacao;

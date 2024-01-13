@@ -1,77 +1,143 @@
 package models;
 
-public abstract class Usuario {
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
-    private int id;
-    private String nomeUsuario;
+public class Usuario {
+
+    private Integer usuarioId;
+    private String nome;
+    private String sobrenome;
     private String email;
     private String senha;
-    private String nome;
-    private String nascimento;
+    private String cpf;
+    private LocalDate dataNascimento;
+    private String sexo;
+    private String ativo;
+    private String celular;
+    private String telefoneFixo;
+    private Instant criado;
+    private Instant editado;
 
-    public Usuario(int id, String nomeUsuario, String email, String senha, String nome, String nascimento) {
-        this.id = id;
-        this.nomeUsuario = nomeUsuario;
+    public Usuario(){
+    }
+    public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
         this.email = email;
         this.senha = senha;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.ativo = ativo;
+        this.celular = celular;
+        this.telefoneFixo = telefoneFixo;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
+    }
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
-        this.nascimento = nascimento;
     }
 
-    public Usuario(int id, String nomeUsuario, String email, String nome, String nascimento) {
-        this.id = id;
-        this.nomeUsuario = nomeUsuario;
-        this.email = email;
-        this.nome = nome;
-        this.nascimento = nascimento;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    public int getId(){
-        return this.id;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
-    public void setId(int id){
-        this.id = id;
+    public String getEmail() {
+        return email;
     }
 
-    public String getNomeUsuario(){
-        return this.nomeUsuario;
-    }
-
-    public void setNomeUsuario(String nomeUsuario){
-        this.nomeUsuario = nomeUsuario;
-    }
-
-    public String getEmail(){
-        return this.email;
-    }
-
-    public void setEmail(String email){
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getSenha(){
-        return this.senha;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setSenha(String senha){
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public String getNome(){
-        return this.nome;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getNascimento(){
-        return this.nascimento;
+    public LocalDate getDataNascimento() {
+        return  dataNascimento;
     }
 
-    public void setNascimento(String nascimento){
-        this.nascimento = nascimento;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getTelefoneFixo() {
+        return telefoneFixo;
+    }
+
+    public void setTelefoneFixo(String telefoneFixo) {
+        this.telefoneFixo = telefoneFixo;
+    }
+
+    public Instant getCriado() {
+        return criado;
+    }
+
+    public void setCriado(Instant criado) {
+        this.criado = criado;
+    }
+
+    public Instant getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Instant editado) {
+        this.editado = editado;
+    }
 }

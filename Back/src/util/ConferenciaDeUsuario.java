@@ -1,9 +1,5 @@
 package util;
 import database.BancoDeDados;
-import models.Locador;
-import models.Locatario;
-
-import java.util.ArrayList;
 
 public class ConferenciaDeUsuario {
 
