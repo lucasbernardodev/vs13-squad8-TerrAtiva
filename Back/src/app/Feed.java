@@ -32,9 +32,9 @@ public class Feed {
                 .filter(terreno -> terreno.getPreco() <= valor)
                 .collect(Collectors.toList());
     }
-    
+
     public List<Terreno> mostrarTerrenosPorTitulo(String titulo){
-        List<Terreno> tituloExato = 
+        List<Terreno> tituloExato =
                 BancoDeDados.terrenosDataBase
                 .stream()
                 .filter(terreno -> terreno.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
