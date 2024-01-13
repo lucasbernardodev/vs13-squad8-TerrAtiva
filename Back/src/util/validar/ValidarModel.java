@@ -3,6 +3,8 @@ package util.validar;
 import infra.exceptions.DataFormatInvalidException;
 import infra.exceptions.InvalidParamException;
 
+import java.time.LocalDate;
+
 import javax.swing.*;
 
 public class ValidarModel {
@@ -68,8 +70,26 @@ public class ValidarModel {
 
     }
 
-    
-    public void USUARIOS() {
+    public static final void USUARIOS(String nome,
+                 String sobrenome, 
+                 String email, 
+                 String senha, 
+                 String cpf, 
+                 LocalDate dataNascimento, 
+                 String sexo, 
+                 String ativo,
+                 String celular,
+                 String telefoneFixo) {
 
-    
+        if (nome.trim().isBlank()) throw new InvalidParamException("Nome não pode estar vazio!");
+        if (sobrenome.trim().isBlank()) throw new InvalidParamException("Sobrenome não pode estar vazio!");
+        if (email.trim().isBlank()) throw new InvalidParamException("Email não pode estar vazio!");
+        if (senha.trim().isBlank()) throw new InvalidParamException("Senha não pode estar vazio!");
+        if (cpf.trim().isBlank()) throw new InvalidParamException("CPF não pode estar vazio!");
+        if (dataNascimento == null) throw new InvalidParamException("Data de Nascimento não pode estar vazio!");
+        if (sexo.trim().isBlank()) throw new InvalidParamException("Sexo não pode estar vazio!");
+        if (ativo.trim().isBlank()) throw new InvalidParamException("Ativo não pode estar vazio!");
+        if (celular.trim().isBlank()) throw new InvalidParamException("Celular não pode estar vazio!");
+        if (telefoneFixo.trim().isBlank()) throw new InvalidParamException("Telefone Fixo não pode estar vazio!");
+    }
 }
