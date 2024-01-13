@@ -30,6 +30,31 @@ public class Terreno {
         this.criado = Instant.now();
         this.editado = Instant.now();
     }
+    public Terreno(String titulo, String descricao, Integer proprietarioID,
+                   Integer enderecoID, double preco, String tamanho,String disponivel) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.proprietarioID = proprietarioID;
+        this.enderecoID = enderecoID;
+        this.preco = preco;
+        this.tamanho = tamanho;
+        this.disponivel = disponivel;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
+    }
+    public Terreno(Integer id,String titulo, String descricao, Integer proprietarioID,
+                   Integer enderecoID, double preco, String tamanho,String disponivel) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.proprietarioID = proprietarioID;
+        this.enderecoID = enderecoID;
+        this.preco = preco;
+        this.tamanho = tamanho;
+        this.disponivel = disponivel;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
+    }
 
     public Integer getId() {
         return id;
@@ -109,5 +134,21 @@ public class Terreno {
 
     public void setEditado(Instant editado) {
         this.editado = editado;
+    }
+
+    @Override
+    public String toString() {
+        return "Terreno{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", proprietarioID=" + proprietarioID +
+                ", enderecoID=" + enderecoID +
+                ", preco=" + preco +
+                ", tamanho='" + tamanho + '\'' +
+                ", disponivel='" + disponivel + '\'' +
+                ", criado=" + criado +
+                ", editado=" + editado +
+                '}';
     }
 }
