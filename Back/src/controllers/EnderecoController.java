@@ -52,4 +52,15 @@ public class EnderecoController {
             return e.getMessage();
         }
     }
+
+    public String deletarEndereco(Integer id) {
+        try {
+            enderecoService.deletar(id);
+            return "Endereço deletado com Sucesso";
+        } catch (DbException e) {
+            return e.getMessage();
+        } catch (UnauthorizedOperationException e){
+            return e.getMessage();
+        }
+    }
 }
