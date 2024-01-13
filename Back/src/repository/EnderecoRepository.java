@@ -32,8 +32,8 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             stmt.setString(6, enderecoRequest.getBairro());
             stmt.setInt(7, enderecoRequest.getCodigoMunicipioIBGE());
             stmt.setInt(8, enderecoRequest.getCep());
-            stmt.setString(9, enderecoRequest.getCriado().toString());
-            stmt.setString(10, enderecoRequest.getEditado().toString());
+            stmt.setString(9, Instant.now().toString());
+            stmt.setString(10, Instant.now().toString());
 
             if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
 

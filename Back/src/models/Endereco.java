@@ -11,8 +11,6 @@ public class Endereco {
     private String bairro;
     private Integer codigoMunicipioIBGE;
     private Integer cep;
-    private Instant criado;
-    private Instant editado;
 
     public Endereco() {}
 
@@ -27,8 +25,6 @@ public class Endereco {
         this.bairro = bairro;
         this.codigoMunicipioIBGE = codigoMunicipioIBGE;
         this.cep = cep;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
     }
 
 
@@ -94,20 +90,5 @@ public class Endereco {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public Instant getCriado() {
-        return criado;
-    }
-    public void setCriado(Instant criado) {
-        this.criado = criado;
-    }
-
-    public Instant getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Instant editado) {
-        this.editado = editado;
     }
 }
