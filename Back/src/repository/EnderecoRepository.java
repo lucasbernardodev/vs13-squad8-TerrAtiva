@@ -1,6 +1,7 @@
 package repository;
 
 import database.BancoDeDados;
+import database.GeradorID;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
@@ -16,6 +17,10 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     public void adicionar(Endereco enderecoRequest) {
         try {
             connection = BancoDeDados.criaConexao();
+
+            Integer proximoId = GeradorID.getProximoEnderecoId(connection);
+            enderecoRequest.setId(proximoId);
+
             String sqlQuery = """
                     INSERT INTO ENDERECOS
                         (ENDERECO_ID, USUARIO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
@@ -72,7 +77,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             stmt.setInt(6, enderecoRequest.getCodigoMunicipioIBGE());
             stmt.setInt(7, enderecoRequest.getCep());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, enderecoRequest.getId());
+            stmt.setInt(9, id);
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
 
