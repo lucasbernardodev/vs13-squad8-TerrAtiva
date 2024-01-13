@@ -20,7 +20,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
                     INSERT INTO ENDERECOS
                         (ENDERECO_ID, USUARIO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
                            BAIRRO, MUNICIPIO_COD_IBGE, CEP, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
