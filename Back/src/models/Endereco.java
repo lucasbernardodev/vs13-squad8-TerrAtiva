@@ -8,29 +8,29 @@ public class Endereco {
     private String logradouro;
     private Integer numero;
     private String complemento;
-    private String Bairro;
+    private String bairro;
     private Integer codigoMunicipioIBGE;
-    private String cep;
-    private String localizacao;
+    private Integer cep;
     private Instant criado;
     private Instant editado;
 
     public Endereco() {}
 
-    public Endereco(String logradouro,
+    public Endereco(Integer usuarioID, String logradouro,
                     Integer numero, String complemento,
                     String bairro, Integer codigoMunicipioIBGE,
-                    String cep, String localizacao) {
+                    Integer cep) {
+        this.usuarioID = usuarioID;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
-        Bairro = bairro;
+        this.bairro = bairro;
         this.codigoMunicipioIBGE = codigoMunicipioIBGE;
         this.cep = cep;
-        this.localizacao = localizacao;
         this.criado = Instant.now();
         this.editado = Instant.now();
     }
+
 
     public Integer getId() {
         return id;
@@ -72,14 +72,6 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    public String getBairro() {
-        return Bairro;
-    }
-
-    public void setBairro(String bairro) {
-        Bairro = bairro;
-    }
-
     public Integer getCodigoMunicipioIBGE() {
         return codigoMunicipioIBGE;
     }
@@ -88,20 +80,20 @@ public class Endereco {
         this.codigoMunicipioIBGE = codigoMunicipioIBGE;
     }
 
-    public String getCep() {
+    public Integer getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(Integer cep) {
         this.cep = cep;
     }
 
-    public String getLocalizacao() {
-        return localizacao;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
     public Instant getCriado() {
