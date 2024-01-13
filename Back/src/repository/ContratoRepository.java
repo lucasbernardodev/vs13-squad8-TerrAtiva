@@ -52,7 +52,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                     UPDATE CONTRATOS
                         set
                         INSERT INTO CONTRATOS
-                        PROPRIETARIO_ID = ?,
+                        LOCATARIO_ID = ?,
                         TERRENO_ID = ?,
                         ATIVO = ?,
                         DATA_ASSINATURA = ?,
