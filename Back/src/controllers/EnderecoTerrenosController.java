@@ -2,17 +2,18 @@ package controllers;
 
 import infra.exceptions.*;
 import services.EnderecoService;
+import services.EnderecoTerrenosService;
 
 public class EnderecoTerrenosController {
 
-    private EnderecoService enderecoService = new EnderecoService();
+    private EnderecoTerrenosService enderecoTerrenosService = new EnderecoTerrenosService();
 
-    public String cadastrarEndereco(Integer enderecoID, Integer usuarioID, String logradouro,
+    public String cadastrarEndereco(String logradouro,
                                     Integer numero, String complemento,
                                     String bairro, Integer codigoMunicipioIBGE,
-                                    Integer cep) {
+                                    Integer cep, String localizacao) {
         try {
-            enderecoService.alterar(enderecoID, usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
+            enderecoTerrenosService.adicionarEnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep,localizacao );
             return "Endereço Cadastrado Com Sucesso!";
         } catch (InvalidParamException e) {
             return e.getMessage();
@@ -25,12 +26,12 @@ public class EnderecoTerrenosController {
         }
     }
 
-    public String atualizarEndereco(Integer enderecoID, Integer usuarioID, String logradouro,
+    public String atualizarEndereco(Integer id,String logradouro,
                                     Integer numero, String complemento,
                                     String bairro, Integer codigoMunicipioIBGE,
-                                    Integer cep) {
+                                    Integer cep, String localizacao) {
         try {
-            enderecoService.alterar(enderecoID, usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
+            enderecoTerrenosService.alterar( id, logradouro,  numero,  complemento,  bairro,  codigoMunicipioIBGE,  cep,  localizacao);
             return "Endereço Atualizado Com Sucesso!";
         } catch (InvalidParamException e) {
             return e.getMessage();
@@ -45,7 +46,7 @@ public class EnderecoTerrenosController {
 
     public String resgatarEnderecoPorID(Integer id){
         try {
-            return enderecoService.resgatarPorId(id).toString();
+            return enderecoTerrenosService.resgatarPorId(id).toString();
         } catch (DataNotFoundException e) {
             return e.getMessage();
         } catch (DbException e) {
@@ -55,7 +56,7 @@ public class EnderecoTerrenosController {
 
     public String deletarEndereco(Integer id) {
         try {
-            enderecoService.deletar(id);
+            enderecoTerrenosService.deletar(id);
             return "Endereço deletado com Sucesso";
         } catch (DbException e) {
             return e.getMessage();

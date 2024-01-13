@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class ValidarModel {
 
-    
     public static final void ENDERECO(Integer usuarioID, String logradouro,
                                Integer numero, String complemento,
                                String bairro, Integer codigoMunicipioIBGE,
@@ -71,5 +70,5 @@ public class ValidarModel {
     
     public void USUARIOS() {
 
-    
+    }
 }

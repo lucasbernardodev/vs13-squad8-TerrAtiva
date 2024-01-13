@@ -15,7 +15,7 @@ public class EnderecoTerrenosService {
         enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
     }
 
-    public void alterar(String logradouro,
+    public void alterar(Integer id,String logradouro,
                         Integer numero, String complemento,
                         String bairro, Integer codigoMunicipioIBGE,
                         Integer cep, String localizacao) {
