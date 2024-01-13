@@ -69,17 +69,6 @@ public class ValidarModel {
     public void TERRENOS() {
 
     }
-    
-
-        // String nome, String sobrenome, 
-    // String email, 
-    // String senha, 
-    // String cpf, 
-    // LocalDate dataNascimento, 
-    // String sexo, 
-    // String ativo, 
-    // String celular, 
-    // String telefoneFixo
 
     public static final void USUARIOS(String nome,
                  String sobrenome, 
@@ -91,7 +80,7 @@ public class ValidarModel {
                  String ativo,
                  String celular,
                  String telefoneFixo) {
-                    
+
         if (nome.trim().isBlank()) throw new InvalidParamException("Nome não pode estar vazio!");
         if (sobrenome.trim().isBlank()) throw new InvalidParamException("Sobrenome não pode estar vazio!");
         if (email.trim().isBlank()) throw new InvalidParamException("Email não pode estar vazio!");
