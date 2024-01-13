@@ -104,7 +104,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     public Contrato resgatarDadosPorId(int id) {
         try {
             connection = BancoDeDados.criaConexao();
-            String sqlQuery = "SELECT * FROM CONTRATOS WHERE ENDERECO_ID = " + id;
+            String sqlQuery = "SELECT * FROM CONTRATOS WHERE CONTRATO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();
 
