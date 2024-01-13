@@ -7,7 +7,7 @@ public class ValidarModel {
     public static final void ENDERECO(Integer usuarioID, String logradouro,
                                Integer numero, String complemento,
                                String bairro, Integer codigoMunicipioIBGE,
-                               Integer cep) throws InvalidParamException, DataFormatInvalidException {
+                               Integer cep) {
 
         if (usuarioID == null) throw new InvalidParamException("ID do Usuário não pode ser Nulo!");
         if (logradouro.isBlank()) throw new InvalidParamException("Logradouro não pode estar vazio!");

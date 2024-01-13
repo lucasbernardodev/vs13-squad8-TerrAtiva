@@ -27,6 +27,15 @@ public class Endereco {
         this.cep = cep;
     }
 
+    @Override
+    public String toString() {
+        return String.format("""
+                Logradouro: %s | Número: %s
+                Complemento: %s
+                Bairro: %s
+                Cep: %s
+                """, this.logradouro, this.numero, this.complemento, this.bairro, this.cep);
+    }
 
     public Integer getId() {
         return id;
