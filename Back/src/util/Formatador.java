@@ -1,5 +1,6 @@
 package util;
 
+import models.Feed;
 import models.Terreno;
 
 import java.util.List;
@@ -16,6 +17,15 @@ public class Formatador {
         String response = "";
 
         for (Terreno value: options) {
+            response += value.toString() + System.lineSeparator();
+        }
+        return response;
+    }
+
+    public static String readerListTerrenosFeed(List<Feed> options) {
+        String response = "";
+
+        for (Feed value: options) {
             response += value.toString() + System.lineSeparator();
         }
         return response;
