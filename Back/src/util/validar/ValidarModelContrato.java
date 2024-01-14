@@ -4,12 +4,12 @@ import infra.exceptions.InvalidParamException;
 import java.time.LocalDate;
 
 public class ValidarModelContrato {
-    public static final void CONTRATO(Integer locatarioID, Integer terrenoID,
+    public static final void CONTRATO(Integer proprietarioID, Integer terrenoID,
                                       LocalDate dataAssinatura,
                                       LocalDate dataInicio, LocalDate dataFinal,
                                       LocalDate dataVencimentoAluguel) {
 
-        if (locatarioID == null) throw new InvalidParamException("ID do Locatário não pode ser Nulo!");
+        if (proprietarioID == null) throw new InvalidParamException("ID do Locatário não pode ser Nulo!");
         if (terrenoID == null) throw new InvalidParamException("ID do Terreno não pode ser Nulo!");
         if (dataAssinatura == null) throw new InvalidParamException("Data de Assinatura não pode ser Nula!");
         if (dataInicio == null) throw new InvalidParamException("Data de Início não pode ser Nula!");
