@@ -49,6 +49,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         try {
             connection = BancoDeDados.criaConexao();
             String sqlQuery = """
+
                 UPDATE CONTRATOS
                 SET
                     LOCATARIO_ID = ?,
@@ -61,6 +62,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                     EDITADO = ?
                 WHERE CONTRATO_ID = ?
                 """;
+                      
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
             stmt.setInt(1, ContratoRequest.getProprietarioID());
@@ -84,6 +86,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         }
     }
 
+  
     @Override
     public void deletar(int id) {
         try {
@@ -106,7 +109,9 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     public Contrato resgatarDadosPorId(int id) {
         try {
             connection = BancoDeDados.criaConexao();
+
             String sqlQuery = "SELECT * FROM CONTRATOS WHERE CONTRATO_ID = " + id;
+
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();
 

@@ -11,6 +11,7 @@ import java.sql.Date;
 public class ContratoService {
     private ContratoRepository contratoRepository = new ContratoRepository();
 
+
     public void adicionarContrato(Integer proprietarioID, Integer terrenoID,
                                   Date dataAssinatura, Date dataInicio, Date dataFinal,
                                   Date dataVencimentoAluguel)  {
@@ -28,6 +29,7 @@ public class ContratoService {
         contratoRepository.alterar(proprietarioID, new Contrato(terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel.toLocalDate()));
     }
+  
     public void deletar(Integer id) {
         contratoRepository.deletar(id);
     }

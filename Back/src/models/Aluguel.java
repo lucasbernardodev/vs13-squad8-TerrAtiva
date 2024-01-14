@@ -4,8 +4,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 public class Aluguel {
-    private Integer aluguelID;
+    private Integer pagamentoID;
     private Integer mensalidadeID;
+    private Integer mesReferencia;
     private LocalDate dataEmissao;
     private LocalDate dataVencimento;
     private double taxas;
@@ -16,10 +17,11 @@ public class Aluguel {
     private Instant editado;
 
     public Aluguel(){}
-    public Aluguel(Integer mensalidadeID, LocalDate dataEmissao, LocalDate dataVencimento,
+    public Aluguel(Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
                    double taxas, String codigoBarras, LocalDate dataPagamento) {
 
         this.mensalidadeID = mensalidadeID;
+        this.mesReferencia = mesReferencia;
         this.dataEmissao = dataEmissao;
         this.dataVencimento = dataVencimento;
         this.taxas = taxas;
@@ -28,12 +30,12 @@ public class Aluguel {
         this.pago = "N";
     }
 
-    public Integer getAluguelID() {
-        return aluguelID;
+    public Integer getPagamentoID() {
+        return pagamentoID;
     }
 
-    public void setAluguelID(Integer aluguelID) {
-        this.aluguelID = aluguelID;
+    public void setPagamentoID(Integer pagamentoID) {
+        this.pagamentoID = pagamentoID;
     }
 
     public Integer getMensalidadeID() {
@@ -43,6 +45,10 @@ public class Aluguel {
     public void setMensalidadeID(Integer mensalidadeID) {
         this.mensalidadeID = mensalidadeID;
     }
+
+    public int getMesReferencia() { return mesReferencia; }
+
+    public void setMesReferencia(int mesReferencia) { this.mesReferencia = mesReferencia; }
 
     public LocalDate getDataEmissao() {
         return dataEmissao;
@@ -106,5 +112,22 @@ public class Aluguel {
 
     public void setEditado(Instant editado) {
         this.editado = editado;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluguel{" +
+                "pagamentoID=" + pagamentoID +
+                ", mensalidadeID=" + mensalidadeID +
+                ", mesReferencia=" + mesReferencia +
+                ", dataEmissao=" + dataEmissao +
+                ", dataVencimento=" + dataVencimento +
+                ", taxas=" + taxas +
+                ", codigoBarras='" + codigoBarras + '\'' +
+                ", dataPagamento=" + dataPagamento +
+                ", pago='" + pago + '\'' +
+                ", criado=" + criado +
+                ", editado=" + editado +
+                '}';
     }
 }
