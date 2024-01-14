@@ -9,12 +9,12 @@ public class MensalidadeService {
 
     MensalidadeRepository mensalidade = new MensalidadeRepository();
     public void adicionarMensalidade( Integer contratoID, Double valorMensal, Integer anoExercicio) {
-        ValidarModel.MENSALIDADE(contratoID, valorMensal, anoExercicio);
+        ValidarModel.MENSALIDADES(contratoID, valorMensal, anoExercicio);
         mensalidade.adicionar(new Mensalidade(contratoID, valorMensal, anoExercicio));
     }
 
     public void alterarMensalidade(Integer mensalidadeID, Integer contratoID, Double valorMensal, Integer anoExercicio) {
-        ValidarModel.MENSALIDADE(contratoID, valorMensal, anoExercicio);
+        ValidarModel.MENSALIDADES(contratoID, valorMensal, anoExercicio);
         mensalidade.alterar(mensalidadeID, new Mensalidade(contratoID, valorMensal, anoExercicio));
     }
 
