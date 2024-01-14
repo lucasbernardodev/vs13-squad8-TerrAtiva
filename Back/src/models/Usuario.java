@@ -17,8 +17,6 @@ public class Usuario {
     private String ativo;
     private String celular;
     private String telefoneFixo;
-    private Instant criado;
-    private Instant editado;
 
     public Usuario(){
     }
@@ -33,8 +31,6 @@ public class Usuario {
         this.ativo = ativo;
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
     }
 
     public int getUsuarioId() {
@@ -123,21 +119,5 @@ public class Usuario {
 
     public void setTelefoneFixo(String telefoneFixo) {
         this.telefoneFixo = telefoneFixo;
-    }
-
-    public Instant getCriado() {
-        return criado;
-    }
-
-    public void setCriado(Instant criado) {
-        this.criado = criado;
-    }
-
-    public Instant getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Instant editado) {
-        this.editado = editado;
     }
 }

@@ -13,8 +13,6 @@ public class Aluguel {
     private String codigoBarras;
     private LocalDate dataPagamento;
     private String pago;
-    private Instant criado;
-    private Instant editado;
 
     public Aluguel(){}
     public Aluguel(Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
@@ -98,22 +96,6 @@ public class Aluguel {
         this.pago = pago;
     }
 
-    public Instant getCriado() {
-        return criado;
-    }
-
-    public void setCriado(Instant criado) {
-        this.criado = criado;
-    }
-
-    public Instant getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Instant editado) {
-        this.editado = editado;
-    }
-
     @Override
     public String toString() {
         return "Aluguel{" +
@@ -126,8 +108,6 @@ public class Aluguel {
                 ", codigoBarras='" + codigoBarras + '\'' +
                 ", dataPagamento=" + dataPagamento +
                 ", pago='" + pago + '\'' +
-                ", criado=" + criado +
-                ", editado=" + editado +
                 '}';
     }
 }
