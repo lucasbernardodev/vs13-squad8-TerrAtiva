@@ -1,7 +1,6 @@
 package controllers;
 
 import infra.exceptions.*;
-import services.EnderecoService;
 import services.EnderecoTerrenosService;
 
 public class EnderecoTerrenosController {
@@ -13,7 +12,7 @@ public class EnderecoTerrenosController {
                                     String bairro, Integer codigoMunicipioIBGE,
                                     Integer cep, String localizacao) {
         try {
-            enderecoTerrenosService.adicionarEnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep,localizacao );
+            enderecoTerrenosService.adicionarEnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
             return "Endereço Cadastrado Com Sucesso!";
         } catch (InvalidParamException e) {
             return e.getMessage();
