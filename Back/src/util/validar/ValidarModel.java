@@ -4,6 +4,7 @@ import infra.exceptions.DataFormatInvalidException;
 import infra.exceptions.InvalidParamException;
 
 import javax.swing.*;
+import java.time.LocalDate;
 
 public class ValidarModel {
 
@@ -49,9 +50,18 @@ public class ValidarModel {
         if (localizacao.trim().isBlank()) throw new InvalidParamException("Complemento do Endereço não pode estar vazio!");
     }
     
-    public void ALUGUEL_PAGAMENTOS() {
-
+    public static final void ALUGUEL_PAGAMENTOS(Integer mensalidadeID, Integer mesReferencia,
+                                   LocalDate dataEmissao, LocalDate dataVencimento,
+                                   double taxas, String codigoBarras, LocalDate dataPagamento) {
+        if (mensalidadeID == null) throw new InvalidParamException("ID da Mensalidade não pode ser Nulo!");
+        if (mesReferencia == null) throw new InvalidParamException("Mês Referência não pode ser Nulo!");
+        if (dataEmissao == null) throw new InvalidParamException("Data de Emissão não pode ser Nula!");
+        if (dataVencimento == null) throw new InvalidParamException("Data de Vencimento não pode ser Nula!");
+        if (taxas < 0) throw new InvalidParamException("Taxas não podem ser negativas!");
+        if (codigoBarras == null) throw new InvalidParamException("Código de Barras não pode ser Nulo!");
+        if (dataPagamento == null) throw new InvalidParamException("Data de Vencimento não pode ser Nula!");
     }
+
 
     
     public void CONTRATOS() {
@@ -72,4 +82,4 @@ public class ValidarModel {
     public void USUARIOS() {
 
     
-}
+}}
