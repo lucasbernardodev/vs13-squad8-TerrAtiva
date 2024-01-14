@@ -24,9 +24,17 @@ public class Formatador {
 
     public static String readerListTerrenosFeed(List<Feed> options) {
         String response = "";
-
         for (Feed value: options) {
             response += value.toString() + System.lineSeparator();
+        }
+        return response;
+    }
+
+    public static String readerListEstadosFeed(List<Feed> options) {
+        String response = "ID | QUANTIDADE DE ANÚNCIOS | ESTADO";
+        response += System.lineSeparator();
+        for (Feed value: options) {
+            response += value.listaEstados() + System.lineSeparator();
         }
         return response;
     }

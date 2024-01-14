@@ -2,12 +2,12 @@ package app.menus;
 
 import app.enums.TipoUsuario;
 import controllers.FeedController;
-import controllers.LoginController;
 import util.Validacao;
 
 public class FeedMenu {
 
     public static void feedMenu() {
+        FeedController feed = new FeedController();
         int opcao;
         do {
             System.out.println("### FEED ###");
@@ -20,13 +20,13 @@ public class FeedMenu {
 
             switch (opcao) {
                 case 1:
-                    System.out.println(FeedController.mostrarTerrenosDisponveis());
+                    System.out.println(feed.mostrarTerrenosDisponveis());
                     break;
                 case 2:
                     feedFiltrado();
                     break;
                 case 3:
-                    confereUsuario();
+//                    confereUsuario(); TODO: ARRUMAR MÉTODO
                     break;
                 case 0:
                     break;
@@ -40,34 +40,39 @@ public class FeedMenu {
     }
 
     private static void feedFiltrado() {
+        FeedController feed = new FeedController();
         int opcao;
         do {
             System.out.println("### Feed ###");
             System.out.println("Selecione um filtro: ");
-            System.out.println("1 - Localização");
+            System.out.println("1 - Estado");
             System.out.println("2 - Valor");
             System.out.println("3 - Título");
             System.out.println("4 - Tamanho");
+            System.out.println("5 - Limpar filtros");
             System.out.println("0 - Voltar");
             opcao = Validacao.validarInt();
 
             switch (opcao) {
                 case 1:
-                    System.out.println(FeedController.mostrarTerrenosPorLocalizacao(
-                            Validacao.validarString("Digite o local:")));
+                    System.out.println(feed.buscarEstados());
+                    System.out.println(feed.mostrarTerrenosPorLocal(
+                            Validacao.validarString("Digite o ID do estado: ")));
                     break;
                 case 2:
-                    System.out.println("Digite o valor máximo:");
-                    System.out.println(FeedController.mostrarTerrenosPorPrecoMenor(
-                            Validacao.validarInt()));
+                    System.out.println(feed.mostrarTerrenosPorPreco(
+                            Validacao.validarString("Digite o valor aproximado: ")));
                     break;
                 case 3:
-                    System.out.println(FeedController.mostrarTerrenosPorTitulo(
-                            Validacao.validarString("Digite parte do título:")));
+                    System.out.println(feed.mostrarTerrenosPorCaracteristica(
+                            Validacao.validarString("Digite uma ou mais palavra chave: ")));
                     break;
                 case 4:
-                    System.out.println(FeedController.mostrarTerrenosPorTamanho(
-                            Validacao.validarString("Digite o tamanho:")));
+                    System.out.println(feed.mostrarTerrenosPorTamanho(
+                            Validacao.validarString("Digite o tamanho: ")));
+                    break;
+                case 5:
+                    feed.limparFiltros();
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -76,20 +81,6 @@ public class FeedMenu {
 
 
         } while (opcao != 0);
-    }
-    private static void menuArrendamento() {
-
-    }
-
-    private static void confereUsuario() {
-        if (LoginController.getTipoUsuario() == TipoUsuario.LOCADOR) {
-            LocadorMenu.menuInicial();
-        }
-        else
-        {
-            LocatarioMenu.menuInicial();
-        }
-
     }
 
 }

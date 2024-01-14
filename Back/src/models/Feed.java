@@ -8,6 +8,8 @@ public class Feed {
    private int tamanho;
    private String estado;
    private String cidade;
+   private String cod_estado;
+   private String quantidade;
 
    @Override
    public String toString() {
@@ -20,6 +22,11 @@ public class Feed {
                this.terrenoId, this.titulo, this.descricao,
                this.preco, this.tamanho / 10000, this.estado, this.cidade);
    }
+
+    public String listaEstados() {
+        return String.format("%s |          (%s)          | %s",
+                this.cod_estado, this.quantidade, this.estado);
+    }
 
     public Feed() {}
     public Feed(int terrenoId, String titulo, String descricao, int preco, int tamanho, String estado, String cidade) {
@@ -86,5 +93,21 @@ public class Feed {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public String getCod_estado() {
+        return cod_estado;
+    }
+
+    public void setCod_estado(String cod_estado) {
+        this.cod_estado = cod_estado;
+    }
+
+    public String getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(String quantidade) {
+        this.quantidade = quantidade;
     }
 }
