@@ -20,6 +20,11 @@ public class Mensalidade {
         this.valorMensal = valorMensal;
         this.anoExercicio = anoExercicio;
     }
+    public Mensalidade(double valorMensal,
+                       Integer anoExercicio) {
+        this.valorMensal = valorMensal;
+        this.anoExercicio = anoExercicio;
+    }
 
     public Mensalidade(Integer mensalidadeID, Integer contratoID, double valorMensal,
                        Integer anoExercicio) {
