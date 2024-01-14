@@ -5,6 +5,7 @@ import util.Validacao;
 
 public class LoginMenu {
     private final LoginController loginController = new LoginController();
+    private UsuarioMenu usuarioMenu = new UsuarioMenu();
 
     public void inicio() {
         int opcaoSelecionada;
@@ -22,10 +23,7 @@ public class LoginMenu {
                     login();
                     break;
                 case 2:
-//                    menuCadastro();
-//                    System.out.println("|-------------------------------------------|");
-//                    System.out.println("Bem vindo de volta! Selecione uma opção: ");
-//                    login();
+//                    TODO: Pendente implementação
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, insira um valor válido.");
@@ -33,14 +31,6 @@ public class LoginMenu {
 
         } while (opcaoSelecionada < 1 || opcaoSelecionada > 2);
 
-//        if (area == 1){
-//            System.out.println();
-//            LocadorMenu.menuInicial();
-//        }
-//        if (area == 2){
-//            LocatarioMenu.menuInicial();
-//
-//        }
     }
 
     private void login() {
@@ -54,5 +44,7 @@ public class LoginMenu {
             retorno = loginController.loginUsuario(email, senha);
 
         } while (!retorno);
+
+        usuarioMenu.inicio();
     }
 }

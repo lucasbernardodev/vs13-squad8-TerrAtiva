@@ -41,7 +41,7 @@ public class UsuarioController {
         }
     }
 
-    public String resgatarUsuarioPorID(int id) {
+    public String resgatarUsuario(int id) {
         try {
             return usuarioService.buscarUsuario(id).toString();
         } catch (DataNotFoundException e) {
@@ -51,7 +51,7 @@ public class UsuarioController {
         }
     }
 
-    public Usuario resgatarUsuarioPorEmail(String email,String senha) {
+    public Usuario resgatarUsuario(String email,String senha) {
         try {
             return usuarioService.buscarUsuarioPorEmail(email,senha);
         } catch (DataNotFoundException e) {
