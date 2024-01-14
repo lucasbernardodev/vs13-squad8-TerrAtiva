@@ -32,6 +32,7 @@ public class Usuario {
         this.ativo = ativo;
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
+    }
 
     public static synchronized Usuario login(
             String nome,
@@ -59,7 +60,7 @@ public class Usuario {
                     telefoneFixo
             );
             instancia.setEstaLogado(true);
-            return  instancia;
+            return instancia;
         } else {
             throw new RuntimeException("O usuário já está autenticado.");
         }
@@ -126,7 +127,7 @@ public class Usuario {
     }
 
     public LocalDate getDataNascimento() {
-        return  dataNascimento;
+        return dataNascimento;
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
