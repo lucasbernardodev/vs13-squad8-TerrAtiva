@@ -32,6 +32,15 @@ public class Contrato {
         this.editado = Instant.now();
     }
 
+    public Contrato(Integer terrenoID, String ativo, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
+    }
+
+    public Contrato(Integer proprietarioID, Integer terrenoID, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
+    }
+
+    public Contrato(Integer terrenoID, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
+    }
+
     public Integer getId() {
         return id;
     }
