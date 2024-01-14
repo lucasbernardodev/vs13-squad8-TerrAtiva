@@ -1,31 +1,37 @@
 package controllers;
 
-import app.Feed;
+import models.Terreno;
+import services.FeedService;
 import util.Formatador;
 
+import java.util.ArrayList;
+
 public class FeedController {
-    static Feed app = new Feed();
-    public static String mostrarTerrenosDisponveis() {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosDisponveis());
+    private final FeedService feedService = new FeedService();
+
+    public String mostrarTerrenosDisponveis() {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosDisponiveis();
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
+
     }
 
-    public static String mostrarTerrenosPorLocalizacao(String localizacao) {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosPorLocalizacao(localizacao));
+    public String mostrarTerrenosPorPrecoMenor(double valor) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosPorPreco(valor);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 
-    public static String mostrarTerrenosPorPrecoMenor(double valor) {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosPorPrecoMenor(valor));
+    public String mostrarTerrenosPorTitulo(String titulo) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosPorTitulo(titulo);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 
-    public static String mostrarTerrenosPorTitulo(String titulo) {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosPorTitulo(titulo));
+    public String mostrarTerrenosPorLocatario(String nomeLocatario) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosPorLocatario(nomeLocatario);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 
-    public static String mostrarTerrenosPorLocatario(String nomeLocatario) {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosPorLocatario(nomeLocatario));
-    }
-
-    public static String mostrarTerrenosPorTamanho(String tamanho) {
-        return Formatador.readerListTerrenos(app.mostrarTerrenosPorTamanho(tamanho));
+    public String mostrarTerrenosPorTamanho(String tamanho) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosPorTamanho(tamanho);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 }

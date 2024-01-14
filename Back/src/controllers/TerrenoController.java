@@ -1,71 +1,65 @@
 package controllers;
 
-import infra.exceptions.DataNotFoundException;
-import infra.exceptions.EmptyDataException;
-import models.Locador;
-import models.Locatario;
+import infra.exceptions.*;
 import models.Terreno;
 import services.TerrenoService;
 import util.Formatador;
 
-/**
- * Classe Locador Controller implementada visando o tratamento de exceptions que possam ser lançadas
- * nos serviços da aplicação.
- * <p>
- * Atribuímos o nome de Controller para clareza e semâtica no fluxo de dados, mas ela também se comportará como um
- * middleware para tratamento de erros
- *
- * @author Pedro Henrique Pereira
- */
 public class TerrenoController {
 
-    TerrenoService service = new TerrenoService();
+    TerrenoService terrenoService = new TerrenoService();
 
-    public String cadastrarTerreno(String titulo, String descricao, String localizacao,
-                                   String tamanho, double preco, Locatario proprietario) {
+    public String cadastrarTerreno(String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         try {
-            service.cadastrarTerreno(titulo, descricao, localizacao, tamanho, preco, proprietario);
+            terrenoService.cadastrarTerreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
             return "Terreno cadastrado com sucesso!";
-        } catch (DataNotFoundException e) {
+        } catch (InvalidParamException e) {
+            return e.getMessage();
+        } catch (DataFormatInvalidException e) {
+            return e.getMessage();
+        } catch (UnauthorizedOperationException e) {
+            return e.getMessage();
+        } catch (DbException e) {
             return e.getMessage();
         }
     }
 
-    public String atualizarDados(int idTerreno, Terreno data) {
+    public String atualizarTerreno(Integer id, String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         try {
-            service.atualizarDadosTerreno(idTerreno, data);
-            return "Dados do Terreno atualizados com Sucesso!";
+            terrenoService.alterarTerreno(id,titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
+            return "Dados do Terreno alterados com Sucesso!";
 
-        } catch (EmptyDataException | DataNotFoundException e) {
+        } catch (InvalidParamException e) {
             return e.getMessage();
+        } catch (DataFormatInvalidException e) {
+            return e.getMessage();
+        } catch (UnauthorizedOperationException e) {
+            return e.getMessage();
+        } catch (DbException e) {
+            return e.getMessage();
+        }
+    }
 
+    public String resgatarTerrenoPorID(int id) {
+        try {
+            return terrenoService.buscarTerreno(id).toString();
+        } catch (DataNotFoundException e) {
+            return e.getMessage();
+        } catch (DbException e) {
+            return e.getMessage();
         }
     }
 
     public String deletarDados(int idTerreno) {
         try {
-            service.deletarTerreno(idTerreno);
+            terrenoService.deletarTerreno(idTerreno);
             return "Terreno deletado com Sucesso";
 
-        } catch (DataNotFoundException e) {
+        } catch (DbException e) {
+            return e.getMessage();
+        } catch (UnauthorizedOperationException e){
             return e.getMessage();
         }
     }
 
-    public String buscarTerreno(int id) {
-        try {
-            return service.buscarTerreno(id).toString();
-
-        } catch (DataNotFoundException e) {
-            return e.getMessage();
-        }
-    }
-
-    public String buscarTerreno(Locador locador) {
-        return Formatador.readerListTerrenos(service.buscarTerreno(locador));
-    }
-
-    public String buscarTerreno(Locatario locatario) {
-        return Formatador.readerListTerrenos(service.buscarTerreno(locatario));
-    }
 }

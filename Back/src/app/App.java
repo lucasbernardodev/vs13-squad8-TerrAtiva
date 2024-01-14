@@ -1,11 +1,15 @@
 package app;
 
-import app.menus.SessaoMenu;
-import database.DadosMocados;
+import app.menus.LoginMenu;
+import database.BancoDeDados;
+
+import java.sql.Connection;
 
 public class App {
-    public static void iniciaAplicacao() {
-        DadosMocados.databaseOn();
-        SessaoMenu.menuInicial();
+    LoginMenu loginMenu = new LoginMenu();
+    public void iniciaAplicacao() {
+        Connection conn = BancoDeDados.criaConexao();
+        if(conn == null) System.out.println("Erro");
+        loginMenu.inicio();
     }
 }

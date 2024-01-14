@@ -1,0 +1,23 @@
+-- CRIAÇÃO DDL DE PELO MENOS 1 TABELA E SEQUENCE PRINCIPAL
+
+CREATE TABLE usuarios (
+    id_usuario INTEGER NOT NULL,
+    nome VARCHAR2(100) NOT NULL,
+    sobrenome VARCHAR2(100) NOT NULL,
+    email VARCHAR2(100) NOT NULL,
+    senha VARCHAR2(100) NOT NULL,
+    cpf VARCHAR2(11) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    sexo VARCHAR2(1) NOT NULL,
+    ativo CHAR(1) NOT NULL,
+    celular VARCHAR2(20) NOT NULL,
+    telefone_fixo VARCHAR2(20) NOT NULL,
+    criado TIMESTAMP NOT NULL,
+    editado TIMESTAMP NOT NULL,
+    CONSTRAINT pk_usuarios PRIMARY KEY (id_usuario)
+);
+
+CREATE SEQUENCE seq_usuarios
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE NOCACHE;

@@ -1,11 +1,9 @@
+/*
 package app.menus;
 import controllers.FeedController;
-import controllers.LocatarioController;
 import controllers.LoginController;
 import controllers.TerrenoController;
 import infra.exceptions.EmptyDataException;
-import models.Locatario;
-import services.LocatarioService;
 import util.Validacao;
 
 import static app.menus.FeedMenu.feedMenu;
@@ -162,4 +160,5 @@ public class LocatarioMenu {
 
 
 }
+*/
 

@@ -1,8 +1,8 @@
 import app.App;
-import app.menus.LocadorMenu;
 
 public class Main {
+    static App app = new App();
     public static void main(String[] args) {
-        App.iniciaAplicacao();
+        app.iniciaAplicacao();
     }
 }
