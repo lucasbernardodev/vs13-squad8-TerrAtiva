@@ -7,7 +7,7 @@ public class EnderecoTerrenosController {
 
     private EnderecoTerrenosService enderecoTerrenosService = new EnderecoTerrenosService();
 
-    public String cadastrarEndereco(String logradouro,
+    public String cadastrarEnderecoTerrenos(String logradouro,
                                     Integer numero, String complemento,
                                     String bairro, Integer codigoMunicipioIBGE,
                                     Integer cep, String localizacao) {
