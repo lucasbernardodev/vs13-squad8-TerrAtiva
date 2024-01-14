@@ -15,12 +15,12 @@ public class Usuario {
     private String ativo;
     private String celular;
     private String telefoneFixo;
-    private String criado;
-    private String editado;
-    private boolean estaLogado;
 
+    private boolean estaLogado;
+  
     public Usuario(){
     }
+  
     public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -32,7 +32,6 @@ public class Usuario {
         this.ativo = ativo;
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
-    }
 
     public static synchronized Usuario login(
             String nome,
@@ -166,22 +165,6 @@ public class Usuario {
         this.telefoneFixo = telefoneFixo;
     }
 
-    public String getCriado() {
-        return criado;
-    }
-
-    public void setCriado(String criado) {
-        this.criado = criado;
-    }
-
-    public String getEditado() {
-        return editado;
-    }
-
-    public void setEditado(String editado) {
-        this.editado = editado;
-    }
-
     public static synchronized Usuario getInstancia(
             String nome,
             String sobrenome,
@@ -214,4 +197,5 @@ public class Usuario {
     public static synchronized Usuario getInstancia() {
         return instancia;
     }
+
 }
