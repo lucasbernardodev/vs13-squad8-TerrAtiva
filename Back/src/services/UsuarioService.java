@@ -30,4 +30,8 @@ public class UsuarioService {
         return usuarioRepository.resgatarDadosPorId(id);
     }
 
+    public Usuario buscarUsuarioPorEmail(String email, String senha){
+        return usuarioRepository.resgatarDadosPorEmail(email,senha);
+    }
+
 }

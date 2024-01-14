@@ -42,8 +42,8 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(9, obj.getAtivo());
             stmt.setString(10, obj.getCelular());
             stmt.setString(11, obj.getTelefoneFixo());
-            stmt.setTimestamp(12, Timestamp.from(obj.getCriado()));
-            stmt.setTimestamp(13, Timestamp.from(obj.getEditado()));
+            stmt.setString(12, Instant.now().toString());
+            stmt.setString(13, Instant.now().toString());
 
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Não foi possivel adicionar");
@@ -85,7 +85,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(7, obj.getSexo());
             stmt.setString(8, obj.getCelular());
             stmt.setString(9, obj.getTelefoneFixo());
-            stmt.setTimestamp(10, Timestamp.from(Instant.now()));
+            stmt.setString(10, Instant.now().toString());
             stmt.setInt(11, obj.getUsuarioId());
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Erro ocurrido na alteracao");
@@ -105,7 +105,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             String sqlQuery = "UPDATE FROM USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
-            stmt.setInt(1,id);
+            stmt.setInt(1, id);
 
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Não foi possivel remover");
@@ -153,6 +153,41 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             }
 
             return usuarioLista;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(conn);
+        }
+    }
+
+    public Usuario resgatarDadosPorEmail(String email,String senha) {
+        try {
+
+            conn = BancoDeDados.criaConexao();
+
+            String sqlQuery = """
+                    SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
+                    """;
+            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+            stmt.setString(1, email);
+            stmt.setString(2,senha);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Usuario usuarioResponse = new Usuario();
+                usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
+                usuarioResponse.setNome(rs.getString("NOME"));
+                usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
+                usuarioResponse.setEmail(rs.getString("EMAIL"));
+                usuarioResponse.setCpf(rs.getString("CPF"));
+                usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
+                usuarioResponse.setSexo(rs.getString("SEXO"));
+                usuarioResponse.setAtivo(rs.getString("ATIVO"));
+                usuarioResponse.setCelular(rs.getString("CELULAR"));
+                usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
+                return usuarioResponse;
+            }
+            return null;
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
