@@ -5,14 +5,14 @@ import infra.exceptions.DbException;
 import models.Feed;
 import services.FeedService;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class FeedRepository {
-
     String pesquisa = "";
     String valor = "";
     String tamanho = "";
@@ -24,6 +24,26 @@ public class FeedRepository {
         try {
             ArrayList<Feed> response = new ArrayList<>();
             connection = BancoDeDados.criaConexao();
+
+            String querySQL = "SELECT * FROM TERRENOS WHERE DISPONIVEL = 'S'";
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(querySQL);
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+    public ArrayList<Terreno> mostrarTerrenosPorPreco(double value) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
 
             String sqlQuery = """
                 SELECT * FROM TERRENOS t\s
@@ -71,6 +91,7 @@ public class FeedRepository {
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
                 terreno.setCidade(resultSet.getString("NOME_MUNICIPIO"));
                 response.add(terreno);
+
             }
 
             return response;
@@ -107,6 +128,7 @@ public class FeedRepository {
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
                 terreno.setQuantidade(resultSet.getString("QUANTIDADE"));
                 response.add(terreno);
+
             }
             return response;
 
@@ -116,6 +138,7 @@ public class FeedRepository {
             BancoDeDados.fechaConexao(connection);
         }
     }
+
     public void filtrarPorCaracteristicas(String caracteristicas) {
         this.pesquisa = caracteristicas;
     }
@@ -127,16 +150,15 @@ public class FeedRepository {
         this.tamanho = tamanho;
     }
 
+
     public void filtrarPorEstado(String estado) {
         this.estado = estado;
     }
-
+  
     public void limparFiltros() {
         this.pesquisa = "";
         this.valor = "";
         this.estado  = "";
         this.tamanho  = "";
     }
-
-
 }
