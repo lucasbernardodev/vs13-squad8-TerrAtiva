@@ -8,10 +8,8 @@ import java.sql.*;
 import java.util.Properties;
 
 public class BancoDeDados {
-
     public static Connection criaConexao(){
             try {
-
                 Properties props = carregaPropriedades();
                 String url = props.getProperty("dburl");
                  Connection conn = DriverManager.getConnection(url, props);

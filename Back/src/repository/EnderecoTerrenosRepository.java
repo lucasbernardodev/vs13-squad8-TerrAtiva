@@ -1,42 +1,38 @@
 package repository;
 
 import database.BancoDeDados;
-import database.GeradorID;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
 import models.Endereco;
+import models.EnderecoTerrenos;
 
 import java.sql.*;
 import java.time.Instant;
 
-public class EnderecoRepository implements DaoRepository<Endereco> {
+public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerrenos> {
     Connection connection;
 
     @Override
-    public void adicionar(Endereco enderecoRequest) {
+    public void adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = BancoDeDados.criaConexao();
-
-            Integer proximoId = GeradorID.getProximoEnderecoId(connection);
-            enderecoRequest.setId(proximoId);
-
             String sqlQuery = """
-                    INSERT INTO ENDERECOS
-                        (ENDERECO_ID, USUARIO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
-                           BAIRRO, MUNICIPIO_COD_IBGE, CEP, CRIADO, EDITADO)
+                    INSERT INTO ENDERECO_TERRENOS
+                        (ENDERECO_TERRENO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
+                           BAIRRO, MUNICIPIO_COD_IBGE, CEP, LOCALIZACAO, CRIADO, EDITADO)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setInt(1, enderecoRequest.getId());
-            stmt.setInt(2, enderecoRequest.getUsuarioID());
-            stmt.setString(3, enderecoRequest.getLogradouro());
-            stmt.setInt(4, enderecoRequest.getNumero());
-            stmt.setString(5, enderecoRequest.getComplemento());
-            stmt.setString(6, enderecoRequest.getBairro());
-            stmt.setInt(7, enderecoRequest.getCodigoMunicipioIBGE());
-            stmt.setInt(8, enderecoRequest.getCep());
+            stmt.setInt(1, enderecoTerrenosRequest.getId());
+            stmt.setString(2, enderecoTerrenosRequest.getLogradouro());
+            stmt.setInt(3, enderecoTerrenosRequest.getNumero());
+            stmt.setString(4, enderecoTerrenosRequest.getComplemento());
+            stmt.setString(5, enderecoTerrenosRequest.getBairro());
+            stmt.setInt(6, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
+            stmt.setInt(7, enderecoTerrenosRequest.getCep());
+            stmt.setString(8, enderecoTerrenosRequest.getLocalizacao());
             stmt.setString(9, Instant.now().toString());
             stmt.setString(10, Instant.now().toString());
 
@@ -50,34 +46,33 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     }
 
     @Override
-    public void alterar(int id, Endereco enderecoRequest) {
+    public void alterar(int id, EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = BancoDeDados.criaConexao();
             String sqlQuery = """
-                    UPDATE ENDERECOS
+                    UPDATE ENDERECO_TERRENOS
                         set
-                        USUARIO_ID = ?,
                         LOGRADOURO = ?,
                         NUMERO = ?,
                         COMPLEMENTO = ?,
                         BAIRRO = ?,
                         MUNICIPIO_COD_IBGE = ?,
                         CEP = ?,
+                        LOCALIZACAO = ?,
                         EDITADO = ?
-                                        
-                    WHERE ENDERECO_ID = ?
+                    WHERE ENDERECO_TERRENO_ID = ?
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setInt(1, enderecoRequest.getUsuarioID());
-            stmt.setString(2, enderecoRequest.getLogradouro());
-            stmt.setInt(3, enderecoRequest.getNumero());
-            stmt.setString(4, enderecoRequest.getComplemento());
-            stmt.setString(5, enderecoRequest.getBairro());
-            stmt.setInt(6, enderecoRequest.getCodigoMunicipioIBGE());
-            stmt.setInt(7, enderecoRequest.getCep());
+            stmt.setString(1, enderecoTerrenosRequest.getLogradouro());
+            stmt.setInt(2, enderecoTerrenosRequest.getNumero());
+            stmt.setString(3, enderecoTerrenosRequest.getComplemento());
+            stmt.setString(4, enderecoTerrenosRequest.getBairro());
+            stmt.setInt(5, enderecoTerrenosRequest.getCodigoMunicipioIBGE());
+            stmt.setInt(6, enderecoTerrenosRequest.getCep());
+            stmt.setString(7, enderecoTerrenosRequest.getLocalizacao());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, enderecoTerrenosRequest.getId());
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
 
@@ -92,7 +87,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     public void deletar(int id) {
         try {
             connection = BancoDeDados.criaConexao();
-            String sqlQuery = "DELETE FROM ENDERECOS WHERE ENDERECO_ID = " + id;
+            String sqlQuery = "DELETE FROM ENDERECO_TERRENOS WHERE ENDERECO_TERRENO_ID = " + id;
             Statement stmt = connection.createStatement();
 
             int rowsAffected = stmt.executeUpdate(sqlQuery);
@@ -107,23 +102,23 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     }
 
     @Override
-    public Endereco resgatarDadosPorId(int id) {
+    public EnderecoTerrenos resgatarDadosPorId(int id) {
         try {
             connection = BancoDeDados.criaConexao();
-            String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
+            String sqlQuery = "SELECT * FROM ENDERECO_TERRENOS WHERE ENDERECO_TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();
 
             if (result.next()) {
-                return new Endereco(
-                        result.getInt("USUARIO_ID"),
+                return new EnderecoTerrenos(
                         result.getString("LOGRADOURO"),
                         result.getInt("NUMERO"),
                         result.getString("COMPLEMENTO"),
                         result.getString("BAIRRO"),
                         result.getInt("MUNICIPIO_COD_IBGE"),
-                        result.getInt("CEP")
-                        );
+                        result.getInt("CEP"),
+                        result.getString("LOCALIZACAO")
+                );
             }
             throw new DataNotFoundException("Não foi possível resgatar dados");
 

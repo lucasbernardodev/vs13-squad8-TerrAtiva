@@ -3,16 +3,16 @@ package controllers;
 import infra.exceptions.*;
 import services.EnderecoService;
 
-public class EnderecoController {
+public class EnderecoTerrenosController {
 
     private EnderecoService enderecoService = new EnderecoService();
 
-    public String cadastrarEndereco(Integer usuarioID, String logradouro,
+    public String cadastrarEndereco(Integer enderecoID, Integer usuarioID, String logradouro,
                                     Integer numero, String complemento,
                                     String bairro, Integer codigoMunicipioIBGE,
                                     Integer cep) {
         try {
-            enderecoService.adicionarEndereco(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
+            enderecoService.alterar(enderecoID, usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
             return "Endereço Cadastrado Com Sucesso!";
         } catch (InvalidParamException e) {
             return e.getMessage();
