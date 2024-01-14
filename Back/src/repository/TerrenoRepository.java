@@ -5,6 +5,9 @@ import database.GeradorID;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
+import models.Aluguel;
+import models.Contrato;
+import models.Mensalidade;
 import models.Terreno;
 
 import java.sql.*;
@@ -129,4 +132,87 @@ public class TerrenoRepository implements DaoRepository<Terreno>{
             BancoDeDados.fechaConexao(connection);
         }
     }
+
+    public void arrendarTerreno(Contrato contratoRequest, Mensalidade mensalidade, Aluguel aluguelRequest) {
+        try {
+            // PASSO 1: GERAR CONTRATO
+            connection = BancoDeDados.criaConexao();
+            Integer newContratoID = GeradorID.getProximoContrato(connection);
+            Integer newMensalidadeID = GeradorID.getProximoMensalidade(connection);
+            Integer newAluguelID = GeradorID.getProximoAluguel(connection);
+
+            String sqlQueryContrato = """
+                    INSERT INTO CONTRATOS
+                        (CONTRATO_ID, LOCATARIO_ID, TERRENO_ID, ATIVO, DATA_ASSINATURA,
+                        DATA_INICIO, DATA_FINAL, DIA_VENCIMENTO_ALUGUEL, CRIADO, EDITADO)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """;
+
+            PreparedStatement stmtContrato = connection.prepareStatement(sqlQueryContrato);
+            stmtContrato.setInt(1, newContratoID);
+            stmtContrato.setInt(2, contratoRequest.getProprietarioID());
+            stmtContrato.setInt(3, contratoRequest.getTerrenoID());
+            stmtContrato.setString(4, contratoRequest.getAtivo());
+            stmtContrato.setDate(5, Date.valueOf(contratoRequest.getDataAssinatura()));
+            stmtContrato.setDate(6, Date.valueOf(contratoRequest.getDataInicio()));
+            stmtContrato.setDate(7, Date.valueOf(contratoRequest.getDataFinal()));
+            stmtContrato.setInt(8, contratoRequest.getDataVencimentoAluguel());
+            stmtContrato.setString(9, Instant.now().toString());
+            stmtContrato.setString(10, Instant.now().toString());
+
+            if (stmtContrato.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
+            System.out.println("Cadastrou contrato");
+
+            // PASSO 2: CRIAR ALUGUEL
+
+            String sqlQueryMensalidade = """
+                    INSERT INTO MENSALIDADES
+                        (MENSALIDADE_ID, CONTRATO_ID, VALOR_MENSAL, ANO_EXERCICIO, CRIADO, EDITADO)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    """;
+
+            PreparedStatement stmtMensalidade = connection.prepareStatement(sqlQueryMensalidade);
+            stmtMensalidade.setInt(1, newMensalidadeID);
+            stmtMensalidade.setInt(2, newContratoID);
+            stmtMensalidade.setDouble(3, mensalidade.getValorMensal());
+            stmtMensalidade.setInt(4, mensalidade.getAnoExercicio());
+            stmtMensalidade.setString(5, Instant.now().toString());
+            stmtMensalidade.setString(6, Instant.now().toString());
+
+            if (stmtMensalidade.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
+            System.out.println("Cadastrou mensalidade");
+
+            // PASSO 3: ALUGUEL
+
+            String sqlQueryAluguel = """
+                                    INSERT INTO ALUGUEL_PAGAMENTOS
+                                        (PAGAMENTO_ID, MENSALIDADE_ID, MES_REFERENCIA, EMISSAO, VENCIMENTO,
+                                        TAXAS, CODIGO_BARRAS_BOLETO, DATA_PAGAMENTO, PAGO, CRIADO, EDITADO)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                    """;
+
+            PreparedStatement stmt = connection.prepareStatement(sqlQueryAluguel);
+
+            stmt.setInt(1, newAluguelID);
+            stmt.setInt(2, newMensalidadeID);
+            stmt.setInt(3, aluguelRequest.getMesReferencia());
+            stmt.setDate(4, Date.valueOf(aluguelRequest.getDataEmissao()));
+            stmt.setDate(5, Date.valueOf(aluguelRequest.getDataVencimento()));
+            stmt.setDouble(6, aluguelRequest.getTaxas());
+            stmt.setString(7, aluguelRequest.getCodigoBarras());
+            stmt.setDate(8, Date.valueOf(aluguelRequest.getDataPagamento()));
+            stmt.setString(9, aluguelRequest.getPago());
+            stmt.setString(10, Instant.now().toString());
+            stmt.setString(11, Instant.now().toString());
+
+            if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Aluguel");
+            System.out.println("Cadastrou aluguel");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package models;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Aluguel {
@@ -19,6 +18,18 @@ public class Aluguel {
                    double taxas, String codigoBarras, LocalDate dataPagamento) {
 
         this.mensalidadeID = mensalidadeID;
+        this.mesReferencia = mesReferencia;
+        this.dataEmissao = dataEmissao;
+        this.dataVencimento = dataVencimento;
+        this.taxas = taxas;
+        this.codigoBarras = codigoBarras;
+        this.dataPagamento = dataPagamento;
+        this.pago = "N";
+    }
+
+    public Aluguel(Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+                   double taxas, String codigoBarras, LocalDate dataPagamento) {
+
         this.mesReferencia = mesReferencia;
         this.dataEmissao = dataEmissao;
         this.dataVencimento = dataVencimento;
