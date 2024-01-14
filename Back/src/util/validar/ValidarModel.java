@@ -9,7 +9,6 @@ import javax.swing.*;
 
 public class ValidarModel {
 
-    
     public static final void ENDERECO(Integer usuarioID, String logradouro,
                                Integer numero, String complemento,
                                String bairro, Integer codigoMunicipioIBGE,
@@ -69,12 +68,6 @@ public class ValidarModel {
         if (dataVencimentoAluguel == null) throw new InvalidParamException("Dia de Vencimento não pode ser Nulo!");
 
     }
-
-    
-    public void MENSALIDADES() {
-
-    }
-
     
     public void TERRENOS() {
 
@@ -103,10 +96,12 @@ public class ValidarModel {
         if (telefoneFixo.trim().isBlank()) throw new InvalidParamException("Telefone Fixo não pode estar vazio!");
     }
 
-    public static final void MENSALIDADE(Integer contratoID, Double valorMensal, Integer anoExercicio) {
+
+    public static final void MENSALIDADES(Integer contratoID, Double valorMensal, Integer anoExercicio) {
 
         if (contratoID == null) throw new InvalidParamException("ID do Contrato não pode ser Nulo!");
         if (valorMensal == null) throw new InvalidParamException("Valor não pode ser nulo");
         if (anoExercicio == null) throw new InvalidParamException("O ano de exercício não pode ser nulo");
     }
+  
 }
