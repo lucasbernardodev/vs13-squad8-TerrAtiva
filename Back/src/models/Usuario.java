@@ -1,11 +1,9 @@
 package models;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Usuario {
-
+    private static Usuario instancia;
     private Integer usuarioId;
     private String nome;
     private String sobrenome;
@@ -19,6 +17,7 @@ public class Usuario {
     private String telefoneFixo;
     private String criado;
     private String editado;
+    private boolean estaLogado;
 
     public Usuario(){
     }
@@ -33,6 +32,50 @@ public class Usuario {
         this.ativo = ativo;
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
+    }
+
+    public static synchronized Usuario login(
+            String nome,
+            String sobrenome,
+            String email,
+            String senha,
+            String cpf,
+            LocalDate dataNascimento,
+            String sexo,
+            String ativo,
+            String celular,
+            String telefoneFixo
+    ) {
+        if (instancia == null) {
+            instancia = new Usuario(
+                    nome,
+                    sobrenome,
+                    email,
+                    senha,
+                    cpf,
+                    dataNascimento,
+                    sexo,
+                    ativo,
+                    celular,
+                    telefoneFixo
+            );
+            instancia.setEstaLogado(true);
+            return  instancia;
+        } else {
+            throw new RuntimeException("O usuário já está autenticado.");
+        }
+    }
+
+    public boolean estaLogado() {
+        return estaLogado;
+    }
+
+    public void setEstaLogado(boolean estaLogado) {
+        this.estaLogado = estaLogado;
+    }
+
+    public void logout() {
+        this.estaLogado = false;
     }
 
     public int getUsuarioId() {
@@ -137,5 +180,38 @@ public class Usuario {
 
     public void setEditado(String editado) {
         this.editado = editado;
+    }
+
+    public static synchronized Usuario getInstancia(
+            String nome,
+            String sobrenome,
+            String email,
+            String senha,
+            String cpf,
+            LocalDate dataNascimento,
+            String sexo,
+            String ativo,
+            String celular,
+            String telefoneFixo
+    ) {
+        if (instancia == null) {
+            instancia = new Usuario(
+                    nome,
+                    sobrenome,
+                    email,
+                    senha,
+                    cpf,
+                    dataNascimento,
+                    sexo,
+                    ativo,
+                    celular,
+                    telefoneFixo
+            );
+        }
+        return instancia;
+    }
+
+    public static synchronized Usuario getInstancia() {
+        return instancia;
     }
 }
