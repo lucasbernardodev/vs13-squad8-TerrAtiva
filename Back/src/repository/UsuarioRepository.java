@@ -186,7 +186,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
                 usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
                 return usuarioResponse;
             }
-            return null;
+            throw new DbException("Usuario não encontrado");
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
