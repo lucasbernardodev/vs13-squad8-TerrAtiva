@@ -5,7 +5,7 @@ import services.ContratoService;
 
 import java.sql.Date;
 
-public class ContratoControler {
+public class ContratoController {
     private ContratoService contratoService = new ContratoService();
 
     public String cadastrarContrato(Integer proprietarioID, Integer terrenoID,
@@ -46,7 +46,7 @@ public class ContratoControler {
 
     public String resgatarContratoPorID(Integer id){
         try {
-            return contratoService.resgatarPorId(id).toString();
+            return contratoService.resgatarContratoPorId(id).toString();
         } catch (DataNotFoundException e) {
             return e.getMessage();
         } catch (DbException e) {

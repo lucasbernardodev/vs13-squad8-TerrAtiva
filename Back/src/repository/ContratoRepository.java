@@ -49,20 +49,18 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         try {
             connection = BancoDeDados.criaConexao();
             String sqlQuery = """
-                    UPDATE CONTRATOS
-                        set
-                        INSERT INTO CONTRATOS
-                        LOCATARIO_ID = ?,
-                        TERRENO_ID = ?,
-                        ATIVO = ?,
-                        DATA_ASSINATURA = ?,
-                        DATA_INICIO = ?,
-                        DATA_FINAL = ?,
-                        DATA_VENCIMENTO_ALUGUEL = ?,
-                        EDITADO = ?
-                                        
-                    WHERE CONTRATO_ID = ?
-                    """;
+                UPDATE CONTRATOS
+                SET
+                    LOCATARIO_ID = ?,
+                    TERRENO_ID = ?,
+                    ATIVO = ?,
+                    DATA_ASSINATURA = ?,
+                    DATA_INICIO = ?,
+                    DATA_FINAL = ?,
+                    DATA_VENCIMENTO_ALUGUEL = ?,
+                    EDITADO = ?
+                WHERE CONTRATO_ID = ?
+                """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
             stmt.setInt(1, ContratoRequest.getProprietarioID());
@@ -72,9 +70,12 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             stmt.setObject(5, ContratoRequest.getDataInicio());
             stmt.setObject(6, ContratoRequest.getDataFinal());
             stmt.setObject(7, ContratoRequest.getDataVencimentoAluguel());
-            stmt.setString(9, Instant.now().toString());
+            stmt.setString(8, Instant.now().toString());
+            stmt.setInt(9, id);  // Adicionado o ID na posição correta
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) {
+                throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID: " + id);
+            }
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -82,6 +83,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             BancoDeDados.fechaConexao(connection);
         }
     }
+
     @Override
     public void deletar(int id) {
         try {
