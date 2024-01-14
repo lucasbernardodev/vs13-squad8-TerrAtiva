@@ -56,6 +56,17 @@ public class Terreno {
         this.editado = Instant.now();
     }
 
+    public Terreno(Integer id,String titulo, String descricao, Integer proprietarioID,
+                   Integer enderecoID, double preco, String tamanho) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.proprietarioID = proprietarioID;
+        this.enderecoID = enderecoID;
+        this.preco = preco;
+        this.tamanho = tamanho;
+    }
+
     public Integer getId() {
         return id;
     }
