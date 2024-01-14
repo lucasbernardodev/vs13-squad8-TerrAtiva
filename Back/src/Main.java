@@ -1,11 +1,8 @@
-import database.BancoDeDados;
-
-import java.sql.Connection;
+import app.App;
 
 public class Main {
+    static App app = new App();
     public static void main(String[] args) {
-        Connection conn = BancoDeDados.criaConexao();
-        if(conn == null) System.out.println("Erro");
-        System.out.println("tudo certo");
+        app.iniciaAplicacao();
     }
 }
