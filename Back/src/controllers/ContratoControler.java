@@ -46,7 +46,7 @@ public class ContratoControler {
 
     public String resgatarContratoPorID(Integer id){
         try {
-            return contratoService.resgatarContratoPorID(id).toString();
+            return contratoService.resgatarPorId(id).toString();
         } catch (DataNotFoundException e) {
             return e.getMessage();
         } catch (DbException e) {

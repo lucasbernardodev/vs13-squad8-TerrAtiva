@@ -12,6 +12,8 @@ public class Contrato {
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private LocalDate dataVencimentoAluguel;
+    private Instant criado;
+    private Instant editado;
 
     public Contrato() {}
 
@@ -26,6 +28,8 @@ public class Contrato {
         this.dataInicio = dataInicio;
         this.dataFinal = dataFinal;
         this.dataVencimentoAluguel = dataVencimentoAluguel;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
 
     public Contrato(Integer terrenoID, String ativo, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
@@ -101,4 +105,19 @@ public class Contrato {
         this.dataVencimentoAluguel = dataVencimentoAluguel;
     }
 
+    public Instant getCriado() {
+        return criado;
+    }
+
+    public void setCriado(Instant criado) {
+        this.criado = criado;
+    }
+
+    public Instant getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Instant editado) {
+        this.editado = editado;
+    }
 }
