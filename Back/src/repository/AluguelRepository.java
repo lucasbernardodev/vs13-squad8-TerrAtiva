@@ -1,47 +1,24 @@
 package repository;
 
 import database.BancoDeDados;
+import infra.exceptions.UnvailableOperationException;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
 import models.Aluguel;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.time.Instant;
 
 public class AluguelRepository  implements DaoRepository<Aluguel>{
     Connection connection;
     @Override
     public void adicionar(Aluguel AluguelRequest) {
-        try {
-            connection = BancoDeDados.criaConexao();
-            String sqlQuery = """
-                    INSERT INTO ALUGUEL_PAGAMENTOS
-                        (PAGAMENTO_ID, MENSALIDADE_ID, MES_REFERENCIA, EMISSAO, VENCIMENTO,
-                        TAXAS, CODIGO_BARRAS_BOLETO, DATA_PAGAMENTO, PAGO, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """;
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-
-            stmt.setInt(1, AluguelRequest.getPagamentoID());
-            stmt.setInt(2, AluguelRequest.getMensalidadeID());
-            stmt.setInt(3, AluguelRequest.getMesReferencia());
-            stmt.setObject(4, AluguelRequest.getDataEmissao());
-            stmt.setObject(5, AluguelRequest.getDataVencimento());
-            stmt.setDouble(6, AluguelRequest.getTaxas());
-            stmt.setString(7, AluguelRequest.getCodigoBarras());
-            stmt.setObject(8, AluguelRequest.getDataPagamento());
-            stmt.setString(3, AluguelRequest.getPago());
-            stmt.setString(9, Instant.now().toString());
-            stmt.setString(10, Instant.now().toString());
-
-            if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Aluguel");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
+        throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
     public void alterar(int id, Aluguel AluguelRequest) {
@@ -57,7 +34,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
                         TAXAS = ?,
                         CODIGO_BARRAS_BOLETO = ?,
                         DATA_PAGAMENTO = ?,
-                        PAGO = ?
+                        PAGO = ?,
                         EDITADO = ?
                                         
                     WHERE PAGAMENTO_ID = ?

@@ -1,6 +1,5 @@
 package models;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Aluguel {
@@ -13,14 +12,24 @@ public class Aluguel {
     private String codigoBarras;
     private LocalDate dataPagamento;
     private String pago;
-    private Instant criado;
-    private Instant editado;
 
     public Aluguel(){}
     public Aluguel(Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
                    double taxas, String codigoBarras, LocalDate dataPagamento) {
 
         this.mensalidadeID = mensalidadeID;
+        this.mesReferencia = mesReferencia;
+        this.dataEmissao = dataEmissao;
+        this.dataVencimento = dataVencimento;
+        this.taxas = taxas;
+        this.codigoBarras = codigoBarras;
+        this.dataPagamento = dataPagamento;
+        this.pago = "N";
+    }
+
+    public Aluguel(Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+                   double taxas, String codigoBarras, LocalDate dataPagamento) {
+
         this.mesReferencia = mesReferencia;
         this.dataEmissao = dataEmissao;
         this.dataVencimento = dataVencimento;
@@ -98,22 +107,6 @@ public class Aluguel {
         this.pago = pago;
     }
 
-    public Instant getCriado() {
-        return criado;
-    }
-
-    public void setCriado(Instant criado) {
-        this.criado = criado;
-    }
-
-    public Instant getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Instant editado) {
-        this.editado = editado;
-    }
-
     @Override
     public String toString() {
         return "Aluguel{" +
@@ -126,8 +119,6 @@ public class Aluguel {
                 ", codigoBarras='" + codigoBarras + '\'' +
                 ", dataPagamento=" + dataPagamento +
                 ", pago='" + pago + '\'' +
-                ", criado=" + criado +
-                ", editado=" + editado +
                 '}';
     }
 }

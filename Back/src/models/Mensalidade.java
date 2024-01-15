@@ -4,24 +4,26 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 public class Mensalidade {
-        private Integer mensalidadeID;
-        private Integer contratoID;
-        private double valorMensal;
-        private Integer anoExercicio;
-        private LocalDate dataReajuste;
+    private Integer mensalidadeID;
+    private Integer contratoID;
+    private double valorMensal;
+    private Integer anoExercicio;
+    private LocalDate dataReajuste;
 
-    private Instant criado;
-    private Instant editado;
 
-    public Mensalidade() {}
+    public Mensalidade() {
+    }
 
     public Mensalidade(Integer contratoID, double valorMensal,
                        Integer anoExercicio) {
         this.contratoID = contratoID;
         this.valorMensal = valorMensal;
         this.anoExercicio = anoExercicio;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
+    }
+    public Mensalidade(double valorMensal,
+                       Integer anoExercicio) {
+        this.valorMensal = valorMensal;
+        this.anoExercicio = anoExercicio;
     }
 
     public Mensalidade(Integer mensalidadeID, Integer contratoID, double valorMensal,
@@ -30,21 +32,6 @@ public class Mensalidade {
         this.contratoID = contratoID;
         this.valorMensal = valorMensal;
         this.anoExercicio = anoExercicio;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
-    }
-
-
-    public Mensalidade(Integer mensalidadeID, Integer contratoID, double valorMensal,
-                       Integer anoExercicio, LocalDate dataReajuste) {
-
-        this.mensalidadeID = mensalidadeID;
-        this.contratoID = contratoID;
-        this.valorMensal = valorMensal;
-        this.anoExercicio = anoExercicio;
-        this.dataReajuste = dataReajuste;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
     }
 
     public Integer getMensalidadeID() {
@@ -89,7 +76,7 @@ public class Mensalidade {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return "---------Mensalidade---------\nID da Mensalidades: " + mensalidadeID + "\nID do Contrato: " + contratoID + "\nValor mensal: R$ " + valorMensal + "\nAno de Exercicios: " + anoExercicio;
     }
 

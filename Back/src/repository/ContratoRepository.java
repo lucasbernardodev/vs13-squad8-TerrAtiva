@@ -4,10 +4,16 @@ import database.BancoDeDados;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
+import infra.exceptions.UnvailableOperationException;
 import models.Contrato;
 
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.time.Instant;
 
 public class ContratoRepository implements DaoRepository<Contrato>{
@@ -15,34 +21,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     Connection connection;
     @Override
     public void adicionar(Contrato ContratoRequest) {
-        try {
-            connection = BancoDeDados.criaConexao();
-            String sqlQuery = """
-                    INSERT INTO CONTRATOS
-                        (CONTRATO_ID, LOCATARIO_ID, TERRENO_ID, ATIVO, DATA_ASSINATURA,
-                        DATA_INICIO, DATA_FINAL, DIA_VENCIMENTO_ALUGUEL, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """;
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-
-            stmt.setInt(1, ContratoRequest.getId());
-            stmt.setInt(2, ContratoRequest.getProprietarioID());
-            stmt.setInt(3, ContratoRequest.getTerrenoID());
-            stmt.setString(4, ContratoRequest.getAtivo());
-            stmt.setObject(5, ContratoRequest.getDataAssinatura());
-            stmt.setObject(6, ContratoRequest.getDataInicio());
-            stmt.setObject(7, ContratoRequest.getDataFinal());
-            stmt.setObject(8, ContratoRequest.getDataVencimentoAluguel());
-            stmt.setString(9, Instant.now().toString());
-            stmt.setString(10, Instant.now().toString());
-
-            if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Contrato");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
+        throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
     public void alterar(int id, Contrato ContratoRequest) {
@@ -58,7 +37,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                     DATA_ASSINATURA = ?,
                     DATA_INICIO = ?,
                     DATA_FINAL = ?,
-                    DATA_VENCIMENTO_ALUGUEL = ?,
+                    DIA_VENCIMENTO_ALUGUEL = ?,
                     EDITADO = ?
                 WHERE CONTRATO_ID = ?
                 """;
@@ -67,13 +46,12 @@ public class ContratoRepository implements DaoRepository<Contrato>{
 
             stmt.setInt(1, ContratoRequest.getProprietarioID());
             stmt.setInt(2, ContratoRequest.getTerrenoID());
-            stmt.setString(3, ContratoRequest.getAtivo());
-            stmt.setObject(4, ContratoRequest.getDataAssinatura());
-            stmt.setObject(5, ContratoRequest.getDataInicio());
-            stmt.setObject(6, ContratoRequest.getDataFinal());
-            stmt.setObject(7, ContratoRequest.getDataVencimentoAluguel());
+            stmt.setDate(4, Date.valueOf(ContratoRequest.getDataAssinatura()));
+            stmt.setDate(5, Date.valueOf(ContratoRequest.getDataInicio()));
+            stmt.setDate(6, Date.valueOf(ContratoRequest.getDataFinal()));
+            stmt.setInt(7, ContratoRequest.getDataVencimentoAluguel());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);  // Adicionado o ID na posição correta
+            stmt.setInt(9, id);
 
             if (stmt.executeUpdate() == 0) {
                 throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID: " + id);
@@ -119,11 +97,10 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                 return new Contrato(
                         result.getInt("LOCATARIO_ID"),
                         result.getInt("TERRENO_ID"),
-                        result.getString("ATIVO"),
                         result.getDate("DATA_ASSINATURA").toLocalDate(),
                         result.getDate("DATA_INICIO").toLocalDate(),
                         result.getDate("DATA_FINAL").toLocalDate(),
-                        result.getDate("DIA_VENCIMENTO_ALUGUEL").toLocalDate()
+                        result.getInt("DIA_VENCIMENTO_ALUGUEL")
                 );
             }
             throw new DataNotFoundException("Não foi possível resgatar os dados do Contrato.");

@@ -3,6 +3,7 @@ package util.validar;
 import infra.exceptions.DataFormatInvalidException;
 import infra.exceptions.InvalidParamException;
 
+import java.util.Date;
 import java.time.LocalDate;
 
 public class ValidarModel {
@@ -48,10 +49,9 @@ public class ValidarModel {
         if (localizacao.trim().isBlank()) throw new InvalidParamException("Complemento do Endereço não pode estar vazio!");
     }
     
-    public static final void ALUGUEL_PAGAMENTOS(Integer mensalidadeID, Integer mesReferencia,
+    public static final void ALUGUEL_PAGAMENTOS(Integer mesReferencia,
                                    LocalDate dataEmissao, LocalDate dataVencimento,
                                    double taxas, String codigoBarras, LocalDate dataPagamento) {
-        if (mensalidadeID == null) throw new InvalidParamException("ID da Mensalidade não pode ser Nulo!");
         if (mesReferencia == null) throw new InvalidParamException("Mês Referência não pode ser Nulo!");
         if (dataEmissao == null) throw new InvalidParamException("Data de Emissão não pode ser Nula!");
         if (dataVencimento == null) throw new InvalidParamException("Data de Vencimento não pode ser Nula!");
@@ -63,7 +63,7 @@ public class ValidarModel {
     public static final void CONTRATOS(Integer locatarioID, Integer terrenoID,
                                        LocalDate dataAssinatura,
                                        LocalDate dataInicio, LocalDate dataFinal,
-                                       LocalDate dataVencimentoAluguel) {
+                                       Integer dataVencimentoAluguel) {
 
         if (locatarioID == null) throw new InvalidParamException("ID do Locatário não pode ser Nulo!");
         if (terrenoID == null) throw new InvalidParamException("ID do Terreno não pode ser Nulo!");
@@ -73,8 +73,6 @@ public class ValidarModel {
         if (dataVencimentoAluguel == null) throw new InvalidParamException("Dia de Vencimento não pode ser Nulo!");
 
     }
-
-
 
     public static final void USUARIOS(String nome,
                  String sobrenome, 
@@ -100,11 +98,10 @@ public class ValidarModel {
     }
 
 
-    public static final void MENSALIDADES(Integer contratoID, Double valorMensal, Integer anoExercicio) {
+    public static final void MENSALIDADES(Double valorMensal, Integer anoExercicio) {
 
-        if (contratoID == null) throw new InvalidParamException("ID do Contrato não pode ser Nulo!");
-        if (valorMensal == null) throw new InvalidParamException("Valor não pode ser nulo");
-        if (anoExercicio == null) throw new InvalidParamException("O ano de exercício não pode ser nulo");
+        if (valorMensal == null || valorMensal < 0) throw new InvalidParamException("O Valor mensal dever ser válido!");
+        if (anoExercicio ==  null || anoExercicio < LocalDate.now().getYear()) throw new InvalidParamException("O ano de exercício deve ser válido");
     }
   
 }
