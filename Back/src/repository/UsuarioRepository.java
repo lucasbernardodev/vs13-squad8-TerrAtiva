@@ -64,7 +64,6 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
                     set  NOME= ?,
                          SOBRENOME= ?,
                          EMAIL= ?,
-                         SENHA= ?,
                          CPF= ?,
                          DATA_NASCIMENTO= ?,
                          SEXO= ?,
@@ -79,14 +78,13 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(1, obj.getNome());
             stmt.setString(2, obj.getSobrenome());
             stmt.setString(3, obj.getEmail());
-            stmt.setString(4, obj.getSenha());
-            stmt.setString(5, obj.getCpf());
-            stmt.setDate(6, Date.valueOf(obj.getDataNascimento()));
-            stmt.setString(7, obj.getSexo());
-            stmt.setString(8, obj.getCelular());
-            stmt.setString(9, obj.getTelefoneFixo());
-            stmt.setString(10, Instant.now().toString());
-            stmt.setInt(11, obj.getUsuarioId());
+            stmt.setString(4, obj.getCpf());
+            stmt.setDate(5, Date.valueOf(obj.getDataNascimento()));
+            stmt.setString(6, obj.getSexo());
+            stmt.setString(7, obj.getCelular());
+            stmt.setString(8, obj.getTelefoneFixo());
+            stmt.setString(9, Instant.now().toString());
+            stmt.setInt(10, id);
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Erro ocurrido na alteracao");
 

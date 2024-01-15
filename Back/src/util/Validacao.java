@@ -55,9 +55,10 @@ public class Validacao {
         }
     }
 
-    public static int validarInt() {
+    public static int validarInt(String placeholder) {
 
         while (true) {
+            System.out.print(placeholder);
             try {
                 return Integer.parseInt(input.nextLine());
             } catch (NumberFormatException e) {

@@ -3,16 +3,18 @@ package repository;
 import database.BancoDeDados;
 import infra.exceptions.DbException;
 import models.Feed;
+import models.Terreno;
+import oracle.jdbc.proxy.annotation.Pre;
 import services.FeedService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class FeedRepository {
-
     String pesquisa = "";
     String valor = "";
     String tamanho = "";
@@ -115,7 +117,137 @@ public class FeedRepository {
         } finally {
             BancoDeDados.fechaConexao(connection);
         }
+
     }
+
+    public ArrayList<Terreno> mostrarTerrenosDisponiveis(Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE DISPONIVEL = 'S' AND DONO_ID = ?";
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setInt(1, usuarioID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosArrendados(Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE DISPONIVEL = 'N' AND DONO_ID = ?";
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setInt(1, usuarioID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTodosOsTerrenos(Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE DONO_ID = ?";
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setInt(1, usuarioID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosPorPreco(double value) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE PRECO <= ? AND DISPONIVEL = 'S'";
+
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setDouble(1, value);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosPorTitulo(String titulo, Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE lower(TITULO) LIKE LOWER(TRIM(?)) AND DISPONIVEL = 'S' AND DONO_ID = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setString(1,  "%" + titulo + "%");
+            stmt.setInt(2,  usuarioID);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    private Terreno terrenoMapper(ResultSet resultSet) throws SQLException {
+        return new Terreno(
+                resultSet.getInt("TERRENO_ID"),
+                resultSet.getString("TITULO"),
+                resultSet.getString("DESCRICAO"),
+                resultSet.getInt("DONO_ID"),
+                resultSet.getInt("ENDERECO_TERRENO_ID"),
+                resultSet.getDouble("PRECO"),
+                resultSet.getString("TAMANHO"),
+                resultSet.getString("DISPONIVEL")
+        );
+    }
+
     public void filtrarPorCaracteristicas(String caracteristicas) {
         this.pesquisa = caracteristicas;
     }
