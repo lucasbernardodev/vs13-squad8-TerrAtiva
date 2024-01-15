@@ -1,6 +1,7 @@
 package app.menus;
 
 import controllers.LoginController;
+import util.Logo;
 import util.Validacao;
 import util.formatter.ShowMenu;
 
@@ -12,7 +13,8 @@ public class LoginMenu {
         int opcaoSelecionada;
 
         do{
-            ShowMenu.header("Bem-vindo ao Terra Viva, o seu aplicativo de arrendamento de terras!", 70);
+            System.out.println(Logo.logo);
+            ShowMenu.header("Bem-vindo ao Terra Ativa, o seu aplicativo de arrendamento de terras!", 70);
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Login");
             System.out.println("2 - Cadastrar-se");

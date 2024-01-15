@@ -3,7 +3,6 @@ package app.menus;
 import controllers.FeedUsuarioController;
 import controllers.UsuarioController;
 import models.Usuario;
-import util.Logo;
 import util.Validacao;
 import util.formatter.ShowMenu;
 
@@ -16,7 +15,6 @@ public class UsuarioMenu {
     public void inicio() {
         int opcaoSelecionada;
         do{
-            System.out.println(Logo.logo);
             ShowMenu.header("Bem-vindo de volta " + Usuario.instancia.getNome() + "!", 70);
             System.out.println("1 - Acessar Perfil");
             System.out.println("2 - Acessar Terrenos");
