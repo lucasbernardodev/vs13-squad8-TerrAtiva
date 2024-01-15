@@ -1,12 +1,14 @@
 package app.menus;
 
 import models.Usuario;
+import util.Logo;
 import util.Validacao;
 
 public class UsuarioMenu {
     public void inicio() {
         int opcaoSelecionada;
         do{
+            System.out.println(Logo.logo);
             System.out.println("Bem-vindo de volta " + Usuario.instancia.getNome() + "!");
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Acessar Perfil");
