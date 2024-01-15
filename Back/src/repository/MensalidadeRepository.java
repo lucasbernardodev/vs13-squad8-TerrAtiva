@@ -5,7 +5,11 @@ import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
 import infra.exceptions.UnvailableOperationException;
 import models.Mensalidade;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class MensalidadeRepository implements DaoRepository<Mensalidade> {
 
