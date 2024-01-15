@@ -1,13 +1,19 @@
 package app.menus;
 
 import controllers.FeedController;
+import controllers.TerrenoController;
+import models.Terreno;
+import models.Usuario;
 import util.Validacao;
 import util.formatter.ShowMenu;
+
+import java.time.LocalDate;
 
 public class FeedMenu {
 
     public static void feedMenu() {
         FeedController feed = new FeedController();
+//        UsuarioMenu usuarioMenu = new UsuarioMenu();
         int opcao;
         do {
             ShowMenu.header("FEED", 70);
@@ -26,7 +32,11 @@ public class FeedMenu {
                     feedFiltrado();
                     break;
                 case 3:
-//                    confereUsuario(); TODO: ARRUMAR MÉTODO
+                    arrendarTerreno(Validacao.validarInt(
+                            "Digite o ID do terreno que deseja arrendar: "));
+                    break; 
+                case 4:
+                    opcao = 0;
                     break;
                 case 0:
                     break;
@@ -82,5 +92,20 @@ public class FeedMenu {
 
         } while (opcao != 0);
     }
+
+
+    public static void arrendarTerreno(int id) {
+        TerrenoController terrenoController = new TerrenoController();
+        Terreno terreno = terrenoController.resgatarTerrenoPorID(id);
+        LocalDate localDate = LocalDate.now();
+
+        terrenoController.arrendarTerreno(terreno.getProprietarioID(), terreno.getId(),
+                localDate, localDate, localDate.plusYears(1),
+                localDate.plusDays(15).getDayOfMonth(), terreno.getPreco(),
+                localDate.getYear(), localDate.getMonthValue(),  localDate, localDate, terreno.getPreco() * 0.02,
+                "0000000000000000000", localDate.plusMonths(1));
+        
+    }
+    
 
 }

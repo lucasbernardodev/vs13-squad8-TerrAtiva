@@ -69,7 +69,9 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     public void deletar(int id) {
         try {
             connection = BancoDeDados.criaConexao();
-            String sqlQuery = "DELETE FROM CONTRATOS WHERE CONTRATO_ID = " + id;
+            String sqlQuery = "UPDATE CONTRATOS " +
+                    "SET ATIVO = 'N'" +
+                    "WHERE CONTRATO_ID = " + id;
             Statement stmt = connection.createStatement();
 
             int rowsAffected = stmt.executeUpdate(sqlQuery);

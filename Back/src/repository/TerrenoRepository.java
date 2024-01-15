@@ -143,6 +143,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             connection = BancoDeDados.criaConexao();
             int newContratoID = GeradorID.getProximoContrato(connection);
             Integer newMensalidadeID = GeradorID.getProximoMensalidade(connection);
+            Integer mensalidadeID = Integer.valueOf(newMensalidadeID);
             Integer newAluguelID = GeradorID.getProximoAluguel(connection);
 
             String sqlQueryContrato = """
@@ -198,30 +199,36 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             PreparedStatement stmt = connection.prepareStatement(sqlQueryAluguel);
 
             stmt.setInt(1, newAluguelID);
-            stmt.setInt(2, newMensalidadeID);
+            stmt.setInt(2, mensalidadeID);
             stmt.setInt(3, aluguelRequest.getMesReferencia());
-            stmt.setDate(4, Date.valueOf(aluguelRequest.getDataEmissao()));
-            stmt.setDate(5, Date.valueOf(aluguelRequest.getDataVencimento()));
+            stmt.setString(4, Date.valueOf(aluguelRequest.getDataEmissao()).toString());
+            stmt.setString(5, Date.valueOf(aluguelRequest.getDataVencimento()).toString());
             stmt.setDouble(6, aluguelRequest.getTaxas());
             stmt.setString(7, aluguelRequest.getCodigoBarras());
             stmt.setDate(8, Date.valueOf(aluguelRequest.getDataPagamento()));
             stmt.setString(9, aluguelRequest.getPago());
             stmt.setString(10, Instant.now().toString());
             stmt.setString(11, Instant.now().toString());
-
+            System.out.println(contratoRequest.getTerrenoID());
             if (stmt.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível cadastrar novo Aluguel");
 
-            PreparedStatement stmtTerrenoIndisponivel = connection.prepareStatement("""
-                                                                                        UPDATE TERRENOS
-                                                                                            SET
-                                                                                            DISPONIVEL = 'N',
-                                                                                            EDITADO = ?
-                                                                                         WHERE TERRENO_ID = ?
-                                                                                        """);
+            System.out.println(contratoRequest.getTerrenoID());
+            PreparedStatement stmtTerrenoIndisponivel = connection.prepareStatement(
+            """
+            UPDATE TERRENOS
+                SET
+                DISPONIVEL = 'N',
+                EDITADO = ?
+             WHERE TERRENO_ID = ?
+            """);
+
             stmtTerrenoIndisponivel.setString(1, Instant.now().toString());
+            System.out.println(contratoRequest.getTerrenoID());
             stmtTerrenoIndisponivel.setInt(2, contratoRequest.getTerrenoID());
-            stmt.executeUpdate();
+
+            if (stmtTerrenoIndisponivel.executeUpdate() == 0)
+                throw new UnauthorizedOperationException("Não foi possível modificar o terreno para indisponivel");
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
