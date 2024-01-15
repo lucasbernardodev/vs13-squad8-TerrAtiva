@@ -16,7 +16,8 @@ public class AluguelController {
                         taxas, codigoBarras, dataPagamento);
                 return "Dados do Aluguel alterados com Sucesso!";
 
-            } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException | DbException e) {
+            } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException |
+                     DbException | EntityIdNullException e) {
                 return e.getMessage();
             }
         }

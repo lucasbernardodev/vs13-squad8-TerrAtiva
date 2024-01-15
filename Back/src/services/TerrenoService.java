@@ -47,4 +47,8 @@ public class TerrenoService {
                 new Mensalidade(valorMensal, anoExercicio),
                 new Aluguel(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento));
     }
+
+    public void cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+        terrenoRepository.cancelarContratoTerreno(usuarioID, contratoID);
+    }
 }
