@@ -19,7 +19,7 @@ public class FeedRepository {
     String estado = "";
 
     Connection connection;
-//teste
+
     public ArrayList<Feed> buscarTerrenos() {
         try {
             ArrayList<Feed> response = new ArrayList<>();
