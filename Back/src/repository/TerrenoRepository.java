@@ -9,7 +9,6 @@ import models.Aluguel;
 import models.Contrato;
 import models.Mensalidade;
 import models.Terreno;
-import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.*;
 import java.time.Instant;
