@@ -11,7 +11,7 @@ public class EnderecoService {
                                   Integer numero, String complemento,
                                   String bairro, Integer codigoMunicipioIBGE,
                                   Integer cep) {
-        ValidarModel.ENDERECOS(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
+        ValidarModel.ENDERECO(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
         enderecoRepository.adicionar(new Endereco(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep));
     }
 
@@ -19,7 +19,7 @@ public class EnderecoService {
                         Integer numero, String complemento,
                         String bairro, Integer codigoMunicipioIBGE,
                         Integer cep) {
-        ValidarModel.ENDERECOS(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
+        ValidarModel.ENDERECO(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
         enderecoRepository.alterar(id,
                 new Endereco(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep));
     }

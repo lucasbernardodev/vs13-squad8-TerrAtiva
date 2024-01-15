@@ -1,5 +1,9 @@
 package models;
 
+import database.BancoDeDados;
+
+import java.time.Instant;
+
 public class Terreno {
     private Integer id;
     private String titulo;
@@ -9,6 +13,8 @@ public class Terreno {
     private double preco;
     private String tamanho;
     private String disponivel;
+    private Instant criado;
+    private Instant editado;
 
     public Terreno() {}
 
@@ -21,6 +27,8 @@ public class Terreno {
         this.preco = preco;
         this.tamanho = tamanho;
         this.disponivel = "S";
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
     public Terreno(String titulo, String descricao, Integer proprietarioID,
                    Integer enderecoID, double preco, String tamanho,String disponivel) {
@@ -31,6 +39,8 @@ public class Terreno {
         this.preco = preco;
         this.tamanho = tamanho;
         this.disponivel = disponivel;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
     public Terreno(Integer id,String titulo, String descricao, Integer proprietarioID,
                    Integer enderecoID, double preco, String tamanho,String disponivel) {
@@ -42,17 +52,8 @@ public class Terreno {
         this.preco = preco;
         this.tamanho = tamanho;
         this.disponivel = disponivel;
-    }
-
-    public Terreno(Integer id,String titulo, String descricao, Integer proprietarioID,
-                   Integer enderecoID, double preco, String tamanho) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.proprietarioID = proprietarioID;
-        this.enderecoID = enderecoID;
-        this.preco = preco;
-        this.tamanho = tamanho;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
 
     public Integer getId() {
@@ -119,6 +120,22 @@ public class Terreno {
         this.disponivel = disponivel;
     }
 
+    public Instant getCriado() {
+        return criado;
+    }
+
+    public void setCriado(Instant criado) {
+        this.criado = criado;
+    }
+
+    public Instant getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Instant editado) {
+        this.editado = editado;
+    }
+
     @Override
     public String toString() {
         return "Terreno{" +
@@ -130,6 +147,8 @@ public class Terreno {
                 ", preco=" + preco +
                 ", tamanho='" + tamanho + '\'' +
                 ", disponivel='" + disponivel + '\'' +
+                ", criado=" + criado +
+                ", editado=" + editado +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package controllers;
 
 import infra.exceptions.*;
-import models.Usuario;
 import services.UsuarioService;
 
 import java.time.LocalDate;
@@ -51,16 +50,6 @@ public class UsuarioController {
         }
     }
 
-    public Usuario resgatarUsuarioPorEmail(String email,String senha) {
-        try {
-            return usuarioService.buscarUsuarioPorEmail(email,senha);
-        } catch (DataNotFoundException e) {
-            throw new DataFormatInvalidException(e.getMessage());
-        } catch (DbException e) {
-            throw new DbException(e.getMessage());
-        }
-    }
-
     public String deletarDados(int idUsuario) {
         try {
             usuarioService.deletarUsuario(idUsuario);
@@ -68,7 +57,7 @@ public class UsuarioController {
 
         } catch (DbException e) {
             return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
+        } catch (UnauthorizedOperationException e){
             return e.getMessage();
         }
     }

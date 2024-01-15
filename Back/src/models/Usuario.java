@@ -1,9 +1,11 @@
 package models;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Usuario {
-    private static Usuario instancia;
+
     private Integer usuarioId;
     private String nome;
     private String sobrenome;
@@ -15,12 +17,11 @@ public class Usuario {
     private String ativo;
     private String celular;
     private String telefoneFixo;
+    private Instant criado;
+    private Instant editado;
 
-    private boolean estaLogado;
-  
     public Usuario(){
     }
-  
     public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -32,49 +33,8 @@ public class Usuario {
         this.ativo = ativo;
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
-
-    public static synchronized Usuario login(
-            String nome,
-            String sobrenome,
-            String email,
-            String senha,
-            String cpf,
-            LocalDate dataNascimento,
-            String sexo,
-            String ativo,
-            String celular,
-            String telefoneFixo
-    ) {
-        if (instancia == null) {
-            instancia = new Usuario(
-                    nome,
-                    sobrenome,
-                    email,
-                    senha,
-                    cpf,
-                    dataNascimento,
-                    sexo,
-                    ativo,
-                    celular,
-                    telefoneFixo
-            );
-            instancia.setEstaLogado(true);
-            return  instancia;
-        } else {
-            throw new RuntimeException("O usuário já está autenticado.");
-        }
-    }
-
-    public boolean estaLogado() {
-        return estaLogado;
-    }
-
-    public void setEstaLogado(boolean estaLogado) {
-        this.estaLogado = estaLogado;
-    }
-
-    public void logout() {
-        this.estaLogado = false;
+        this.criado = Instant.now();
+        this.editado = Instant.now();
     }
 
     public int getUsuarioId() {
@@ -165,37 +125,19 @@ public class Usuario {
         this.telefoneFixo = telefoneFixo;
     }
 
-    public static synchronized Usuario getInstancia(
-            String nome,
-            String sobrenome,
-            String email,
-            String senha,
-            String cpf,
-            LocalDate dataNascimento,
-            String sexo,
-            String ativo,
-            String celular,
-            String telefoneFixo
-    ) {
-        if (instancia == null) {
-            instancia = new Usuario(
-                    nome,
-                    sobrenome,
-                    email,
-                    senha,
-                    cpf,
-                    dataNascimento,
-                    sexo,
-                    ativo,
-                    celular,
-                    telefoneFixo
-            );
-        }
-        return instancia;
+    public Instant getCriado() {
+        return criado;
     }
 
-    public static synchronized Usuario getInstancia() {
-        return instancia;
+    public void setCriado(Instant criado) {
+        this.criado = criado;
     }
 
+    public Instant getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Instant editado) {
+        this.editado = editado;
+    }
 }
