@@ -14,7 +14,8 @@ public class TerrenoController {
         try {
             terrenoService.cadastrarTerreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
             return "Terreno cadastrado com sucesso!";
-        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException | DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException |
+                 DbException | EntityIdNullException e) {
             return e.getMessage();
         }
     }
@@ -58,6 +59,14 @@ public class TerrenoController {
                                             mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
 
             return "Terreno Arrendado com Sucesso!";
+        } catch (DbException | UnauthorizedOperationException | DataFormatInvalidException | DateTimeException | InvalidParamException e) {
+            return e.getMessage();
+        }
+    }
+    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+        try {
+            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
+            return "Contrato cancelado com sucesso!";
         } catch (DbException | UnauthorizedOperationException | DataFormatInvalidException | DateTimeException | InvalidParamException e) {
             return e.getMessage();
         }
