@@ -1,3 +1,4 @@
+/*
 package app.menus;
 
 import app.enums.TipoUsuario;
@@ -84,3 +85,4 @@ public class FeedMenu {
     }
 
 }
+*/

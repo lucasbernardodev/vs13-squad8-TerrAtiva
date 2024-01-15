@@ -19,7 +19,8 @@ public class LoginController {
         } catch (DataFormatInvalidException e) {
             throw new DataFormatInvalidException(e.getMessage());
         } catch (DbException e) {
-            throw new DbException(e.getMessage());
+            System.out.println("Dados incorretos, tente novamente");
+            return false;
         }
 
     }

@@ -39,6 +39,7 @@ public class UsuarioService {
 
         if (usuario != null) {
             return Usuario.login(
+                    usuario.getUsuarioId(),
                     usuario.getNome(),
                     usuario.getSobrenome(),
                     usuario.getEmail(),

@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class Usuario {
-    private static Usuario instancia;
+    public static Usuario instancia;
     private Integer usuarioId;
     private String nome;
     private String sobrenome;
@@ -34,7 +34,8 @@ public class Usuario {
         this.telefoneFixo = telefoneFixo;
     }
 
-    public static synchronized Usuario login(
+    public static Usuario login(
+            Integer usuarioId,
             String nome,
             String sobrenome,
             String email,
@@ -60,7 +61,8 @@ public class Usuario {
                     telefoneFixo
             );
             instancia.setEstaLogado(true);
-            return instancia;
+            instancia.setUsuarioId(usuarioId);
+            return  instancia;
         } else {
             throw new RuntimeException("O usuário já está autenticado.");
         }
@@ -195,8 +197,21 @@ public class Usuario {
         return instancia;
     }
 
-    public static synchronized Usuario getInstancia() {
+    public static Usuario getInstancia() {
         return instancia;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nome: " + nome +
+                ", sobrenome: " + sobrenome +
+                ", email: " + email +
+                ", cpf: " + cpf +
+                ", dataNascimento: " + dataNascimento +
+                ", sexo: " + sexo +
+                ", celular: " + celular +
+                ", telefoneFixo: " + telefoneFixo +
+                '}';
+    }
 }
