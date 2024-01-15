@@ -81,7 +81,6 @@ public class ValidarModel {
                  String cpf, 
                  LocalDate dataNascimento, 
                  String sexo, 
-                 String ativo,
                  String celular,
                  String telefoneFixo) {
 
@@ -92,7 +91,6 @@ public class ValidarModel {
         if (cpf.trim().isBlank()) throw new InvalidParamException("CPF não pode estar vazio!");
         if (dataNascimento == null) throw new InvalidParamException("Data de Nascimento não pode estar vazio!");
         if (sexo.trim().isBlank()) throw new InvalidParamException("Sexo não pode estar vazio!");
-        if (ativo.trim().isBlank()) throw new InvalidParamException("Ativo não pode estar vazio!");
         if (celular.trim().isBlank()) throw new InvalidParamException("Celular não pode estar vazio!");
         if (telefoneFixo.trim().isBlank()) throw new InvalidParamException("Telefone Fixo não pode estar vazio!");
     }

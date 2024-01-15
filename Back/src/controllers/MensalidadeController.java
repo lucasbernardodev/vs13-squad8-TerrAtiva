@@ -11,13 +11,8 @@ public class MensalidadeController {
         try {
             mensalidadeService.alterarMensalidade(mensalidadeID, contratoID, valorMensal, anoExercicio);
             return "Mensalidade Atualizada com Sucesso!";
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException |
+                 DbException | EntityIdNullException e) {
             return e.getMessage();
         }
     }

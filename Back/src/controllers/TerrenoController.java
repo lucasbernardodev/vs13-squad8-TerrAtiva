@@ -14,7 +14,8 @@ public class TerrenoController {
         try {
             terrenoService.cadastrarTerreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
             return "Terreno cadastrado com sucesso!";
-        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException | DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException |
+                 DbException | EntityIdNullException e) {
             return e.getMessage();
         }
     }

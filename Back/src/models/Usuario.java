@@ -21,7 +21,7 @@ public class Usuario {
     public Usuario(){
     }
   
-    public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+    public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String celular, String telefoneFixo) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
@@ -29,7 +29,7 @@ public class Usuario {
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
-        this.ativo = ativo;
+        this.ativo = "S";
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
     }
@@ -43,7 +43,6 @@ public class Usuario {
             String cpf,
             LocalDate dataNascimento,
             String sexo,
-            String ativo,
             String celular,
             String telefoneFixo
     ) {
@@ -56,7 +55,6 @@ public class Usuario {
                     cpf,
                     dataNascimento,
                     sexo,
-                    ativo,
                     celular,
                     telefoneFixo
             );
@@ -189,7 +187,6 @@ public class Usuario {
                     cpf,
                     dataNascimento,
                     sexo,
-                    ativo,
                     celular,
                     telefoneFixo
             );

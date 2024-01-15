@@ -16,7 +16,8 @@ public class ContratoController {
                     dataInicio, dataFinal, dataVencimentoAluguel);
             return "Contrato Atualizado Com Sucesso!";
 
-        } catch (InvalidParamException | UnauthorizedOperationException | DbException | DataFormatInvalidException e) {
+        } catch (InvalidParamException | UnauthorizedOperationException | DbException |
+                 DataFormatInvalidException | EntityIdNullException e) {
             return e.getMessage();
         }
     }

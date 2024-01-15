@@ -5,7 +5,7 @@ import services.EnderecoService;
 
 public class EnderecoController {
 
-    private EnderecoService enderecoService = new EnderecoService();
+    private final EnderecoService enderecoService = new EnderecoService();
 
     public String cadastrarEndereco(Integer usuarioID, String logradouro,
                                     Integer numero, String complemento,
@@ -14,13 +14,7 @@ public class EnderecoController {
         try {
             enderecoService.adicionarEndereco(usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
             return "Endereço Cadastrado Com Sucesso!";
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | UnauthorizedOperationException | DbException | EntityIdNullException e) {
             return e.getMessage();
         }
     }
@@ -32,13 +26,7 @@ public class EnderecoController {
         try {
             enderecoService.alterar(enderecoID, usuarioID, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep);
             return "Endereço Atualizado Com Sucesso!";
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException | DbException e) {
             return e.getMessage();
         }
     }
@@ -46,9 +34,7 @@ public class EnderecoController {
     public String resgatarEnderecoPorID(Integer id){
         try {
             return enderecoService.resgatarPorId(id).toString();
-        } catch (DataNotFoundException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (DataNotFoundException | DbException e) {
             return e.getMessage();
         }
     }
@@ -57,9 +43,7 @@ public class EnderecoController {
         try {
             enderecoService.deletar(id);
             return "Endereço deletado com Sucesso";
-        } catch (DbException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e){
+        } catch (DbException | UnauthorizedOperationException e) {
             return e.getMessage();
         }
     }
