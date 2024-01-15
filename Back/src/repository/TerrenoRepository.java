@@ -199,7 +199,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             PreparedStatement stmt = connection.prepareStatement(sqlQueryAluguel);
 
             stmt.setInt(1, newAluguelID);
-            stmt.setInt(2, mensalidadeID);
+            stmt.setInt(2, newMensalidadeID);
             stmt.setInt(3, aluguelRequest.getMesReferencia());
             stmt.setString(4, Date.valueOf(aluguelRequest.getDataEmissao()).toString());
             stmt.setString(5, Date.valueOf(aluguelRequest.getDataVencimento()).toString());
@@ -209,11 +209,11 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmt.setString(9, aluguelRequest.getPago());
             stmt.setString(10, Instant.now().toString());
             stmt.setString(11, Instant.now().toString());
-            System.out.println(contratoRequest.getTerrenoID());
             if (stmt.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível cadastrar novo Aluguel");
 
-            System.out.println(contratoRequest.getTerrenoID());
+
+            // ATUALIZA STATUS DO TERRENO
             PreparedStatement stmtTerrenoIndisponivel = connection.prepareStatement(
             """
             UPDATE TERRENOS
@@ -224,7 +224,6 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             """);
 
             stmtTerrenoIndisponivel.setString(1, Instant.now().toString());
-            System.out.println(contratoRequest.getTerrenoID());
             stmtTerrenoIndisponivel.setInt(2, contratoRequest.getTerrenoID());
 
             if (stmtTerrenoIndisponivel.executeUpdate() == 0)

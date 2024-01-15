@@ -76,7 +76,7 @@ public class GeradorID {
     }
 
     public static Integer getProximoAluguel(Connection conn) throws SQLException {
-        String sql = "SELECT SEQ_MENSALIDADE.nextval mysequence from DUAL";
+        String sql = "SELECT SEQ_ALUGUEL.nextval mysequence from DUAL";
 
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(sql);
