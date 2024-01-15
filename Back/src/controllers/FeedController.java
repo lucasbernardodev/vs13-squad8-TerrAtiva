@@ -2,7 +2,7 @@ package controllers;
 
 import models.Feed;
 import services.FeedService;
-import util.Formatador;
+import util.formatter.Formatador;
 
 import java.util.ArrayList;
 

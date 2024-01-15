@@ -3,6 +3,7 @@ package app.menus;
 import app.enums.TipoUsuario;
 import controllers.FeedController;
 import util.Validacao;
+import util.formatter.ShowMenu;
 
 public class FeedMenu {
 
@@ -10,13 +11,12 @@ public class FeedMenu {
         FeedController feed = new FeedController();
         int opcao;
         do {
-            System.out.println("### FEED ###");
-            System.out.println("Seleciona uma opção: ");
+            ShowMenu.header("FEED", 70);
             System.out.println("1 - Listar todos anúncios");
             System.out.println("2 - Selecionar filtros");
             System.out.println("3 - Meu perfil");
             System.out.println("0 - Voltar");
-            opcao = Validacao.validarInt();
+            opcao = Validacao.validarInt("Digite: ");
 
             switch (opcao) {
                 case 1:
@@ -43,7 +43,7 @@ public class FeedMenu {
         FeedController feed = new FeedController();
         int opcao;
         do {
-            System.out.println("### Feed ###");
+            ShowMenu.header("BUSCA CUSTOMIZADA", 70);
             System.out.println("Selecione um filtro: ");
             System.out.println("1 - Estado");
             System.out.println("2 - Valor");
@@ -51,7 +51,7 @@ public class FeedMenu {
             System.out.println("4 - Tamanho");
             System.out.println("5 - Limpar filtros");
             System.out.println("0 - Voltar");
-            opcao = Validacao.validarInt();
+            opcao = Validacao.validarInt("Digite: ");
 
             switch (opcao) {
                 case 1:

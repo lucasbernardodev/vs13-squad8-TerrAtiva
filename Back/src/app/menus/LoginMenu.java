@@ -2,6 +2,7 @@ package app.menus;
 
 import controllers.LoginController;
 import util.Validacao;
+import util.formatter.ShowMenu;
 
 public class LoginMenu {
     private final LoginController loginController = new LoginController();
@@ -11,12 +12,12 @@ public class LoginMenu {
         int opcaoSelecionada;
 
         do{
-            System.out.println("Bem-vindo ao Terra Viva, o seu aplicativo de arrendamento de terras!");
+            ShowMenu.header("Bem-vindo ao Terra Viva, o seu aplicativo de arrendamento de terras!", 70);
             System.out.println("Selecione uma opção: ");
             System.out.println("1 - Login");
             System.out.println("2 - Cadastrar-se");
-
-            opcaoSelecionada = Validacao.validarInt();
+            opcaoSelecionada = Validacao.validarInt("Digite: ");
+            System.out.println();
 
             switch (opcaoSelecionada){
                 case 1:
@@ -37,9 +38,9 @@ public class LoginMenu {
         boolean retorno;
 
         do {
-
-            String email= Validacao.validarString("Digite seu email:");
-            String senha = Validacao.validarString("Digite sua senha:");
+            ShowMenu.header("LOGIN", 70);
+            String email= Validacao.validarString("Digite seu email: ");
+            String senha = Validacao.validarString("Digite sua senha: ");
 
             retorno = loginController.loginUsuario(email, senha);
 

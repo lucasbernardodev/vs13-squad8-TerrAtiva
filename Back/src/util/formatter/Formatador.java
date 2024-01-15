@@ -1,4 +1,4 @@
-package util;
+package util.formatter;
 
 import models.Feed;
 import models.Terreno;
