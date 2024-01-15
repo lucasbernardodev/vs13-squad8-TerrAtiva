@@ -63,5 +63,13 @@ public class TerrenoController {
             return e.getMessage();
         }
     }
+    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+        try {
+            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
+            return "Contrato cancelado com sucesso!";
+        } catch (DbException | UnauthorizedOperationException | DataFormatInvalidException | DateTimeException | InvalidParamException e) {
+            return e.getMessage();
+        }
+    }
 
 }

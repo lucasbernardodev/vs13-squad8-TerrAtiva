@@ -167,7 +167,6 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             if (stmtContrato.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
-            System.out.println("Cadastrou contrato");
 
             // PASSO 2: CRIAR ALUGUEL
 
@@ -187,7 +186,6 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             if (stmtMensalidade.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
-            System.out.println("Cadastrou mensalidade");
 
             // PASSO 3: ALUGUEL
 
@@ -226,7 +224,6 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmtTerrenoIndisponivel.setInt(2, contratoRequest.getTerrenoID());
             stmt.executeUpdate();
 
-            System.out.println("Cadastrou aluguel");
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -234,4 +231,41 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
         }
     }
 
+    public void cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+        try {
+            connection = BancoDeDados.criaConexao();
+            String sqlQuery = """
+                    UPDATE CONTRATOS
+                        set
+                         ATIVO = 'N',
+                         EDITADO = ?
+                    WHERE TERRENO_ID = ? AND LOCATARIO_ID = ?
+                    """;
+            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setString(1, Instant.now().toString());
+            stmt.setInt(2, contratoID);
+            stmt.setInt(3, usuarioID);
+
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Incosistência de dados. Registros não Encontrados.");
+
+            PreparedStatement stmtTerrenoDisponivel = connection.prepareStatement("""
+                                                                                        UPDATE TERRENOS
+                                                                                            SET
+                                                                                            DISPONIVEL = 'S',
+                                                                                            EDITADO = ?
+                                                                                         WHERE TERRENO_ID = ?
+                                                                                        """);
+            stmtTerrenoDisponivel.setString(1, Instant.now().toString());
+            stmtTerrenoDisponivel.setInt(2, contratoID);
+            stmtTerrenoDisponivel.executeUpdate();
+
+            if (stmt.executeUpdate() == 0) throw new DbException("Não foi possível alterar o status do Terreno.");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getCause().getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
 }
