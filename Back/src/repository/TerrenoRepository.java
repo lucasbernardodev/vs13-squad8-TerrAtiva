@@ -5,10 +5,7 @@ import database.GeradorID;
 import infra.exceptions.DataNotFoundException;
 import infra.exceptions.DbException;
 import infra.exceptions.UnauthorizedOperationException;
-import models.Aluguel;
-import models.Contrato;
-import models.Mensalidade;
-import models.Terreno;
+import models.*;
 
 import java.sql.*;
 import java.time.Instant;
@@ -155,7 +152,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             PreparedStatement stmtContrato = connection.prepareStatement(sqlQueryContrato);
             stmtContrato.setInt(1, newContratoID);
-            stmtContrato.setInt(2, contratoRequest.getProprietarioID());
+            stmtContrato.setInt(2, Usuario.instancia.getUsuarioId());
             stmtContrato.setInt(3, contratoRequest.getTerrenoID());
             stmtContrato.setString(4, contratoRequest.getAtivo());
             stmtContrato.setDate(5, Date.valueOf(contratoRequest.getDataAssinatura()));
