@@ -2,6 +2,9 @@ package util;
 
 import infra.exceptions.EmptyDataException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -51,6 +54,24 @@ public class Validacao {
 
             } catch (NoSuchElementException e) {
                 System.err.println("Comando inválido! Por favor digite um texto válido!");
+            }
+        }
+    }
+
+    public static LocalDate validarData(String placeholder) {
+
+        while (true) {
+            System.out.print(placeholder);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            try {
+
+                String stringToRead = input.nextLine();
+                return LocalDate.parse(stringToRead, formatter);
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de data inválido. Certifique-se de usar o formato dd/MM/yyyy.");
             }
         }
     }

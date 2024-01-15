@@ -107,7 +107,7 @@ public class UsuarioMenu {
                     menuPerfil();
                     break;
                 case 2:
-                    menuEditarPerfil(); // OK
+                    menuEditarPerfil();
                     break;
                 case 3:
                     menuDeletarPerfil();

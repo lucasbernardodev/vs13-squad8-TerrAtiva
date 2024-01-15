@@ -1,12 +1,16 @@
 package app.menus;
 
 import controllers.LoginController;
+import controllers.UsuarioController;
 import util.Logo;
 import util.Validacao;
 import util.formatter.ShowMenu;
 
+import java.time.LocalDate;
+
 public class LoginMenu {
     private static final LoginController loginController = new LoginController();
+    private static final UsuarioController usuarioController = new UsuarioController();
     private static final UsuarioMenu usuarioMenu = new UsuarioMenu();
 
     public void inicio() {
@@ -26,7 +30,7 @@ public class LoginMenu {
                     login();
                     break;
                 case 2:
-//                    TODO: Pendente implementação
+                    cadastro();
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, insira um valor válido.");
@@ -49,5 +53,57 @@ public class LoginMenu {
         } while (!retorno);
 
         usuarioMenu.inicio();
+    }
+
+    private void cadastro() {
+        boolean confirm = true;
+
+
+        ShowMenu.header("CADASTRO", 70);
+        String nome = Validacao.validarString("Nome: ");
+        String sobrenome = Validacao.validarString("Sobrenome: ");
+        String email = Validacao.validarString("Email: ");
+        String senha = Validacao.validarString("Senha: ");
+        String cpf = Validacao.validarString("CPF: ");
+        LocalDate dataDeNascimento = Validacao.validarData("Data De Nascimento: ");
+        String sexo = Validacao.validarString("Sexo: ");
+        String celular = Validacao.validarString("Celular: ");
+        String telefoneFixo = Validacao.validarString("Telefone: ");
+
+        while (confirm) {
+            System.out.println("Confirma os dados?");
+            System.out.println("S | Sim");
+            System.out.println("N | Não");
+            String choice = Validacao.validarString("Digite: ").toLowerCase();
+            System.out.println();
+
+            switch (choice) {
+                case "s":
+                    System.out.println(usuarioController.cadastrarUsuario(
+                            nome,
+                            sobrenome,
+                            email,
+                            senha,
+                            cpf,
+                            dataDeNascimento,
+                            sexo,
+                            "S",
+                            celular,
+                            telefoneFixo
+                    ));
+                    confirm = false;
+                    break;
+                case "n":
+                    System.out.println("OPERAÇÃO CANCELADA");
+                    confirm = false;
+                    break;
+
+                default:
+                    System.out.println("Digite um valor válido!");
+                    break;
+            }
+
+            inicio();
+        }
     }
 }
