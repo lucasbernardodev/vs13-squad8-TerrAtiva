@@ -33,17 +33,6 @@ public class Usuario {
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
     }
-    public Usuario(String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String celular, String telefoneFixo) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.email = email;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.sexo = sexo;
-        this.ativo = "S";
-        this.celular = celular;
-        this.telefoneFixo = telefoneFixo;
-    }
     public Usuario(String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -88,16 +77,20 @@ public class Usuario {
         }
     }
 
+    public static void logout() {
+        if (instancia != null) {
+            instancia = null;
+        } else {
+            throw new RuntimeException("Não é possivel realizar logout, ocorreu um error.");
+        }
+    }
+
     public boolean estaLogado() {
         return estaLogado;
     }
 
     public void setEstaLogado(boolean estaLogado) {
         this.estaLogado = estaLogado;
-    }
-
-    public void logout() {
-        this.estaLogado = false;
     }
 
     public Integer getUsuarioId() {

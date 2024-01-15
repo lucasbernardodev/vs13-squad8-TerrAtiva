@@ -34,6 +34,8 @@ public class UsuarioMenu {
                     FeedMenu.feedMenu();
                     break;
                 case 4:
+                    Usuario.logout();
+                    loginMenu.inicio();
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, insira um valor válido.");
@@ -105,7 +107,7 @@ public class UsuarioMenu {
                     menuPerfil();
                     break;
                 case 2:
-                    menuEditarPerfil(); // OK
+                    menuEditarPerfil();
                     break;
                 case 3:
                     menuDeletarPerfil();
@@ -181,6 +183,7 @@ public class UsuarioMenu {
             switch (choice) {
                 case "s":
                     System.out.println(usuarioController.deletarDados(Usuario.instancia.getUsuarioId()));
+                    Usuario.logout();
                     loginMenu.inicio();
                     confirm = false;
                     break;
