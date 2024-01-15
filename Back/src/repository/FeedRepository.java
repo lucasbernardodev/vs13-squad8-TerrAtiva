@@ -142,6 +142,50 @@ public class FeedRepository {
         }
     }
 
+    public ArrayList<Terreno> mostrarTerrenosAlugados(Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS, CONTRATOS WHERE LOCATARIO_ID = ? AND CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID";
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setInt(1, usuarioID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosDoUsuario(Integer usuarioID) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = BancoDeDados.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE DONO_ID = ?";
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setInt(1, usuarioID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
     public ArrayList<Terreno> mostrarTerrenosArrendados(Integer usuarioID) {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
@@ -269,6 +313,5 @@ public class FeedRepository {
         this.estado  = "";
         this.tamanho  = "";
     }
-
 
 }

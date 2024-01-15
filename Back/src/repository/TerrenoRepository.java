@@ -134,6 +134,36 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
         }
     }
 
+//    @Override
+//    public Terreno resgatarDadosPorId(int id) {
+//        try {
+//            connection = BancoDeDados.criaConexao();
+//            String sqlQuery = "SELECT * FROM TERRENOS, CONTRATOS WHERE LOCATARIO_ID = " + id +  "AND CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID";
+//
+//            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+//            ResultSet result = stmt.executeQuery();
+//
+//            if (result.next()) {
+//                return new Terreno(
+//                        result.getInt("TERRENO_ID"),
+//                        result.getString("TITULO"),
+//                        result.getString("DESCRICAO"),
+//                        result.getInt("DONO_ID"),
+//                        result.getInt("ENDERECO_TERRENO_ID"),
+//                        result.getDouble("PRECO"),
+//                        result.getString("TAMANHO"),
+//                        result.getString("DISPONIVEL")
+//                );
+//            }
+//            throw new DataNotFoundException("Não foi possível resgatar dados");
+//
+//        } catch (SQLException e) {
+//            throw new DbException(e.getCause().getMessage());
+//        } finally {
+//            BancoDeDados.fechaConexao(connection);
+//        }
+//    }
+
     public void arrendarTerreno(Contrato contratoRequest, Mensalidade mensalidade, Aluguel aluguelRequest) {
         try {
             // PASSO 1: GERAR CONTRATO

@@ -54,7 +54,8 @@ public class UsuarioMenu {
             System.out.println("1 | Mostrar Todos os Meus Terrenos");
             System.out.println("2 | Mostrar Terrenos DISPONÍVEIS");
             System.out.println("3 | Mostrar Terrenos ARRENDADOS");
-            System.out.println("4 | Consultar um Terreno por Título");
+            System.out.println("4 | Consultar Terrenos ALUGADOS");
+            System.out.println("5 | Consultar de Terreno");
             System.out.println("0 | Voltar");
 
             int terrenoMenu = Validacao.validarInt("Digite: ");
@@ -63,17 +64,21 @@ public class UsuarioMenu {
             switch (terrenoMenu) {
                 case 1:
                     ShowMenu.header("MEUS TERRENOS", 70);
-                    System.out.println(feedUsuario.mostrarTerrenosDisponveis(Usuario.instancia.getUsuarioId()));
+                    System.out.println(feedUsuario.mostrarTerrenosDoUsuario(Usuario.instancia.getUsuarioId()));
                     break;
                 case 2:
-                    ShowMenu.header("MEUS TERRENOS DISPONÍVEIS", 70);
+                    ShowMenu.header("MEUS TERRENOS MEUS DISPONÍVEIS", 70);
                     System.out.println(feedUsuario.mostrarTerrenosDisponveis(Usuario.instancia.getUsuarioId()));
                     break;
                 case 3:
-                    ShowMenu.header("MEUS TERRENOS ARRENDADOS", 70);
-                    System.out.println(feedUsuario.mostrarTerrenosArrendados(Usuario.instancia.getUsuarioId()));
+                    ShowMenu.header("MEUS TERRENOS MEUS ARRENDADOS", 70);
+                    System.out.println(feedUsuario.mostrarMeusTerrenosArrendados(Usuario.instancia.getUsuarioId()));
                     break;
                 case 4:
+                    ShowMenu.header("MEUS TERRENOS ARRENDADOS", 70);
+                    System.out.println(feedUsuario.mostrarTerrenosAlugados(Usuario.instancia.getUsuarioId()));
+                    break;
+                case 5:
                     ShowMenu.header("CONSULTA DE TERRENO", 70);
                     String tituloConsulta = Validacao.validarString("Título para Busca: ");
                     System.out.println(feedUsuario.mostrarTerrenosPorTitulo(tituloConsulta, Usuario.instancia.getUsuarioId()));

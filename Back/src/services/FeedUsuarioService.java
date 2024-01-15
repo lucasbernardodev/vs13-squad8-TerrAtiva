@@ -12,6 +12,14 @@ public class FeedUsuarioService {
         return feedRepository.mostrarTerrenosDisponiveis(usuarioID);
     }
 
+    public ArrayList<Terreno> mostrarTerrenosAlugados(Integer usuarioID) {
+        return feedRepository.mostrarTerrenosAlugados(usuarioID);
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosDoUsuario(Integer usuarioID) {
+        return feedRepository.mostrarTerrenosDoUsuario(usuarioID);
+    }
+
     public ArrayList<Terreno> mostrarTodosTerrenos(Integer usuarioID) {
         return feedRepository.mostrarTodosOsTerrenos(usuarioID);
     }
