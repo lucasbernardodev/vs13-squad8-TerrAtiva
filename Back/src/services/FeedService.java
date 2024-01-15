@@ -56,13 +56,13 @@ public class FeedService {
         String[] pesquisaFatiada = pesquisa.split(" ");
         StringBuilder resultado = new StringBuilder();
 
-        resultado.append("(");
         for (String p : pesquisaFatiada) {
+            resultado.append("[");
             resultado.append(p);
-            resultado.append("(+)|");
+            resultado.append("(+)");
+            resultado.append("]");
         }
-        resultado.deleteCharAt(resultado.length() -1);
-        resultado.append(")");
+        System.out.println(resultado.toString());
         return resultado.toString();
     }
 
