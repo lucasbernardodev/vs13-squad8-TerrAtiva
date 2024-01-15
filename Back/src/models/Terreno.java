@@ -121,15 +121,12 @@ public class Terreno {
 
     @Override
     public String toString() {
-        return "Terreno{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", proprietarioID=" + proprietarioID +
-                ", enderecoID=" + enderecoID +
-                ", preco=" + preco +
-                ", tamanho='" + tamanho + '\'' +
-                ", disponivel='" + disponivel + '\'' +
-                '}';
+        return String.format("""
+                ID: %s | Título: %s
+                Descrição: %s
+                Preço: R$%.2f | Tamanho: %s
+                Disponível: %s
+                """, this.id, this.titulo, this.descricao, this.preco, this.tamanho,
+                    this.getDisponivel().equals("S") ? "SIM" : "NÃO");
     }
 }

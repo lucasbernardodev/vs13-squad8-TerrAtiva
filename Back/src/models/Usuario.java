@@ -33,6 +33,17 @@ public class Usuario {
         this.celular = celular;
         this.telefoneFixo = telefoneFixo;
     }
+    public Usuario(String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.ativo = ativo;
+        this.celular = celular;
+        this.telefoneFixo = telefoneFixo;
+    }
 
     public static Usuario login(
             Integer usuarioId,
@@ -80,7 +91,7 @@ public class Usuario {
         this.estaLogado = false;
     }
 
-    public int getUsuarioId() {
+    public Integer getUsuarioId() {
         return usuarioId;
     }
 
@@ -137,7 +148,7 @@ public class Usuario {
     }
 
     public String getSexo() {
-        return sexo;
+        return this.sexo;
     }
 
     public void setSexo(String sexo) {
@@ -203,15 +214,13 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "nome: " + nome +
-                ", sobrenome: " + sobrenome +
-                ", email: " + email +
-                ", cpf: " + cpf +
-                ", dataNascimento: " + dataNascimento +
-                ", sexo: " + sexo +
-                ", celular: " + celular +
-                ", telefoneFixo: " + telefoneFixo +
-                '}';
+        return String.format("""
+                Nome: %s %s
+                Email: %s
+                CPF: %s
+                Data de Nascimento: %s | Sexo: %s
+                Celular: %s | Fixo: %s
+                """, this.nome, this.sobrenome, this.email, this.cpf, this.dataNascimento,
+                this.getSexo().equals("M") ? "Masculino" : "Feminino", this.celular, this.telefoneFixo);
     }
 }
