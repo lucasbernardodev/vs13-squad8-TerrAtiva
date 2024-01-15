@@ -5,15 +5,12 @@ import infra.exceptions.InvalidParamException;
 
 import java.time.LocalDate;
 
-import javax.swing.*;
-import java.time.LocalDate;
-
 public class ValidarModel {
 
     public static final void ENDERECOS(Integer usuarioID, String logradouro,
-                               Integer numero, String complemento,
-                               String bairro, Integer codigoMunicipioIBGE,
-                               Integer cep) {
+                                       Integer numero, String complemento,
+                                       String bairro, Integer codigoMunicipioIBGE,
+                                       Integer cep) {
 
         if (usuarioID == null) throw new InvalidParamException("ID do Usuário não pode ser Nulo!");
         if (logradouro.trim().isBlank()) throw new InvalidParamException("Logradouro não pode estar vazio!");
@@ -76,6 +73,8 @@ public class ValidarModel {
         if (dataVencimentoAluguel == null) throw new InvalidParamException("Dia de Vencimento não pode ser Nulo!");
 
     }
+
+
 
     public static final void USUARIOS(String nome,
                  String sobrenome, 

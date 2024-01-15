@@ -30,4 +30,28 @@ public class UsuarioService {
         return usuarioRepository.resgatarDadosPorId(id);
     }
 
+    public Usuario buscarUsuarioPorEmail(String email, String senha){
+        return usuarioRepository.resgatarDadosPorEmail(email,senha);
+    }
+
+    public Usuario realizarLogin(String email, String senha){
+        Usuario usuario =  buscarUsuarioPorEmail(email, senha);
+
+        if (usuario != null) {
+            return Usuario.login(
+                    usuario.getNome(),
+                    usuario.getSobrenome(),
+                    usuario.getEmail(),
+                    usuario.getSenha(),
+                    usuario.getCpf(),
+                    usuario.getDataNascimento(),
+                    usuario.getSexo(),
+                    usuario.getAtivo(),
+                    usuario.getCelular(),
+                    usuario.getTelefoneFixo()
+            );
+        }
+        return usuarioRepository.resgatarDadosPorEmail(email,senha);
+    }
+
 }
