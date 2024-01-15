@@ -25,9 +25,9 @@ public class UsuarioController {
         }
     }
 
-    public String atualizarUsuario(int id, String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+    public String atualizarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
         try {
-            usuarioService.alterarUsuario(id, nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
+            usuarioService.alterarUsuario(id, nome, sobrenome, email, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
             return "Dados do Usuário alterados com Sucesso!";
 
         } catch (InvalidParamException e) {
@@ -41,7 +41,7 @@ public class UsuarioController {
         }
     }
 
-    public String resgatarUsuarioPorID(int id) {
+    public String resgatarUsuario(int id) {
         try {
             return usuarioService.buscarUsuario(id).toString();
         } catch (DataNotFoundException e) {
@@ -51,7 +51,7 @@ public class UsuarioController {
         }
     }
 
-    public Usuario resgatarUsuarioPorEmail(String email,String senha) {
+    public Usuario resgatarUsuario(String email,String senha) {
         try {
             return usuarioService.buscarUsuarioPorEmail(email,senha);
         } catch (DataNotFoundException e) {

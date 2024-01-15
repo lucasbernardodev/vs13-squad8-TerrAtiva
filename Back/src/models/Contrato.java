@@ -1,6 +1,5 @@
 package models;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Contrato {
@@ -11,35 +10,21 @@ public class Contrato {
     private LocalDate dataAssinatura;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private LocalDate dataVencimentoAluguel;
-    private Instant criado;
-    private Instant editado;
+    private Integer dataVencimentoAluguel;
 
     public Contrato() {}
 
-    public Contrato(Integer proprietarioID, Integer terrenoID, String ativo,
-                    LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
-                    LocalDate dataVencimentoAluguel) {
-
+    public Contrato(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio,
+                    LocalDate dataFinal, Integer dataVencimentoAluguel) {
         this.proprietarioID = proprietarioID;
         this.terrenoID = terrenoID;
-        this.ativo = ativo;
         this.dataAssinatura = dataAssinatura;
         this.dataInicio = dataInicio;
+        this.ativo = "S";
         this.dataFinal = dataFinal;
         this.dataVencimentoAluguel = dataVencimentoAluguel;
-        this.criado = Instant.now();
-        this.editado = Instant.now();
     }
 
-    public Contrato(Integer terrenoID, String ativo, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
-    }
-
-    public Contrato(Integer proprietarioID, Integer terrenoID, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
-    }
-
-    public Contrato(Integer terrenoID, LocalDate toLocalDate, LocalDate toLocalDate1, LocalDate toLocalDate2, LocalDate toLocalDate3) {
-    }
 
     public Integer getId() {
         return id;
@@ -97,27 +82,11 @@ public class Contrato {
         this.dataFinal = dataFinal;
     }
 
-    public LocalDate getDataVencimentoAluguel() {
+    public Integer getDataVencimentoAluguel() {
         return dataVencimentoAluguel;
     }
 
-    public void setDataVencimentoAluguel(LocalDate dataVencimentoAluguel) {
+    public void setDataVencimentoAluguel(Integer dataVencimentoAluguel) {
         this.dataVencimentoAluguel = dataVencimentoAluguel;
-    }
-
-    public Instant getCriado() {
-        return criado;
-    }
-
-    public void setCriado(Instant criado) {
-        this.criado = criado;
-    }
-
-    public Instant getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Instant editado) {
-        this.editado = editado;
     }
 }

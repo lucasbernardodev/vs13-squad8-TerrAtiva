@@ -14,13 +14,8 @@ public class EnderecoTerrenosController {
         try {
             enderecoTerrenosService.adicionarEnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
             return "Endereço Cadastrado Com Sucesso!";
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | DbException | UnauthorizedOperationException |
+                 EntityIdNullException | DataFormatInvalidException e) {
             return e.getMessage();
         }
     }

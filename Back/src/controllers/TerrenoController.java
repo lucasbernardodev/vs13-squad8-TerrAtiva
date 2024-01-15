@@ -3,7 +3,9 @@ package controllers;
 import infra.exceptions.*;
 import models.Terreno;
 import services.TerrenoService;
-import util.Formatador;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
 
 public class TerrenoController {
 
@@ -13,13 +15,8 @@ public class TerrenoController {
         try {
             terrenoService.cadastrarTerreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
             return "Terreno cadastrado com sucesso!";
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException |
+                 DbException | EntityIdNullException e) {
             return e.getMessage();
         }
     }
@@ -29,24 +26,17 @@ public class TerrenoController {
             terrenoService.alterarTerreno(id,titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
             return "Dados do Terreno alterados com Sucesso!";
 
-        } catch (InvalidParamException e) {
-            return e.getMessage();
-        } catch (DataFormatInvalidException e) {
-            return e.getMessage();
-        } catch (UnauthorizedOperationException e) {
-            return e.getMessage();
-        } catch (DbException e) {
+        } catch (InvalidParamException | DataFormatInvalidException | UnauthorizedOperationException | DbException e) {
             return e.getMessage();
         }
     }
 
-    public String resgatarTerrenoPorID(int id) {
+    public Terreno resgatarTerrenoPorID(int id) {
         try {
-            return terrenoService.buscarTerreno(id).toString();
-        } catch (DataNotFoundException e) {
-            return e.getMessage();
-        } catch (DbException e) {
-            return e.getMessage();
+
+            return terrenoService.buscarTerreno(id);
+        } catch (DataNotFoundException | DbException e) {
+            return null;
         }
     }
 
@@ -55,9 +45,31 @@ public class TerrenoController {
             terrenoService.deletarTerreno(idTerreno);
             return "Terreno deletado com Sucesso";
 
-        } catch (DbException e) {
+        } catch (DbException | UnauthorizedOperationException e) {
             return e.getMessage();
-        } catch (UnauthorizedOperationException e){
+        }
+    }
+
+    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
+                                  Integer dataVencimentoAluguel, // CONTRATO
+                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
+                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
+        try {
+            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
+                                            valorMensal, anoExercicio,
+                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
+
+            return "Terreno Arrendado com Sucesso!";
+        } catch (DbException | UnauthorizedOperationException | DataFormatInvalidException | DateTimeException | InvalidParamException e) {
+            return e.getMessage();
+        }
+    }
+    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+        try {
+            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
+            return "Contrato cancelado com sucesso!";
+        } catch (DbException | UnauthorizedOperationException | DataFormatInvalidException | DateTimeException | InvalidParamException e) {
             return e.getMessage();
         }
     }

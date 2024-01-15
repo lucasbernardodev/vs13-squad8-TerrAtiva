@@ -11,14 +11,14 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository = new UsuarioRepository();
 
     public void cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-        ValidarModel.USUARIOS(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-        Usuario usuario = new Usuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
+        ValidarModel.NOVOUSUARIO(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, celular, telefoneFixo);
+        Usuario usuario = new Usuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, celular, telefoneFixo);
         usuarioRepository.adicionar(usuario);
     }
 
-    public void alterarUsuario(int id, String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-        ValidarModel.USUARIOS(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-        Usuario usuario = new Usuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
+    public void alterarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+        ValidarModel.USUARIOS(nome, sobrenome, email, cpf, dataNascimento, sexo, celular, telefoneFixo);
+        Usuario usuario = new Usuario(nome, sobrenome, email, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
         usuarioRepository.alterar(id, usuario);
     }
 
@@ -39,6 +39,7 @@ public class UsuarioService {
 
         if (usuario != null) {
             return Usuario.login(
+                    usuario.getUsuarioId(),
                     usuario.getNome(),
                     usuario.getSobrenome(),
                     usuario.getEmail(),
@@ -46,7 +47,6 @@ public class UsuarioService {
                     usuario.getCpf(),
                     usuario.getDataNascimento(),
                     usuario.getSexo(),
-                    usuario.getAtivo(),
                     usuario.getCelular(),
                     usuario.getTelefoneFixo()
             );

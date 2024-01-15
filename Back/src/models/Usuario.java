@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class Usuario {
-    private static Usuario instancia;
+    public static Usuario instancia;
     private Integer usuarioId;
     private String nome;
     private String sobrenome;
@@ -15,17 +15,28 @@ public class Usuario {
     private String ativo;
     private String celular;
     private String telefoneFixo;
-    private String criado;
-    private String editado;
-    private boolean estaLogado;
 
+    private boolean estaLogado;
+  
     public Usuario(){
     }
-    public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+  
+    public Usuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String celular, String telefoneFixo) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
         this.senha = senha;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.ativo = "S";
+        this.celular = celular;
+        this.telefoneFixo = telefoneFixo;
+    }
+    public Usuario(String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
@@ -34,7 +45,8 @@ public class Usuario {
         this.telefoneFixo = telefoneFixo;
     }
 
-    public static synchronized Usuario login(
+    public static Usuario login(
+            Integer usuarioId,
             String nome,
             String sobrenome,
             String email,
@@ -42,7 +54,6 @@ public class Usuario {
             String cpf,
             LocalDate dataNascimento,
             String sexo,
-            String ativo,
             String celular,
             String telefoneFixo
     ) {
@@ -55,14 +66,22 @@ public class Usuario {
                     cpf,
                     dataNascimento,
                     sexo,
-                    ativo,
                     celular,
                     telefoneFixo
             );
             instancia.setEstaLogado(true);
+            instancia.setUsuarioId(usuarioId);
             return  instancia;
         } else {
             throw new RuntimeException("O usuário já está autenticado.");
+        }
+    }
+
+    public static void logout() {
+        if (instancia != null) {
+            instancia = null;
+        } else {
+            throw new RuntimeException("Não é possivel realizar logout, ocorreu um error.");
         }
     }
 
@@ -74,11 +93,7 @@ public class Usuario {
         this.estaLogado = estaLogado;
     }
 
-    public void logout() {
-        this.estaLogado = false;
-    }
-
-    public int getUsuarioId() {
+    public Integer getUsuarioId() {
         return usuarioId;
     }
 
@@ -127,7 +142,7 @@ public class Usuario {
     }
 
     public LocalDate getDataNascimento() {
-        return  dataNascimento;
+        return dataNascimento;
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
@@ -135,7 +150,7 @@ public class Usuario {
     }
 
     public String getSexo() {
-        return sexo;
+        return this.sexo;
     }
 
     public void setSexo(String sexo) {
@@ -166,22 +181,6 @@ public class Usuario {
         this.telefoneFixo = telefoneFixo;
     }
 
-    public String getCriado() {
-        return criado;
-    }
-
-    public void setCriado(String criado) {
-        this.criado = criado;
-    }
-
-    public String getEditado() {
-        return editado;
-    }
-
-    public void setEditado(String editado) {
-        this.editado = editado;
-    }
-
     public static synchronized Usuario getInstancia(
             String nome,
             String sobrenome,
@@ -203,7 +202,6 @@ public class Usuario {
                     cpf,
                     dataNascimento,
                     sexo,
-                    ativo,
                     celular,
                     telefoneFixo
             );
@@ -211,7 +209,19 @@ public class Usuario {
         return instancia;
     }
 
-    public static synchronized Usuario getInstancia() {
+    public static Usuario getInstancia() {
         return instancia;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                Nome: %s %s
+                Email: %s
+                CPF: %s
+                Data de Nascimento: %s | Sexo: %s
+                Celular: %s | Fixo: %s
+                """, this.nome, this.sobrenome, this.email, this.cpf, this.dataNascimento,
+                this.getSexo().equals("M") ? "Masculino" : "Feminino", this.celular, this.telefoneFixo);
     }
 }
