@@ -6,7 +6,7 @@ import repository.FeedRepository;
 import java.util.ArrayList;
 
 public class FeedUsuarioService {
-    private FeedRepository feedRepository = new FeedRepository();
+    private static FeedRepository feedRepository = new FeedRepository();
 
     public ArrayList<Terreno> mostrarTerrenosDisponiveis(Integer usuarioID) {
         return feedRepository.mostrarTerrenosDisponiveis(usuarioID);

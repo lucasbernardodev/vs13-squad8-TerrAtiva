@@ -5,8 +5,8 @@ import util.Validacao;
 import util.formatter.ShowMenu;
 
 public class LoginMenu {
-    private final LoginController loginController = new LoginController();
-    private UsuarioMenu usuarioMenu = new UsuarioMenu();
+    private static final LoginController loginController = new LoginController();
+    private static final UsuarioMenu usuarioMenu = new UsuarioMenu();
 
     public void inicio() {
         int opcaoSelecionada;
