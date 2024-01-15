@@ -1,7 +1,6 @@
 package app.menus;
 
 import controllers.FeedUsuarioController;
-import controllers.LoginController;
 import controllers.UsuarioController;
 import models.Usuario;
 import util.Validacao;
@@ -11,11 +10,13 @@ public class UsuarioMenu {
     UsuarioController usuarioController = new UsuarioController();
     FeedUsuarioController feedUsuario = new FeedUsuarioController();
 
+    LoginMenu loginMenu = new LoginMenu();
+
     public void inicio() {
         int opcaoSelecionada;
         do{
             ShowMenu.header("Bem-vindo de volta " + Usuario.instancia.getNome() + "!", 70);
-            System.out.println("1 - Acessar Perfil"); // FALTA DELETAR PERFIL
+            System.out.println("1 - Acessar Perfil");
             System.out.println("2 - Acessar Terrenos");
             System.out.println("3 - Acessar Feed");
             System.out.println("4 - Sair");
@@ -107,6 +108,7 @@ public class UsuarioMenu {
                     menuEditarPerfil(); // OK
                     break;
                 case 3:
+                    menuDeletarPerfil();
                     break;
                 case 4:
                     inicio();
@@ -149,6 +151,37 @@ public class UsuarioMenu {
                             celular,
                             telefoneFixo
                     ));
+                    confirm = false;
+                    break;
+                case "n":
+                    System.out.println("OPERAÇÃO CANCELADA");
+                    confirm = false;
+                    break;
+
+                default:
+                    System.out.println("Digite um valor válido!");
+                    break;
+            }
+
+        }
+    }
+
+    private void menuDeletarPerfil() {
+        boolean confirm = true;
+
+        ShowMenu.header("DELETAR PERFIL", 70);
+
+        while (confirm) {
+            System.out.println("Deseja comcluir a ação?");
+            System.out.println("S | Sim");
+            System.out.println("N | Não");
+            String choice = Validacao.validarString("Digite: ").toLowerCase();
+            System.out.println();
+
+            switch (choice) {
+                case "s":
+                    System.out.println(usuarioController.deletarDados(Usuario.instancia.getUsuarioId()));
+                    loginMenu.inicio();
                     confirm = false;
                     break;
                 case "n":

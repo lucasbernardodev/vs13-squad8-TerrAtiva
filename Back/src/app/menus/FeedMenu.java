@@ -1,6 +1,5 @@
 package app.menus;
 
-import app.enums.TipoUsuario;
 import controllers.FeedController;
 import util.Validacao;
 import util.formatter.ShowMenu;
@@ -14,7 +13,8 @@ public class FeedMenu {
             ShowMenu.header("FEED", 70);
             System.out.println("1 - Listar todos anúncios");
             System.out.println("2 - Selecionar filtros");
-            System.out.println("3 - Meu perfil");
+            System.out.println("3 - Arrendar Terreno");
+            System.out.println("4 - Meu perfil");
             System.out.println("0 - Voltar");
             opcao = Validacao.validarInt("Digite: ");
 

@@ -100,7 +100,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         try {
             conn = BancoDeDados.criaConexao();
 
-            String sqlQuery = "UPDATE FROM USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?";
+            String sqlQuery = "UPDATE USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             stmt.setInt(1, id);
