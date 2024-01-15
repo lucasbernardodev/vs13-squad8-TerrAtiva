@@ -14,12 +14,22 @@ public class FeedUsuarioController {
         return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 
+    public String mostrarTerrenosAlugados(Integer usuarioID) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosAlugados(usuarioID);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
+    }
+
+    public String mostrarTerrenosDoUsuario(Integer usuarioID) {
+        ArrayList<Terreno> response = feedService.mostrarTerrenosDoUsuario(usuarioID);
+        return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
+    }
+
     public String mostrarTodosTerrenos(Integer usuarioID) {
         ArrayList<Terreno> response = feedService.mostrarTodosTerrenos(usuarioID);
         return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }
 
-    public String mostrarTerrenosArrendados(Integer usuarioID) {
+    public String mostrarMeusTerrenosArrendados(Integer usuarioID) {
         ArrayList<Terreno> response = feedService.mostrarTerrenosArrendados(usuarioID);
         return response.isEmpty() ? "Não Existem Dados Disponiveis" : Formatador.readerListTerrenos(response);
     }

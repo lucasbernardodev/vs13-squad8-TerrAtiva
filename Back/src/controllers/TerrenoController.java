@@ -1,6 +1,7 @@
 package controllers;
 
 import infra.exceptions.*;
+import models.Terreno;
 import services.TerrenoService;
 
 import java.time.DateTimeException;
@@ -30,11 +31,12 @@ public class TerrenoController {
         }
     }
 
-    public String resgatarTerrenoPorID(int id) {
+    public Terreno resgatarTerrenoPorID(int id) {
         try {
-            return terrenoService.buscarTerreno(id).toString();
+
+            return terrenoService.buscarTerreno(id);
         } catch (DataNotFoundException | DbException e) {
-            return e.getMessage();
+            return null;
         }
     }
 

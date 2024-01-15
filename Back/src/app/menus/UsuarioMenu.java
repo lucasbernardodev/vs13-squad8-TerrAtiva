@@ -1,7 +1,6 @@
 package app.menus;
 
 import controllers.FeedUsuarioController;
-import controllers.LoginController;
 import controllers.UsuarioController;
 import models.Usuario;
 import util.Validacao;
@@ -11,11 +10,13 @@ public class UsuarioMenu {
     UsuarioController usuarioController = new UsuarioController();
     FeedUsuarioController feedUsuario = new FeedUsuarioController();
 
+    LoginMenu loginMenu = new LoginMenu();
+
     public void inicio() {
         int opcaoSelecionada;
         do{
             ShowMenu.header("Bem-vindo de volta " + Usuario.instancia.getNome() + "!", 70);
-            System.out.println("1 - Acessar Perfil"); // FALTA DELETAR PERFIL
+            System.out.println("1 - Acessar Perfil");
             System.out.println("2 - Acessar Terrenos");
             System.out.println("3 - Acessar Feed");
             System.out.println("4 - Sair");
@@ -33,6 +34,8 @@ public class UsuarioMenu {
                     FeedMenu.feedMenu();
                     break;
                 case 4:
+                    Usuario.logout();
+                    loginMenu.inicio();
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, insira um valor válido.");
@@ -51,7 +54,8 @@ public class UsuarioMenu {
             System.out.println("1 | Mostrar Todos os Meus Terrenos");
             System.out.println("2 | Mostrar Terrenos DISPONÍVEIS");
             System.out.println("3 | Mostrar Terrenos ARRENDADOS");
-            System.out.println("4 | Consultar um Terreno por Título");
+            System.out.println("4 | Consultar Terrenos ALUGADOS");
+            System.out.println("5 | Consultar de Terreno");
             System.out.println("0 | Voltar");
 
             int terrenoMenu = Validacao.validarInt("Digite: ");
@@ -60,17 +64,21 @@ public class UsuarioMenu {
             switch (terrenoMenu) {
                 case 1:
                     ShowMenu.header("MEUS TERRENOS", 70);
-                    System.out.println(feedUsuario.mostrarTerrenosDisponveis(Usuario.instancia.getUsuarioId()));
+                    System.out.println(feedUsuario.mostrarTerrenosDoUsuario(Usuario.instancia.getUsuarioId()));
                     break;
                 case 2:
-                    ShowMenu.header("MEUS TERRENOS DISPONÍVEIS", 70);
+                    ShowMenu.header("MEUS TERRENOS MEUS DISPONÍVEIS", 70);
                     System.out.println(feedUsuario.mostrarTerrenosDisponveis(Usuario.instancia.getUsuarioId()));
                     break;
                 case 3:
-                    ShowMenu.header("MEUS TERRENOS ARRENDADOS", 70);
-                    System.out.println(feedUsuario.mostrarTerrenosArrendados(Usuario.instancia.getUsuarioId()));
+                    ShowMenu.header("MEUS TERRENOS MEUS ARRENDADOS", 70);
+                    System.out.println(feedUsuario.mostrarMeusTerrenosArrendados(Usuario.instancia.getUsuarioId()));
                     break;
                 case 4:
+                    ShowMenu.header("MEUS TERRENOS ARRENDADOS", 70);
+                    System.out.println(feedUsuario.mostrarTerrenosAlugados(Usuario.instancia.getUsuarioId()));
+                    break;
+                case 5:
                     ShowMenu.header("CONSULTA DE TERRENO", 70);
                     String tituloConsulta = Validacao.validarString("Título para Busca: ");
                     System.out.println(feedUsuario.mostrarTerrenosPorTitulo(tituloConsulta, Usuario.instancia.getUsuarioId()));
@@ -104,9 +112,10 @@ public class UsuarioMenu {
                     menuPerfil();
                     break;
                 case 2:
-                    menuEditarPerfil(); // OK
+                    menuEditarPerfil();
                     break;
                 case 3:
+                    menuDeletarPerfil();
                     break;
                 case 4:
                     inicio();
@@ -149,6 +158,38 @@ public class UsuarioMenu {
                             celular,
                             telefoneFixo
                     ));
+                    confirm = false;
+                    break;
+                case "n":
+                    System.out.println("OPERAÇÃO CANCELADA");
+                    confirm = false;
+                    break;
+
+                default:
+                    System.out.println("Digite um valor válido!");
+                    break;
+            }
+
+        }
+    }
+
+    private void menuDeletarPerfil() {
+        boolean confirm = true;
+
+        ShowMenu.header("DELETAR PERFIL", 70);
+
+        while (confirm) {
+            System.out.println("Deseja comcluir a ação?");
+            System.out.println("S | Sim");
+            System.out.println("N | Não");
+            String choice = Validacao.validarString("Digite: ").toLowerCase();
+            System.out.println();
+
+            switch (choice) {
+                case "s":
+                    System.out.println(usuarioController.deletarDados(Usuario.instancia.getUsuarioId()));
+                    Usuario.logout();
+                    loginMenu.inicio();
                     confirm = false;
                     break;
                 case "n":
