@@ -28,6 +28,8 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
 ## Pré-Requisitos ⚙️
 - [IntelliJ Idea](https://www.jetbrains.com/idea/)
 - [JDK17](https://www.oracle.com/java/technologies/downloads/)
+- [OJDBC](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
+
 
 ## Diagrama UML
   ![uml](assets/terrativa-uml.png)
