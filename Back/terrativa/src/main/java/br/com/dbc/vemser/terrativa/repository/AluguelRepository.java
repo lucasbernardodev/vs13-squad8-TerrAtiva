@@ -24,7 +24,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
-    public void alterar(int id, Aluguel AluguelRequest) throws SQLException {
+    public void alterar(Aluguel AluguelRequest) throws SQLException {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE ALUGUEL_PAGAMENTOS
@@ -52,6 +52,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             stmt.setObject(7, AluguelRequest.getDataPagamento());
             stmt.setString(8, AluguelRequest.getPago());
             stmt.setString(9, Instant.now().toString());
+        stmt.setString(10, Instant.now().toString());
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID: " + id);
 

@@ -56,7 +56,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     }
 
     @Override
-    public void alterar(int id, Terreno terreno) {
+    public void alterar(Terreno terreno) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """

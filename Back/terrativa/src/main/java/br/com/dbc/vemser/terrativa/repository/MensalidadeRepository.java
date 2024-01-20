@@ -27,7 +27,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     }
 
     @Override
-    public void alterar(int id, Mensalidade mensalidade) {
+    public void alterar(Mensalidade mensalidade) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """

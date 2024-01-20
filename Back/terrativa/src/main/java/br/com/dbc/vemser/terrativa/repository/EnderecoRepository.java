@@ -57,7 +57,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     }
 
     @Override
-    public void alterar(int id, Endereco enderecoRequest) {
+    public void alterar(Endereco enderecoRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """

@@ -26,7 +26,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
-    public void alterar(int id, Contrato ContratoRequest) {
+    public void alterar(Contrato ContratoRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """

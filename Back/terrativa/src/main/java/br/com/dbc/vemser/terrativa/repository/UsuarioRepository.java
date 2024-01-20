@@ -63,7 +63,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     }
 
     @Override
-    public void alterar(int id, Usuario obj) {
+    public void alterar(Usuario obj) {
         try {
             conn = bancoConection.criaConexao();
             String sqlQuery = """
@@ -91,7 +91,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(7, obj.getCelular());
             stmt.setString(8, obj.getTelefoneFixo());
             stmt.setString(9, Instant.now().toString());
-            stmt.setInt(10, id);
+            stmt.setInt(10, obj.getUsuarioId());
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Erro ocurrido na alteracao");
 
