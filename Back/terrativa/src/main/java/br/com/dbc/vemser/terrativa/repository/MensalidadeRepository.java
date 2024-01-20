@@ -1,6 +1,10 @@
 package br.com.dbc.vemser.terrativa.repository;
-import br.com.dbc.vemser.terrativa.backup.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.models.Mensalidade;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;

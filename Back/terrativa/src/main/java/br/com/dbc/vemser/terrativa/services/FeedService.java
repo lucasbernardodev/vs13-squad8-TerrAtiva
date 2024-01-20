@@ -1,13 +1,12 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.Feed;
-import models.Terreno;
-import repository.FeedRepository;
+import br.com.dbc.vemser.terrativa.entity.Feed;
+import br.com.dbc.vemser.terrativa.repository.FeedRepository;
 
 import java.util.ArrayList;
 
 public class FeedService {
-    private FeedRepository feedRepository = new FeedRepository();
+    private final FeedRepository feedRepository = new FeedRepository();
 
     public ArrayList<Feed> mostrarTerrenosDisponiveis() {
 
@@ -33,10 +32,6 @@ public class FeedService {
 
     public ArrayList<Feed> buscarEstados() {
         return feedRepository.buscarEstados();
-    }
-
-    public void limparFiltros() {
-        feedRepository.limparFiltros();
     }
 
     public String preparaPesquisa(String pesquisa) {

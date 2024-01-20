@@ -1,8 +1,11 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.backup.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.backup.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.models.Contrato;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
 
 
 import java.sql.SQLException;

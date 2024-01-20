@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.EnderecoTerrenos;
-import repository.EnderecoTerrenosRepository;
-import util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
 
 public class EnderecoTerrenosService {
     private EnderecoTerrenosRepository enderecoTerrenosRepository = new EnderecoTerrenosRepository();

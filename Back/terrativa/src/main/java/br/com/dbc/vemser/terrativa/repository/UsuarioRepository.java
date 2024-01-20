@@ -1,8 +1,10 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.backup.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.backup.database.GeradorID;
-import br.com.dbc.vemser.terrativa.models.Usuario;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.database.GeradorID;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 
 import java.sql.*;
 import java.time.Instant;
@@ -21,7 +23,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             Integer proximoId = GeradorID.getProximoUsuarioId(conn);
             obj.setUsuarioId(proximoId);
             String sqlQuery = """
-                    insert into 
+                    insert into
                     USUARIOS (USUARIO_ID, NOME, SOBRENOME, EMAIL, SENHA, CPF, DATA_NASCIMENTO, SEXO, ATIVO, CELULAR, TELEFONE_FIXO, CRIADO, EDITADO)
                     values (?,?,?,?,?,?,?,?,?,?,?,?,?)
                     """;
@@ -94,7 +96,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     }
 
     @Override
-    public void deletar(int id) {
+    public void deletar(int id) throws UnauthorizedOperationException{
         try {
             conn = BancoDeDados.criaConexao();
 
@@ -139,7 +141,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         try {
             conn = BancoDeDados.criaConexao();
 
-            String sqlQuery = " SELECT * FROM LOCADOR WHERE ATIVO = 'S'";
+            String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
             st = conn.createStatement();
             rs = st.executeQuery(sqlQuery);
             List<Usuario> usuarioLista = new ArrayList<>();

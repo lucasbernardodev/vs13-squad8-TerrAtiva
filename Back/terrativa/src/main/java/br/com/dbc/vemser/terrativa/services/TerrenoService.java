@@ -1,18 +1,17 @@
 package br.com.dbc.vemser.terrativa.services;
 
 
-import models.Aluguel;
-import models.Contrato;
-import models.Mensalidade;
-import models.Terreno;
-import repository.TerrenoRepository;
-
-import util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 
 import java.time.LocalDate;
 
 public class TerrenoService {
-   private TerrenoRepository terrenoRepository = new TerrenoRepository();
+   private final TerrenoRepository terrenoRepository = new TerrenoRepository();
     public void cadastrarTerreno( String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
         terrenoRepository.adicionar(new Terreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));

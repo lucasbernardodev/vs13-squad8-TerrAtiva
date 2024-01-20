@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.Contrato;
-import repository.ContratoRepository;
-import util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 
 import java.sql.Date;
 

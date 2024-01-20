@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.Terreno;
-import repository.FeedRepository;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.repository.FeedRepository;
 
 import java.util.ArrayList;
 

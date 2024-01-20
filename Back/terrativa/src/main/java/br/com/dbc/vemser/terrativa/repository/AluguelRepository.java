@@ -1,11 +1,11 @@
 package br.com.dbc.vemser.terrativa.repository;
 
 
-import br.com.dbc.vemser.terrativa.backup.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.backup.exceptions.DataNotFoundException;
-import br.com.dbc.vemser.terrativa.backup.exceptions.UnauthorizedOperationException;
-import br.com.dbc.vemser.terrativa.backup.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.models.Aluguel;
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
 
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -77,8 +77,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();
 
-            if (result.next()) {
-                return new Aluguel(
+            Aluguel aluguel = new Aluguel(
                         result.getInt("MENSALIDADE_ID"),
                         result.getInt("MES_REFERENCIA"),
                         result.getDate("EMISSAO").toLocalDate(),
@@ -87,9 +86,9 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
                         result.getString("CODIGO_BARRAS_BOLETO"),
                         result.getDate("DATA_PAGAMENTO").toLocalDate()
                 );
-            }
-            throw new DataNotFoundException("Não foi possível resgatar os dados do Aluguel.");
 
             BancoDeDados.fechaConexao(connection);
+
+            return aluguel;
     }
 }

@@ -1,15 +1,15 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.backup.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.models.Feed;
-import br.com.dbc.vemser.terrativa.models.Terreno;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Feed;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class FeedRepository {

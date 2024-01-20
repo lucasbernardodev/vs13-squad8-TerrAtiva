@@ -1,14 +1,14 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.models.Usuario;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import br.com.dbc.vemser.terrativa.backup.util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 
 import java.time.LocalDate;
 
 
 public class UsuarioService {
-    private UsuarioRepository usuarioRepository = new UsuarioRepository();
+    private final UsuarioRepository usuarioRepository = new UsuarioRepository();
 
     public void cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
         ValidarModel.NOVOUSUARIO(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, celular, telefoneFixo);

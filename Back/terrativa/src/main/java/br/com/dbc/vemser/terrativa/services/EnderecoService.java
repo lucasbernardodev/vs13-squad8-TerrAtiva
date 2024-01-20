@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.Endereco;
-import repository.EnderecoRepository;
-import util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.entity.Endereco;
+import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
 
 public class EnderecoService {
     private EnderecoRepository enderecoRepository = new EnderecoRepository();

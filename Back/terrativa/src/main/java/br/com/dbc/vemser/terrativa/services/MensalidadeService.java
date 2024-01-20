@@ -1,9 +1,9 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import models.Endereco;
-import models.Mensalidade;
-import repository.MensalidadeRepository;
-import util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.entity.Endereco;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
+import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 
 public class MensalidadeService {
 
