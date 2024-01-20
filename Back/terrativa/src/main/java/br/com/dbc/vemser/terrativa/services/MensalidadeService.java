@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MensalidadeService {
 
-    MensalidadeRepository mensalidade = new MensalidadeRepository();
+    public final MensalidadeRepository mensalidade;
+
+    public MensalidadeService(MensalidadeRepository mensalidade) {
+        this.mensalidade = mensalidade;
+    }
 
     public void alterarMensalidade(Integer mensalidadeID, Integer contratoID, Double valorMensal, Integer anoExercicio) {
         ValidarModel.MENSALIDADES(valorMensal, anoExercicio);

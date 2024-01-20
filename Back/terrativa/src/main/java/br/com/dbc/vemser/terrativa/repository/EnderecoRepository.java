@@ -1,11 +1,11 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -15,11 +15,15 @@ import java.time.Instant;
 
 public class EnderecoRepository implements DaoRepository<Endereco> {
     Connection connection;
+    BancoDeDados bancoConection;
 
+    public EnderecoRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(Endereco enderecoRequest) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
 
             Integer proximoId = GeradorID.getProximoEnderecoId(connection);
             enderecoRequest.setId(proximoId);
@@ -55,7 +59,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     @Override
     public void alterar(int id, Endereco enderecoRequest) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE ENDERECOS
                         set
@@ -94,7 +98,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     @Override
     public void deletar(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "DELETE FROM ENDERECOS WHERE ENDERECO_ID = " + id;
             Statement stmt = connection.createStatement();
 
@@ -112,7 +116,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     @Override
     public Endereco resgatarDadosPorId(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();

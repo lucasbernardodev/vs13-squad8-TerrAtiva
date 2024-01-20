@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 @Service
 public class FeedUsuarioService {
-    private static FeedRepository feedRepository = new FeedRepository();
+    private final FeedRepository feedRepository;
+
+    public FeedUsuarioService(FeedRepository feedRepository) {
+        this.feedRepository = feedRepository;
+    }
 
     public ArrayList<Terreno> mostrarTerrenosDisponiveis(Integer usuarioID) {
         return feedRepository.mostrarTerrenosDisponiveis(usuarioID);

@@ -1,11 +1,11 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.*;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -15,17 +15,21 @@ import java.time.Instant;
 
 public class TerrenoRepository implements DaoRepository<Terreno> {
     Connection connection;
+    BancoDeDados bancoConection;
 
+    public TerrenoRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(Terreno terreno) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             Integer proximoId = GeradorID.getProximoTerrenoId(connection);
             terreno.setId(proximoId);
 
             String sqlQuery = """
                     INSERT INTO TERRENOS(
-                    TERRENO_ID, TITULO, DESCRICAO, DONO_ID, ENDERECO_TERRENO_ID, PRECO, TAMANHO, DISPONIVEL, CRIADO, EDITADO 
+                    TERRENO_ID, TITULO, DESCRICAO, DONO_ID, ENDERECO_TERRENO_ID, PRECO, TAMANHO, DISPONIVEL, CRIADO, EDITADO
                     )VALUES (?,?,?,?,?,?,?,?,?,?)
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
@@ -54,7 +58,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     @Override
     public void alterar(int id, Terreno terreno) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE TERRENOS
                         set
@@ -65,7 +69,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
                          PRECO= ?,
                          TAMANHO= ?,
                          DISPONIVEL= ?,
-                         EDITADO= ?                 
+                         EDITADO= ?
                     WHERE TERRENO_ID = ?
                     """;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
@@ -93,7 +97,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     @Override
     public void deletar(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "UPDATE TERRENOS set DISPONIVEL= ? WHERE TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, "N");
@@ -111,7 +115,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     @Override
     public Terreno resgatarDadosPorId(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM TERRENOS WHERE TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();
@@ -140,10 +144,9 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     public void arrendarTerreno(Contrato contratoRequest, Mensalidade mensalidade, Aluguel aluguelRequest) {
         try {
             // PASSO 1: GERAR CONTRATO
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             int newContratoID = GeradorID.getProximoContrato(connection);
-            Integer newMensalidadeID = GeradorID.getProximoMensalidade(connection);
-            Integer mensalidadeID = Integer.valueOf(newMensalidadeID);
+            int newMensalidadeID = GeradorID.getProximoMensalidade(connection);
             Integer newAluguelID = GeradorID.getProximoAluguel(connection);
 
             String sqlQueryContrato = """
@@ -238,7 +241,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
     public void cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE CONTRATOS
                         set

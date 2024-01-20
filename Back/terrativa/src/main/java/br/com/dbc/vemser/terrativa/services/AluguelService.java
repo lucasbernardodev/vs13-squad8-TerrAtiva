@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;

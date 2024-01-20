@@ -1,16 +1,15 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
-import br.com.dbc.vemser.terrativa.services.FeedService;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Repository
@@ -22,11 +21,16 @@ public class FeedRepository {
     String estado = "";
 
     Connection connection;
+    BancoDeDados bancoConection;
+
+    public FeedRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
 
     public ArrayList<Feed> buscarTerrenos() {
         try {
             ArrayList<Feed> response = new ArrayList<>();
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
 
             String sqlQuery = """
                 SELECT * FROM TERRENOS t\s
@@ -52,10 +56,8 @@ public class FeedRepository {
 
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            FeedService feedService = new FeedService();
-
-            stmt.setString(1, feedService.preparaPesquisa(pesquisa));
-            stmt.setString(2, feedService.preparaPesquisa(pesquisa));
+            stmt.setString(1, preparaPesquisa(pesquisa));
+            stmt.setString(2, preparaPesquisa(pesquisa));
             stmt.setString(3, valor);
             stmt.setString(4, valor);
             stmt.setString(5, tamanho);
@@ -88,7 +90,7 @@ public class FeedRepository {
     public ArrayList<Feed> buscarEstados() {
         try {
             ArrayList<Feed> response = new ArrayList<>();
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
 
             String sqlQuery = """
                SELECT count(*) as QUANTIDADE, NOME_ESTADO, em.ESTADO_COD, t.DISPONIVEL  FROM TERRENOS t
@@ -125,7 +127,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE DISPONIVEL = 'S' AND DONO_ID = ?";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
@@ -147,7 +149,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS, CONTRATOS WHERE LOCATARIO_ID = ? AND CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
@@ -169,7 +171,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE DONO_ID = ?";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
@@ -191,7 +193,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE DISPONIVEL = 'N' AND DONO_ID = ?";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
@@ -213,7 +215,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE DONO_ID = ?";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
@@ -235,7 +237,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE PRECO <= ? AND DISPONIVEL = 'S'";
 
             PreparedStatement stmt = connection.prepareStatement(querySQL);
@@ -259,7 +261,7 @@ public class FeedRepository {
         try {
             ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String querySQL = "SELECT * FROM TERRENOS WHERE lower(TITULO) LIKE LOWER(TRIM(?)) AND DISPONIVEL = 'S' AND DONO_ID = ?";
 
             PreparedStatement stmt = connection.prepareStatement(querySQL);
@@ -296,7 +298,6 @@ public class FeedRepository {
     public void filtrarPorCaracteristicas(String caracteristicas) {
         this.pesquisa = caracteristicas;
     }
-
     public void filtrarPorValor(String valor) {
         this.valor = valor;
     }
@@ -305,6 +306,25 @@ public class FeedRepository {
     }
     public void filtrarPorEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String preparaPesquisa(String pesquisa) {
+
+        if (pesquisa == "") {
+            return "(+)";
+        }
+
+        String[] pesquisaFatiada = pesquisa.split(" ");
+        StringBuilder resultado = new StringBuilder();
+
+        for (String p : pesquisaFatiada) {
+            resultado.append("[");
+            resultado.append(p);
+            resultado.append("(+)");
+            resultado.append("]");
+        }
+        System.out.println(resultado.toString());
+        return resultado.toString();
     }
 
 

@@ -2,17 +2,13 @@ package br.com.dbc.vemser.terrativa.repository;
 
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.time.Instant;
 
 @Repository

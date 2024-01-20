@@ -1,15 +1,19 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 
 @Service
 public class ContratoService {
-    private ContratoRepository contratoRepository = new ContratoRepository();
+    private final ContratoRepository contratoRepository;
+
+    public ContratoService(ContratoRepository contratoRepository) {
+        this.contratoRepository = contratoRepository;
+    }
 
     public void alterar(Integer proprietarioID, Integer terrenoID,
                         Date dataAssinatura, Date dataInicio, Date dataFinal,

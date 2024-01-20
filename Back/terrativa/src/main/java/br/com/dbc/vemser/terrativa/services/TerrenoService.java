@@ -13,7 +13,12 @@ import java.time.LocalDate;
 
 @Service
 public class TerrenoService {
-   private final TerrenoRepository terrenoRepository = new TerrenoRepository();
+   private final TerrenoRepository terrenoRepository;
+
+    public TerrenoService(TerrenoRepository terrenoRepository) {
+         this.terrenoRepository = terrenoRepository;
+    }
+
     public void cadastrarTerreno( String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
         terrenoRepository.adicionar(new Terreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));

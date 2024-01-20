@@ -1,13 +1,17 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
+import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EnderecoService {
-    private EnderecoRepository enderecoRepository = new EnderecoRepository();
+    private final EnderecoRepository enderecoRepository;
+
+    public EnderecoService(EnderecoRepository enderecoRepository) {
+        this.enderecoRepository = enderecoRepository;
+    }
 
     public void adicionarEndereco(Integer usuarioID, String logradouro,
                                   Integer numero, String complemento,

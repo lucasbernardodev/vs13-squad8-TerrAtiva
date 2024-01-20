@@ -2,10 +2,11 @@ package br.com.dbc.vemser.terrativa.database;
 
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.util.PropertiesReader;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Component
 public class BancoDeDados {

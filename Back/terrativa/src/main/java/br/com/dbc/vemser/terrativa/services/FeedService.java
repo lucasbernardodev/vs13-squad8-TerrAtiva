@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 @Service
 public class FeedService {
-    private final FeedRepository feedRepository = new FeedRepository();
+    private final FeedRepository feedRepository;
+
+    public FeedService(FeedRepository feedRepository) {
+        this.feedRepository = feedRepository;
+    }
 
     public ArrayList<Feed> mostrarTerrenosDisponiveis() {
 
@@ -36,23 +40,6 @@ public class FeedService {
         return feedRepository.buscarEstados();
     }
 
-    public String preparaPesquisa(String pesquisa) {
 
-        if (pesquisa == "") {
-            return "(+)";
-        }
-
-        String[] pesquisaFatiada = pesquisa.split(" ");
-        StringBuilder resultado = new StringBuilder();
-
-        for (String p : pesquisaFatiada) {
-            resultado.append("[");
-            resultado.append(p);
-            resultado.append("(+)");
-            resultado.append("]");
-        }
-        System.out.println(resultado.toString());
-        return resultado.toString();
-    }
 
 }

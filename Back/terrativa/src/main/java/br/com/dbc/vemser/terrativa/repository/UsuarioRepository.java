@@ -1,10 +1,10 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -17,11 +17,15 @@ import java.util.List;
 public class UsuarioRepository implements DaoRepository<Usuario> {
 
     Connection conn;
-
+    BancoDeDados bancoConection;
+    
+    public UsuarioRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(Usuario obj) {
         try {
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
 
             Integer proximoId = GeradorID.getProximoUsuarioId(conn);
             obj.setUsuarioId(proximoId);
@@ -61,7 +65,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     @Override
     public void alterar(int id, Usuario obj) {
         try {
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
             String sqlQuery = """
                     update USUARIOS
                     set  NOME= ?,
@@ -101,7 +105,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     @Override
     public void deletar(int id) throws UnauthorizedOperationException{
         try {
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
 
             String sqlQuery = "UPDATE USUARIOS SET ATIVO = 'N' WHERE USUARIO_ID = ?";
 
@@ -122,7 +126,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     public Usuario resgatarDadosPorId(int id) {
         try {
 
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
 
             String sqlQuery = " SELECT * FROM USUARIOS WHERE Id = " + id;
             Statement st = conn.createStatement();
@@ -142,7 +146,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         ResultSet rs = null;
         Statement st = null;
         try {
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
 
             String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
             st = conn.createStatement();
@@ -164,7 +168,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     public Usuario resgatarDadosPorEmail(String email,String senha) {
         try {
 
-            conn = BancoDeDados.criaConexao();
+            conn = bancoConection.criaConexao();
 
             String sqlQuery = """
                     SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
