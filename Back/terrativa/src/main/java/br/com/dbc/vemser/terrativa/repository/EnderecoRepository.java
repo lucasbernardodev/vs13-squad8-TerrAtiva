@@ -84,9 +84,9 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             stmt.setInt(6, enderecoRequest.getCodigoMunicipioIBGE());
             stmt.setInt(7, enderecoRequest.getCep());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, enderecoRequest.getId());
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: ");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -123,6 +123,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
 
             if (result.next()) {
                 return new Endereco(
+                        result.getInt("ENDERECO_ID"),
                         result.getInt("USUARIO_ID"),
                         result.getString("LOGRADOURO"),
                         result.getInt("NUMERO"),

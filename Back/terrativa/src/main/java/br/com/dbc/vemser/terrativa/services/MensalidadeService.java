@@ -16,7 +16,7 @@ public class MensalidadeService {
 
     public void alterarMensalidade(Integer mensalidadeID, Integer contratoID, Double valorMensal, Integer anoExercicio) {
         ValidarModel.MENSALIDADES(valorMensal, anoExercicio);
-        mensalidade.alterar(mensalidadeID, new Mensalidade(contratoID, valorMensal, anoExercicio));
+        mensalidade.alterar(new Mensalidade(mensalidadeID, contratoID, valorMensal, anoExercicio));
     }
 
     public void deletarMensalidade(Integer id) {

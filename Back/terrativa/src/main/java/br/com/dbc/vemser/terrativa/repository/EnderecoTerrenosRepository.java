@@ -81,9 +81,9 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
             stmt.setInt(6, enderecoTerrenosRequest.getCep());
             stmt.setString(7, enderecoTerrenosRequest.getLocalizacao());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, enderecoTerrenosRequest.getId());
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -120,6 +120,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
 
             if (result.next()) {
                 return new EnderecoTerrenos(
+                        result.getInt("ENDERECO_TERRENO_ID"),
                         result.getString("LOGRADOURO"),
                         result.getInt("NUMERO"),
                         result.getString("COMPLEMENTO"),

@@ -18,7 +18,7 @@ public class EnderecoTerrenosService {
                                   String bairro, Integer codigoMunicipioIBGE,
                                   Integer cep, String localizacao) {
         ValidarModel.ENDERECO_TERRENOS(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
-        enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
+        enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(1, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
     }
 
     public void alterar(Integer id,String logradouro,
@@ -26,8 +26,8 @@ public class EnderecoTerrenosService {
                         String bairro, Integer codigoMunicipioIBGE,
                         Integer cep, String localizacao) {
         ValidarModel.ENDERECO_TERRENOS(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
-        enderecoTerrenosRepository.alterar(id,
-                new EnderecoTerrenos(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
+        enderecoTerrenosRepository.alterar(
+                new EnderecoTerrenos(id, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
     }
 
     public void deletar(Integer id) {

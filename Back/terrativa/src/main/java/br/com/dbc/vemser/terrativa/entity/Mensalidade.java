@@ -17,4 +17,13 @@ public class Mensalidade {
     private Integer anoExercicio;
     private LocalDate dataReajuste;
 
+    public Mensalidade(Integer mensalidadeID, Integer contratoID, double valorMensal, Integer anoExercicio) {
+        this.mensalidadeID = mensalidadeID;
+        this.contratoID = contratoID;
+        this.valorMensal = valorMensal;
+        this.anoExercicio = anoExercicio;
+    }
+
+    public Mensalidade(double valorMensal, Integer anoExercicio) {
+    }
 }

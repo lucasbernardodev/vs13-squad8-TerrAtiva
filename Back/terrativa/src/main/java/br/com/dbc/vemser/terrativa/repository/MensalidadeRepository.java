@@ -44,10 +44,10 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
             stmt.setInt(1, mensalidade.getContratoID());
             stmt.setDouble(2, mensalidade.getValorMensal());
             stmt.setInt(3, mensalidade.getAnoExercicio());
-            stmt.setInt(4, id);
+            stmt.setInt(4, mensalidade.getMensalidadeID());
 
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

@@ -53,10 +53,10 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             stmt.setDate(6, Date.valueOf(ContratoRequest.getDataFinal()));
             stmt.setInt(7, ContratoRequest.getDataVencimentoAluguel());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, ContratoRequest.getId());
 
             if (stmt.executeUpdate() == 0) {
-                throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID: " + id);
+                throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID");
             }
 
         } catch (SQLException e) {

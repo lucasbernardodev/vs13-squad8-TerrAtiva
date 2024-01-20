@@ -19,7 +19,7 @@ public class AluguelService {
     public void alterar(Integer pagamentoID, Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao,
                         LocalDate dataVencimento, double taxas, String codigoBarras,
                         LocalDate dataPagamento) throws SQLException {
-        aluguelRepository.alterar(pagamentoID, new Aluguel(mensalidadeID, mesReferencia, dataEmissao, dataVencimento,
+        aluguelRepository.alterar(new Aluguel(pagamentoID, mensalidadeID, mesReferencia, dataEmissao, dataVencimento,
                 taxas, codigoBarras, dataPagamento));
     }
 

@@ -20,4 +20,6 @@ public class Contrato {
     private LocalDate dataFinal;
     private Integer dataVencimentoAluguel;
 
+    public Contrato(Integer proprietarioID, Integer terrenoID, LocalDate localDate, LocalDate localDate1, LocalDate localDate2, Integer dataVencimentoAluguel) {
+    }
 }

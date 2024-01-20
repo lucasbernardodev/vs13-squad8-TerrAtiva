@@ -22,7 +22,7 @@ public class ContratoService {
         ValidarModel.CONTRATOS(proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel);
 
-        contratoRepository.alterar(proprietarioID, new Contrato(proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
+        contratoRepository.alterar(new Contrato(proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel));
     }
 

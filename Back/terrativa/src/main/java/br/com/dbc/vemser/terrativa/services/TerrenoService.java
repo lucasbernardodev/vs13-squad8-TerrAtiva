@@ -21,12 +21,12 @@ public class TerrenoService {
 
     public void cadastrarTerreno( String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-        terrenoRepository.adicionar(new Terreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
+        terrenoRepository.adicionar(new Terreno(1, titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
     }
 
     public void alterarTerreno(Integer id, String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
         ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-        terrenoRepository.alterar(id, new Terreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
+        terrenoRepository.alterar(new Terreno(id, titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
     }
 
     public Terreno buscarTerreno(int idTerreno) {

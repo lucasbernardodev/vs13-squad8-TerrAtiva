@@ -82,10 +82,10 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmt.setString(6, terreno.getTamanho());
             stmt.setString(7, terreno.getDisponivel());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, terreno.getId());
 
             if (stmt.executeUpdate() == 0)
-                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -158,7 +158,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             PreparedStatement stmtContrato = connection.prepareStatement(sqlQueryContrato);
             stmtContrato.setInt(1, newContratoID);
-            stmtContrato.setInt(2, Usuario.instancia.getUsuarioId());
+            stmtContrato.setInt(2, contratoRequest.getProprietarioID());
             stmtContrato.setInt(3, contratoRequest.getTerrenoID());
             stmtContrato.setString(4, contratoRequest.getAtivo());
             stmtContrato.setDate(5, Date.valueOf(contratoRequest.getDataAssinatura()));

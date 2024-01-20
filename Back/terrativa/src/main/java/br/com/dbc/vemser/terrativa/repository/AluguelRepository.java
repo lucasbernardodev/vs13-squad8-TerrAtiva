@@ -52,9 +52,9 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             stmt.setObject(7, AluguelRequest.getDataPagamento());
             stmt.setString(8, AluguelRequest.getPago());
             stmt.setString(9, Instant.now().toString());
-        stmt.setString(10, Instant.now().toString());
+        stmt.setInt(10, AluguelRequest.getPagamentoID());
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID")  ;
 
             BancoDeDados.fechaConexao(connection);
 
@@ -82,13 +82,15 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             ResultSet result = stmt.executeQuery();
 
             Aluguel aluguel = new Aluguel(
-                        result.getInt("MENSALIDADE_ID"),
-                        result.getInt("MES_REFERENCIA"),
-                        result.getDate("EMISSAO").toLocalDate(),
-                        result.getDate("VENCIMENTO").toLocalDate(),
-                        result.getDouble("TAXAS"),
-                        result.getString("CODIGO_BARRAS_BOLETO"),
-                        result.getDate("DATA_PAGAMENTO").toLocalDate()
+//                        result.getInt("MENSALIDADE_ID"),
+//                        result.getInt("MES_REFERENCIA").toString(),
+//                        result.getDate("EMISSAO").toLocalDate(),
+//                        result.getDate("VENCIMENTO").toLocalDate(),
+//                        result.getDouble("TAXAS"),
+//                        result.getString("CODIGO_BARRAS_BOLETO"),
+//                        result.getDate("DATA_PAGAMENTO").toLocalDate(),
+//                        result.getString("PAGO"),
+//                        result.getInt("PAGAMENTO_ID")
                 );
 
             BancoDeDados.fechaConexao(connection);
