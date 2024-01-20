@@ -2,27 +2,30 @@ package br.com.dbc.vemser.terrativa.repository;
 
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.time.Instant;
 
+@Repository
 public class AluguelRepository  implements DaoRepository<Aluguel>{
     Connection connection;
+    BancoDeDados bancoConection;
+
+    public AluguelRepository(BancoDeDados bancoDeDados) {
+    this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(Aluguel AluguelRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
     public void alterar(int id, Aluguel AluguelRequest) throws SQLException {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE ALUGUEL_PAGAMENTOS
                         set
@@ -57,7 +60,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
     }
     @Override
     public void deletar(int id) throws SQLException {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "DELETE FROM ALUGUEL_PAGAMENTOS WHERE PAGAMENTO_ID = " + id;
             Statement stmt = connection.createStatement();
 
@@ -72,7 +75,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
     @Override
     public Aluguel resgatarDadosPorId(int id) throws SQLException {
 
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ALUGUEL_PAGAMENTOS WHERE PAGAMENTO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();

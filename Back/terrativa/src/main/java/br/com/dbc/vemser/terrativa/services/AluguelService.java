@@ -1,13 +1,19 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+@Service
 public class AluguelService {
-    private AluguelRepository aluguelRepository = new AluguelRepository();
+    private final AluguelRepository aluguelRepository;
+
+    public AluguelService(AluguelRepository aluguelRepository) {
+        this.aluguelRepository = aluguelRepository;
+    }
 
 
     public void alterar(Integer pagamentoID, Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao,

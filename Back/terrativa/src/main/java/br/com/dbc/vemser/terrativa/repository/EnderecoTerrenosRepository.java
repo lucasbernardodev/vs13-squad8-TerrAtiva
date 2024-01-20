@@ -1,22 +1,29 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
 
+@Repository
+
 public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerrenos> {
     Connection connection;
+    BancoDeDados bancoConection;
 
+    public EnderecoTerrenosRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             Integer proximoId = GeradorID.getProximoEnderecoTerrenos(connection);
             enderecoTerrenosRequest.setId(proximoId);
             String sqlQuery = """
@@ -50,7 +57,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     @Override
     public void alterar(int id, EnderecoTerrenos enderecoTerrenosRequest) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE ENDERECO_TERRENOS
                         set
@@ -88,7 +95,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     @Override
     public void deletar(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "DELETE FROM ENDERECO_TERRENOS WHERE ENDERECO_TERRENO_ID = " + id;
             Statement stmt = connection.createStatement();
 
@@ -106,7 +113,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     @Override
     public EnderecoTerrenos resgatarDadosPorId(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ENDERECO_TERRENOS WHERE ENDERECO_TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();

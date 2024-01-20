@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Validated
@@ -21,7 +19,11 @@ import java.time.LocalDate;
 @RequestMapping("/usuario") // localhost:8081/pessoa
 public class UsuarioController {
 
-    UsuarioService usuarioService = new UsuarioService();
+    public final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     public String cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
 

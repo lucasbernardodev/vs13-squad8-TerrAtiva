@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.database;
 
 import br.com.dbc.vemser.terrativa.exceptions.EntityIdNullException;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
