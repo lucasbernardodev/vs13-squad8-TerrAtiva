@@ -2,11 +2,17 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.FeedUsuarioService;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
+@RestController
 public class FeedUsuarioController {
-    private final FeedUsuarioService feedService = new FeedUsuarioService();
+    private final FeedUsuarioService feedService;
+
+    public FeedUsuarioController(FeedUsuarioService feedService) {
+        this.feedService = feedService;
+    }
 
     public String mostrarTerrenosDisponveis(Integer usuarioID) {
         ArrayList<Terreno> response = feedService.mostrarTerrenosDisponiveis(usuarioID);

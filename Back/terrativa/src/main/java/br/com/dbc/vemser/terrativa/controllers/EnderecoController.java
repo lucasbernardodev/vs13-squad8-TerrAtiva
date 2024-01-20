@@ -2,10 +2,16 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class EnderecoController {
 
-    private final EnderecoService enderecoService = new EnderecoService();
+    private final EnderecoService enderecoService;
+
+    public EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
+    }
 
     public String cadastrarEndereco(Integer usuarioID, String logradouro,
                                     Integer numero, String complemento,

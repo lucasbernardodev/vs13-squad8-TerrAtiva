@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-
 @Getter
 @Setter
 public class Aluguel {
@@ -20,8 +19,7 @@ public class Aluguel {
     private String codigoBarras;
     private LocalDate dataPagamento;
     private String pago;
-
-    public Aluguel(){}
+    
     public Aluguel(Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
                    double taxas, String codigoBarras, LocalDate dataPagamento) {
 

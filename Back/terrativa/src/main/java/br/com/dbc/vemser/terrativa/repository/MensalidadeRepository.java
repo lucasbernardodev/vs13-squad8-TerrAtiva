@@ -1,20 +1,25 @@
 package br.com.dbc.vemser.terrativa.repository;
+
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.entity.Mensalidade;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import org.springframework.stereotype.Repository;
+
+import java.sql.*;
+
+@Repository
 
 public class MensalidadeRepository implements DaoRepository<Mensalidade> {
 
     Connection connection;
-    Mensalidade mensalidade = new Mensalidade();
+    BancoDeDados bancoConection;
+
+    public MensalidadeRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
 
     @Override
     public void adicionar(Mensalidade mensalidade) {
@@ -24,7 +29,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     @Override
     public void alterar(int id, Mensalidade mensalidade) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE MENSALIDADES
                         set
@@ -55,7 +60,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     @Override
     public void deletar(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "DELETE FROM MENSALIDADES WHERE MENSALIDADE_ID = " + id;
             Statement stmt = connection.createStatement();
 
@@ -73,7 +78,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     @Override
     public Mensalidade resgatarDadosPorId(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM MENSALIDADES WHERE MENSALIDADE_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             ResultSet result = stmt.executeQuery();

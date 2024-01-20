@@ -1,24 +1,26 @@
 package br.com.dbc.vemser.terrativa.repository;
 
+import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
-import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
-import br.com.dbc.vemser.terrativa.entity.Contrato;
+import org.springframework.stereotype.Repository;
 
-
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.time.Instant;
+
+@Repository
 
 public class ContratoRepository implements DaoRepository<Contrato>{
 
     Connection connection;
+    BancoDeDados bancoConection;
+
+    public ContratoRepository(BancoDeDados bancoDeDados) {
+        this.bancoConection = bancoDeDados;
+    }
     @Override
     public void adicionar(Contrato ContratoRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
@@ -26,7 +28,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     @Override
     public void alterar(int id, Contrato ContratoRequest) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = """
 
                 UPDATE CONTRATOS
@@ -68,7 +70,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     @Override
     public void deletar(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
             String sqlQuery = "UPDATE CONTRATOS " +
                     "SET ATIVO = 'N'" +
                     "WHERE CONTRATO_ID = " + id;
@@ -88,7 +90,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     @Override
     public Contrato resgatarDadosPorId(int id) {
         try {
-            connection = BancoDeDados.criaConexao();
+            connection = bancoConection.criaConexao();
 
             String sqlQuery = "SELECT * FROM CONTRATOS WHERE CONTRATO_ID = " + id;
 
