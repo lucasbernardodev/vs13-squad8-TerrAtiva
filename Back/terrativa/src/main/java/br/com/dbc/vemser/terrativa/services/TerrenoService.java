@@ -7,9 +7,11 @@ import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Service
 public class TerrenoService {
    private final TerrenoRepository terrenoRepository = new TerrenoRepository();
     public void cadastrarTerreno( String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {

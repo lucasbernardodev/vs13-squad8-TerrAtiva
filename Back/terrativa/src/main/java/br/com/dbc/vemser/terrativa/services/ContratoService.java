@@ -3,10 +3,11 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 
-
+@Service
 public class ContratoService {
     private ContratoRepository contratoRepository = new ContratoRepository();
 

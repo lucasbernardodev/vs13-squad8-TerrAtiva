@@ -5,11 +5,14 @@ import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
+@Repository
 
 public class UsuarioRepository implements DaoRepository<Usuario> {
 

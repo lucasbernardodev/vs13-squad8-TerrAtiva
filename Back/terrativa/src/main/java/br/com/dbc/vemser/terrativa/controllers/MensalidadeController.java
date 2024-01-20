@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class MensalidadeController {
 
     MensalidadeService mensalidadeService = new MensalidadeService();

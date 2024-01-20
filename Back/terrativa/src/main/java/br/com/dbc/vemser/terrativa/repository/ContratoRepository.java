@@ -6,6 +6,7 @@ import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
+import org.springframework.stereotype.Repository;
 
 
 import java.sql.SQLException;
@@ -15,6 +16,8 @@ import java.sql.Statement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.Instant;
+
+@Repository
 
 public class ContratoRepository implements DaoRepository<Contrato>{
 

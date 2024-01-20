@@ -6,9 +6,12 @@ import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+
+@Repository
 
 public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerrenos> {
     Connection connection;

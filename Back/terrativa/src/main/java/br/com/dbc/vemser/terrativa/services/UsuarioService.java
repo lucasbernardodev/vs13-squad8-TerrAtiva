@@ -3,10 +3,11 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-
+@Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository = new UsuarioRepository();
 

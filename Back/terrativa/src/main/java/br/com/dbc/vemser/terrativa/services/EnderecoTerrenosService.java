@@ -3,7 +3,9 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EnderecoTerrenosService {
     private EnderecoTerrenosRepository enderecoTerrenosRepository = new EnderecoTerrenosRepository();
 
