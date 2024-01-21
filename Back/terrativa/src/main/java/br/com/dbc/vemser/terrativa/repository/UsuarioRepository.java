@@ -5,6 +5,7 @@ import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,14 +14,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-
+@RequiredArgsConstructor
 public class UsuarioRepository implements DaoRepository<Usuario> {
 
     Connection conn;
     BancoDeDados bancoConection;
-    
-    public UsuarioRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
+
+    public List<Usuario> listarUsuarios() {
+        ResultSet rs;
+        Statement st;
+        try {
+            conn = bancoConection.criaConexao();
+
+            String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
+            st = conn.createStatement();
+            rs = st.executeQuery(sqlQuery);
+            List<Usuario> usuarioLista = new ArrayList<>();
+
+            while (rs.next()) {
+                usuarioLista.add(mapperUsuario(rs));
+            }
+
+            return usuarioLista;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(conn);
+        }
     }
     @Override
     public Usuario adicionar(Usuario obj) {
@@ -63,7 +83,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
     }
 
     @Override
-    public void alterar(Usuario obj) {
+    public Usuario alterar(Usuario obj) {
         try {
             conn = bancoConection.criaConexao();
             String sqlQuery = """
@@ -94,6 +114,8 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setInt(10, obj.getUsuarioId());
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Erro ocurrido na alteracao");
+            BancoDeDados.fechaConexao(conn);
+            return obj;
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -135,29 +157,6 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
                 return mapperUsuario(rs);
             }
             return null;
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
-        }
-    }
-
-    public List<Usuario> resgatarUsuariosTodos() {
-        ResultSet rs = null;
-        Statement st = null;
-        try {
-            conn = bancoConection.criaConexao();
-
-            String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
-            st = conn.createStatement();
-            rs = st.executeQuery(sqlQuery);
-            List<Usuario> usuarioLista = new ArrayList<>();
-
-            while (rs.next()) {
-                usuarioLista.add(mapperUsuario(rs));
-            }
-
-            return usuarioLista;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -214,4 +213,6 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
         return usuarioResponse;
     }
+
+
 }

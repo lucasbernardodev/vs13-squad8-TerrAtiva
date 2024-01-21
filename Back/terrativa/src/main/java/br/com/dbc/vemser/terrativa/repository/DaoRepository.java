@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public interface DaoRepository<T> {
     T adicionar(T obj);
-    void alterar(T obj) throws SQLException;
+    T alterar(T obj) throws SQLException;
     void deletar(int id) throws SQLException;
     T resgatarDadosPorId(int id) throws SQLException;
 

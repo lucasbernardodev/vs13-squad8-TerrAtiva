@@ -2,7 +2,10 @@ package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
-import br.com.dbc.vemser.terrativa.entity.*;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;

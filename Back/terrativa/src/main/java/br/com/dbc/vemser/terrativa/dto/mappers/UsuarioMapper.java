@@ -4,8 +4,6 @@ import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 
-import java.time.LocalDate;
-
 public class UsuarioMapper {
 
     public static ResponseUsuario usuarioParaResponseUsuario(Usuario usuario){

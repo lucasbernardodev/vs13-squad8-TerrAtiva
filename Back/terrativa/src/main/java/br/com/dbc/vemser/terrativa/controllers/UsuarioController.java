@@ -2,17 +2,14 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
-import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 
 @Slf4j
 @RestController
@@ -22,6 +19,13 @@ public class UsuarioController {
 
     public final UsuarioService usuarioService;
 
+    @GetMapping // GET localhost:8081/usuario
+    public ResponseEntity<ResponseUsuario> listarUsuarios() throws Exception {
+        log.info("Buscando todos os usuários");
+        ResponseUsuario responseUsuario = usuarioService.listarUsuarios();
+        log.info("Buscou todos os usuários");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+    }
 
     @PostMapping // POST localhost:8081/usuario
     public ResponseEntity<ResponseUsuario> cadastrarUsuario(
@@ -34,23 +38,12 @@ public class UsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-    public String atualizarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-
-            usuarioService.alterarUsuario(id, nome, sobrenome, email, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-            return "Dados do Usuário alterados com Sucesso!";
-
-    }
-
-    public String resgatarUsuario(int id) {
-
-            return usuarioService.buscarUsuario(id).toString();
-
-    }
-
-    public Usuario resgatarUsuario(String email, String senha) {
-
-            return usuarioService.buscarUsuarioPorEmail(email,senha);
-
+    @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
+    public ResponseEntity<ResponseUsuario> atualizarUsuario(@Valid @RequestBody RequestUsuario usuario) {
+            log.info("Atualizando usuário");
+            usuarioService.alterarUsuario(usuario);
+            log.info("Atualizou usuário");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idUsuario}")
