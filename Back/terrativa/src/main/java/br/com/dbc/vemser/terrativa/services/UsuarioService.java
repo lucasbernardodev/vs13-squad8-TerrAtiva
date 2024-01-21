@@ -20,6 +20,10 @@ public class UsuarioService {
                 .map(UsuarioMapper::usuarioParaResponseUsuario).toList();
     }
 
+    public ResponseUsuario buscarUsuarioPorId(Integer id) {
+        return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.resgatarDadosPorId(id));
+    }
+
     public ResponseUsuario cadastrarUsuario(RequestUsuario usuario) throws Exception {
 
         return UsuarioMapper.usuarioParaResponseUsuario(
@@ -28,11 +32,16 @@ public class UsuarioService {
     }
 
     public ResponseUsuario alterarUsuario(RequestUsuario usuario) {
-        Usuario alteracoesUsuario = UsuarioMapper.requestUsuarioParaUsuario(usuario);
-        Usuario usuarioAlterado = usuarioRepository.alterar(alteracoesUsuario);
-        ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioAlterado);
-        return responseUsuario;
+        return UsuarioMapper.usuarioParaResponseUsuario(
+                usuarioRepository.alterar(
+                        UsuarioMapper.requestUsuarioParaUsuario(usuario)));
     }
+//    public ResponseUsuario alterarUsuario(RequestUsuario usuario) {
+//        Usuario alteracoesUsuario = UsuarioMapper.requestUsuarioParaUsuario(usuario);
+//        Usuario usuarioAlterado = usuarioRepository.alterar(alteracoesUsuario);
+//        ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioAlterado);
+//        return responseUsuario;
+//    }
 
     public void deletarUsuario(int id) {
         usuarioRepository.deletar(id);

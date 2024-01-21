@@ -28,6 +28,14 @@ public class UsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
+    @GetMapping("/{idUsuario}") // GET localhost:8081/usuario/1
+    public ResponseEntity<ResponseUsuario> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception {
+        log.info("Buscando usuario por id");
+        ResponseUsuario responseUsuario = usuarioService.buscarUsuarioPorId(idUsuario);
+        log.info("Buscou usuario por id");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+    }
+
     @PostMapping // POST localhost:8081/usuario
     public ResponseEntity<ResponseUsuario> cadastrarUsuario(
             @Valid @RequestBody RequestUsuario usuario) throws Exception {
@@ -40,8 +48,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
-    public ResponseEntity<ResponseUsuario> atualizarUsuario(@Valid @RequestBody RequestUsuario usuario) {
+    public ResponseEntity<ResponseUsuario> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
+                                                            @Valid @RequestBody RequestUsuario usuario) {
             log.info("Atualizando usuário");
+            usuario.setUsuarioId(idUsuario);
             ResponseUsuario responseUsuario = usuarioService.alterarUsuario(usuario);
             log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
