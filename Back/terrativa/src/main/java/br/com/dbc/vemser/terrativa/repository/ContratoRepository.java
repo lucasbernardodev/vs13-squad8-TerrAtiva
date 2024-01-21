@@ -26,7 +26,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
-    public void alterar(Contrato ContratoRequest) {
+    public Contrato alterar(Contrato ContratoRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -58,6 +58,8 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             if (stmt.executeUpdate() == 0) {
                 throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID");
             }
+            BancoDeDados.fechaConexao(connection);
+            return ContratoRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

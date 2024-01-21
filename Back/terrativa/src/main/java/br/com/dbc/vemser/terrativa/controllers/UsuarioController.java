@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -20,9 +21,9 @@ public class UsuarioController {
     public final UsuarioService usuarioService;
 
     @GetMapping // GET localhost:8081/usuario
-    public ResponseEntity<ResponseUsuario> listarUsuarios() throws Exception {
+    public ResponseEntity<List<ResponseUsuario>> listarUsuarios() throws Exception {
         log.info("Buscando todos os usuários");
-        ResponseUsuario responseUsuario = usuarioService.listarUsuarios();
+        List<ResponseUsuario> responseUsuario = usuarioService.listarUsuarios();
         log.info("Buscou todos os usuários");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
@@ -41,7 +42,7 @@ public class UsuarioController {
     @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
     public ResponseEntity<ResponseUsuario> atualizarUsuario(@Valid @RequestBody RequestUsuario usuario) {
             log.info("Atualizando usuário");
-            usuarioService.alterarUsuario(usuario);
+            ResponseUsuario responseUsuario = usuarioService.alterarUsuario(usuario);
             log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }

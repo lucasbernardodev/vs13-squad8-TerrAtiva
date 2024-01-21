@@ -57,7 +57,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     }
 
     @Override
-    public void alterar(EnderecoTerrenos enderecoTerrenosRequest) {
+    public EnderecoTerrenos alterar(EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -86,6 +86,9 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
             stmt.setInt(9, enderecoTerrenosRequest.getId());
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+
+            BancoDeDados.fechaConexao(connection);
+            return enderecoTerrenosRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

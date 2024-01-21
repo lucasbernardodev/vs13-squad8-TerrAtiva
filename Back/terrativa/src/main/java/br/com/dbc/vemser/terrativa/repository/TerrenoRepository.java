@@ -61,7 +61,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     }
 
     @Override
-    public void alterar(Terreno terreno) {
+    public Terreno alterar(Terreno terreno) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -91,6 +91,8 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             if (stmt.executeUpdate() == 0)
                 throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+            BancoDeDados.fechaConexao(connection);
+            return terreno;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

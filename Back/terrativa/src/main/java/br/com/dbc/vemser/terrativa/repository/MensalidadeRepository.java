@@ -27,7 +27,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     }
 
     @Override
-    public void alterar(Mensalidade mensalidade) {
+    public Mensalidade alterar(Mensalidade mensalidade) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -48,6 +48,8 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
 
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+            BancoDeDados.fechaConexao(connection);
+            return mensalidade;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

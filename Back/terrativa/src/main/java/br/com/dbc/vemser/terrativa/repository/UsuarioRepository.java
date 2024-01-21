@@ -6,6 +6,8 @@ import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.flogger.Flogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,18 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Slf4j
 @RequiredArgsConstructor
 public class UsuarioRepository implements DaoRepository<Usuario> {
 
-    Connection conn;
-    BancoDeDados bancoConection;
+    private Connection conn;
+    private final BancoDeDados bancoConection;
 
     public List<Usuario> listarUsuarios() {
         ResultSet rs;
         Statement st;
         try {
             conn = bancoConection.criaConexao();
-
+            log.info("Conexao bem sucedida");
             String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
             st = conn.createStatement();
             rs = st.executeQuery(sqlQuery);
@@ -34,12 +37,10 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             while (rs.next()) {
                 usuarioLista.add(mapperUsuario(rs));
             }
-
+            BancoDeDados.fechaConexao(conn);
             return usuarioLista;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
         }
     }
     @Override

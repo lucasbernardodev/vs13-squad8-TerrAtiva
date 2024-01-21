@@ -8,13 +8,16 @@ import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
-    public ResponseUsuario listarUsuarios() {
-        return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.listarUsuarios());
+    public List<ResponseUsuario> listarUsuarios() {
+        return usuarioRepository.listarUsuarios().stream()
+                .map(UsuarioMapper::usuarioParaResponseUsuario).toList();
     }
 
     public ResponseUsuario cadastrarUsuario(RequestUsuario usuario) throws Exception {

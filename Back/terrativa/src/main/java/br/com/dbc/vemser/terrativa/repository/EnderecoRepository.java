@@ -59,7 +59,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     }
 
     @Override
-    public void alterar(Endereco enderecoRequest) {
+    public Endereco alterar(Endereco enderecoRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -89,6 +89,8 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             stmt.setInt(9, enderecoRequest.getId());
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: ");
+            BancoDeDados.fechaConexao(connection);
+            return enderecoRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

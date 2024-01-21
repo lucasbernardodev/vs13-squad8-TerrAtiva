@@ -2,12 +2,14 @@ package br.com.dbc.vemser.terrativa.database;
 
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.util.PropertiesReader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Slf4j
 @Component
 public class BancoDeDados {
 
@@ -19,6 +21,7 @@ public class BancoDeDados {
         try {
             Connection conn = DriverManager.getConnection(props.getDburl(), props.getDbuser(), props.getDbpassword());
             if(conn == null) throw new DbException("Conexao nao sucedida");
+            log.info("Conexao bem sucedida");
             conn.createStatement().execute("alter session set current_schema = VS_13_EQUIPE_8");
             return conn;
         }
