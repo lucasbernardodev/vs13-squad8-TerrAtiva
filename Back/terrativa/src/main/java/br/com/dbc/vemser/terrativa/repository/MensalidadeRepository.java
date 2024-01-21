@@ -22,7 +22,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     }
 
     @Override
-    public void adicionar(Mensalidade mensalidade) {
+    public Mensalidade adicionar(Mensalidade mensalidade) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
 

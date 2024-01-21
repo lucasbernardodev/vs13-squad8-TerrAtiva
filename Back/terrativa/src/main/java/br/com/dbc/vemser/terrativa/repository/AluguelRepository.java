@@ -20,7 +20,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
     this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(Aluguel AluguelRequest) {
+    public Aluguel adicionar(Aluguel AluguelRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override

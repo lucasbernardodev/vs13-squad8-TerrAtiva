@@ -21,7 +21,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
         this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
+    public EnderecoTerrenos adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = bancoConection.criaConexao();
             Integer proximoId = GeradorID.getProximoEnderecoTerrenos(connection);
@@ -46,6 +46,8 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
             stmt.setString(10, Instant.now().toString());
 
             if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
+            BancoDeDados.fechaConexao(connection);
+            return enderecoTerrenosRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

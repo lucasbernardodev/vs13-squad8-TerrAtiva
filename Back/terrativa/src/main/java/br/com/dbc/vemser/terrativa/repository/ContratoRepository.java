@@ -22,7 +22,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(Contrato ContratoRequest) {
+    public Contrato adicionar(Contrato ContratoRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override

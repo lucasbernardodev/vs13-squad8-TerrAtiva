@@ -21,7 +21,7 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
         this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(Endereco enderecoRequest) {
+    public Endereco adicionar(Endereco enderecoRequest) {
         try {
             connection = bancoConection.criaConexao();
 
@@ -48,6 +48,8 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             stmt.setString(10, Instant.now().toString());
 
             if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
+            BancoDeDados.fechaConexao(connection);
+            return enderecoRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

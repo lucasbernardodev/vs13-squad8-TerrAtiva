@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -9,23 +11,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
-@Validated
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/usuario") // localhost:8081/pessoa
+@RequestMapping("/usuario") // localhost:8081/usuario
 public class UsuarioController {
 
     public final UsuarioService usuarioService;
 
 
-//    PostMapping
-    public String cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
+    @PostMapping // POST localhost:8081/usuario
+    public ResponseEntity<ResponseUsuario> cadastrarUsuario(
+            @Valid @RequestBody RequestUsuario usuario) throws Exception {
 
-            usuarioService.cadastrarUsuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-            return "Usuário cadastrado com sucesso!";
+        log.info("Criando usuário");
+        ResponseUsuario responseUsuario = usuarioService.cadastrarUsuario(usuario);
+        log.info("Criou usuário");
+
+        return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
     public String atualizarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {

@@ -23,7 +23,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(Usuario obj) {
+    public Usuario adicionar(Usuario obj) {
         try {
             conn = bancoConection.criaConexao();
 
@@ -54,11 +54,11 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
 
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Não foi possivel adicionar");
+            BancoDeDados.fechaConexao(conn);
+            return obj;
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
         }
     }
 
