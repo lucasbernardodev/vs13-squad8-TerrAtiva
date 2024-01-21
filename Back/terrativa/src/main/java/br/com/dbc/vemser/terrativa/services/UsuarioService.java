@@ -3,7 +3,6 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
-import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -9,6 +9,7 @@ public class EnderecoMapper {
     public static ResponseEndereco EnderecoParaResponseEndereco(Endereco entity) {
         ResponseEndereco dto = new ResponseEndereco();
         dto.setId(entity.getId());
+        dto.setUsuarioID(entity.getUsuarioID());
         dto.setLogradouro(entity.getLogradouro());
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
@@ -20,6 +21,7 @@ public class EnderecoMapper {
     public static Endereco RequestEnderecoParaEndereco(RequestEndereco dto) {
         Endereco entity = new Endereco();
         entity.setId(dto.getId());
+        entity.setUsuarioID(dto.getUsuarioID());
         entity.setLogradouro(dto.getLogradouro());
         entity.setNumero(dto.getNumero());
         entity.setComplemento(dto.getComplemento());
