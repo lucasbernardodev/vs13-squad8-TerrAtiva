@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,5 +19,6 @@ public class Endereco {
     private String bairro;
     private Integer codigoMunicipioIBGE;
     private Integer cep;
+
 
 }

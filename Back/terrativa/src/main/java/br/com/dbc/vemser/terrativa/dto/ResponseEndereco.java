@@ -2,10 +2,7 @@ package br.com.dbc.vemser.terrativa.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class ResponseEndereco {
 
@@ -18,4 +15,14 @@ public class ResponseEndereco {
     private Integer codigoMunicipioIBGE;
     private Integer cep;
 
+    public ResponseEndereco() {
+        Integer id;
+        Integer usuarioID;
+        String logradouro;
+        Integer numero;
+        String complemento;
+        String bairro;
+        Integer codigoMunicipioIBGE;
+        Integer cep;
+    }
 }

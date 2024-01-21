@@ -20,6 +20,36 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     public EnderecoRepository(BancoDeDados bancoDeDados) {
         this.bancoConection = bancoDeDados;
     }
+
+
+    @Override
+    public Endereco resgatarDadosPorId(int id) {
+        try {
+            connection = bancoConection.criaConexao();
+            String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
+            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+            ResultSet result = stmt.executeQuery();
+
+            if (result.next()) {
+                return new Endereco(
+                        result.getInt("ENDERECO_ID"),
+                        result.getInt("USUARIO_ID"),
+                        result.getString("LOGRADOURO"),
+                        result.getInt("NUMERO"),
+                        result.getString("COMPLEMENTO"),
+                        result.getString("BAIRRO"),
+                        result.getInt("MUNICIPIO_COD_IBGE"),
+                        result.getInt("CEP")
+                );
+            }
+            throw new DataNotFoundException("Não foi possível resgatar dados");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getCause().getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
     @Override
     public Endereco adicionar(Endereco enderecoRequest) {
         try {
@@ -28,6 +58,10 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             Integer proximoId = GeradorID.getProximoEnderecoId(connection);
             enderecoRequest.setId(proximoId);
 
+            Integer usuarioId = enderecoRequest.getUsuarioID();
+            if (usuarioId == null) {
+                throw new IllegalArgumentException("UsuarioID não pode ser nulo.");
+            }
             String sqlQuery = """
                     INSERT INTO ENDERECOS
                         (ENDERECO_ID, USUARIO_ID, LOGRADOURO, NUMERO, COMPLEMENTO,
@@ -116,35 +150,5 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
             BancoDeDados.fechaConexao(connection);
         }
     }
-
-    @Override
-    public Endereco resgatarDadosPorId(int id) {
-        try {
-            connection = bancoConection.criaConexao();
-            String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-            ResultSet result = stmt.executeQuery();
-
-            if (result.next()) {
-                return new Endereco(
-                        result.getInt("ENDERECO_ID"),
-                        result.getInt("USUARIO_ID"),
-                        result.getString("LOGRADOURO"),
-                        result.getInt("NUMERO"),
-                        result.getString("COMPLEMENTO"),
-                        result.getString("BAIRRO"),
-                        result.getInt("MUNICIPIO_COD_IBGE"),
-                        result.getInt("CEP")
-                        );
-            }
-            throw new DataNotFoundException("Não foi possível resgatar dados");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
 
 }
