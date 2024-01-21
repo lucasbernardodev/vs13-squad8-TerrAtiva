@@ -5,18 +5,16 @@ import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 @RestController
+@RequiredArgsConstructor
 public class AluguelController {
         private final AluguelService aluguelService;
-
-        public AluguelController(AluguelService aluguelService) {
-            this.aluguelService = aluguelService;
-        }
 
         public String alterar(Integer pagamentoID, Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao,
                                        LocalDate dataVencimento, double taxas, String codigoBarras,

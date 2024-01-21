@@ -1,16 +1,14 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class EnderecoTerrenosController {
 
     private final EnderecoTerrenosService enderecoTerrenosService;
-
-    public EnderecoTerrenosController(EnderecoTerrenosService enderecoTerrenosService) {
-        this.enderecoTerrenosService = enderecoTerrenosService;
-    }
 
     public String cadastrarEnderecoTerrenos(String logradouro,
                                     Integer numero, String complemento,

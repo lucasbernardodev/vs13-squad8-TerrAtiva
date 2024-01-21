@@ -2,18 +2,16 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
 @RestController
+@RequiredArgsConstructor
 public class TerrenoController {
 
     public final TerrenoService terrenoService;
-
-    public TerrenoController(TerrenoService terrenoService) {
-        this.terrenoService = terrenoService;
-    }
 
     public String cadastrarTerreno(String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
 

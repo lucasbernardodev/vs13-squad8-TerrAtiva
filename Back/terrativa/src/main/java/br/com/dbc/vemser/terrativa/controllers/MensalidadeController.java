@@ -1,16 +1,14 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class MensalidadeController {
 
     public final MensalidadeService mensalidadeService;
-
-    public MensalidadeController(MensalidadeService mensalidadeService) {
-        this.mensalidadeService = mensalidadeService;
-    }
 
     public String atualizarMensalidade(Integer mensalidadeID, Integer contratoID, Double valorMensal, Integer anoExercicio) {
             mensalidadeService.alterarMensalidade(mensalidadeID, contratoID, valorMensal, anoExercicio);
