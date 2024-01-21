@@ -59,7 +59,9 @@ public class UsuarioController {
 
     @DeleteMapping("/{idUsuario}")
     public ResponseEntity<String> deletarDados(@PathVariable Integer idUsuario) throws Exception {
+        log.info("Deletando usuário");
         usuarioService.deletarUsuario(idUsuario);
-        return new ResponseEntity<>("Usuário deletado com Sucesso", HttpStatus.OK);
+        log.info("Deletou usuário");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
