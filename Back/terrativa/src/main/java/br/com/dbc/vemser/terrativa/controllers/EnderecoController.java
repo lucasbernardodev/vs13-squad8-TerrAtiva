@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.RequestEndereco;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseEndereco;
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,9 @@ public class EnderecoController {
             return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
     @PutMapping ("/{id}") // PUT localhost:8081/endereco/1
-    public  ResponseEntity<ResponseEndereco> atualizarEndereco(@Valid @RequestBody RequestEndereco endereco)throws Exception {
+    public  ResponseEntity<ResponseEndereco> atualizarEndereco(@Valid @RequestBody  RequestEndereco endereco)throws Exception {
              log.info("Alterando Endereço.");
-        ResponseEndereco responseEndereco = enderecoService.alterar(endereco);
+                ResponseEndereco responseEndereco = enderecoService.alterar(endereco);
         log.info("Endereço Criado!");
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
