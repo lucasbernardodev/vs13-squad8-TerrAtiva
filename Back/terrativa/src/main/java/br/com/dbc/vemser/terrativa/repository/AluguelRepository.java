@@ -94,6 +94,7 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
 //                        result.getInt("PAGAMENTO_ID")
                 );
 
+
             BancoDeDados.fechaConexao(connection);
 
             return aluguel;

@@ -20,5 +20,4 @@ public class Endereco {
     private Integer codigoMunicipioIBGE;
     private Integer cep;
 
-
 }

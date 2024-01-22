@@ -9,12 +9,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+import java.util.List;
+
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
+    public List<ResponseEndereco> listarEnderecos() {
+        return enderecoRepository.listarEnderecos().stream()
+                .map(EnderecoMapper::EnderecoParaResponseEndereco)
+                .toList();
+    }
 
     public ResponseEndereco resgatarPorId(Integer id) {
         Endereco endereco = enderecoRepository.resgatarDadosPorId(id);
