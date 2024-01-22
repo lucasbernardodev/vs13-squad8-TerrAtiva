@@ -35,23 +35,23 @@ public class TerrenoController {
     public String deletarDados(int idTerreno) {
             terrenoService.deletarTerreno(idTerreno);
             return "Terreno deletado com Sucesso";
-    }
+    }}
 
-    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
-                                  Integer dataVencimentoAluguel, // CONTRATO
-                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
-                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
-                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
-
-            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
-                                            valorMensal, anoExercicio,
-                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
-
-            return "Terreno Arrendado com Sucesso!";
-    }
-    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
-            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
-            return "Contrato cancelado com sucesso!";
-    }
-
-}
+//    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
+//                                  Integer dataVencimentoAluguel, // CONTRATO
+//                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
+//                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+//                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
+//
+//            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
+//                                            valorMensal, anoExercicio,
+//                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
+//
+//            return "Terreno Arrendado com Sucesso!";
+//    }
+//    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+//            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
+//            return "Contrato cancelado com sucesso!";
+//    }
+//
+//}

@@ -7,11 +7,15 @@ import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 @Repository
 public class EnderecoRepository implements DaoRepository<Endereco> {
     Connection connection;
@@ -21,10 +25,28 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
         this.bancoConection = bancoDeDados;
     }
 
+   public List<Endereco> listarEnderecos() {
+       try {
+           connection = bancoConection.criaConexao();
+           String sqlQuery = " SELECT * FROM ENDERECOS";
 
-    @Override
+           PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+           ResultSet result = stmt.executeQuery(sqlQuery);
+           List<Endereco> enderecoLista = new ArrayList<>();
+           while (result.next()){
+               enderecoLista.add(mapperEndereco(result));
+           }
+           BancoDeDados.fechaConexao(connection);
+           return enderecoLista;
+       } catch (SQLException e) {
+           throw new DbException(e.getMessage());
+       }
+   }
+
+
     public Endereco resgatarDadosPorId(int id) {
         try {
+            log.info("Repository - Buscando endereço por ID: {}", id);
             connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
@@ -42,14 +64,19 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
                         result.getInt("CEP")
                 );
             }
-            throw new DataNotFoundException("Não foi possível resgatar dados");
+
+            throw new DataNotFoundException("Não foi possível resgatar dados. Endereço não encontrado para o ID: " + id);
 
         } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
+            log.error("Erro ao buscar endereço por ID: {}", id, e);
+            DbException dbException = new DbException("Erro ao buscar endereço por ID: " + id);
+            dbException.addSuppressed(e);
+            throw dbException;
         } finally {
             BancoDeDados.fechaConexao(connection);
         }
     }
+
     @Override
     public Endereco adicionar(Endereco enderecoRequest) {
         try {
@@ -149,6 +176,20 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
         } finally {
             BancoDeDados.fechaConexao(connection);
         }
+    }
+    private Endereco mapperEndereco(ResultSet result) throws SQLException {
+        Endereco enderecoResponse = new Endereco();
+
+        enderecoResponse.setId(result.getInt("ENDERECO_ID"));
+        enderecoResponse.setUsuarioID(result.getInt("USUARIO_ID"));
+        enderecoResponse.setLogradouro(result.getString("LOGRADOURO"));
+        enderecoResponse.setNumero(result.getInt("NUMERO"));
+        enderecoResponse.setComplemento(result.getString("COMPLEMENTO"));
+        enderecoResponse.setBairro(result.getString("BAIRRO"));
+        enderecoResponse.setCodigoMunicipioIBGE(result.getInt("MUNICIPIO_COD_IBGE"));
+        enderecoResponse.setCep(result.getInt("CEP"));
+
+        return enderecoResponse;
     }
 
 }

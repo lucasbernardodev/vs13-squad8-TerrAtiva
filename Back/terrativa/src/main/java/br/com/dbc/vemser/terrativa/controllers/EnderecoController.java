@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 import br.com.dbc.vemser.terrativa.dto.RequestEndereco;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseEndereco;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Slf4j
@@ -23,8 +25,16 @@ public class EnderecoController {
 
     private final EnderecoService enderecoService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseEndereco> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception {
+    @GetMapping ("/todos")// GET localhost:8081/endereco/todos
+    public ResponseEntity<List<ResponseEndereco>> listarEndereco() throws Exception {
+        log.info("Buscando todos os endereço");
+        List<ResponseEndereco> responseEndereco = enderecoService.listarEnderecos();
+        log.info("Buscou todos os endereços");
+        return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")// localhost:8081/enderecoendereco/1
+    public ResponseEntity<ResponseEndereco> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
         log.info("Buscando endereço por Id.");
         ResponseEndereco endereco = enderecoService.resgatarPorId(id);
         log.info("Endereço Listado!");
@@ -41,14 +51,16 @@ public class EnderecoController {
             return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
     @PutMapping ("/{id}") // PUT localhost:8081/endereco/1
-    public  ResponseEntity<ResponseEndereco> atualizarEndereco(@Valid @RequestBody  RequestEndereco endereco)throws Exception {
+    public  ResponseEntity<ResponseEndereco> atualizarEndereco(@PathVariable("id") Integer idUsuario,
+                                                               @Valid @RequestBody  RequestEndereco endereco, RequestUsuario usuario)throws Exception {
              log.info("Alterando Endereço.");
+                usuario.setUsuarioId(idUsuario);
                 ResponseEndereco responseEndereco = enderecoService.alterar(endereco);
         log.info("Endereço Criado!");
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")// DELETE localhost:8081/endereco/1
     public ResponseEntity<String> deletarEndereco(@PathVariable Integer id) throws Exception {
         log.info("Deletando Endereço.");
             enderecoService.deletar(id);

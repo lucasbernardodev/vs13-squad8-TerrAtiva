@@ -44,10 +44,6 @@ public class TerrenoService {
                                 Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
                                 double taxas, String codigoBarras, LocalDate dataPagamento) { // ALUGUEL
 
-        ValidarModel.CONTRATOS(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel);
-        ValidarModel.MENSALIDADES(valorMensal, anoExercicio);
-        ValidarModel.ALUGUEL_PAGAMENTOS(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
-
         terrenoRepository.arrendarTerreno(
                 new Contrato(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel),
                 new Mensalidade(valorMensal, anoExercicio),

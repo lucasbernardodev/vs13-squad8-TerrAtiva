@@ -1,36 +1,37 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
+import br.com.dbc.vemser.terrativa.dto.mappers.AluguelMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class AluguelService {
     private final AluguelRepository aluguelRepository;
-
-    public AluguelService(AluguelRepository aluguelRepository) {
-        this.aluguelRepository = aluguelRepository;
+    public ResponseAluguel resgatarAluguelPorId(Integer id) throws Exception {
+        Aluguel aluguel = aluguelRepository.resgatarDadosPorId(id);
+        return AluguelMapper.AluguelParaResponseAluguel(aluguel);
     }
+    public ResponseAluguel alterar(RequestAluguel aluguel) throws SQLException {
+        return AluguelMapper.AluguelParaResponseAluguel(
+                aluguelRepository.alterar(
+                        AluguelMapper.RequestAluguelParaAluguel(aluguel)));
 
-
-    public void alterar(Integer pagamentoID, Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao,
-                        LocalDate dataVencimento, double taxas, String codigoBarras,
-                        LocalDate dataPagamento) throws SQLException {
-        aluguelRepository.alterar(new Aluguel(pagamentoID, mensalidadeID, mesReferencia, dataEmissao, dataVencimento,
-                taxas, codigoBarras, dataPagamento));
     }
-
 
     public void deletar(Integer id) throws SQLException {
         aluguelRepository.deletar(id);
     }
 
-    public Aluguel resgatarPorId(Integer id) throws SQLException {
-        return aluguelRepository.resgatarDadosPorId(id);
-    }
+
 }
 
 
