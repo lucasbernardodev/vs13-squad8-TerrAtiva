@@ -12,7 +12,6 @@ public class MensalidadeMapper {
         dto.setContratoID(entity.getContratoID());
         dto.setValorMensal(entity.getValorMensal());
         dto.setAnoExercicio(entity.getAnoExercicio());
-        dto.setDataReajuste(entity.getDataReajuste());
         return dto;
     }
 
@@ -22,7 +21,6 @@ public class MensalidadeMapper {
         entity.setContratoID(dto.getContratoID());
         entity.setValorMensal(dto.getValorMensal());
         entity.setAnoExercicio(dto.getAnoExercicio());
-        entity.setDataReajuste(dto.getDataReajuste());
         return entity;
     }
 }
