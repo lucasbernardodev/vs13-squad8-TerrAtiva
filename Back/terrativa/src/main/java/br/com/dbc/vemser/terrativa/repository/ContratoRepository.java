@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Repository
 
@@ -100,12 +101,18 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             ResultSet result = stmt.executeQuery();
 
             if (result.next()) {
+                LocalDate localDate;
+                if (result.getDate("DATA_FINAL") == null){
+                    localDate = null;
+                }else {
+                    localDate = result.getDate("DATA_FINAL").toLocalDate();
+                }
                 return new Contrato(
                         result.getInt("LOCATARIO_ID"),
                         result.getInt("TERRENO_ID"),
                         result.getDate("DATA_ASSINATURA").toLocalDate(),
                         result.getDate("DATA_INICIO").toLocalDate(),
-                        result.getDate("DATA_FINAL").toLocalDate(),
+                        localDate,
                         result.getInt("DIA_VENCIMENTO_ALUGUEL")
                 );
             }
