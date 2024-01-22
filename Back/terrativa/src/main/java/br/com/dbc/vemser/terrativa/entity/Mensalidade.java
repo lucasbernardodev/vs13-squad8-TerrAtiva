@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.support.MessageSourceAccessor;
 
 import java.time.LocalDate;
 
@@ -15,15 +15,13 @@ public class Mensalidade {
     private Integer contratoID;
     private double valorMensal;
     private Integer anoExercicio;
-    private LocalDate dataReajuste;
 
-    public Mensalidade(Integer mensalidadeID, Integer contratoID, double valorMensal, Integer anoExercicio) {
-        this.mensalidadeID = mensalidadeID;
-        this.contratoID = contratoID;
+
+    public Mensalidade(double valorMensal, Integer anoExercicio ){
         this.valorMensal = valorMensal;
         this.anoExercicio = anoExercicio;
     }
 
-    public Mensalidade(double valorMensal, Integer anoExercicio) {
-    }
+
+
 }
