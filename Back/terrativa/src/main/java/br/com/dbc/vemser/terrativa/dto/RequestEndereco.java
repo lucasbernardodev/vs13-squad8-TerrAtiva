@@ -29,6 +29,7 @@ public class RequestEndereco {
     @NotEmpty(message = "Bairro não pode ser vazio ou nulo!")
     private String bairro;
 
+    @NotNull
     private Integer codigoMunicipioIBGE;
 
     @NotNull(message = "O CEP não pode ser nulo.")
