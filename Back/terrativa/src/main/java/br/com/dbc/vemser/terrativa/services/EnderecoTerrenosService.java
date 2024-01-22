@@ -1,5 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
@@ -8,33 +11,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class EnderecoTerrenosService {
     private final EnderecoTerrenosRepository enderecoTerrenosRepository;
+    private final EstadosMunicipioService estadosMunicipioService;
 
-    public EnderecoTerrenosService(EnderecoTerrenosRepository enderecoTerrenosRepository) {
+    public EnderecoTerrenosService(EnderecoTerrenosRepository enderecoTerrenosRepository, EstadosMunicipioService estadosMunicipioService) {
         this.enderecoTerrenosRepository = enderecoTerrenosRepository;
+        this.estadosMunicipioService = estadosMunicipioService;
     }
 
-    public void adicionarEnderecoTerrenos(String logradouro,
-                                  Integer numero, String complemento,
-                                  String bairro, Integer codigoMunicipioIBGE,
-                                  Integer cep, String localizacao) {
-        ValidarModel.ENDERECO_TERRENOS(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
-        enderecoTerrenosRepository.adicionar(new EnderecoTerrenos(1, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
+    public ResponseEnderecoTerrenos adicionarEnderecoTerrenos(RequestEnderecoTerrenos requestEnderecoTerrenos) throws Exception{
+        estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+        EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
+        ResponseEnderecoTerrenos responseEnderecoTerrenos = EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.adicionar(enderecoTerrenos));
+        return responseEnderecoTerrenos;
     }
 
-    public void alterar(Integer id,String logradouro,
-                        Integer numero, String complemento,
-                        String bairro, Integer codigoMunicipioIBGE,
-                        Integer cep, String localizacao) {
-        ValidarModel.ENDERECO_TERRENOS(logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao);
-        enderecoTerrenosRepository.alterar(
-                new EnderecoTerrenos(id, logradouro, numero, complemento, bairro, codigoMunicipioIBGE, cep, localizacao));
+    public ResponseEnderecoTerrenos alterar(Integer id, RequestEnderecoTerrenos requestEnderecoTerrenos) throws Exception{
+        estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+        EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
+        ResponseEnderecoTerrenos responseEnderecoTerrenos = EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.alterar(id, enderecoTerrenos));
+        return responseEnderecoTerrenos;
     }
 
-    public void deletar(Integer id) {
+    public void deletar(Integer id) throws Exception{
         enderecoTerrenosRepository.deletar(id);
     }
 
-    public EnderecoTerrenos resgatarPorId(Integer id) {
-        return enderecoTerrenosRepository.resgatarDadosPorId(id);
+    public ResponseEnderecoTerrenos resgatarPorId(Integer id) throws Exception{
+        ResponseEnderecoTerrenos responseEnderecoTerrenos = EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.resgatarDadosPorId(id));
+        return responseEnderecoTerrenos;
     }
 }
