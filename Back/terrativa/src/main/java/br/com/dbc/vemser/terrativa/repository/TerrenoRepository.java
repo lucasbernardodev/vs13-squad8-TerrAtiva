@@ -178,7 +178,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             if (stmtContrato.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
 
-            // PASSO 2: CRIAR ALUGUEL
+            // PASSO 2: CRIAR Mensalidade
 
             String sqlQueryMensalidade = """
                     INSERT INTO MENSALIDADES
