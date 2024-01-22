@@ -33,7 +33,7 @@ public class EnderecoController {
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")// localhost:8081/enderecoendereco/1
+    @GetMapping("/{id}")// localhost:8081/endereco/1
     public ResponseEntity<ResponseEndereco> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
         log.info("Buscando endereço por Id.");
         ResponseEndereco endereco = enderecoService.resgatarPorId(id);

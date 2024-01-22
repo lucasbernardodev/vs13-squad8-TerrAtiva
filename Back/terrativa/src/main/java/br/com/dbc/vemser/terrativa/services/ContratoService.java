@@ -14,12 +14,13 @@ public class ContratoService {
     public ContratoService(ContratoRepository contratoRepository) {
         this.contratoRepository = contratoRepository;
     }
-
+    public Contrato resgatarContratoPorId(Integer id) {
+        return contratoRepository.resgatarDadosPorId(id);
+    }
     public void alterar(Integer proprietarioID, Integer terrenoID,
                         Date dataAssinatura, Date dataInicio, Date dataFinal,
                         Integer dataVencimentoAluguel) {
 
-        ValidarModel.CONTRATOS(proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(), dataVencimentoAluguel);
 
         contratoRepository.alterar(new Contrato(proprietarioID, terrenoID, dataAssinatura.toLocalDate(),
@@ -30,7 +31,5 @@ public class ContratoService {
         contratoRepository.deletar(id);
     }
 
-    public Contrato resgatarContratoPorId(Integer id) {
-        return contratoRepository.resgatarDadosPorId(id);
-    }
+
 }
