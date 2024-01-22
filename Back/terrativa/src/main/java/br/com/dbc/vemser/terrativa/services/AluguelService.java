@@ -32,6 +32,11 @@ public class AluguelService {
     }
 
 
+    public ResponseAluguel criar(RequestAluguel aluguel) {
+        return AluguelMapper.AluguelParaResponseAluguel(
+                aluguelRepository.adicionar(
+                        AluguelMapper.RequestAluguelParaAluguel(aluguel)));
+    }
 }
 
 

@@ -21,6 +21,12 @@ public class ContratoService {
         Contrato contrato = contratoRepository.resgatarDadosPorId(id);
         return ContratoMapper.ContratoParaResponseContrato(contrato);
     }
+
+    public ResponseContrato criar(RequestContrato contrato) throws Exception {
+        return ContratoMapper.ContratoParaResponseContrato(
+                contratoRepository.adicionar(
+                        ContratoMapper.RequestContratoParaContrato(contrato)));
+    }
     public ResponseContrato alterar(RequestContrato contrato)throws Exception {
     return ContratoMapper.ContratoParaResponseContrato(
             contratoRepository.alterar(

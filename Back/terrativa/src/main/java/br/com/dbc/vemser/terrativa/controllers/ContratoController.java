@@ -29,6 +29,13 @@ public class ContratoController {
         log.info("Contrato Listado!");
         return new ResponseEntity<>(contrato, HttpStatus.OK);
            }
+    @PostMapping // POST localhost:8081/contrato
+    public ResponseEntity<ResponseContrato> criarContrato(@Valid @RequestBody RequestContrato contrato) throws Exception {
+        log.info("Criando Contrato.");
+        ResponseContrato responseContrato = contratoService.criar(contrato);
+        log.info("Contrato Criado!");
+        return new ResponseEntity<>(responseContrato, HttpStatus.CREATED);
+    }
     @PutMapping("/{id}") // PUT localhost:8081/contrato/1
     public ResponseEntity<ResponseContrato> atualizarContrato(@PathVariable("id") Integer id,
                                           @Valid @RequestBody RequestContrato contrato)throws Exception {

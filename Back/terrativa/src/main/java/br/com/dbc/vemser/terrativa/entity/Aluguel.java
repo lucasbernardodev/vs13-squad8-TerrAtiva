@@ -15,22 +15,9 @@ public class Aluguel {
     private Integer mesReferencia;
     private LocalDate dataEmissao;
     private LocalDate dataVencimento;
-    private double taxas;
+    private Double taxas;
     private String codigoBarras;
     private LocalDate dataPagamento;
     private String pago = "N";
 
-    public Aluguel(Integer pagamentoID, Integer mensalidadeID, Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento, double taxas, String codigoBarras, LocalDate dataPagamento) {
-        this.pagamentoID = pagamentoID;
-        this.mensalidadeID = mensalidadeID;
-        this.mesReferencia = mesReferencia;
-        this.dataEmissao = dataEmissao;
-        this.dataVencimento = dataVencimento;
-        this.taxas = taxas;
-        this.codigoBarras = codigoBarras;
-        this.dataPagamento = dataPagamento;
-    }
-
-    public Aluguel(Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento, double taxas, String codigoBarras, LocalDate dataPagamento) {
-    }
 }
