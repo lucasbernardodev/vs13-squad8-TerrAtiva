@@ -6,19 +6,19 @@ import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
+@RequiredArgsConstructor
 @Repository
 public class AluguelRepository  implements DaoRepository<Aluguel>{
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public AluguelRepository(BancoDeDados bancoDeDados) {
-    this.bancoConection = bancoDeDados;
-    }
     @Override
     public Aluguel adicionar(Aluguel AluguelRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
@@ -83,22 +83,19 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             ResultSet result = stmt.executeQuery();
 
             Aluguel aluguel = new Aluguel(
-//                        result.getInt("MENSALIDADE_ID"),
-//                        result.getInt("MES_REFERENCIA").toString(),
-//                        result.getDate("EMISSAO").toLocalDate(),
-//                        result.getDate("VENCIMENTO").toLocalDate(),
-//                        result.getDouble("TAXAS"),
-//                        result.getString("CODIGO_BARRAS_BOLETO"),
-//                        result.getDate("DATA_PAGAMENTO").toLocalDate(),
-//                        result.getString("PAGO"),
-//                        result.getInt("PAGAMENTO_ID")
-                );
-//        return aluguel;
-//    }
+                    result.getInt("PAGAMENTO_ID"),
+                    result.getInt("MENSALIDADE_ID"),
+                    result.getInt("MES_REFERENCIA"),
+                    result.getDate("EMISSAO").toLocalDate(),
+                    result.getDate("VENCIMENTO").toLocalDate(),
+                    result.getDouble("TAXAS"),
+                    result.getString("CODIGO_BARRAS_BOLETO"),
+                    result.getDate("DATA_PAGAMENTO").toLocalDate(),
+                    result.getString("PAGO")
 
+            );
 
             BancoDeDados.fechaConexao(connection);
-
             return aluguel;
     }
 }

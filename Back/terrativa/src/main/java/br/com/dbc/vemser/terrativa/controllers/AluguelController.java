@@ -35,15 +35,21 @@ public class AluguelController {
             return new ResponseEntity<>(aluguel, HttpStatus.OK);
         }
 
+        @PostMapping // POST localhost:8081/aluguel
+        public ResponseEntity<ResponseAluguel> criar(@Valid @RequestBody RequestAluguel aluguel) throws Exception {
+            log.info("Criando Aluguel.");
+            ResponseAluguel responseAluguel = aluguelService.criar(aluguel);
+            log.info("Aluguel Criado!");
+            return new ResponseEntity<>(responseAluguel, HttpStatus.CREATED);
+        }
         @PutMapping ("/{id}")// PUT localhost:8081/aluguel/1
         public ResponseEntity<ResponseAluguel> alterar(@PathVariable("id") Integer idUsuario,
                       @Valid @RequestBody RequestAluguel aluguel, RequestUsuario usuario) throws Exception {
             log.info("Criando Aluguel ");
             usuario.setUsuarioId(idUsuario);
-            ResponseAluguel responseAluguel =aluguelService.alterar(aluguel);
+            ResponseAluguel responseAluguel = aluguelService.alterar(aluguel);
             log.info("Aluguel Criado!");
             return new ResponseEntity<>(responseAluguel, HttpStatus.OK);
-
         }
     @DeleteMapping("/{id}")// DELETE localhost:8081/aluguel/1
     public ResponseEntity<String> deletar(@PathVariable int id) throws Exception{
