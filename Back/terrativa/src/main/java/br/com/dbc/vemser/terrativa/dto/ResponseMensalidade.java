@@ -15,6 +15,5 @@ public class ResponseMensalidade {
     private Integer contratoID;
     private double valorMensal;
     private Integer anoExercicio;
-    private LocalDate dataReajuste;
 
 }
