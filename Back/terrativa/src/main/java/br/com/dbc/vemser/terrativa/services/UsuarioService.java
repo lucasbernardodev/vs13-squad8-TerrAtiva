@@ -15,27 +15,35 @@ import java.util.List;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final EmailService emailService;
 
-    public List<ResponseUsuario> listarUsuarios() {
+    public List<ResponseUsuario> listarUsuarios() throws Exception{
         return usuarioRepository.listarUsuarios().stream()
                 .map(UsuarioMapper::usuarioParaResponseUsuario).toList();
     }
 
-    public ResponseUsuario buscarUsuarioPorId(Integer id) {
+    public ResponseUsuario buscarUsuarioPorId(Integer id) throws Exception {
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.resgatarDadosPorId(id));
     }
 
     public ResponseUsuario cadastrarUsuario(RequestUsuario usuario) throws Exception {
-
-        return UsuarioMapper.usuarioParaResponseUsuario(
+        Integer status = 1;
+         ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.adicionar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
+        emailService.sendEmailUsuario(responseUsuario, status);
+        return responseUsuario;
+
     }
 
-    public ResponseUsuario alterarUsuario(RequestUsuario usuario) {
-        return UsuarioMapper.usuarioParaResponseUsuario(
+    public ResponseUsuario alterarUsuario(RequestUsuario usuario) throws Exception{
+        Integer status = 2;
+        ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.alterar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
+        emailService.sendEmailUsuario(responseUsuario, status);
+        return responseUsuario;
+
     }
 //    public ResponseUsuario alterarUsuario(RequestUsuario usuario) {
 //        Usuario alteracoesUsuario = UsuarioMapper.requestUsuarioParaUsuario(usuario);
@@ -44,7 +52,7 @@ public class UsuarioService {
 //        return responseUsuario;
 //    }
 
-    public void deletarUsuario(int id) {
+    public void deletarUsuario(int id) throws Exception {
         usuarioRepository.deletar(id);
     }
 
