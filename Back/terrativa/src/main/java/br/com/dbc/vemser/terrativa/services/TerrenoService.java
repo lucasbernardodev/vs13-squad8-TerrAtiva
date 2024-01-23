@@ -1,37 +1,43 @@
 package br.com.dbc.vemser.terrativa.services;
 
 
+import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
+import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class TerrenoService {
    private final TerrenoRepository terrenoRepository;
 
-    public TerrenoService(TerrenoRepository terrenoRepository) {
-         this.terrenoRepository = terrenoRepository;
+    public ResponseTerreno buscarTerreno(Integer idTerreno) {
+        return TerrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.resgatarDadosPorId(idTerreno));
     }
 
-    public void cadastrarTerreno( String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
-        ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-        terrenoRepository.adicionar(new Terreno(1, titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
+    public ResponseTerreno cadastrarTerreno(RequestTerreno requestTerreno) {
+        return TerrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.adicionar(
+                        TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));
     }
 
-    public void alterarTerreno(Integer id, String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
-        ValidarModel.TERRENOS(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-        terrenoRepository.alterar(new Terreno(id, titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel));
+    public ResponseTerreno alterarTerreno(RequestTerreno requestTerreno) {
+        return TerrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.alterar(
+                        TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));
     }
 
-    public Terreno buscarTerreno(int idTerreno) {
-        return terrenoRepository.resgatarDadosPorId(idTerreno);
-    }
 
     public void deletarTerreno(int idTerreno) {
         terrenoRepository.deletar(idTerreno);

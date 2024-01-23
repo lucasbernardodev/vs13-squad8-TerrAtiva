@@ -31,7 +31,7 @@ public class UsuarioService {
          ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.adicionar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
-        emailService.sendEmailUsuario(responseUsuario, status);
+        //emailService.sendEmailUsuario(responseUsuario, status);
         return responseUsuario;
 
     }
@@ -41,7 +41,7 @@ public class UsuarioService {
         ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.alterar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
-        emailService.sendEmailUsuario(responseUsuario, status);
+        //emailService.sendEmailUsuario(responseUsuario, status);
         return responseUsuario;
 
     }

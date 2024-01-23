@@ -9,20 +9,18 @@ import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
 
 @Repository
-
+@RequiredArgsConstructor
 public class TerrenoRepository implements DaoRepository<Terreno> {
     Connection connection;
-    BancoDeDados bancoConection;
+    private final BancoDeDados bancoConection;
 
-    public TerrenoRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
     @Override
     public Terreno adicionar(Terreno terreno) {
         try {
@@ -102,15 +100,15 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     }
 
     @Override
-    public void deletar(int id) {
+    public void deletar(int id) throws UnauthorizedOperationException{
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = "UPDATE TERRENOS set DISPONIVEL= ? WHERE TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, "N");
 
-            if (stmt.executeUpdate() == 0)
-                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            int res = stmt.executeUpdate();
+            if (res == 0) throw new UnauthorizedOperationException("Não foi possivel remover");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

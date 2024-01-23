@@ -6,7 +6,7 @@ import br.com.dbc.vemser.terrativa.entity.Terreno;
 
 public class TerrenoMapper {
 
-    public static Terreno RequestTerrenoParaTerreno(RequestTerreno requestTerreno){
+    public static Terreno requestTerrenoParaTerreno(RequestTerreno requestTerreno){
         Terreno terreno = new Terreno();
         terreno.setId(requestTerreno.getId());
         terreno.setTitulo(requestTerreno.getTitulo());
@@ -19,7 +19,7 @@ public class TerrenoMapper {
         return terreno;
     }
 
-    public static ResponseTerreno TerrenoParaResponseTerreno(Terreno terreno){
+    public static ResponseTerreno terrenoParaResponseTerreno(Terreno terreno){
         ResponseTerreno responseTerreno = new ResponseTerreno();
         responseTerreno.setId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());

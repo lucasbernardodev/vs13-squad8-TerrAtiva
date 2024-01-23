@@ -18,7 +18,7 @@ import java.sql.Date;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/contrato") // localhost:8081/endereco
+@RequestMapping("/contrato") // localhost:8081/contrato
 public class ContratoController {
     private final ContratoService contratoService;
     @GetMapping("/{id}")// localhost:8081/contrato/1
