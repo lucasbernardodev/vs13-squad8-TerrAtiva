@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.services.EmailService;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,21 +40,19 @@ public class UsuarioController {
     @PostMapping // POST localhost:8081/usuario
     public ResponseEntity<ResponseUsuario> cadastrarUsuario(
             @Valid @RequestBody RequestUsuario usuario) throws Exception {
-
         log.info("Criando usuário");
         ResponseUsuario responseUsuario = usuarioService.cadastrarUsuario(usuario);
         log.info("Criou usuário");
-
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
     @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
     public ResponseEntity<ResponseUsuario> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                            @Valid @RequestBody RequestUsuario usuario) {
-            log.info("Atualizando usuário");
-            usuario.setUsuarioId(idUsuario);
-            ResponseUsuario responseUsuario = usuarioService.alterarUsuario(usuario);
-            log.info("Atualizou usuário");
+                                                            @Valid @RequestBody RequestUsuario usuario) throws Exception {
+        log.info("Atualizando usuário");
+        usuario.setUsuarioId(idUsuario);
+        ResponseUsuario responseUsuario = usuarioService.alterarUsuario(usuario);
+        log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 

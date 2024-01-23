@@ -63,7 +63,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     public void deletar(int id) {
         try {
             connection = bancoConection.criaConexao();
-            String sqlQuery = "DELETE FROM MENSALIDADES WHERE MENSALIDADE_ID = " + id;
+            String sqlQuery = "UPDATE VS_13_EQUIPE_8.MENSALIDADES SET ATIVO='N' WHERE MENSALIDADE_ID=" + id;
             Statement stmt = connection.createStatement();
 
             int rowsAffected = stmt.executeUpdate(sqlQuery);
@@ -91,7 +91,8 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
                   result.getInt("MENSALIDADE_ID"),
                   result.getInt("CONTRATO_ID"),
                   result.getInt("VALOR_MENSAL"),
-                  result.getInt("ANO_EXERCICIO")
+                  result.getInt("ANO_EXERCICIO"),
+                  result.getString("ATIVO")
                );
             }
             throw new DataNotFoundException("Não foi possível resgatar dados");

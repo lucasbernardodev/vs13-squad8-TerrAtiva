@@ -182,8 +182,8 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             String sqlQueryMensalidade = """
                     INSERT INTO MENSALIDADES
-                        (MENSALIDADE_ID, CONTRATO_ID, VALOR_MENSAL, ANO_EXERCICIO, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?)
+                        (MENSALIDADE_ID, CONTRATO_ID, VALOR_MENSAL, ANO_EXERCICIO, CRIADO, EDITADO, ATIVO)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
                     """;
 
             PreparedStatement stmtMensalidade = connection.prepareStatement(sqlQueryMensalidade);
@@ -193,6 +193,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmtMensalidade.setInt(4, mensalidade.getAnoExercicio());
             stmtMensalidade.setString(5, Instant.now().toString());
             stmtMensalidade.setString(6, Instant.now().toString());
+            stmtMensalidade.setString(7,"S" );
 
             if (stmtMensalidade.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");

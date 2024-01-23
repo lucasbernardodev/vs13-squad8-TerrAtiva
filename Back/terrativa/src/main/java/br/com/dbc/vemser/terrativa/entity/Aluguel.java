@@ -20,4 +20,6 @@ public class Aluguel {
     private LocalDate dataPagamento;
     private String pago = "N";
 
+    public Aluguel(Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento, double taxas, String codigoBarras, LocalDate dataPagamento) {
+    }
 }

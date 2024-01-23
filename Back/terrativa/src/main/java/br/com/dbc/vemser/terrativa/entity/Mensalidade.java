@@ -15,13 +15,12 @@ public class Mensalidade {
     private Integer contratoID;
     private double valorMensal;
     private Integer anoExercicio;
+    private String ativo;
 
 
     public Mensalidade(double valorMensal, Integer anoExercicio ){
         this.valorMensal = valorMensal;
         this.anoExercicio = anoExercicio;
     }
-
-
 
 }
