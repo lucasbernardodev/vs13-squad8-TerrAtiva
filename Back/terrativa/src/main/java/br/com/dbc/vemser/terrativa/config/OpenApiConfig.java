@@ -17,6 +17,6 @@ public class OpenApiConfig {
                         .description("Documentação da API da plataforma TerrAtiva")
                         .version("v0.0.1")
                         .license(new License().name("Apache 2.0").url("https://springdoc.org")))
-                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
+                    .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
     }
 }
