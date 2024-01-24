@@ -6,6 +6,7 @@ import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 @Validated
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Aluguel", description = "Endpoints CRUD aluguel")
 @RequestMapping("/aluguel") // localhost:8081/aluguel
 
 public class AluguelController {

@@ -5,6 +5,7 @@ import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseEndereco;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Enderecos", description = "Endpoints CRUD enderecos")
 @RequestMapping("/endereco") // localhost:8081/endereco
 public class EnderecoController {
 
