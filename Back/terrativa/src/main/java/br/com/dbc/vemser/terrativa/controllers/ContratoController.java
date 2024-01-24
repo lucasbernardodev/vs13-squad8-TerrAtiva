@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.documentacao.IContratoController;
 import br.com.dbc.vemser.terrativa.dto.*;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,10 @@ import java.sql.Date;
 @Slf4j
 @Validated
 @RestController
+@Tag(name = "Contrato", description = "Endpoints do CRUD de Contrato")
 @RequiredArgsConstructor
 @RequestMapping("/contrato") // localhost:8081/contrato
-public class ContratoController {
+public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
     @GetMapping("/{id}")// localhost:8081/contrato/1
     public ResponseEntity<ResponseContrato> resgatarContratoPorID(

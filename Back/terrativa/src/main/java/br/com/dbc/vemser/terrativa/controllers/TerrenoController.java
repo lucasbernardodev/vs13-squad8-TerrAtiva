@@ -5,6 +5,7 @@ import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 
 @Slf4j
 @RestController
+@Tag(name = "Terreno", description = "Endpoints do CRUD de Terreno")
 @RequiredArgsConstructor
 @RequestMapping("/terreno") // localhost:8081/usuario
 public class TerrenoController {
