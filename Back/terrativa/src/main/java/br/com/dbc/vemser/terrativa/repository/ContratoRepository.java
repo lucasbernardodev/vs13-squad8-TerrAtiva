@@ -5,7 +5,6 @@ import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
-import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

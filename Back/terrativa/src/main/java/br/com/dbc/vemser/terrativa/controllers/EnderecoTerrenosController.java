@@ -1,4 +1,5 @@
 package br.com.dbc.vemser.terrativa.controllers;
+
 import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerrenoController;
 import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 

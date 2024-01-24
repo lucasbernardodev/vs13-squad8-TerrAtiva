@@ -1,10 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
-import br.com.dbc.vemser.terrativa.dto.*;
-import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
-import java.time.LocalDate;
 
 @Slf4j
 @Validated

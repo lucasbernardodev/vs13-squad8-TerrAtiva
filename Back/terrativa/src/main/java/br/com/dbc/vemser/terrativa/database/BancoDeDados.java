@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.database;
 
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.config.PropertiesReader;
+import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

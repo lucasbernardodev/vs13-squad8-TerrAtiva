@@ -1,4 +1,5 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
+
 import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
 import io.swagger.v3.oas.annotations.Operation;
@@ -6,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 

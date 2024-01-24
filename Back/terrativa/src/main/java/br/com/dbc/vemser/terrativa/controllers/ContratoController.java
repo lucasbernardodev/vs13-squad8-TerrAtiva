@@ -1,9 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.documentacao.IContratoController;
-import br.com.dbc.vemser.terrativa.dto.*;
-import br.com.dbc.vemser.terrativa.exceptions.DbException;
-import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import br.com.dbc.vemser.terrativa.dto.RequestContrato;
+import br.com.dbc.vemser.terrativa.dto.ResponseContrato;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Date;
 
 @Slf4j
 @Validated

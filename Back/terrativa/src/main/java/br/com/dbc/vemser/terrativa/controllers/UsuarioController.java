@@ -3,7 +3,6 @@ package br.com.dbc.vemser.terrativa.controllers;
 import br.com.dbc.vemser.terrativa.controllers.documentacao.IUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
-import br.com.dbc.vemser.terrativa.services.EmailService;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

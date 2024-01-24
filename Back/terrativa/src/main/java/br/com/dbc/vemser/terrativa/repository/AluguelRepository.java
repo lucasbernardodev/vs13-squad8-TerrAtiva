@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
-import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @Repository
