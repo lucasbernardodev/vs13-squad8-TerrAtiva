@@ -1,59 +1,79 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
+@Slf4j
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/terreno") // localhost:8081/usuario
 public class TerrenoController {
 
     public final TerrenoService terrenoService;
 
-    public TerrenoController(TerrenoService terrenoService) {
-        this.terrenoService = terrenoService;
+    @GetMapping("/{idTerreno}") // GET localhost:8081/terreno/1
+    public ResponseEntity<ResponseTerreno> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
+        log.info("Buscando terreno por id");
+        ResponseTerreno responseTerreno = terrenoService.buscarTerreno(idTerreno);
+        log.info("Buscou terreno por id");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
     }
 
-    public String cadastrarTerreno(String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
-
-            terrenoService.cadastrarTerreno(titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-            return "Terreno cadastrado com sucesso!";
-
-    }
-
-    public String atualizarTerreno(Integer id, String titulo, String descricao, Integer proprietarioID, Integer enderecoID, double preco, String tamanho, String disponivel) {
-
-            terrenoService.alterarTerreno(id,titulo,descricao,proprietarioID,enderecoID,preco,tamanho,disponivel);
-            return "Dados do Terreno alterados com Sucesso!";
-
+    @PostMapping
+    public ResponseEntity<ResponseTerreno> cadastrarTerreno(
+                                        @Valid @RequestBody RequestTerreno terreno) throws Exception {
+        log.info("Criando terreno");
+        ResponseTerreno responseTerreno = terrenoService.cadastrarTerreno(terreno);
+        log.info("Criando terreno");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.CREATED);
 
     }
 
-    public Terreno resgatarTerrenoPorID(int id) {
-            return terrenoService.buscarTerreno(id);
+    @PutMapping("/{idTerreno}")
+    public ResponseEntity<ResponseTerreno> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
+                                                            @Valid @RequestBody RequestTerreno terreno) {
+        log.info("Atualizando terreno");
+        terreno.setId(idTerreno);
+        ResponseTerreno responseTerreno = terrenoService.alterarTerreno(terreno);
+        log.info("Atualizou terreno");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
+
     }
 
-    public String deletarDados(int idTerreno) {
-            terrenoService.deletarTerreno(idTerreno);
-            return "Terreno deletado com Sucesso";
-    }
+    @DeleteMapping("/{idTerreno}")
+    public ResponseEntity<String> deletarDados(@PathVariable Integer idTerreno) throws Exception {
+        log.info("Deletando terreno...");
+        terrenoService.deletarTerreno(idTerreno);
+        log.info("Terreno deletado");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }}
 
-    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
-                                  Integer dataVencimentoAluguel, // CONTRATO
-                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
-                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
-                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
-
-            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
-                                            valorMensal, anoExercicio,
-                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
-
-            return "Terreno Arrendado com Sucesso!";
-    }
-    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
-            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
-            return "Contrato cancelado com sucesso!";
-    }
-
-}
+//    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
+//                                  Integer dataVencimentoAluguel, // CONTRATO
+//                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
+//                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+//                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
+//
+//            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
+//                                            valorMensal, anoExercicio,
+//                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
+//
+//            return "Terreno Arrendado com Sucesso!";
+//    }
+//    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
+//            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
+//            return "Contrato cancelado com sucesso!";
+//    }
+//
+//}

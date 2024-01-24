@@ -6,27 +6,28 @@ import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Repository
-
+@RequiredArgsConstructor
 public class ContratoRepository implements DaoRepository<Contrato>{
 
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public ContratoRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
+    //TODO: implementar o método de adicionar contrato
     @Override
-    public void adicionar(Contrato ContratoRequest) {
-        throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
+    public Contrato adicionar(Contrato contratoRequest) {
+        return contratoRequest;
     }
+
     @Override
-    public void alterar(int id, Contrato ContratoRequest) {
+    public Contrato alterar(Contrato contratoRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -46,18 +47,20 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                       
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setInt(1, ContratoRequest.getProprietarioID());
-            stmt.setInt(2, ContratoRequest.getTerrenoID());
-            stmt.setDate(4, Date.valueOf(ContratoRequest.getDataAssinatura()));
-            stmt.setDate(5, Date.valueOf(ContratoRequest.getDataInicio()));
-            stmt.setDate(6, Date.valueOf(ContratoRequest.getDataFinal()));
-            stmt.setInt(7, ContratoRequest.getDataVencimentoAluguel());
+            stmt.setInt(1, contratoRequest.getProprietarioID());
+            stmt.setInt(2, contratoRequest.getTerrenoID());
+            stmt.setDate(4, Date.valueOf(contratoRequest.getDataAssinatura()));
+            stmt.setDate(5, Date.valueOf(contratoRequest.getDataInicio()));
+            stmt.setDate(6, Date.valueOf(contratoRequest.getDataFinal()));
+            stmt.setInt(7, contratoRequest.getDataVencimentoAluguel());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, contratoRequest.getId());
 
             if (stmt.executeUpdate() == 0) {
-                throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID: " + id);
+                throw new DataNotFoundException("Dados do Contrato Não Encontrado. ID");
             }
+            BancoDeDados.fechaConexao(connection);
+            return contratoRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -98,12 +101,20 @@ public class ContratoRepository implements DaoRepository<Contrato>{
             ResultSet result = stmt.executeQuery();
 
             if (result.next()) {
+                LocalDate localDate;
+                if (result.getDate("DATA_FINAL") == null){
+                    localDate = null;
+                }else {
+                    localDate = result.getDate("DATA_FINAL").toLocalDate();
+                }
                 return new Contrato(
+                        result.getInt("CONTRATO_ID"),
                         result.getInt("LOCATARIO_ID"),
                         result.getInt("TERRENO_ID"),
+                        result.getString("ATIVO"),
                         result.getDate("DATA_ASSINATURA").toLocalDate(),
                         result.getDate("DATA_INICIO").toLocalDate(),
-                        result.getDate("DATA_FINAL").toLocalDate(),
+                        localDate,
                         result.getInt("DIA_VENCIMENTO_ALUGUEL")
                 );
             }

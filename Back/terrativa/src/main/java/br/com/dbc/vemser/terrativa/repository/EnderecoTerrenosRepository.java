@@ -12,7 +12,6 @@ import java.sql.*;
 import java.time.Instant;
 
 @Repository
-
 public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerrenos> {
     Connection connection;
     BancoDeDados bancoConection;
@@ -21,7 +20,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
         this.bancoConection = bancoDeDados;
     }
     @Override
-    public void adicionar(EnderecoTerrenos enderecoTerrenosRequest) {
+    public EnderecoTerrenos adicionar(EnderecoTerrenos enderecoTerrenosRequest){
         try {
             connection = bancoConection.criaConexao();
             Integer proximoId = GeradorID.getProximoEnderecoTerrenos(connection);
@@ -45,7 +44,9 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
             stmt.setString(9, Instant.now().toString());
             stmt.setString(10, Instant.now().toString());
 
-            if (stmt.executeUpdate() == 0) throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Não foi possível cadastrar novo Endereço");
+            BancoDeDados.fechaConexao(connection);
+            return enderecoTerrenosRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -54,8 +55,10 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
         }
     }
 
-    @Override
-    public void alterar(int id, EnderecoTerrenos enderecoTerrenosRequest) {
+
+
+
+    public EnderecoTerrenos alterar(Integer id, EnderecoTerrenos enderecoTerrenosRequest) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -83,7 +86,10 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
             stmt.setString(8, Instant.now().toString());
             stmt.setInt(9, id);
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+
+            BancoDeDados.fechaConexao(connection);
+            return enderecoTerrenosRequest;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -101,7 +107,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
 
             int rowsAffected = stmt.executeUpdate(sqlQuery);
             if (rowsAffected == 0)
-                throw new UnauthorizedOperationException("Operação de Deletar Endereço Não Autorizada");
+                throw new DataNotFoundException("Operação de Deletar Endereço Não Autorizada");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -111,7 +117,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
     }
 
     @Override
-    public EnderecoTerrenos resgatarDadosPorId(int id) {
+    public EnderecoTerrenos resgatarDadosPorId(int id){
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ENDERECO_TERRENOS WHERE ENDERECO_TERRENO_ID = " + id;
@@ -120,6 +126,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
 
             if (result.next()) {
                 return new EnderecoTerrenos(
+                        result.getInt("ENDERECO_TERRENO_ID"),
                         result.getString("LOGRADOURO"),
                         result.getInt("NUMERO"),
                         result.getString("COMPLEMENTO"),
@@ -138,5 +145,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
         }
     }
 
-
+    public EnderecoTerrenos alterar(EnderecoTerrenos obj) throws SQLException {
+        return null;
+    }
 }

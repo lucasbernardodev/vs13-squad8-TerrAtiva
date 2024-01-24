@@ -22,12 +22,12 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     }
 
     @Override
-    public void adicionar(Mensalidade mensalidade) {
+    public Mensalidade adicionar(Mensalidade mensalidade) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
 
     @Override
-    public void alterar(int id, Mensalidade mensalidade) {
+    public Mensalidade alterar(Mensalidade mensalidade) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -44,10 +44,12 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
             stmt.setInt(1, mensalidade.getContratoID());
             stmt.setDouble(2, mensalidade.getValorMensal());
             stmt.setInt(3, mensalidade.getAnoExercicio());
-            stmt.setInt(4, id);
+            stmt.setInt(4, mensalidade.getMensalidadeID());
 
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+            BancoDeDados.fechaConexao(connection);
+            return mensalidade;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -61,7 +63,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
     public void deletar(int id) {
         try {
             connection = bancoConection.criaConexao();
-            String sqlQuery = "DELETE FROM MENSALIDADES WHERE MENSALIDADE_ID = " + id;
+            String sqlQuery = "UPDATE VS_13_EQUIPE_8.MENSALIDADES SET ATIVO='N' WHERE MENSALIDADE_ID=" + id;
             Statement stmt = connection.createStatement();
 
             int rowsAffected = stmt.executeUpdate(sqlQuery);
@@ -89,7 +91,8 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
                   result.getInt("MENSALIDADE_ID"),
                   result.getInt("CONTRATO_ID"),
                   result.getInt("VALOR_MENSAL"),
-                  result.getInt("ANO_EXERCICIO")
+                  result.getInt("ANO_EXERCICIO"),
+                  result.getString("ATIVO")
                );
             }
             throw new DataNotFoundException("Não foi possível resgatar dados");

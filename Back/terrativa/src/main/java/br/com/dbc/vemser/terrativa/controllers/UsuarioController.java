@@ -1,58 +1,66 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.services.EmailService;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import javax.validation.Valid;
+import java.util.List;
 
-@Validated
 @Slf4j
 @RestController
-@RequestMapping("/usuario") // localhost:8081/pessoa
+@RequiredArgsConstructor
+@RequestMapping("/usuario") // localhost:8081/usuario
 public class UsuarioController {
 
     public final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    @GetMapping // GET localhost:8081/usuario
+    public ResponseEntity<List<ResponseUsuario>> listarUsuarios() throws Exception {
+        log.info("Buscando todos os usuários");
+        List<ResponseUsuario> responseUsuario = usuarioService.listarUsuarios();
+        log.info("Buscou todos os usuários");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
-    public String cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-
-            usuarioService.cadastrarUsuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-            return "Usuário cadastrado com sucesso!";
+    @GetMapping("/{idUsuario}") // GET localhost:8081/usuario/1
+    public ResponseEntity<ResponseUsuario> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception {
+        log.info("Buscando usuario por id");
+        ResponseUsuario responseUsuario = usuarioService.buscarUsuarioPorId(idUsuario);
+        log.info("Buscou usuario por id");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
-    public String atualizarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-
-            usuarioService.alterarUsuario(id, nome, sobrenome, email, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-            return "Dados do Usuário alterados com Sucesso!";
-
+    @PostMapping // POST localhost:8081/usuario
+    public ResponseEntity<ResponseUsuario> cadastrarUsuario(
+            @Valid @RequestBody RequestUsuario usuario) throws Exception {
+        log.info("Criando usuário");
+        ResponseUsuario responseUsuario = usuarioService.cadastrarUsuario(usuario);
+        log.info("Criou usuário");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-    public String resgatarUsuario(int id) {
-
-            return usuarioService.buscarUsuario(id).toString();
-
-    }
-
-    public Usuario resgatarUsuario(String email, String senha) {
-
-            return usuarioService.buscarUsuarioPorEmail(email,senha);
-
+    @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
+    public ResponseEntity<ResponseUsuario> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
+                                                            @Valid @RequestBody RequestUsuario usuario) throws Exception {
+        log.info("Atualizando usuário");
+        usuario.setUsuarioId(idUsuario);
+        ResponseUsuario responseUsuario = usuarioService.alterarUsuario(usuario);
+        log.info("Atualizou usuário");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idUsuario}")
     public ResponseEntity<String> deletarDados(@PathVariable Integer idUsuario) throws Exception {
+        log.info("Deletando usuário");
         usuarioService.deletarUsuario(idUsuario);
-        return new ResponseEntity<>("Usuário deletado com Sucesso", HttpStatus.OK);
+        log.info("Deletou usuário");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

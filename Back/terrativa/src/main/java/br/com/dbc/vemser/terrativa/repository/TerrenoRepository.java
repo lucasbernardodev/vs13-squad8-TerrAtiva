@@ -2,26 +2,27 @@ package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
-import br.com.dbc.vemser.terrativa.entity.*;
+import br.com.dbc.vemser.terrativa.entity.Aluguel;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Mensalidade;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
 
 @Repository
-
+@RequiredArgsConstructor
 public class TerrenoRepository implements DaoRepository<Terreno> {
     Connection connection;
-    BancoDeDados bancoConection;
+    private final BancoDeDados bancoConection;
 
-    public TerrenoRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
     @Override
-    public void adicionar(Terreno terreno) {
+    public Terreno adicionar(Terreno terreno) {
         try {
             connection = bancoConection.criaConexao();
             Integer proximoId = GeradorID.getProximoTerrenoId(connection);
@@ -47,6 +48,8 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             if (stmt.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
+            BancoDeDados.fechaConexao(connection);
+            return terreno;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -56,7 +59,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     }
 
     @Override
-    public void alterar(int id, Terreno terreno) {
+    public Terreno alterar(Terreno terreno) {
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
@@ -82,10 +85,12 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmt.setString(6, terreno.getTamanho());
             stmt.setString(7, terreno.getDisponivel());
             stmt.setString(8, Instant.now().toString());
-            stmt.setInt(9, id);
+            stmt.setInt(9, terreno.getId());
 
             if (stmt.executeUpdate() == 0)
-                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
+            BancoDeDados.fechaConexao(connection);
+            return terreno;
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -95,15 +100,15 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
     }
 
     @Override
-    public void deletar(int id) {
+    public void deletar(int id) throws UnauthorizedOperationException{
         try {
             connection = bancoConection.criaConexao();
             String sqlQuery = "UPDATE TERRENOS set DISPONIVEL= ? WHERE TERRENO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, "N");
 
-            if (stmt.executeUpdate() == 0)
-                throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID: " + id);
+            int res = stmt.executeUpdate();
+            if (res == 0) throw new UnauthorizedOperationException("Não foi possivel remover");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());
@@ -158,7 +163,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             PreparedStatement stmtContrato = connection.prepareStatement(sqlQueryContrato);
             stmtContrato.setInt(1, newContratoID);
-            stmtContrato.setInt(2, Usuario.instancia.getUsuarioId());
+            stmtContrato.setInt(2, contratoRequest.getProprietarioID());
             stmtContrato.setInt(3, contratoRequest.getTerrenoID());
             stmtContrato.setString(4, contratoRequest.getAtivo());
             stmtContrato.setDate(5, Date.valueOf(contratoRequest.getDataAssinatura()));
@@ -171,12 +176,12 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             if (stmtContrato.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
 
-            // PASSO 2: CRIAR ALUGUEL
+            // PASSO 2: CRIAR Mensalidade
 
             String sqlQueryMensalidade = """
                     INSERT INTO MENSALIDADES
-                        (MENSALIDADE_ID, CONTRATO_ID, VALOR_MENSAL, ANO_EXERCICIO, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?)
+                        (MENSALIDADE_ID, CONTRATO_ID, VALOR_MENSAL, ANO_EXERCICIO, CRIADO, EDITADO, ATIVO)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
                     """;
 
             PreparedStatement stmtMensalidade = connection.prepareStatement(sqlQueryMensalidade);
@@ -186,6 +191,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmtMensalidade.setInt(4, mensalidade.getAnoExercicio());
             stmtMensalidade.setString(5, Instant.now().toString());
             stmtMensalidade.setString(6, Instant.now().toString());
+            stmtMensalidade.setString(7,"S" );
 
             if (stmtMensalidade.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");

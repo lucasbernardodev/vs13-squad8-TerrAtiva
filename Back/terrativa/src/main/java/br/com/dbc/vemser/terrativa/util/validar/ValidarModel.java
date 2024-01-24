@@ -92,19 +92,6 @@ public class ValidarModel {
         if (telefoneFixo.trim().isBlank()) throw new InvalidParamException("Telefone Fixo não pode estar vazio!");
     }
 
-    public static final void NOVOUSUARIO(String nome,
-                                         String sobrenome,
-                                         String email,
-                                         String senha,
-                                         String cpf,
-                                         LocalDate dataNascimento,
-                                         String sexo,
-                                         String celular,
-                                         String telefoneFixo) {
-        if (senha.trim().isBlank()) throw new InvalidParamException("Senha não pode estar vazio!");
-        ValidarModel.USUARIOS(nome, sobrenome, email, cpf, dataNascimento, sexo, celular, telefoneFixo);
-    }
-
     public static final void MENSALIDADES(Double valorMensal, Integer anoExercicio) {
 
         if (valorMensal == null || valorMensal < 0) throw new InvalidParamException("O Valor mensal dever ser válido!");

@@ -1,43 +1,53 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.*;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Date;
 
+@Slf4j
+@Validated
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/contrato") // localhost:8081/contrato
 public class ContratoController {
     private final ContratoService contratoService;
-
-    public ContratoController(ContratoService contratoService) {
-        this.contratoService = contratoService;
+    @GetMapping("/{id}")// localhost:8081/contrato/1
+    public ResponseEntity<ResponseContrato> resgatarContratoPorID(
+            @PathVariable("id") Integer id) throws Exception {
+        log.info("Buscando contrato por Id.");
+        ResponseContrato contrato = contratoService.resgatarContratoPorId(id);
+        log.info("Contrato Listado!");
+        return new ResponseEntity<>(contrato, HttpStatus.OK);
+           }
+    @PostMapping // POST localhost:8081/contrato
+    public ResponseEntity<ResponseContrato> criarContrato(@Valid @RequestBody RequestContrato contrato) throws Exception {
+        log.info("Criando Contrato.");
+        ResponseContrato responseContrato = contratoService.criar(contrato);
+        log.info("Contrato Criado!");
+        return new ResponseEntity<>(responseContrato, HttpStatus.CREATED);
     }
-
-    public String atualizarContrato(Integer proprietarioID, Integer terrenoID,
-                                    Date dataAssinatura, Date dataInicio, Date dataFinal,
-                                    Integer dataVencimentoAluguel) {
-
-            contratoService.alterar(proprietarioID, terrenoID, dataAssinatura,
-                    dataInicio, dataFinal, dataVencimentoAluguel);
-            return "Contrato Atualizado Com Sucesso!";
-
+    @PutMapping("/{id}") // PUT localhost:8081/contrato/1
+    public ResponseEntity<ResponseContrato> atualizarContrato(@PathVariable("id") Integer id,
+                                          @Valid @RequestBody RequestContrato contrato)throws Exception {
+        log.info("Alterando Contrato.");
+        ResponseContrato responseContrato = contratoService.alterar(contrato);
+        log.info("Contrato Criado!");
+        return new ResponseEntity<>(responseContrato, HttpStatus.OK);
     }
-
-    public String resgatarContratoPorID(Integer id){
-
-            return contratoService.resgatarContratoPorId(id).toString();
-
-    }
-
-    public String deletarContrato(Integer id) {
-        try {
-            contratoService.deletar(id);
-            return "Contrato deletado com Sucesso";
-
-        } catch (DbException | UnauthorizedOperationException e) {
-            return e.getMessage();
-        }
-    }
-}
+    @DeleteMapping("/{id}")// DELETE localhost:8081/contrato/1
+    public ResponseEntity<String>deletarContrato(@PathVariable Integer id)throws Exception {
+        log.info("Deletando Contrato.");
+        contratoService.deletar(id);
+        log.info("Contrato Deletado!");
+        return new ResponseEntity<>("Contrato deletado com Sucesso", HttpStatus.OK);
+    }}

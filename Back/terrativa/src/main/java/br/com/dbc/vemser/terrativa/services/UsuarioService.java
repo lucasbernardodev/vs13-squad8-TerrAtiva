@@ -1,62 +1,59 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.List;
 
+
+
+@RequiredArgsConstructor
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final EmailService emailService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public List<ResponseUsuario> listarUsuarios() throws Exception{
+        return usuarioRepository.listarUsuarios().stream()
+                .map(UsuarioMapper::usuarioParaResponseUsuario).toList();
     }
 
-    public void cadastrarUsuario(String nome, String sobrenome, String email, String senha, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-        ValidarModel.NOVOUSUARIO(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, celular, telefoneFixo);
-        Usuario usuario = new Usuario(nome, sobrenome, email, senha, cpf, dataNascimento, sexo, celular, telefoneFixo);
-        usuarioRepository.adicionar(usuario);
+    public ResponseUsuario buscarUsuarioPorId(Integer id) throws Exception {
+        return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.resgatarDadosPorId(id));
     }
 
-    public void alterarUsuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String ativo, String celular, String telefoneFixo) {
-        ValidarModel.USUARIOS(nome, sobrenome, email, cpf, dataNascimento, sexo, celular, telefoneFixo);
-        Usuario usuario = new Usuario(nome, sobrenome, email, cpf, dataNascimento, sexo, ativo, celular, telefoneFixo);
-        usuarioRepository.alterar(id, usuario);
+    public ResponseUsuario cadastrarUsuario(RequestUsuario usuario) throws Exception {
+        Integer status = 1;
+         ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
+                usuarioRepository.adicionar(
+                        UsuarioMapper.requestUsuarioParaUsuario(usuario)));
+        //emailService.sendEmailUsuario(responseUsuario, status);
+        return responseUsuario;
+
     }
 
-    public void deletarUsuario(int id) {
+    public ResponseUsuario alterarUsuario(RequestUsuario usuario) throws Exception{
+        Integer status = 2;
+        ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
+                usuarioRepository.alterar(
+                        UsuarioMapper.requestUsuarioParaUsuario(usuario)));
+        //emailService.sendEmailUsuario(responseUsuario, status);
+        return responseUsuario;
+
+    }
+//    public ResponseUsuario alterarUsuario(RequestUsuario usuario) {
+//        Usuario alteracoesUsuario = UsuarioMapper.requestUsuarioParaUsuario(usuario);
+//        Usuario usuarioAlterado = usuarioRepository.alterar(alteracoesUsuario);
+//        ResponseUsuario responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioAlterado);
+//        return responseUsuario;
+//    }
+
+    public void deletarUsuario(int id) throws Exception {
         usuarioRepository.deletar(id);
-    }
-
-    public Usuario buscarUsuario(int id) {
-        return usuarioRepository.resgatarDadosPorId(id);
-    }
-
-    public Usuario buscarUsuarioPorEmail(String email, String senha){
-        return usuarioRepository.resgatarDadosPorEmail(email,senha);
-    }
-
-    public Usuario realizarLogin(String email, String senha){
-        Usuario usuario =  buscarUsuarioPorEmail(email, senha);
-
-        if (usuario != null) {
-            return Usuario.login(
-                    usuario.getUsuarioId(),
-                    usuario.getNome(),
-                    usuario.getSobrenome(),
-                    usuario.getEmail(),
-                    usuario.getSenha(),
-                    usuario.getCpf(),
-                    usuario.getDataNascimento(),
-                    usuario.getSexo(),
-                    usuario.getCelular(),
-                    usuario.getTelefoneFixo()
-            );
-        }
-        return usuarioRepository.resgatarDadosPorEmail(email,senha);
     }
 
 }

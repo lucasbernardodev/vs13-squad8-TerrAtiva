@@ -5,6 +5,8 @@ import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,17 +15,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-
+@Slf4j
+@RequiredArgsConstructor
 public class UsuarioRepository implements DaoRepository<Usuario> {
 
-    Connection conn;
-    BancoDeDados bancoConection;
-    
-    public UsuarioRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
+    private Connection conn;
+    private final BancoDeDados bancoConection;
+
+    public List<Usuario> listarUsuarios() {
+        ResultSet rs;
+        Statement st;
+        try {
+            conn = bancoConection.criaConexao();
+            String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
+            st = conn.createStatement();
+            rs = st.executeQuery(sqlQuery);
+            List<Usuario> usuarioLista = new ArrayList<>();
+
+            while (rs.next()) {
+                usuarioLista.add(mapperUsuario(rs));
+            }
+            BancoDeDados.fechaConexao(conn);
+            return usuarioLista;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Usuario resgatarDadosPorId(int id) {
+        try {
+
+            conn = bancoConection.criaConexao();
+
+            String sqlQuery = "SELECT * FROM USUARIOS WHERE USUARIO_ID = " + id;
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sqlQuery);
+
+            if (rs.next()) {
+                return mapperUsuario(rs);
+            }
+
+            throw new UnauthorizedOperationException("Usuario não encontrado");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(conn);
+        }
     }
     @Override
-    public void adicionar(Usuario obj) {
+    public Usuario adicionar(Usuario obj) {
         try {
             conn = bancoConection.criaConexao();
 
@@ -54,16 +96,16 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
 
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Não foi possivel adicionar");
+            BancoDeDados.fechaConexao(conn);
+            return obj;
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
         }
     }
 
     @Override
-    public void alterar(int id, Usuario obj) {
+    public Usuario alterar(Usuario obj) {
         try {
             conn = bancoConection.criaConexao();
             String sqlQuery = """
@@ -71,9 +113,11 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
                     set  NOME= ?,
                          SOBRENOME= ?,
                          EMAIL= ?,
+                         SENHA= ?,
                          CPF= ?,
                          DATA_NASCIMENTO= ?,
                          SEXO= ?,
+                         ATIVO= ?,
                          CELULAR= ?,
                          TELEFONE_FIXO= ?,
                          EDITADO= ?
@@ -85,15 +129,20 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(1, obj.getNome());
             stmt.setString(2, obj.getSobrenome());
             stmt.setString(3, obj.getEmail());
-            stmt.setString(4, obj.getCpf());
-            stmt.setDate(5, Date.valueOf(obj.getDataNascimento()));
-            stmt.setString(6, obj.getSexo());
-            stmt.setString(7, obj.getCelular());
-            stmt.setString(8, obj.getTelefoneFixo());
-            stmt.setString(9, Instant.now().toString());
-            stmt.setInt(10, id);
+            stmt.setString(4, obj.getSenha());
+            stmt.setString(5, obj.getCpf());
+            stmt.setDate(6, Date.valueOf(obj.getDataNascimento()));
+            stmt.setString(7, obj.getSexo());
+            stmt.setString(8, obj.getAtivo());
+            stmt.setString(9, obj.getCelular());
+            stmt.setString(10, obj.getTelefoneFixo());
+            stmt.setString(11, Instant.now().toString());
+            stmt.setInt(12, obj.getUsuarioId());
+
             int res = stmt.executeUpdate();
             if (res == 0) throw new UnauthorizedOperationException("Erro ocurrido na alteracao");
+            BancoDeDados.fechaConexao(conn);
+            return obj;
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -122,83 +171,40 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         }
     }
 
-    @Override
-    public Usuario resgatarDadosPorId(int id) {
-        try {
-
-            conn = bancoConection.criaConexao();
-
-            String sqlQuery = " SELECT * FROM USUARIOS WHERE Id = " + id;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sqlQuery);
-            if (rs.next()) {
-                return mapperUsuario(rs);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
-        }
-    }
-
-    public List<Usuario> resgatarUsuariosTodos() {
-        ResultSet rs = null;
-        Statement st = null;
-        try {
-            conn = bancoConection.criaConexao();
-
-            String sqlQuery = " SELECT * FROM USUARIOS WHERE ATIVO = 'S'";
-            st = conn.createStatement();
-            rs = st.executeQuery(sqlQuery);
-            List<Usuario> usuarioLista = new ArrayList<>();
-
-            while (rs.next()) {
-                usuarioLista.add(mapperUsuario(rs));
-            }
-
-            return usuarioLista;
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
-        }
-    }
-
-    public Usuario resgatarDadosPorEmail(String email,String senha) {
-        try {
-
-            conn = bancoConection.criaConexao();
-
-            String sqlQuery = """
-                    SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
-                    """;
-            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
-            stmt.setString(1, email);
-            stmt.setString(2,senha);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Usuario usuarioResponse = new Usuario();
-                usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
-                usuarioResponse.setNome(rs.getString("NOME"));
-                usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
-                usuarioResponse.setEmail(rs.getString("EMAIL"));
-                usuarioResponse.setCpf(rs.getString("CPF"));
-                usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
-                usuarioResponse.setSexo(rs.getString("SEXO"));
-                usuarioResponse.setAtivo(rs.getString("ATIVO"));
-                usuarioResponse.setCelular(rs.getString("CELULAR"));
-                usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
-                return usuarioResponse;
-            }
-            throw new DbException("Usuario não encontrado");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(conn);
-        }
-    }
+//    public Usuario resgatarDadosPorEmail(String email,String senha) {
+//        try {
+//
+//            conn = bancoConection.criaConexao();
+//
+//            String sqlQuery = """
+//                    SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
+//                    """;
+//            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+//            stmt.setString(1, email);
+//            stmt.setString(2,senha);
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                Usuario usuarioResponse = new Usuario();
+//                usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
+//                usuarioResponse.setNome(rs.getString("NOME"));
+//                usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
+//                usuarioResponse.setEmail(rs.getString("EMAIL"));
+//                usuarioResponse.setCpf(rs.getString("CPF"));
+//                usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
+//                usuarioResponse.setSexo(rs.getString("SEXO"));
+//                usuarioResponse.setAtivo(rs.getString("ATIVO"));
+//                usuarioResponse.setCelular(rs.getString("CELULAR"));
+//                usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
+//                return usuarioResponse;
+//            }
+//            throw new DbException("Usuario não encontrado");
+//
+//        } catch (SQLException e) {
+//            throw new DbException(e.getMessage());
+//        } finally {
+//            BancoDeDados.fechaConexao(conn);
+//        }
+//    }
 
     private Usuario mapperUsuario(ResultSet rs) throws SQLException {
         Usuario usuarioResponse = new Usuario();
@@ -206,6 +212,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         usuarioResponse.setNome(rs.getString("NOME"));
         usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
         usuarioResponse.setEmail(rs.getString("EMAIL"));
+        usuarioResponse.setSenha(rs.getString("SENHA"));
         usuarioResponse.setCpf(rs.getString("CPF"));
         usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
         usuarioResponse.setSexo(rs.getString("SEXO"));
@@ -214,4 +221,6 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
         return usuarioResponse;
     }
+
+
 }

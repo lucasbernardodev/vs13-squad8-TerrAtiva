@@ -6,25 +6,25 @@ import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
+@RequiredArgsConstructor
 @Repository
 public class AluguelRepository  implements DaoRepository<Aluguel>{
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public AluguelRepository(BancoDeDados bancoDeDados) {
-    this.bancoConection = bancoDeDados;
-    }
     @Override
-    public void adicionar(Aluguel AluguelRequest) {
+    public Aluguel adicionar(Aluguel AluguelRequest) {
         throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
     }
     @Override
-    public void alterar(int id, Aluguel AluguelRequest) throws SQLException {
+    public Aluguel alterar(Aluguel AluguelRequest) throws SQLException {
             connection = bancoConection.criaConexao();
             String sqlQuery = """
                     UPDATE ALUGUEL_PAGAMENTOS
@@ -52,10 +52,12 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             stmt.setObject(7, AluguelRequest.getDataPagamento());
             stmt.setString(8, AluguelRequest.getPago());
             stmt.setString(9, Instant.now().toString());
+        stmt.setInt(10, AluguelRequest.getPagamentoID());
 
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID: " + id);
+            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID")  ;
 
             BancoDeDados.fechaConexao(connection);
+            return AluguelRequest;
 
     }
     @Override
@@ -81,17 +83,19 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             ResultSet result = stmt.executeQuery();
 
             Aluguel aluguel = new Aluguel(
-                        result.getInt("MENSALIDADE_ID"),
-                        result.getInt("MES_REFERENCIA"),
-                        result.getDate("EMISSAO").toLocalDate(),
-                        result.getDate("VENCIMENTO").toLocalDate(),
-                        result.getDouble("TAXAS"),
-                        result.getString("CODIGO_BARRAS_BOLETO"),
-                        result.getDate("DATA_PAGAMENTO").toLocalDate()
-                );
+                    result.getInt("PAGAMENTO_ID"),
+                    result.getInt("MENSALIDADE_ID"),
+                    result.getInt("MES_REFERENCIA"),
+                    result.getDate("EMISSAO").toLocalDate(),
+                    result.getDate("VENCIMENTO").toLocalDate(),
+                    result.getDouble("TAXAS"),
+                    result.getString("CODIGO_BARRAS_BOLETO"),
+                    result.getDate("DATA_PAGAMENTO").toLocalDate(),
+                    result.getString("PAGO")
+
+            );
 
             BancoDeDados.fechaConexao(connection);
-
             return aluguel;
     }
 }
