@@ -18,23 +18,31 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
 ## Referências 🗞️📰
 
 ### [Os Objetivos de Desenvolvimento Sustentável no Brasil](https://brasil.un.org/pt-br)
+
 ### [Objetivo de Desenvolvimento Sustentável - 15 - Vida Terrestre](https://www.ipea.gov.br/ods/ods15.html)
+
 ### [Benefícios Fiscais para Desenvolvimento Sustentável](https://www.conjur.com.br/2023-jun-12/elaise-sestrem-beneficios-fiscais-desenvolvimento-sustentavel/)
+
 ### [Política Tributária e Incentivo a Tecnologias Sustentáveis](https://www.ipea.gov.br/cts/pt/central-de-conteudo/artigos/artigos/309-politica-tributaria-e-incentivo-a-tecnologias-sustentaveis-o-brasil-na-contramao)
+
 ### [Proposta de Emissão de Debêntures Verdes (Câmara dos Deputados)](https://www.camara.leg.br/noticias/852063-proposta-permite-a-emissao-de-debentures-incentivadas-para-projetos-sus%20tentaveis/)
+
 ### [53 Cidades do Brasil com mais Residências Vazias do que Ocupadas](https://www.nsctotal.com.br/noticias/conheca-as-53-cidades-do-brasil-com-mais-residencias-vazias-do-que-ocupadas#:~:text=Arroio%20do%20Sal%20%28RS%29%20%E2%80%93%2076%2C2%25%20Xangri-l%C3%A1%20%28RS%29,%E2%80%93%2068%2C3%25%20Pontal%20do%20Paran%C3%A1%20%28PR%29%20%E2%80%93%2068%2C1%25)
+
 ### [IBGE: Áreas Urbanizadas](https://www.ibge.gov.br/geociencias/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html)
 
 ## Pré-Requisitos ⚙️
+
 - [IntelliJ Idea](https://www.jetbrains.com/idea/)
 - [JDK17](https://www.oracle.com/java/technologies/downloads/)
 - [OJDBC](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
 
-
 ## Diagrama UML
-  ![uml](assets/terrativa-uml.png)
+
+![uml](assets/terrativa-uml.png)
 
 ## Integrantes do Projeto 👨‍💻
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -60,8 +68,17 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
   </tbody>
 </table>
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+## ex-Integrantes do Projeto 👨‍💻
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+Não chegariamos até aqui sem vocês <3
 
+<table>
+<tbody>
+    </tr>
+        <tr>
+            <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/pedrohpdo"><img src="https://avatars.githubusercontent.com/u/113143071?v=4" width="100px;" alt="Pedro Henrique Pereira"/><br /><sub><b>Pedro Henrique Pereira</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Jessica-Garcia"><img src="https://avatars.githubusercontent.com/u/53917707?v=4" width="100px;" alt="Jessica Gargia"/><br /><sub><b>Jessica Gargia</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Shaienne23"><img src="https://avatars.githubusercontent.com/u/137116404?v=4" width="100px;" alt="Renan Meira"/><br /><sub><b>Shaianne Oliveira</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+  </table>
