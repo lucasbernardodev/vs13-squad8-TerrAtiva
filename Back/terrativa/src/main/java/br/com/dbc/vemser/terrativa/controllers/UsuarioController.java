@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.documentacao.IUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
 import br.com.dbc.vemser.terrativa.services.EmailService;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,10 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Tag(name = "Usuários", description = "Endpoints do CRUD de Usuários")
 @RequiredArgsConstructor
 @RequestMapping("/usuario") // localhost:8081/usuario
-public class UsuarioController {
+public class UsuarioController implements IUsuarioController {
 
     public final UsuarioService usuarioService;
 
