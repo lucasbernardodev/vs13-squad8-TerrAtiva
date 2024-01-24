@@ -50,7 +50,7 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/DavidKirsch-DBC"><img src="https://avatars.githubusercontent.com/u/153624310?v=4" width="100px;" alt="David Kirsch"/><br /><sub><b>David Kirsch</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Leonardo-Rauber"><img src="https://media.licdn.com/dms/image/D4D03AQEK6cgB9dALFw/profile-displayphoto-shrink_800_800/0/1673825154756?e=1709769600&v=beta&t=3ShzbURNX_-bUH-OR4-jj1jaSRite3cMR4W2JhqYaIA" width="100px;" alt="Leonardo Rauber"/><br /><sub><b>Leonardo Rauber</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Leonardo-Rauber"><img src="https://avatars.githubusercontent.com/u/153655052?v=4" width="100px;" alt="Leonardo Rauber"/><br /><sub><b>Leonardo Rauber</b></sub></a><br /></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/lucasbernardodev"><img src="https://media.licdn.com/dms/image/D4D03AQGlVZDL_zXGYw/profile-displayphoto-shrink_800_800/0/1701705256375?e=1709769600&v=beta&t=aLGO9J147YOI3TA_LCHP0zq9bd-iq1mLEI0g-bDs79o" width="100px;" alt="Lucas Lima"/><br /><sub><b>Lucas Lima</b></sub></a><br /></td>
     </tr>
         <tr>
