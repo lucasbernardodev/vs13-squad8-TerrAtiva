@@ -1,4 +1,5 @@
 package br.com.dbc.vemser.terrativa.controllers;
+import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerreno;
 import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 @RequestMapping("/endereco/terreno") // localhost:8081/endereco/terreno
 @Slf4j
-public class EnderecoTerrenosController {
+public class EnderecoTerrenosController implements IEnderecoTerreno {
 
     private final EnderecoTerrenosService enderecoTerrenosService;
 
