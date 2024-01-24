@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public interface IEnderecoTerreno {
+public interface IEnderecoTerrenoController {
 
 
     @Operation(summary = "Adicionar endereço para os terrenos.", description = "Adiciona endereço para os terrenos.")

@@ -1,11 +1,11 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.documentacao.IMensalidadeController;
 import br.com.dbc.vemser.terrativa.dto.RequestMensalidade;
 import br.com.dbc.vemser.terrativa.dto.ResponseMensalidade;
-import br.com.dbc.vemser.terrativa.services.ContratoService;
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,8 @@ import javax.validation.constraints.NotNull;
 @Validated
 @RequestMapping("/mensalidade") // localhost:8081/mensalidade
 @Slf4j
-public class MensalidadeController {
+@Tag(name = "Mensalidade", description = "Endpoints do CRUD de Mensalidades")
+public class MensalidadeController implements IMensalidadeController {
 
     private final MensalidadeService mensalidadeService;
 

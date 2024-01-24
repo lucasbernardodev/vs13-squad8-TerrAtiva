@@ -1,8 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
-import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerreno;
+import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerrenoController;
 import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,8 @@ import javax.validation.constraints.NotNull;
 @Validated
 @RequestMapping("/endereco/terreno") // localhost:8081/endereco/terreno
 @Slf4j
-public class EnderecoTerrenosController implements IEnderecoTerreno {
+@Tag(name = "EndereçosTerrenos", description = "Endpoints do CRUD de EndereçosTerrenos")
+public class EnderecoTerrenosController implements IEnderecoTerrenoController {
 
     private final EnderecoTerrenosService enderecoTerrenosService;
 
