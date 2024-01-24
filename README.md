@@ -47,15 +47,15 @@ Clique no botão abaixo para acessar o Relatório em formato de PDF através do 
     </tr>
         <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/ItaloLacerda"><img src="https://media.licdn.com/dms/image/D4D03AQHKAd_8nQK77Q/profile-displayphoto-shrink_800_800/0/1691340581250?e=1709769600&v=beta&t=fLatK97mTsH1QTaNnJpt655mJiYiDxlng6wDC71-2po" width="100px;" alt="Italo Lacerda"/><br /><sub><b>Italo Lacerda</b></sub></a><br /></td>
-          <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Jessica-Garcia"><img src="https://avatars.githubusercontent.com/u/53917707?v=4" width="100px;" alt="Jéssica Garcia"/><br /><sub><b>Jéssica Garcia</b></sub></a></td>
+          <td align="center" valign="top" width="14.28%"><a href="https://github.com/wesleysousaa"><img src="https://avatars.githubusercontent.com/u/47366440?v=4" width="100px;" alt="Wesley Souza"/><br /><sub><b>Wesley Souza</b></sub></a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/PedroBersch"><img src="https://avatars.githubusercontent.com/u/113629864?v=4" width="100px;" alt="Pedro Leotte Bersch"/><br /><sub><b>Pedro Leotte Bersch
 </b></sub></a><br /></td>
     </tr>
         <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/pedrohpdo"><img src="https://avatars.githubusercontent.com/u/113143071?v=4" width="100px;" alt="Pedro Henrique Pereira"/><br /><sub><b>Pedro Henrique Pereira</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AssucenaSaldanhaa"><img src="https://avatars.githubusercontent.com/u/118921604?v=4" width="100px;" alt="Assucena Saldanha Araujo"/><br /><sub><b>Assucena Araujo</b></sub></a><br /></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/rogervargass"><img src="https://avatars.githubusercontent.com/u/70342776?v=4" width="100px;" alt="Roger Vargas"/><br /><sub><b>Roger Vargas
 </b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.github.com/Shaienne23"><img src="https://avatars.githubusercontent.com/u/137116404?v=4" width="100px;" alt="Shaienne Oliveira"/><br /><sub><b>Shaienne Oliveira</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/RenanStMeira"><img src="https://avatars.githubusercontent.com/u/122182644?v=4" width="100px;" alt="Renan Meira"/><br /><sub><b>Renan Meira</b></sub></a><br /></td>
     </tr>
   </tbody>
 </table>
