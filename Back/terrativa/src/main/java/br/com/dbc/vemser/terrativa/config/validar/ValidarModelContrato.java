@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.util.validar;
+package br.com.dbc.vemser.terrativa.config.validar;
 import br.com.dbc.vemser.terrativa.exceptions.InvalidParamException;
 
 import java.time.LocalDate;

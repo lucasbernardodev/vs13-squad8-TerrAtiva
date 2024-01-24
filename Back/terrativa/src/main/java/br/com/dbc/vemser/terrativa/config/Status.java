@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.util;
+package br.com.dbc.vemser.terrativa.config;
 
 public enum Status {
     ATIVO,

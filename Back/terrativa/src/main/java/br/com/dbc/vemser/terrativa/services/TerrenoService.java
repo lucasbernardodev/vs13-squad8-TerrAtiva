@@ -4,13 +4,11 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
 import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
-import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
-import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
+import br.com.dbc.vemser.terrativa.config.validar.ValidarModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -5,7 +5,6 @@ import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import org.springframework.stereotype.Service;
 
 @Service

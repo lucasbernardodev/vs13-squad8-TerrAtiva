@@ -5,11 +5,8 @@ import br.com.dbc.vemser.terrativa.dto.ResponseMensalidade;
 import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
-import br.com.dbc.vemser.terrativa.util.validar.ValidarModel;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-
-import javax.swing.plaf.PanelUI;
 
 @Service
 @Data
