@@ -18,5 +18,5 @@ public class ResponseFeedDTO {
     private String cidade;
     private String cod_estado;
     private String quantidade;
-
+    private String campoDeBusca;
 }

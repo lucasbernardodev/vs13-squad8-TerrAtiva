@@ -1,18 +1,12 @@
 package br.com.dbc.vemser.terrativa.services;
 
 
-import br.com.dbc.vemser.terrativa.config.validar.ValidarModel;
 import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
-import br.com.dbc.vemser.terrativa.entity.Aluguel;
-import br.com.dbc.vemser.terrativa.entity.Contrato;
-import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -41,22 +35,22 @@ public class TerrenoService {
         terrenoRepository.deletar(idTerreno);
     }
 
-    public void arrendarTerreno(Integer proprietarioID, Integer terrenoID,
-                                LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
-                                Integer dataVencimentoAluguel, // CONTRATO
-                                double valorMensal, Integer anoExercicio, // MENSALIDADE
-                                Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
-                                double taxas, String codigoBarras, LocalDate dataPagamento) { // ALUGUEL
-
-        ValidarModel.CONTRATOS(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel);
-        ValidarModel.MENSALIDADES(valorMensal, anoExercicio);
-        ValidarModel.ALUGUEL_PAGAMENTOS(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
-
-        terrenoRepository.arrendarTerreno(
-                new Contrato(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel),
-                new Mensalidade(valorMensal, anoExercicio),
-                new Aluguel(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento));
-    }
+//    public void arrendarTerreno(Integer proprietarioID, Integer terrenoID,
+//                                LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
+//                                Integer dataVencimentoAluguel, // CONTRATO
+//                                double valorMensal, Integer anoExercicio, // MENSALIDADE
+//                                Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
+//                                double taxas, String codigoBarras, LocalDate dataPagamento) { // ALUGUEL
+//
+//        ValidarModel.CONTRATOS(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel);
+//        ValidarModel.MENSALIDADES(valorMensal, anoExercicio);
+//        ValidarModel.ALUGUEL_PAGAMENTOS(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
+//
+//        terrenoRepository.arrendarTerreno(
+//                new Contrato(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel),
+//                new Mensalidade(valorMensal, anoExercicio),
+//                new Aluguel(mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento));
+//    }
 
     public void cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
         terrenoRepository.cancelarContratoTerreno(usuarioID, contratoID);

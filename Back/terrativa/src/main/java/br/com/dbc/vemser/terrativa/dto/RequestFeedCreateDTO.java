@@ -12,11 +12,12 @@ public class RequestFeedCreateDTO {
     private int terrenoId;
     private String titulo;
     private String descricao;
-    private double preco;
-    private int tamanho;
+    private String preco;
+    private String tamanho;
     private String estado;
     private String cidade;
     private String cod_estado;
     private String quantidade;
+    private String campoDeBusca;
 
 }
