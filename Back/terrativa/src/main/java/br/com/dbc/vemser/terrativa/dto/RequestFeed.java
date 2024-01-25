@@ -17,6 +17,5 @@ public class RequestFeed {
     private String estado;
     private String cidade;
     private String cod_estado;
-    private String quantidade;
 
 }

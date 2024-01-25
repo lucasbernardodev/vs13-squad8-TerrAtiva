@@ -16,7 +16,6 @@ public class FeedMapper {
         dto.setEstado(entity.getEstado());
         dto.setCidade(entity.getCidade());
         dto.setCod_estado(entity.getCod_estado());
-        dto.setQuantidade(entity.getQuantidade());
         return dto;
     }
 
@@ -30,7 +29,6 @@ public class FeedMapper {
         entity.setEstado(dto.getEstado());
         entity.setCidade(dto.getCidade());
         entity.setCod_estado(dto.getCod_estado());
-        entity.setQuantidade(dto.getQuantidade());
         return entity;
     }
 }

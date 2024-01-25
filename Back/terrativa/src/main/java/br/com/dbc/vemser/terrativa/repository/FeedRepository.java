@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Repository
-
+@Slf4j
 public class FeedRepository {
     String pesquisa = "";
     String valor = "";
@@ -42,9 +43,9 @@ public class FeedRepository {
                     AND (REGEXP_LIKE (t.TITULO, ?, 'i') OR REGEXP_LIKE (t.DESCRICAO, ?, 'i'))
                     AND  PRECO\s
                         BETWEEN\s
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 50 FROM DUAL), 0))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 150 FROM DUAL), 0))
                         AND
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') +50 FROM DUAL), 10000000))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') +150 FROM DUAL), 10000000))
                     AND TAMANHO
                         BETWEEN\s
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') * 10000 - 20000 FROM DUAL), 0))
@@ -75,9 +76,34 @@ public class FeedRepository {
                 terreno.setTamanho(resultSet.getInt("TAMANHO"));
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
                 terreno.setCidade(resultSet.getString("NOME_MUNICIPIO"));
+                terreno.setCod_estado(resultSet.getString("ESTADO_COD"));
                 response.add(terreno);
             }
 
+            return response;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
+    public ArrayList<Terreno> mostrarTerrenosPorPreco(double value) {
+        try {
+            ArrayList<Terreno> response = new ArrayList<>();
+
+            connection = bancoConection.criaConexao();
+            String querySQL = "SELECT * FROM TERRENOS WHERE PRECO <= ? AND DISPONIVEL = 'S'";
+
+            PreparedStatement stmt = connection.prepareStatement(querySQL);
+            stmt.setDouble(1, value);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                response.add(terrenoMapper(resultSet));
+            }
             return response;
 
         } catch (SQLException e) {
@@ -233,29 +259,7 @@ public class FeedRepository {
         }
     }
 
-    public ArrayList<Terreno> mostrarTerrenosPorPreco(double value) {
-        try {
-            ArrayList<Terreno> response = new ArrayList<>();
 
-            connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM TERRENOS WHERE PRECO <= ? AND DISPONIVEL = 'S'";
-
-            PreparedStatement stmt = connection.prepareStatement(querySQL);
-            stmt.setDouble(1, value);
-
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                response.add(terrenoMapper(resultSet));
-            }
-            return response;
-
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
 
     public ArrayList<Terreno> mostrarTerrenosPorTitulo(String titulo, Integer usuarioID) {
         try {
@@ -309,7 +313,7 @@ public class FeedRepository {
     }
 
     public String preparaPesquisa(String pesquisa) {
-
+        log.info("Cheguei no prepara pesquisa");
         if (pesquisa == "") {
             return "(+)";
         }
@@ -323,6 +327,7 @@ public class FeedRepository {
             resultado.append("(+)");
             resultado.append("]");
         }
+        log.info("Vou retornar a pesquisa");
         System.out.println(resultado.toString());
         return resultado.toString();
     }
