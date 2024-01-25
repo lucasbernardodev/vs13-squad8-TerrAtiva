@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.documentacao.IContratoController;
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
 import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;

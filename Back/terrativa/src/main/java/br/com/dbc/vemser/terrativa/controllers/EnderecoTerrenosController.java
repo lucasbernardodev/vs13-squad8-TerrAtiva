@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerrenoController;
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IEnderecoTerrenoController;
 import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenosCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;

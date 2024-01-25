@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.documentacao.IUsuarioController;
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;

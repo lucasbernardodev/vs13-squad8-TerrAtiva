@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.controllers.documentacao;
+package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseMensalidadeDTO;

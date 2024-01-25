@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.controllers.documentacao;
+package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
