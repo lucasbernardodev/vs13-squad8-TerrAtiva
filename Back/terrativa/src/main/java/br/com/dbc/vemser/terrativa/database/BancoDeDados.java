@@ -3,14 +3,12 @@ package br.com.dbc.vemser.terrativa.database;
 import br.com.dbc.vemser.terrativa.config.PropertiesReader;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class BancoDeDados {
