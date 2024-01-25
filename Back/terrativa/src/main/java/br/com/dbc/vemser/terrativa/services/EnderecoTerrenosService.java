@@ -5,17 +5,15 @@ import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EnderecoTerrenosService {
     private final EnderecoTerrenosRepository enderecoTerrenosRepository;
     private final EstadosMunicipioService estadosMunicipioService;
 
-    public EnderecoTerrenosService(EnderecoTerrenosRepository enderecoTerrenosRepository, EstadosMunicipioService estadosMunicipioService) {
-        this.enderecoTerrenosRepository = enderecoTerrenosRepository;
-        this.estadosMunicipioService = estadosMunicipioService;
-    }
 
     public ResponseEnderecoTerrenosDTO adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception{
         estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());

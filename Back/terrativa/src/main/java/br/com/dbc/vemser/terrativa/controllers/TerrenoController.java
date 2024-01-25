@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("/terreno") // localhost:8081/usuario
 public class TerrenoController {
 
-    public final TerrenoService terrenoService;
+    private final TerrenoService terrenoService;
 
     @GetMapping("/{idTerreno}") // GET localhost:8081/terreno/1
     public ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {

@@ -25,7 +25,6 @@ public class MensalidadeController implements IMensalidadeController {
 
     private final MensalidadeService mensalidadeService;
 
-
     @PutMapping("/{id}")
     public ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception{
         log.info("Atualizando mensalidade");

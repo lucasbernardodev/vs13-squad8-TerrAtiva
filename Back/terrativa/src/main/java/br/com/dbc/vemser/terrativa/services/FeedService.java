@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.dto.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.FeedMapper;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.repository.FeedRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FeedService {
     private final FeedRepository feedRepository;
 
-    public FeedService(FeedRepository feedRepository) {
-        this.feedRepository = feedRepository;
-    }
 
     public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
         List<Feed> terrenos = feedRepository.buscarTerrenos(preco, estado, tamanho);

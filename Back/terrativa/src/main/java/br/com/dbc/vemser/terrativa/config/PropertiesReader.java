@@ -15,5 +15,7 @@ public class PropertiesReader {
     private String dbpassword;
     @Value("${dburl}")
     private String dburl;
+    @Value("${spring.jpa.properties.hibernate.default_schema}")
+    private String SCHEMA;
 
 }

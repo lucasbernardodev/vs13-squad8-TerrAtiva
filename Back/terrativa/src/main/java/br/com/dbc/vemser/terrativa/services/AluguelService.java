@@ -31,7 +31,6 @@ public class AluguelService {
         aluguelRepository.deletar(id);
     }
 
-
     public ResponseAluguelDTO criar(RequestAluguelCreateDTO aluguel) {
         return AluguelMapper.AluguelParaResponseAluguel(
                 aluguelRepository.adicionar(

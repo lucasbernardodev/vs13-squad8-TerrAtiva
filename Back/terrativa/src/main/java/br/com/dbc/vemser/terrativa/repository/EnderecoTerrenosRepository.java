@@ -5,19 +5,18 @@ import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
 
 @Repository
+@RequiredArgsConstructor
 public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerrenos> {
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public EnderecoTerrenosRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
     @Override
     public EnderecoTerrenos adicionar(EnderecoTerrenos enderecoTerrenosRequest){
         try {

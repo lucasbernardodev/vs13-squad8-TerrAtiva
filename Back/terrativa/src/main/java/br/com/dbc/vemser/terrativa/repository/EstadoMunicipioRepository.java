@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @RequiredArgsConstructor
 public class EstadoMunicipioRepository {
 
-    private Connection connection;
+    private static Connection connection;
     private final BancoDeDados bancoConection;
 
 

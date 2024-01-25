@@ -19,7 +19,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class FeedRepository {
 
-    private Connection connection;
+    private static Connection connection;
     private final BancoDeDados bancoConection;
 
 

@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/usuario") // localhost:8081/usuario
 public class UsuarioController implements IUsuarioController {
 
-    public final UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     @GetMapping // GET localhost:8081/usuario
     public ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception {
