@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestMensalidade;
-import br.com.dbc.vemser.terrativa.dto.ResponseMensalidade;
+import br.com.dbc.vemser.terrativa.dto.RequestMensalidadeCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
@@ -16,7 +16,7 @@ public class MensalidadeService {
     private final ContratoService contratoService;
 
 
-    public ResponseMensalidade alterarMensalidade(Integer id, RequestMensalidade requestMensalidade) {
+    public ResponseMensalidadeDTO alterarMensalidade(Integer id, RequestMensalidadeCreateDTO requestMensalidade) {
         contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());
         Mensalidade mensalidade = MensalidadeMapper.RequestMensalidadeParaMensalidade(requestMensalidade);
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.alterar(mensalidade));
@@ -26,8 +26,8 @@ public class MensalidadeService {
         mensalidadeRepository.deletar(id);
     }
 
-    public ResponseMensalidade resgatarMensalidadePorId(Integer id) {
-        ResponseMensalidade responseMensalidade = MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
+    public ResponseMensalidadeDTO resgatarMensalidadePorId(Integer id) {
+        ResponseMensalidadeDTO responseMensalidade = MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
         return responseMensalidade;
     }
 }

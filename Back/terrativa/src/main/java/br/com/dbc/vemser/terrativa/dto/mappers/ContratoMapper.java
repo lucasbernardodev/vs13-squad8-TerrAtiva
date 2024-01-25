@@ -1,13 +1,13 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestContrato;
-import br.com.dbc.vemser.terrativa.dto.ResponseContrato;
+import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 
 public class ContratoMapper {
 
-    public static ResponseContrato ContratoParaResponseContrato(Contrato entity) {
-        ResponseContrato dto = new ResponseContrato();
+    public static ResponseContratoDTO ContratoParaResponseContrato(Contrato entity) {
+        ResponseContratoDTO dto = new ResponseContratoDTO();
         dto.setId(entity.getId());
         dto.setProprietarioID(entity.getProprietarioID());
         dto.setTerrenoID(entity.getTerrenoID());
@@ -19,7 +19,7 @@ public class ContratoMapper {
         return dto;
     }
 
-    public static Contrato RequestContratoParaContrato(RequestContrato dto) {
+    public static Contrato RequestContratoParaContrato(RequestContratoCreateDTO dto) {
         Contrato entity = new Contrato();
         entity.setId(dto.getId());
         entity.setProprietarioID(dto.getProprietarioID());

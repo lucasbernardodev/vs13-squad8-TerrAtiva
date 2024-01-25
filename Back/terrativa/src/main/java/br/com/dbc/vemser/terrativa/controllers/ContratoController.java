@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.documentacao.IContratoController;
-import br.com.dbc.vemser.terrativa.dto.RequestContrato;
-import br.com.dbc.vemser.terrativa.dto.ResponseContrato;
+import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +23,25 @@ import javax.validation.Valid;
 public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
     @GetMapping("/{id}")// localhost:8081/contrato/1
-    public ResponseEntity<ResponseContrato> resgatarContratoPorID(
+    public ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(
             @PathVariable("id") Integer id) throws Exception {
         log.info("Buscando contrato por Id.");
-        ResponseContrato contrato = contratoService.resgatarContratoPorId(id);
+        ResponseContratoDTO contrato = contratoService.resgatarContratoPorId(id);
         log.info("Contrato Listado!");
         return new ResponseEntity<>(contrato, HttpStatus.OK);
            }
     @PostMapping // POST localhost:8081/contrato
-    public ResponseEntity<ResponseContrato> criarContrato(@Valid @RequestBody RequestContrato contrato) throws Exception {
+    public ResponseEntity<ResponseContratoDTO> criarContrato(@Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception {
         log.info("Criando Contrato.");
-        ResponseContrato responseContrato = contratoService.criar(contrato);
+        ResponseContratoDTO responseContrato = contratoService.criar(contrato);
         log.info("Contrato Criado!");
         return new ResponseEntity<>(responseContrato, HttpStatus.CREATED);
     }
     @PutMapping("/{id}") // PUT localhost:8081/contrato/1
-    public ResponseEntity<ResponseContrato> atualizarContrato(@PathVariable("id") Integer id,
-                                          @Valid @RequestBody RequestContrato contrato)throws Exception {
+    public ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
+                                                                 @Valid @RequestBody RequestContratoCreateDTO contrato)throws Exception {
         log.info("Alterando Contrato.");
-        ResponseContrato responseContrato = contratoService.alterar(contrato);
+        ResponseContratoDTO responseContrato = contratoService.alterar(contrato);
         log.info("Contrato Criado!");
         return new ResponseEntity<>(responseContrato, HttpStatus.OK);
     }

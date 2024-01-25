@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestMensalidade;
-import br.com.dbc.vemser.terrativa.dto.ResponseMensalidade;
+import br.com.dbc.vemser.terrativa.dto.RequestMensalidadeCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseMensalidadeDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,7 +22,7 @@ public interface IMensalidadeController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseMensalidade> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidade requestMensalidade) throws Exception;
+    public ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
 
 
     @Operation(summary = "Retorna mensalidade", description = "Retorna mensalidade do respectivo ID.")
@@ -34,7 +34,7 @@ public interface IMensalidadeController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseMensalidade> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception;
+    public ResponseEntity<ResponseMensalidadeDTO> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception;
 
 
     @Operation(summary = "Deleta mensalidade", description = "Deleta mensalidade do respectivo ID.")

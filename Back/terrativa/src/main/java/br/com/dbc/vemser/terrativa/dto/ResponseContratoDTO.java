@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseContrato {
+public class ResponseContratoDTO {
 
     private Integer id;
     private Integer proprietarioID;

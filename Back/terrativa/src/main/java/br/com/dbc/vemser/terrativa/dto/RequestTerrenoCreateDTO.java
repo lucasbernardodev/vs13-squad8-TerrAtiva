@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Terreno")
-public class RequestTerreno {
+public class RequestTerrenoCreateDTO {
 
     @Schema(description = "Identificador único do Terreno.", example = "1")
     private Integer id;

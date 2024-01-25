@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
+import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.AluguelMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
@@ -16,11 +16,11 @@ import java.sql.SQLException;
 @Service
 public class AluguelService {
     private final AluguelRepository aluguelRepository;
-    public ResponseAluguel resgatarAluguelPorId(Integer id) throws Exception {
+    public ResponseAluguelDTO resgatarAluguelPorId(Integer id) throws Exception {
         Aluguel aluguel = aluguelRepository.resgatarDadosPorId(id);
         return AluguelMapper.AluguelParaResponseAluguel(aluguel);
     }
-    public ResponseAluguel alterar(RequestAluguel aluguel) throws SQLException {
+    public ResponseAluguelDTO alterar(RequestAluguelCreateDTO aluguel) throws SQLException {
         return AluguelMapper.AluguelParaResponseAluguel(
                 aluguelRepository.alterar(
                         AluguelMapper.RequestAluguelParaAluguel(aluguel)));
@@ -32,7 +32,7 @@ public class AluguelService {
     }
 
 
-    public ResponseAluguel criar(RequestAluguel aluguel) {
+    public ResponseAluguelDTO criar(RequestAluguelCreateDTO aluguel) {
         return AluguelMapper.AluguelParaResponseAluguel(
                 aluguelRepository.adicionar(
                         AluguelMapper.RequestAluguelParaAluguel(aluguel)));

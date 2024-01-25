@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestAluguel {
+public class RequestAluguelCreateDTO {
 
 
     private Integer pagamentoID;

@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestMensalidade {
+public class RequestMensalidadeCreateDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer mensalidadeID;

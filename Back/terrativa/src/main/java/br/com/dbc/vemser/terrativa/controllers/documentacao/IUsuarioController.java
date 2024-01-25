@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,7 +22,7 @@ public interface IUsuarioController {
             }
     )
     @GetMapping
-    ResponseEntity<List<ResponseUsuario>> listarUsuarios() throws Exception;
+    ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception;
 
     @Operation(summary = "Listar usuário pelo id", description = "Lista todos os usuários do banco que contenham o id informado")
     @ApiResponses(
@@ -33,7 +33,7 @@ public interface IUsuarioController {
             }
     )
     @GetMapping("/{idUsuario}")
-    ResponseEntity<ResponseUsuario> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception;
+    ResponseEntity<ResponseUsuarioDTO> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception;
 
     @Operation(summary = "Criar usuário", description = "Cria um usuário no banco")
     @ApiResponses(
@@ -44,7 +44,7 @@ public interface IUsuarioController {
             }
     )
     @PostMapping
-    ResponseEntity<ResponseUsuario> cadastrarUsuario(@Valid @RequestBody RequestUsuario usuario) throws Exception;
+    ResponseEntity<ResponseUsuarioDTO> cadastrarUsuario(@Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
 
     @Operation(summary = "Editar usuário", description = "Editar um usuário no banco")
     @ApiResponses(
@@ -55,8 +55,8 @@ public interface IUsuarioController {
             }
     )
     @PutMapping("/{idUsuario}")
-    ResponseEntity<ResponseUsuario> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                     @Valid @RequestBody RequestUsuario usuario) throws Exception;
+    ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
+                                                        @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
 
     @Operation(summary = "Deletar usuário", description = "Deletar um usuário no banco")
     @ApiResponses(

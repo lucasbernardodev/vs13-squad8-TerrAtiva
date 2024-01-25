@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestContrato;
-import br.com.dbc.vemser.terrativa.dto.ResponseContrato;
+import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,7 +21,7 @@ public interface IContratoController {
             }
     )
     @GetMapping("/{id}")
-    ResponseEntity<ResponseContrato> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
+    ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Criar contrato", description = "Cria um novo contrato")
     @ApiResponses(
@@ -32,7 +32,7 @@ public interface IContratoController {
             }
     )
     @PostMapping
-    ResponseEntity<ResponseContrato> criarContrato(@Valid @RequestBody RequestContrato contrato) throws Exception;
+    ResponseEntity<ResponseContratoDTO> criarContrato(@Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 
     @Operation(summary = "Atualizar contrato", description = "Atualiza um contrato existente")
     @ApiResponses(
@@ -43,8 +43,8 @@ public interface IContratoController {
             }
     )
     @PutMapping("/{id}")
-    ResponseEntity<ResponseContrato> atualizarContrato(@PathVariable("id") Integer id,
-                                                       @Valid @RequestBody RequestContrato contrato) throws Exception;
+    ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
+                                                          @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 
     @Operation(summary = "Deletar contrato", description = "Deleta um contrato existente")
     @ApiResponses(

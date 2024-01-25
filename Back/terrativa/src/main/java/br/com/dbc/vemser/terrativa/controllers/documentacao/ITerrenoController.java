@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
-import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
+import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,7 +21,7 @@ public interface ITerrenoController {
             }
     )
     @GetMapping("/{idTerreno}")
-    ResponseEntity<ResponseTerreno> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception;
+    ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception;
 
     @Operation(summary = "Criar terreno", description = "Cria um novo terreno")
     @ApiResponses(
@@ -32,7 +32,7 @@ public interface ITerrenoController {
             }
     )
     @PostMapping
-    ResponseEntity<ResponseTerreno> cadastrarTerreno(@Valid @RequestBody RequestTerreno terreno) throws Exception;
+    ResponseEntity<ResponseTerrenoDTO> cadastrarTerreno(@Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception;
 
     @Operation(summary = "Atualizar terreno", description = "Atualiza um terreno existente")
     @ApiResponses(
@@ -43,8 +43,8 @@ public interface ITerrenoController {
             }
     )
     @PutMapping("/{idTerreno}")
-    ResponseEntity<ResponseTerreno> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
-                                                     @Valid @RequestBody RequestTerreno terreno) throws Exception;
+    ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
+                                                        @Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception;
 
     @Operation(summary = "Deletar terreno", description = "Deleta um terreno existente")
     @ApiResponses(

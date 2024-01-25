@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestFeed {
+public class ResponseFeedDTO {
 
     private int terrenoId;
     private String titulo;

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseAluguel {
+public class ResponseAluguelDTO {
 
     @NotBlank(message = "O ID do pagamento não pode ser nulo")
     private Integer pagamentoID;

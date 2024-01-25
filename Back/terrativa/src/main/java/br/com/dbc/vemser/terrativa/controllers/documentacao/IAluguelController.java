@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
+import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,7 +21,7 @@ public interface IAluguelController {
             }
     )
     @GetMapping("/{id}") // GET localhost:8081/aluguel/1
-    public ResponseEntity<ResponseAluguel> listarPorId(
+    public ResponseEntity<ResponseAluguelDTO> listarPorId(
             @PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Listar Aluguel por ID", description = "Lista alugueis por ID")
@@ -33,7 +33,7 @@ public interface IAluguelController {
             }
     )
     @PostMapping // POST localhost:8081/aluguel
-    public ResponseEntity<ResponseAluguel> criar(@Valid @RequestBody RequestAluguel aluguel) throws Exception;
+    public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception;
 
     @Operation(summary = "Criar Aluguel", description = "cria um endpoint de aluguel no banco")
     @ApiResponses(
@@ -44,8 +44,8 @@ public interface IAluguelController {
             }
     )
     @PutMapping("/{id}")// PUT localhost:8081/aluguel/1
-    public ResponseEntity<ResponseAluguel> alterar(@PathVariable("id") Integer idUsuario,
-                                                   @Valid @RequestBody RequestAluguel aluguel, RequestUsuario usuario) throws Exception;
+    public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
+                                                      @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception;
 
     @Operation(summary = "Deletar Aluguel por ID", description = "deleta todas os alugueis por do banco")
     @ApiResponses(

@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.documentacao;
 
-import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
-import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenosCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -23,7 +23,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @PostMapping
-    public ResponseEntity<ResponseEnderecoTerrenos> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenos endereco) throws Exception;
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
 
     @Operation(summary = "Atualiza endereço para os terrenos.", description = "Atualiza endereço para os terrenos com seu respectivo ID.")
     @ApiResponses(
@@ -34,7 +34,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenos endereco) throws Exception;
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
 
 
     @Operation(summary = "Lista endereço solicitado.", description = "Lista endereços solicitados pelo seu ID.")
@@ -46,7 +46,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception;
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception;
 
 
     @Operation(summary = "Deleta endereço solicitado.", description = "Deleta endereço solicitado.")
@@ -58,6 +58,6 @@ public interface IEnderecoTerrenoController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception;
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception;
 
 }

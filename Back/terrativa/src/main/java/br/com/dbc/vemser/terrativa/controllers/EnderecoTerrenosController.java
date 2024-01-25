@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.documentacao.IEnderecoTerrenoController;
-import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
-import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenosCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,29 +26,29 @@ public class EnderecoTerrenosController implements IEnderecoTerrenoController {
     private final EnderecoTerrenosService enderecoTerrenosService;
 
     @PostMapping
-    public ResponseEntity<ResponseEnderecoTerrenos> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenos endereco) throws Exception {
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenosCreateDTO endereco) throws Exception {
         log.info("Adicionado endereço para os terrenos");
-        ResponseEnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(endereco);
+        ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(endereco);
         log.info("Endereço adicionado");
         return new ResponseEntity<>(responseEnderecoTerrenos, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenos endereco) throws Exception {
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenosCreateDTO endereco) throws Exception {
             log.info("Atualizando endereço");
-            ResponseEnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.alterar(id, endereco);
+            ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.alterar(id, endereco);
             return new ResponseEntity<>(responseEnderecoTerrenos, HttpStatus.OK);
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception{
-        ResponseEnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.resgatarPorId(id);
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception{
+        ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.resgatarPorId(id);
         return new ResponseEntity<>(responseEnderecoTerrenos, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenos> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception{
+    public ResponseEntity<ResponseEnderecoTerrenosDTO> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception{
         log.info("Deletando Endereço");
         enderecoTerrenosService.deletar(id);
         log.info("Endereço Deletado");

@@ -1,9 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
+import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,27 +26,27 @@ public class AluguelController {
         private final AluguelService aluguelService;
 
         @GetMapping("/{id}") // GET localhost:8081/aluguel/1
-        public ResponseEntity<ResponseAluguel> listarPorId(
+        public ResponseEntity<ResponseAluguelDTO> listarPorId(
                 @PathVariable("id") Integer id) throws Exception {
             log.info("Buscando Aluguel por Id.");
-            ResponseAluguel aluguel =aluguelService.resgatarAluguelPorId(id);
+            ResponseAluguelDTO aluguel =aluguelService.resgatarAluguelPorId(id);
             log.info("Aluguel Listado!");
             return new ResponseEntity<>(aluguel, HttpStatus.OK);
         }
 
         @PostMapping // POST localhost:8081/aluguel
-        public ResponseEntity<ResponseAluguel> criar(@Valid @RequestBody RequestAluguel aluguel) throws Exception {
+        public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception {
             log.info("Criando Aluguel.");
-            ResponseAluguel responseAluguel = aluguelService.criar(aluguel);
+            ResponseAluguelDTO responseAluguel = aluguelService.criar(aluguel);
             log.info("Aluguel Criado!");
             return new ResponseEntity<>(responseAluguel, HttpStatus.CREATED);
         }
         @PutMapping ("/{id}")// PUT localhost:8081/aluguel/1
-        public ResponseEntity<ResponseAluguel> alterar(@PathVariable("id") Integer idUsuario,
-                      @Valid @RequestBody RequestAluguel aluguel, RequestUsuario usuario) throws Exception {
+        public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
+                                                          @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception {
             log.info("Criando Aluguel ");
             usuario.setUsuarioId(idUsuario);
-            ResponseAluguel responseAluguel = aluguelService.alterar(aluguel);
+            ResponseAluguelDTO responseAluguel = aluguelService.alterar(aluguel);
             log.info("Aluguel Criado!");
             return new ResponseEntity<>(responseAluguel, HttpStatus.OK);
         }

@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestEnderecoTerrenos {
+public class RequestEnderecoTerrenosCreateDTO {
 
     private Integer id;
 

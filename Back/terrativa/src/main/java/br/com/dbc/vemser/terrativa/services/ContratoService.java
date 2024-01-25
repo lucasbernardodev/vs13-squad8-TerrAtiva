@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestContrato;
-import br.com.dbc.vemser.terrativa.dto.ResponseContrato;
+import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
 public class ContratoService {
     private final ContratoRepository contratoRepository;
 
-    public ResponseContrato resgatarContratoPorId(Integer id) {
+    public ResponseContratoDTO resgatarContratoPorId(Integer id) {
         Contrato contrato = contratoRepository.resgatarDadosPorId(id);
         return ContratoMapper.ContratoParaResponseContrato(contrato);
     }
 
-    public ResponseContrato criar(RequestContrato contrato) throws Exception {
+    public ResponseContratoDTO criar(RequestContratoCreateDTO contrato) throws Exception {
         return ContratoMapper.ContratoParaResponseContrato(
                 contratoRepository.adicionar(
                         ContratoMapper.RequestContratoParaContrato(contrato)));
     }
-    public ResponseContrato alterar(RequestContrato contrato)throws Exception {
+    public ResponseContratoDTO alterar(RequestContratoCreateDTO contrato)throws Exception {
     return ContratoMapper.ContratoParaResponseContrato(
             contratoRepository.alterar(
                     ContratoMapper.RequestContratoParaContrato(contrato)));

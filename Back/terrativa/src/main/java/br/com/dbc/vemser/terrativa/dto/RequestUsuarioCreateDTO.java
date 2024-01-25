@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuario {
+public class RequestUsuarioCreateDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer usuarioId;

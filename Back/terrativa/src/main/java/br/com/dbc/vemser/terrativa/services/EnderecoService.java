@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestEndereco;
-import br.com.dbc.vemser.terrativa.dto.ResponseEndereco;
+import br.com.dbc.vemser.terrativa.dto.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
@@ -16,24 +16,24 @@ import java.util.List;
 @Service
 public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
-    public List<ResponseEndereco> listarEnderecos() {
+    public List<ResponseEnderecoDTO> listarEnderecos() {
         return enderecoRepository.listarEnderecos().stream()
                 .map(EnderecoMapper::EnderecoParaResponseEndereco)
                 .toList();
     }
 
-    public ResponseEndereco resgatarPorId(Integer id) {
+    public ResponseEnderecoDTO resgatarPorId(Integer id) {
         Endereco endereco = enderecoRepository.resgatarDadosPorId(id);
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 
-    public ResponseEndereco adicionarEndereco(RequestEndereco endereco) throws Exception {
+    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws Exception {
        return EnderecoMapper.EnderecoParaResponseEndereco(
                enderecoRepository.adicionar(
                        EnderecoMapper.RequestEnderecoParaEndereco(endereco)));
             }
 
-    public ResponseEndereco alterar(RequestEndereco endereco) throws Exception {
+    public ResponseEnderecoDTO alterar(RequestEnderecoCreateDTO endereco) throws Exception {
         return EnderecoMapper.EnderecoParaResponseEndereco(
         enderecoRepository.alterar(
                 EnderecoMapper.RequestEnderecoParaEndereco(endereco)));

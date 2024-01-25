@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Contrato")
-public class RequestContrato {
+public class RequestContratoCreateDTO {
 
     @Schema(description = "Identificador único do Contrato.", example = "1")
     private Integer id;

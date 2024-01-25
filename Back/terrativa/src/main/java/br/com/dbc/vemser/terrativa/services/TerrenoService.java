@@ -2,8 +2,8 @@ package br.com.dbc.vemser.terrativa.services;
 
 
 import br.com.dbc.vemser.terrativa.config.validar.ValidarModel;
-import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
-import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
+import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
@@ -19,18 +19,18 @@ import java.time.LocalDate;
 public class TerrenoService {
    private final TerrenoRepository terrenoRepository;
 
-    public ResponseTerreno buscarTerreno(Integer idTerreno) {
+    public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) {
         return TerrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.resgatarDadosPorId(idTerreno));
     }
 
-    public ResponseTerreno cadastrarTerreno(RequestTerreno requestTerreno) {
+    public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) {
         return TerrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.adicionar(
                         TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));
     }
 
-    public ResponseTerreno alterarTerreno(RequestTerreno requestTerreno) {
+    public ResponseTerrenoDTO alterarTerreno(RequestTerrenoCreateDTO requestTerreno) {
         return TerrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.alterar(
                         TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseMensalidade {
+public class ResponseMensalidadeDTO {
 
     private Integer mensalidadeID;
     private Integer contratoID;

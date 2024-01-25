@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class EmailService {
     private String from;
     private String to = "leonardo.rauber@dbccompany.com.br";
 
-    public void sendEmailUsuario(ResponseUsuario responseUsuario, Integer status) throws Exception {
+    public void sendEmailUsuario(ResponseUsuarioDTO responseUsuario, Integer status) throws Exception {
         switch (status){
             case 1:
                 Map<String, Object> listaPessoasCreate = new HashMap<>();

@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
-import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
+import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,29 +22,29 @@ public class TerrenoController {
     public final TerrenoService terrenoService;
 
     @GetMapping("/{idTerreno}") // GET localhost:8081/terreno/1
-    public ResponseEntity<ResponseTerreno> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
+    public ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
         log.info("Buscando terreno por id");
-        ResponseTerreno responseTerreno = terrenoService.buscarTerreno(idTerreno);
+        ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(idTerreno);
         log.info("Buscou terreno por id");
         return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseTerreno> cadastrarTerreno(
-                                        @Valid @RequestBody RequestTerreno terreno) throws Exception {
+    public ResponseEntity<ResponseTerrenoDTO> cadastrarTerreno(
+                                        @Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception {
         log.info("Criando terreno");
-        ResponseTerreno responseTerreno = terrenoService.cadastrarTerreno(terreno);
+        ResponseTerrenoDTO responseTerreno = terrenoService.cadastrarTerreno(terreno);
         log.info("Criando terreno");
         return new ResponseEntity<>(responseTerreno, HttpStatus.CREATED);
 
     }
 
     @PutMapping("/{idTerreno}")
-    public ResponseEntity<ResponseTerreno> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
-                                                            @Valid @RequestBody RequestTerreno terreno) {
+    public ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
+                                                               @Valid @RequestBody RequestTerrenoCreateDTO terreno) {
         log.info("Atualizando terreno");
         terreno.setId(idTerreno);
-        ResponseTerreno responseTerreno = terrenoService.alterarTerreno(terreno);
+        ResponseTerrenoDTO responseTerreno = terrenoService.alterarTerreno(terreno);
         log.info("Atualizou terreno");
         return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
 
