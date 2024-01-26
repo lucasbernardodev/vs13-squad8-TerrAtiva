@@ -18,7 +18,7 @@ import java.time.Instant;
 @Repository
 @RequiredArgsConstructor
 public class TerrenoRepository implements DaoRepository<Terreno> {
-    Connection connection;
+    private static Connection connection;
     private final BancoDeDados bancoConection;
 
     @Override

@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class EmailService {
     private String from;
     private String to = "leonardo.rauber@dbccompany.com.br";
 
-    public void sendEmailUsuario(ResponseUsuario responseUsuario, Integer status) throws Exception {
+    public void sendEmailUsuario(ResponseUsuarioDTO responseUsuario, Integer status) throws Exception {
         switch (status){
             case 1:
                 Map<String, Object> listaPessoasCreate = new HashMap<>();

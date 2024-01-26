@@ -7,15 +7,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestTerreno {
+public class RequestFeedCreateDTO {
 
-    private Integer id;
+    private int terrenoId;
     private String titulo;
     private String descricao;
-    private Integer proprietarioID;
-    private Integer enderecoID;
-    private double preco;
+    private String preco;
     private String tamanho;
-    private String disponivel;
+    private String estado;
+    private String cidade;
+    private String cod_estado;
+    private String quantidade;
+    private String campoDeBusca;
 
 }

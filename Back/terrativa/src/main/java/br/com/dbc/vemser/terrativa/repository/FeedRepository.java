@@ -4,6 +4,8 @@ import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,25 +15,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Repository
-
+@Slf4j
+@RequiredArgsConstructor
 public class FeedRepository {
-    String pesquisa = "";
-    String valor = "";
-    String tamanho = "";
-    String estado = "";
 
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public FeedRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
 
-    public ArrayList<Feed> buscarTerrenos() {
+    public ArrayList<Feed> buscarTerrenos(String preco, String estado, String tamanho) {
         try {
             ArrayList<Feed> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
-
+            //localhost:8080/terrenos?pesquisa=terreno&valor=100000&tamanho=100&estado=SP
             String sqlQuery = """
                 SELECT * FROM TERRENOS t\s
                 JOIN ENDERECO_TERRENOS et\s
@@ -39,7 +35,6 @@ public class FeedRepository {
                 JOIN ESTADO_MUNICIPIOS em\s
                 ON et.MUNICIPIO_COD_IBGE = em.MUNICIPIO_COD_IBGE
                 WHERE DISPONIVEL = 'S'
-                    AND (REGEXP_LIKE (t.TITULO, ?, 'i') OR REGEXP_LIKE (t.DESCRICAO, ?, 'i'))
                     AND  PRECO\s
                         BETWEEN\s
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 50 FROM DUAL), 0))
@@ -53,17 +48,13 @@ public class FeedRepository {
                     AND REGEXP_LIKE (em.ESTADO_COD, NVL(?,'[0-9]'))
                """;
 
-
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setString(1, preparaPesquisa(pesquisa));
-            stmt.setString(2, preparaPesquisa(pesquisa));
-            stmt.setString(3, valor);
-            stmt.setString(4, valor);
-            stmt.setString(5, tamanho);
-            stmt.setString(6, tamanho);
-            stmt.setString(7, estado);
-
+            stmt.setString(1, preco);
+            stmt.setString(2, preco);
+            stmt.setString(3, tamanho);
+            stmt.setString(4, tamanho);
+            stmt.setString(5, estado);
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
@@ -71,7 +62,7 @@ public class FeedRepository {
                 terreno.setTerrenoId(resultSet.getInt("TERRENO_ID"));
                 terreno.setTitulo(resultSet.getString("TITULO"));
                 terreno.setDescricao(resultSet.getString("DESCRICAO"));
-                terreno.setPreco((double) resultSet.getInt("PRECO"));
+                terreno.setPreco(resultSet.getInt("PRECO"));
                 terreno.setTamanho(resultSet.getInt("TAMANHO"));
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
                 terreno.setCidade(resultSet.getString("NOME_MUNICIPIO"));
@@ -210,78 +201,6 @@ public class FeedRepository {
             BancoDeDados.fechaConexao(connection);
         }
     }
-
-    public ArrayList<Terreno> mostrarTodosOsTerrenos(Integer usuarioID) {
-        try {
-            ArrayList<Terreno> response = new ArrayList<>();
-
-            connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM TERRENOS WHERE DONO_ID = ?";
-            PreparedStatement stmt = connection.prepareStatement(querySQL);
-            stmt.setInt(1, usuarioID);
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                response.add(terrenoMapper(resultSet));
-            }
-            return response;
-
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
-    public ArrayList<Terreno> mostrarTerrenosPorPreco(double value) {
-        try {
-            ArrayList<Terreno> response = new ArrayList<>();
-
-            connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM TERRENOS WHERE PRECO <= ? AND DISPONIVEL = 'S'";
-
-            PreparedStatement stmt = connection.prepareStatement(querySQL);
-            stmt.setDouble(1, value);
-
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                response.add(terrenoMapper(resultSet));
-            }
-            return response;
-
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
-    public ArrayList<Terreno> mostrarTerrenosPorTitulo(String titulo, Integer usuarioID) {
-        try {
-            ArrayList<Terreno> response = new ArrayList<>();
-
-            connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM TERRENOS WHERE lower(TITULO) LIKE LOWER(TRIM(?)) AND DISPONIVEL = 'S' AND DONO_ID = ?";
-
-            PreparedStatement stmt = connection.prepareStatement(querySQL);
-            stmt.setString(1,  "%" + titulo + "%");
-            stmt.setInt(2,  usuarioID);
-
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                response.add(terrenoMapper(resultSet));
-            }
-            return response;
-
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
     private Terreno terrenoMapper(ResultSet resultSet) throws SQLException {
         return new Terreno(
                 resultSet.getInt("TERRENO_ID"),
@@ -293,38 +212,6 @@ public class FeedRepository {
                 resultSet.getString("TAMANHO"),
                 resultSet.getString("DISPONIVEL")
         );
-    }
-
-    public void filtrarPorCaracteristicas(String caracteristicas) {
-        this.pesquisa = caracteristicas;
-    }
-    public void filtrarPorValor(String valor) {
-        this.valor = valor;
-    }
-    public void filtrarPorTamanho(String tamanho) {
-        this.tamanho = tamanho;
-    }
-    public void filtrarPorEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String preparaPesquisa(String pesquisa) {
-
-        if (pesquisa == "") {
-            return "(+)";
-        }
-
-        String[] pesquisaFatiada = pesquisa.split(" ");
-        StringBuilder resultado = new StringBuilder();
-
-        for (String p : pesquisaFatiada) {
-            resultado.append("[");
-            resultado.append(p);
-            resultado.append("(+)");
-            resultado.append("]");
-        }
-        System.out.println(resultado.toString());
-        return resultado.toString();
     }
 
 

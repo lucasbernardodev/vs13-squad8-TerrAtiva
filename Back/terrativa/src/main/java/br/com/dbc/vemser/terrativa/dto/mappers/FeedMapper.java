@@ -1,13 +1,12 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestFeed;
-import br.com.dbc.vemser.terrativa.dto.ResponseFeed;
+import br.com.dbc.vemser.terrativa.dto.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 
 public class FeedMapper {
 
-    public static ResponseFeed FeedParaResponseFeed(Feed entity) {
-        ResponseFeed dto = new ResponseFeed();
+    public static ResponseFeedDTO FeedParaResponseFeed(Feed entity) {
+        ResponseFeedDTO dto = new ResponseFeedDTO();
         dto.setTerrenoId(entity.getTerrenoId());
         dto.setTitulo(entity.getTitulo());
         dto.setDescricao(entity.getDescricao());
@@ -20,17 +19,17 @@ public class FeedMapper {
         return dto;
     }
 
-    public static Feed RequestFeedParaFeed(RequestFeed dto) {
-        Feed entity = new Feed();
-        entity.setTerrenoId(dto.getTerrenoId());
-        entity.setTitulo(dto.getTitulo());
-        entity.setDescricao(dto.getDescricao());
-        entity.setPreco(dto.getPreco());
-        entity.setTamanho(dto.getTamanho());
-        entity.setEstado(dto.getEstado());
-        entity.setCidade(dto.getCidade());
-        entity.setCod_estado(dto.getCod_estado());
-        entity.setQuantidade(dto.getQuantidade());
-        return entity;
-    }
+//    public static Feed RequestFeedParaFeed(RequestFeedCreateDTO dto) {
+//        Feed entity = new Feed();
+//        entity.setTerrenoId(dto.getTerrenoId());
+//        entity.setTitulo(dto.getTitulo());
+//        entity.setDescricao(dto.getDescricao());
+//        entity.setPreco(dto.getPreco());
+//        entity.setTamanho(dto.getTamanho());
+//        entity.setEstado(dto.getEstado());
+//        entity.setCidade(dto.getCidade());
+//        entity.setCod_estado(dto.getCod_estado());
+//        entity.setQuantidade(dto.getQuantidade());
+//        return entity;
+//    }
 }

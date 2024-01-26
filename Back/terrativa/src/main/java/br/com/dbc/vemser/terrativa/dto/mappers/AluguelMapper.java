@@ -1,12 +1,12 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguel;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguel;
+import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 public class AluguelMapper {
 
-    public static ResponseAluguel AluguelParaResponseAluguel(Aluguel entity) {
-        ResponseAluguel dto = new ResponseAluguel();
+    public static ResponseAluguelDTO AluguelParaResponseAluguel(Aluguel entity) {
+        ResponseAluguelDTO dto = new ResponseAluguelDTO();
         dto.setPagamentoID(entity.getPagamentoID());
         dto.setMensalidadeID(entity.getMensalidadeID());
         dto.setMesReferencia(entity.getMesReferencia());
@@ -19,7 +19,7 @@ public class AluguelMapper {
         return dto;
     }
 
-    public static Aluguel RequestAluguelParaAluguel(RequestAluguel dto) {
+    public static Aluguel RequestAluguelParaAluguel(RequestAluguelCreateDTO dto) {
         Aluguel entity = new Aluguel();
         entity.setPagamentoID(dto.getPagamentoID());
         entity.setMensalidadeID(dto.getMensalidadeID());

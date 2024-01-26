@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseFeed {
+public class ResponseFeedDTO {
 
     private int terrenoId;
     private String titulo;
@@ -18,5 +18,5 @@ public class ResponseFeed {
     private String cidade;
     private String cod_estado;
     private String quantidade;
-
+    private String campoDeBusca;
 }

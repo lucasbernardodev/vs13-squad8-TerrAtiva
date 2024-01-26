@@ -1,13 +1,13 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenos;
-import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenosCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 
 public class EnderecoTerrenosMapper {
 
-    public static ResponseEnderecoTerrenos EnderecoTerrenosParaResponseEnderecoTerrenos(EnderecoTerrenos entity) {
-        ResponseEnderecoTerrenos dto = new ResponseEnderecoTerrenos();
+    public static ResponseEnderecoTerrenosDTO EnderecoTerrenosParaResponseEnderecoTerrenos(EnderecoTerrenos entity) {
+        ResponseEnderecoTerrenosDTO dto = new ResponseEnderecoTerrenosDTO();
         dto.setId(entity.getId());
         dto.setLogradouro(entity.getLogradouro());
         dto.setNumero(entity.getNumero());
@@ -19,7 +19,7 @@ public class EnderecoTerrenosMapper {
         return dto;
     }
 
-    public static EnderecoTerrenos RequestEnderecoTerrenosParaEnderecoTerrenos(RequestEnderecoTerrenos dto) {
+    public static EnderecoTerrenos RequestEnderecoTerrenosParaEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO dto) {
         EnderecoTerrenos entity = new EnderecoTerrenos();
         entity.setId(dto.getId());
         entity.setLogradouro(dto.getLogradouro());

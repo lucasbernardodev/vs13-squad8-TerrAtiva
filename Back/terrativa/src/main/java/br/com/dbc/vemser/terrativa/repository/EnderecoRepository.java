@@ -3,10 +3,10 @@ package br.com.dbc.vemser.terrativa.repository;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
-
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -17,13 +17,10 @@ import java.util.List;
 
 @Slf4j
 @Repository
+@RequiredArgsConstructor
 public class EnderecoRepository implements DaoRepository<Endereco> {
-    Connection connection;
-    BancoDeDados bancoConection;
-
-    public EnderecoRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
    public List<Endereco> listarEnderecos() {
        try {
@@ -46,7 +43,6 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
 
     public Endereco resgatarDadosPorId(int id) {
         try {
-            log.info("Repository - Buscando endereço por ID: {}", id);
             connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ENDERECOS WHERE ENDERECO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);

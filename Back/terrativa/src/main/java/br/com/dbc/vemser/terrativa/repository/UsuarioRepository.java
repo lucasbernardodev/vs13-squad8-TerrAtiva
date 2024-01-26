@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioRepository implements DaoRepository<Usuario> {
 
-    private Connection conn;
+    private static Connection conn;
     private final BancoDeDados bancoConection;
 
     public List<Usuario> listarUsuarios() {

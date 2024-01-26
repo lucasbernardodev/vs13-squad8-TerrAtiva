@@ -1,13 +1,13 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestUsuario;
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuario;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 
 public class UsuarioMapper {
 
-    public static ResponseUsuario usuarioParaResponseUsuario(Usuario usuario){
-        ResponseUsuario responseUsuario = new ResponseUsuario();
+    public static ResponseUsuarioDTO usuarioParaResponseUsuario(Usuario usuario){
+        ResponseUsuarioDTO responseUsuario = new ResponseUsuarioDTO();
         responseUsuario.setUsuarioId(usuario.getUsuarioId());
         responseUsuario.setNome(usuario.getNome());
         responseUsuario.setSobrenome(usuario.getSobrenome());
@@ -22,7 +22,7 @@ public class UsuarioMapper {
         return responseUsuario;
     }
 
-    public static Usuario requestUsuarioParaUsuario(RequestUsuario requestUsuario){
+    public static Usuario requestUsuarioParaUsuario(RequestUsuarioCreateDTO requestUsuario){
         Usuario usuario = new Usuario();
         usuario.setUsuarioId(requestUsuario.getUsuarioId());
         usuario.setNome(requestUsuario.getNome());

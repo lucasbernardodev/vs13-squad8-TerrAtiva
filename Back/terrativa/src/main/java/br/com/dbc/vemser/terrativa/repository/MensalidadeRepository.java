@@ -6,20 +6,18 @@ import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-
+@RequiredArgsConstructor
 public class MensalidadeRepository implements DaoRepository<Mensalidade> {
 
-    Connection connection;
-    BancoDeDados bancoConection;
+    private static Connection connection;
+    private final BancoDeDados bancoConection;
 
-    public MensalidadeRepository(BancoDeDados bancoDeDados) {
-        this.bancoConection = bancoDeDados;
-    }
 
     @Override
     public Mensalidade adicionar(Mensalidade mensalidade) {

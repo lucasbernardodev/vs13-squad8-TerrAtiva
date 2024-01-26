@@ -1,12 +1,12 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.RequestTerreno;
-import br.com.dbc.vemser.terrativa.dto.ResponseTerreno;
+import br.com.dbc.vemser.terrativa.dto.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 
 public class TerrenoMapper {
 
-    public static Terreno requestTerrenoParaTerreno(RequestTerreno requestTerreno){
+    public static Terreno requestTerrenoParaTerreno(RequestTerrenoCreateDTO requestTerreno){
         Terreno terreno = new Terreno();
         terreno.setId(requestTerreno.getId());
         terreno.setTitulo(requestTerreno.getTitulo());
@@ -19,8 +19,8 @@ public class TerrenoMapper {
         return terreno;
     }
 
-    public static ResponseTerreno terrenoParaResponseTerreno(Terreno terreno){
-        ResponseTerreno responseTerreno = new ResponseTerreno();
+    public static ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno){
+        ResponseTerrenoDTO responseTerreno = new ResponseTerrenoDTO();
         responseTerreno.setId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());
         responseTerreno.setDescricao(terreno.getDescricao());
