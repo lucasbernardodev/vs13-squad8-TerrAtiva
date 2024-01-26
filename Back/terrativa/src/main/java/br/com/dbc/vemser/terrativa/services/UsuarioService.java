@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
@@ -56,7 +57,7 @@ public class UsuarioService {
         usuarioRepository.deletar(id);
     }
 
-    public ResponseUsuarioDTO loginUsuario(RequestUsuarioCreateDTO usuario) {
+    public ResponseUsuarioDTO loginUsuario(RequestUsuarioLoginDTO usuario) {
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.loginUsuario(usuario));
     }
 }

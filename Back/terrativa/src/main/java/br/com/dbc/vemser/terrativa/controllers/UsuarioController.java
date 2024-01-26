@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,7 +51,7 @@ public class UsuarioController implements IUsuarioController {
 
     @PostMapping("/login") // POST localhost:8081/usuario/login
     public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
-            @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
+            @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
         log.info("Logando usuário");
         ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
         log.info("Logou usuário");

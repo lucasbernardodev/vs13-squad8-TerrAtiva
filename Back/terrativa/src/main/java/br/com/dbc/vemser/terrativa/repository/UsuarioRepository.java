@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.repository;
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
@@ -172,7 +173,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         }
     }
 
-    public Usuario loginUsuario(RequestUsuarioCreateDTO usuario) {
+    public Usuario loginUsuario(RequestUsuarioLoginDTO usuario) {
         try {
 
             conn = bancoConection.criaConexao();
