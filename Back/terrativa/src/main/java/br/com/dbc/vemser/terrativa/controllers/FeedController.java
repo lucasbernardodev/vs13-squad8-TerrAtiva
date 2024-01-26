@@ -33,5 +33,11 @@ public class FeedController {
 
     }
 
+    @GetMapping("/quantidade")
+    public ResponseEntity<List<ResponseFeedDTO>> quantidadeAnuncios() {
+        List<ResponseFeedDTO> response = feedService.quantidadeAnuncios();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 }

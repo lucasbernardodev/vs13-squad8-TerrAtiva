@@ -45,12 +45,9 @@ public class FeedService {
         return terrenosFiltrados;
     }
 
-
-
-
-//    public ArrayList<Feed> buscarEstados() {
-//        return feedRepository.buscarEstados();
-//    }
+    public List<ResponseFeedDTO> quantidadeAnuncios() {
+        return feedRepository.quantidadeAnuncios();
+    }
 
 
 
