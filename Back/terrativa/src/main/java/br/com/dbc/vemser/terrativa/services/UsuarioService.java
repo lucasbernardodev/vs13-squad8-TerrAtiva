@@ -56,4 +56,7 @@ public class UsuarioService {
         usuarioRepository.deletar(id);
     }
 
+    public ResponseUsuarioDTO loginUsuario(RequestUsuarioCreateDTO usuario) {
+        return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.loginUsuario(usuario));
+    }
 }

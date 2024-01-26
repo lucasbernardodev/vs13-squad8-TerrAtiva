@@ -48,6 +48,15 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login") // POST localhost:8081/usuario/login
+    public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
+            @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
+        log.info("Logando usuário");
+        ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
+        log.info("Logou usuário");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+    }
+
     @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
     public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
                                                                @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
