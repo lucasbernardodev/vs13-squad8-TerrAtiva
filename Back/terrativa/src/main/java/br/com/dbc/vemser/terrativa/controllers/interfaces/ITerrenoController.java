@@ -3,6 +3,8 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,8 @@ public interface ITerrenoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna o terreno solicitado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/{idTerreno}")
@@ -27,8 +29,8 @@ public interface ITerrenoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "201", description = "Cria e retorna o terreno criado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @PostMapping
@@ -38,8 +40,8 @@ public interface ITerrenoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Atualiza e retorna o terreno atualizado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @PutMapping("/{idTerreno}")
@@ -50,8 +52,8 @@ public interface ITerrenoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Deleta o terreno solicitado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @DeleteMapping("/{idTerreno}")

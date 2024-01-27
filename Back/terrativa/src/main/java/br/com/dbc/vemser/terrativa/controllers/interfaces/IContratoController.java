@@ -3,6 +3,8 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,8 @@ public interface IContratoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna o contrato solicitado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/{id}")
@@ -27,8 +29,8 @@ public interface IContratoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Atualiza e retorna o contrato atualizado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @PutMapping("/{id}")
@@ -39,8 +41,8 @@ public interface IContratoController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Deleta o contrato solicitado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @DeleteMapping("/{id}")

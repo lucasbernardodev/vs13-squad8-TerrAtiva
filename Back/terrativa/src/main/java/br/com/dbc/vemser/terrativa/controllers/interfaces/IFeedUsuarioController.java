@@ -3,6 +3,8 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioAlugadosDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,8 @@ public interface IFeedUsuarioController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno por ID"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/disponiveis/{id}")
@@ -28,8 +30,8 @@ public interface IFeedUsuarioController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno por ID"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/todosterrenos/{id}")
@@ -39,8 +41,8 @@ public interface IFeedUsuarioController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno alugados por ID"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/alugados/{id}")
@@ -50,8 +52,8 @@ public interface IFeedUsuarioController {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno arrendados por ID"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/arrendados/{id}")
