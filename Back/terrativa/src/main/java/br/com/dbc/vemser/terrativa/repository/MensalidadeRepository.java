@@ -33,7 +33,7 @@ public class MensalidadeRepository implements DaoRepository<Mensalidade> {
                         set
                         CONTRATO_ID = ?,
                         VALOR_MENSAL = ?,
-                        ANO_EXERCICIO = ?             
+                        ANO_EXERCICIO = ?
                     WHERE MENSALIDADE_ID = ?
                     """;
 

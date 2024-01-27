@@ -24,7 +24,7 @@ public interface IEnderecoController {
             }
     )
     @GetMapping("/todos")// GET localhost:8081/endereco/todos
-    public ResponseEntity<List<ResponseEnderecoDTO>> listarEndereco() throws Exception;
+    ResponseEntity<List<ResponseEnderecoDTO>> listarEndereco() throws Exception;
 
     @Operation(summary = "Listar Endereco por ID", description = "Lista todas os enderecos do banco")
     @ApiResponses(
@@ -35,7 +35,7 @@ public interface IEnderecoController {
             }
     )
     @GetMapping("/{id}")// localhost:8081/endereco/1
-    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Criar Endereco", description = "Cria enderecos do banco")
     @ApiResponses(
@@ -46,7 +46,7 @@ public interface IEnderecoController {
             }
     )
     @PostMapping // POST localhost:8081/endereco
-    public  ResponseEntity<ResponseEnderecoDTO> cadastrarEndereco(
+    ResponseEntity<ResponseEnderecoDTO> cadastrarEndereco(
             @Valid @RequestBody RequestEnderecoCreateDTO endereco) throws Exception;
 
     @Operation(summary = "Altera Endereco", description = "Altera endereco no banco")
@@ -58,8 +58,8 @@ public interface IEnderecoController {
             }
     )
     @PutMapping("/{id}") // PUT localhost:8081/endereco/1
-    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer idUsuario,
-                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco, RequestUsuarioCreateDTO usuario)throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer idUsuario,
+                                                          @Valid @RequestBody RequestEnderecoCreateDTO endereco, RequestUsuarioCreateDTO usuario)throws Exception;
 
     @Operation(summary = "Deletar Endereco", description = "Deletar endereco do banco")
     @ApiResponses(
@@ -70,5 +70,5 @@ public interface IEnderecoController {
             }
     )
     @DeleteMapping("/{id}")// DELETE localhost:8081/endereco/1
-    public ResponseEntity<String> deletarEndereco(@PathVariable Integer id) throws Exception;
+    ResponseEntity<String> deletarEndereco(@PathVariable Integer id) throws Exception;
 }

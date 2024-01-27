@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Endereço")
 public class RequestEnderecoTerrenosCreateDTO {
 
     private Integer id;

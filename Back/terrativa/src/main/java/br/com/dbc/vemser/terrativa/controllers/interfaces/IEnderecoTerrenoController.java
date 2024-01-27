@@ -25,7 +25,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @PostMapping
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
+    ResponseEntity<ResponseEnderecoTerrenosDTO> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
 
     @Operation(summary = "Atualiza endereço para os terrenos.", description = "Atualiza endereço para os terrenos com seu respectivo ID.")
     @ApiResponses(
@@ -36,7 +36,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
+    ResponseEntity<ResponseEnderecoTerrenosDTO> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenosCreateDTO endereco) throws Exception;
 
 
     @Operation(summary = "Lista endereço solicitado.", description = "Lista endereços solicitados pelo seu ID.")
@@ -48,7 +48,7 @@ public interface IEnderecoTerrenoController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ResponseEnderecoTerrenosDTO> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception;
 
 
     @Operation(summary = "Deleta endereço solicitado.", description = "Deleta endereço solicitado.")
@@ -60,6 +60,6 @@ public interface IEnderecoTerrenoController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ResponseEnderecoTerrenosDTO> deletarEndereco(@PathVariable("id") @NotNull Integer id) throws Exception;
 
 }

@@ -102,7 +102,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     }
 
     @Override
-    public Contrato resgatarDadosPorId(int id) {
+    public Contrato resgatarDadosPorId(int id)  {
         try {
             connection = bancoConection.criaConexao();
 

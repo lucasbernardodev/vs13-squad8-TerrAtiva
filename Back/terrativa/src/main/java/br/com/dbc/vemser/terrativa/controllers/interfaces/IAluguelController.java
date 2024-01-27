@@ -23,7 +23,7 @@ public interface IAluguelController {
             }
     )
     @GetMapping("/{id}") // GET localhost:8081/aluguel/1
-    public ResponseEntity<ResponseAluguelDTO> listarPorId(
+    ResponseEntity<ResponseAluguelDTO> listarPorId(
             @PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Listar Aluguel por ID", description = "Lista alugueis por ID")
@@ -35,7 +35,7 @@ public interface IAluguelController {
             }
     )
     @PostMapping // POST localhost:8081/aluguel
-    public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception;
+    ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception;
 
     @Operation(summary = "Criar Aluguel", description = "cria um endpoint de aluguel no banco")
     @ApiResponses(
@@ -46,8 +46,8 @@ public interface IAluguelController {
             }
     )
     @PutMapping("/{id}")// PUT localhost:8081/aluguel/1
-    public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
-                                                      @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception;
+    ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
+                                               @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception;
 
     @Operation(summary = "Deletar Aluguel por ID", description = "deleta todas os alugueis por do banco")
     @ApiResponses(
@@ -58,6 +58,6 @@ public interface IAluguelController {
             }
     )
     @DeleteMapping("/{id}")// DELETE localhost:8081/aluguel/1
-    public ResponseEntity<String> deletar(@PathVariable int id) throws Exception;
+    ResponseEntity<String> deletar(@PathVariable int id) throws Exception;
 
 }

@@ -40,7 +40,7 @@ public class ContratoController implements IContratoController {
         return new ResponseEntity<>(responseContrato, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>deletarContrato(@PathVariable Integer id)throws Exception {
+    public ResponseEntity<String>deletarContrato(@PathVariable Integer id) {
         log.info("Deletando Contrato.");
         contratoService.deletar(id);
         log.info("Contrato Deletado!");

@@ -143,6 +143,7 @@ public class EnderecoTerrenosRepository implements DaoRepository<EnderecoTerreno
         }
     }
 
+    //TODO: implementar
     public EnderecoTerrenos alterar(EnderecoTerrenos obj) throws SQLException {
         return null;
     }

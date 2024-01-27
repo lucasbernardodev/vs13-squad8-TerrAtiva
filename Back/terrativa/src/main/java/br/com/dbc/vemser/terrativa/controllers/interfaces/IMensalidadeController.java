@@ -24,7 +24,7 @@ public interface IMensalidadeController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
+    ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
 
 
     @Operation(summary = "Retorna mensalidade", description = "Retorna mensalidade do respectivo ID.")
@@ -36,7 +36,7 @@ public interface IMensalidadeController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseMensalidadeDTO> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception;
+    ResponseEntity<ResponseMensalidadeDTO> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception;
 
 
     @Operation(summary = "Deleta mensalidade", description = "Deleta mensalidade do respectivo ID.")
@@ -48,6 +48,6 @@ public interface IMensalidadeController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarMensalidade(@PathVariable Integer id) throws Exception;
+    ResponseEntity<Void> deletarMensalidade(@PathVariable Integer id) throws Exception;
 
 }

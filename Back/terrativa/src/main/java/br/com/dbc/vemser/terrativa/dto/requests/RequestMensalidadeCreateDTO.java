@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Mensalidade")
 public class RequestMensalidadeCreateDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")

@@ -49,10 +49,11 @@ public class FeedUsuarioRepository {
             ArrayList<FeedUsuariosAlugados> response = new ArrayList<>();
 
             connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM CONTRATOS \n" +
-                    "LEFT JOIN TERRENOS ON (CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID)\n" +
-                    "LEFT JOIN ENDERECO_TERRENOS ON (TERRENOS.ENDERECO_TERRENO_ID = ENDERECO_TERRENOS.ENDERECO_TERRENO_ID)\n" +
-                    "WHERE CONTRATOS.LOCATARIO_ID = ?";
+            String querySQL = """
+                    SELECT * FROM CONTRATOS
+                    LEFT JOIN TERRENOS ON (CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID)
+                    LEFT JOIN ENDERECO_TERRENOS ON (TERRENOS.ENDERECO_TERRENO_ID = ENDERECO_TERRENOS.ENDERECO_TERRENO_ID)
+                    WHERE CONTRATOS.LOCATARIO_ID = ?""";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
             ResultSet resultSet = stmt.executeQuery();
@@ -96,10 +97,11 @@ public class FeedUsuarioRepository {
             ArrayList<FeedUsuariosAlugados> response = new ArrayList<>();
 
             connection = bancoConection.criaConexao();
-            String querySQL = "SELECT * FROM CONTRATOS \n" +
-                    "LEFT JOIN TERRENOS ON (CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID)\n" +
-                    "LEFT JOIN ENDERECO_TERRENOS ON (TERRENOS.ENDERECO_TERRENO_ID = ENDERECO_TERRENOS.ENDERECO_TERRENO_ID)\n" +
-                    "WHERE TERRENOS.DISPONIVEL = 'N' AND TERRENOS.DONO_ID = ?";
+            String querySQL = """
+                    SELECT * FROM CONTRATOS
+                    LEFT JOIN TERRENOS ON (CONTRATOS.TERRENO_ID = TERRENOS.TERRENO_ID)
+                    LEFT JOIN ENDERECO_TERRENOS ON (TERRENOS.ENDERECO_TERRENO_ID = ENDERECO_TERRENOS.ENDERECO_TERRENO_ID)
+                    WHERE TERRENOS.DISPONIVEL = 'N' AND TERRENOS.DONO_ID = ?""";
             PreparedStatement stmt = connection.prepareStatement(querySQL);
             stmt.setInt(1, usuarioID);
             ResultSet resultSet = stmt.executeQuery();

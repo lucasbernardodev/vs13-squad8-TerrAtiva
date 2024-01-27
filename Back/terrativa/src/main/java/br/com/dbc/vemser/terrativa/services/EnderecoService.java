@@ -27,7 +27,7 @@ public class EnderecoService {
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 
-    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws Exception {
+    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) {
        return EnderecoMapper.EnderecoParaResponseEndereco(
                enderecoRepository.adicionar(
                        EnderecoMapper.RequestEnderecoParaEndereco(endereco)));

@@ -27,7 +27,6 @@ public class MensalidadeService {
     }
 
     public ResponseMensalidadeDTO resgatarMensalidadePorId(Integer id) {
-        ResponseMensalidadeDTO responseMensalidade = MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
-        return responseMensalidade;
+        return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
     }
 }

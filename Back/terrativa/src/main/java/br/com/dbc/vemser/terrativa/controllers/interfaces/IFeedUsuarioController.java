@@ -24,7 +24,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/disponiveis/{id}")
-    public ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Disponiveis Por ID", description = "Lista os terrenos por ID do banco")
     @ApiResponses(
@@ -35,7 +35,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/todosterrenos/{id}")
-    public ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Alugados Por ID", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses(
@@ -46,7 +46,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/alugados/{id}")
-    public ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Arrendados Por ID", description = "Lista os terrenos arrendados por ID do banco")
     @ApiResponses(
@@ -57,5 +57,5 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/arrendados/{id}")
-    public ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
 }

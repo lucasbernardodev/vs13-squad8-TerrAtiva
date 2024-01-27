@@ -25,31 +25,31 @@ import javax.validation.Valid;
 public class AluguelController {
         private final AluguelService aluguelService;
 
-        @GetMapping("/{id}")
-        public ResponseEntity<ResponseAluguelDTO> listarPorId(
-                @PathVariable("id") Integer id) throws Exception {
-            log.info("Buscando Aluguel por Id.");
-            ResponseAluguelDTO aluguel =aluguelService.resgatarAluguelPorId(id);
-            log.info("Aluguel Listado!");
-            return new ResponseEntity<>(aluguel, HttpStatus.OK);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseAluguelDTO> listarPorId(
+            @PathVariable("id") Integer id) throws Exception {
+        log.info("Buscando Aluguel por Id.");
+        ResponseAluguelDTO aluguel =aluguelService.resgatarAluguelPorId(id);
+        log.info("Aluguel Listado!");
+        return new ResponseEntity<>(aluguel, HttpStatus.OK);
+    }
 
-        @PostMapping
-        public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception {
-            log.info("Criando Aluguel.");
-            ResponseAluguelDTO responseAluguel = aluguelService.criar(aluguel);
-            log.info("Aluguel Criado!");
-            return new ResponseEntity<>(responseAluguel, HttpStatus.CREATED);
-        }
-        @PutMapping ("/{id}")
-        public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
-                                                          @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception {
-            log.info("Criando Aluguel ");
-            usuario.setUsuarioId(idUsuario);
-            ResponseAluguelDTO responseAluguel = aluguelService.alterar(aluguel);
-            log.info("Aluguel Criado!");
-            return new ResponseEntity<>(responseAluguel, HttpStatus.OK);
-        }
+    @PostMapping
+    public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) {
+        log.info("Criando Aluguel.");
+        ResponseAluguelDTO responseAluguel = aluguelService.criar(aluguel);
+        log.info("Aluguel Criado!");
+        return new ResponseEntity<>(responseAluguel, HttpStatus.CREATED);
+    }
+    @PutMapping ("/{id}")
+    public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
+                                                      @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception {
+        log.info("Criando Aluguel ");
+        usuario.setUsuarioId(idUsuario);
+        ResponseAluguelDTO responseAluguel = aluguelService.alterar(aluguel);
+        log.info("Aluguel Criado!");
+        return new ResponseEntity<>(responseAluguel, HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable int id) throws Exception{
         log.info("Deletando Aluguel.");
