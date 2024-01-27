@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Calendar;
 
 @Repository
 @RequiredArgsConstructor
@@ -146,13 +148,12 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
         }
     }
 
-    public void arrendarTerreno(Contrato contratoRequest, Mensalidade mensalidade, Aluguel aluguelRequest) {
+    public void arrendarTerreno(Contrato contrato, Terreno terreno) {
         try {
             // PASSO 1: GERAR CONTRATO
             connection = bancoConection.criaConexao();
             int newContratoID = GeradorID.getProximoContrato(connection);
             int newMensalidadeID = GeradorID.getProximoMensalidade(connection);
-            Integer newAluguelID = GeradorID.getProximoAluguel(connection);
 
             String sqlQueryContrato = """
                     INSERT INTO CONTRATOS
@@ -163,13 +164,13 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
 
             PreparedStatement stmtContrato = connection.prepareStatement(sqlQueryContrato);
             stmtContrato.setInt(1, newContratoID);
-            stmtContrato.setInt(2, contratoRequest.getProprietarioID());
-            stmtContrato.setInt(3, contratoRequest.getTerrenoID());
-            stmtContrato.setString(4, contratoRequest.getAtivo());
-            stmtContrato.setDate(5, Date.valueOf(contratoRequest.getDataAssinatura()));
-            stmtContrato.setDate(6, Date.valueOf(contratoRequest.getDataInicio()));
-            stmtContrato.setDate(7, Date.valueOf(contratoRequest.getDataFinal()));
-            stmtContrato.setInt(8, contratoRequest.getDataVencimentoAluguel());
+            stmtContrato.setInt(2, contrato.getLocatarioID());
+            stmtContrato.setInt(3, terreno.getId());
+            stmtContrato.setString(4, "S");
+            stmtContrato.setDate(5, Date.valueOf(contrato.getDataAssinatura()));
+            stmtContrato.setDate(6, Date.valueOf(contrato.getDataInicio()));
+            stmtContrato.setDate(7, Date.valueOf(contrato.getDataFinal()));
+            stmtContrato.setInt(8, contrato.getDataVencimentoAluguel());
             stmtContrato.setString(9, Instant.now().toString());
             stmtContrato.setString(10, Instant.now().toString());
 
@@ -187,39 +188,14 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             PreparedStatement stmtMensalidade = connection.prepareStatement(sqlQueryMensalidade);
             stmtMensalidade.setInt(1, newMensalidadeID);
             stmtMensalidade.setInt(2, newContratoID);
-            stmtMensalidade.setDouble(3, mensalidade.getValorMensal());
-            stmtMensalidade.setInt(4, mensalidade.getAnoExercicio());
+            stmtMensalidade.setDouble(3, terreno.getPreco());
+            stmtMensalidade.setInt(4, Calendar.getInstance().get(Calendar.YEAR));
             stmtMensalidade.setString(5, Instant.now().toString());
             stmtMensalidade.setString(6, Instant.now().toString());
             stmtMensalidade.setString(7,"S" );
 
             if (stmtMensalidade.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível Criar um Novo Contrato");
-
-            // PASSO 3: ALUGUEL
-
-            String sqlQueryAluguel = """
-                    INSERT INTO ALUGUEL_PAGAMENTOS
-                        (PAGAMENTO_ID, MENSALIDADE_ID, MES_REFERENCIA, EMISSAO, VENCIMENTO,
-                        TAXAS, CODIGO_BARRAS_BOLETO, DATA_PAGAMENTO, PAGO, CRIADO, EDITADO)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """;
-
-            PreparedStatement stmt = connection.prepareStatement(sqlQueryAluguel);
-
-            stmt.setInt(1, newAluguelID);
-            stmt.setInt(2, newMensalidadeID);
-            stmt.setInt(3, aluguelRequest.getMesReferencia());
-            stmt.setString(4, Date.valueOf(aluguelRequest.getDataEmissao()).toString());
-            stmt.setString(5, Date.valueOf(aluguelRequest.getDataVencimento()).toString());
-            stmt.setDouble(6, aluguelRequest.getTaxas());
-            stmt.setString(7, aluguelRequest.getCodigoBarras());
-            stmt.setDate(8, Date.valueOf(aluguelRequest.getDataPagamento()));
-            stmt.setString(9, aluguelRequest.getPago());
-            stmt.setString(10, Instant.now().toString());
-            stmt.setString(11, Instant.now().toString());
-            if (stmt.executeUpdate() == 0)
-                throw new UnauthorizedOperationException("Não foi possível cadastrar novo Aluguel");
 
 
             // ATUALIZA STATUS DO TERRENO
@@ -233,7 +209,7 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             """);
 
             stmtTerrenoIndisponivel.setString(1, Instant.now().toString());
-            stmtTerrenoIndisponivel.setInt(2, contratoRequest.getTerrenoID());
+            stmtTerrenoIndisponivel.setInt(2, terreno.getId());
 
             if (stmtTerrenoIndisponivel.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível modificar o terreno para indisponivel");
@@ -262,19 +238,6 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmt.setInt(3, usuarioID);
 
             if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Incosistência de dados. Registros não Encontrados.");
-
-            PreparedStatement stmtTerrenoDisponivel = connection.prepareStatement("""
-                                                                                        UPDATE TERRENOS
-                                                                                            SET
-                                                                                            DISPONIVEL = 'S',
-                                                                                            EDITADO = ?
-                                                                                         WHERE TERRENO_ID = ?
-                                                                                        """);
-            stmtTerrenoDisponivel.setString(1, Instant.now().toString());
-            stmtTerrenoDisponivel.setInt(2, contratoID);
-            stmtTerrenoDisponivel.executeUpdate();
-
-            if (stmt.executeUpdate() == 0) throw new DbException("Não foi possível alterar o status do Terreno.");
 
         } catch (SQLException e) {
             throw new DbException(e.getCause().getMessage());

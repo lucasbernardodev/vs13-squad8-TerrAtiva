@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class ResponseContratoDTO {
 
     private Integer id;
-    private Integer proprietarioID;
+    private Integer locatarioID;
     private Integer terrenoID;
     private String ativo;
     private LocalDate dataAssinatura;

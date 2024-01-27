@@ -12,14 +12,11 @@ import java.time.LocalDate;
 public class Contrato {
 
     private Integer id;
-    private Integer proprietarioID;
+    private Integer locatarioID;
     private Integer terrenoID;
     private String ativo;
     private LocalDate dataAssinatura;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private Integer dataVencimentoAluguel;
-
-    public Contrato(Integer proprietarioID, Integer terrenoID, LocalDate localDate, LocalDate localDate1, LocalDate localDate2, Integer dataVencimentoAluguel) {
-    }
 }

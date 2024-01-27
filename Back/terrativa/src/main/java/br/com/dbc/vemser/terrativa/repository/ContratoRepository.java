@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
+import br.com.dbc.vemser.terrativa.database.GeradorID;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
@@ -25,6 +26,18 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         return contratoRequest;
     }
 
+    public Integer getNextId() {
+        try {
+            connection = bancoConection.criaConexao();
+            return GeradorID.getProximoTerrenoId(connection);
+
+        } catch (SQLException e) {
+            throw new DbException(e.getCause().getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(connection);
+        }
+    }
+
     @Override
     public Contrato alterar(Contrato contratoRequest) {
         try {
@@ -46,7 +59,7 @@ public class ContratoRepository implements DaoRepository<Contrato>{
                       
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
 
-            stmt.setInt(1, contratoRequest.getProprietarioID());
+            stmt.setInt(1, contratoRequest.getLocatarioID());
             stmt.setInt(2, contratoRequest.getTerrenoID());
             stmt.setDate(4, Date.valueOf(contratoRequest.getDataAssinatura()));
             stmt.setDate(5, Date.valueOf(contratoRequest.getDataInicio()));

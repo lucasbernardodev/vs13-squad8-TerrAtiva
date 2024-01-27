@@ -24,7 +24,6 @@ public class AluguelService {
         return AluguelMapper.AluguelParaResponseAluguel(
                 aluguelRepository.alterar(
                         AluguelMapper.RequestAluguelParaAluguel(aluguel)));
-
     }
 
     public void deletar(Integer id) throws SQLException {
