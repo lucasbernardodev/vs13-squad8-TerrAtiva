@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +23,11 @@ public class FeedRepository {
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-
     public ArrayList<Feed> buscarTerrenos(String preco, String estado, String tamanho) {
         try {
             ArrayList<Feed> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
-            //localhost:8080/terrenos?pesquisa=terreno&valor=100000&tamanho=100&estado=SP
+
             String sqlQuery = """
                 SELECT * FROM TERRENOS t\s
                 JOIN ENDERECO_TERRENOS et\s

@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @Data
+@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Endereço")
 public class RequestEnderecoCreateDTO {
 
     private Integer id;

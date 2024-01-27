@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class EnderecoService {
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 
-    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws Exception {
+    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) {
        return EnderecoMapper.EnderecoParaResponseEndereco(
                enderecoRepository.adicionar(
                        EnderecoMapper.RequestEnderecoParaEndereco(endereco)));

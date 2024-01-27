@@ -1,10 +1,9 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.FeedMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.repository.FeedRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,18 +18,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FeedService {
     private final FeedRepository feedRepository;
-    private final ObjectMapper objectMapper;
 
     public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
-        List<Feed> terrenos = feedRepository.buscarTerrenos(preco, estado, tamanho);
 
-        List<ResponseFeedDTO> responseFeedDTOS = terrenos.stream()
-                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
-                .toList();
+        List<Feed> terrenos = feedRepository.buscarTerrenos(preco, estado, tamanho);
 
         return filtrarTerrenos(terrenos, campoDeBusca)
                 .stream()
-                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
+                .map(FeedMapper::FeedParaResponseFeed)
                 .collect(Collectors.toList());
     }
 
@@ -44,6 +39,7 @@ public class FeedService {
             for (String palavraChave : palavrasChaveList) {
                 if (!terreno.getDescricao().toLowerCase().contains(palavraChave.toLowerCase()) && !terreno.getTitulo().toLowerCase().contains(palavraChave.toLowerCase())) {
                     encontrado = false;
+                    break;
                 }
             }
             if (encontrado) {
@@ -54,10 +50,6 @@ public class FeedService {
     }
 
     public List<ResponseFeedDTO> quantidadeAnuncios() {
-        List<ResponseFeedDTO> anuncios = feedRepository.quantidadeAnuncios();
-
-        return anuncios.stream()
-                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
-                .collect(Collectors.toList());
+        return feedRepository.quantidadeAnuncios();
     }
 }

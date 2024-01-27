@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +19,10 @@ import javax.validation.Valid;
 @RestController
 @Tag(name = "Contrato", description = "Endpoints do CRUD de Contrato")
 @RequiredArgsConstructor
-@RequestMapping("/contrato") // localhost:8081/contrato
+@RequestMapping("/contrato")
 public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
-    @GetMapping("/{id}")// localhost:8081/contrato/1
+    @GetMapping("/{id}")
     public ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(
             @PathVariable("id") Integer id) throws Exception {
         log.info("Buscando contrato por Id.");
@@ -30,14 +30,8 @@ public class ContratoController implements IContratoController {
         log.info("Contrato Listado!");
         return new ResponseEntity<>(contrato, HttpStatus.OK);
            }
-    @PostMapping // POST localhost:8081/contrato
-    public ResponseEntity<ResponseContratoDTO> criarContrato(@Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception {
-        log.info("Criando Contrato.");
-        ResponseContratoDTO responseContrato = contratoService.criar(contrato);
-        log.info("Contrato Criado!");
-        return new ResponseEntity<>(responseContrato, HttpStatus.CREATED);
-    }
-    @PutMapping("/{id}") // PUT localhost:8081/contrato/1
+
+    @PutMapping("/{id}")
     public ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
                                                                  @Valid @RequestBody RequestContratoCreateDTO contrato)throws Exception {
         log.info("Alterando Contrato.");
@@ -45,8 +39,8 @@ public class ContratoController implements IContratoController {
         log.info("Contrato Criado!");
         return new ResponseEntity<>(responseContrato, HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")// DELETE localhost:8081/contrato/1
-    public ResponseEntity<String>deletarContrato(@PathVariable Integer id)throws Exception {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deletarContrato(@PathVariable Integer id) {
         log.info("Deletando Contrato.");
         contratoService.deletar(id);
         log.info("Contrato Deletado!");

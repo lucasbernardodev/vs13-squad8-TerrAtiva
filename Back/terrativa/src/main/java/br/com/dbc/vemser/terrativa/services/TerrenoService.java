@@ -2,10 +2,10 @@ package br.com.dbc.vemser.terrativa.services;
 
 
 import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
+import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
-import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;

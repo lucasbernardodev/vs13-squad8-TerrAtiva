@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.AluguelMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.repository.AluguelRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @Service
 public class AluguelService {
     private final AluguelRepository aluguelRepository;
-    public ResponseAluguelDTO resgatarAluguelPorId(Integer id) throws Exception {
+    public ResponseAluguelDTO resgatarAluguelPorId(Integer id) throws SQLException {
         Aluguel aluguel = aluguelRepository.resgatarDadosPorId(id);
         return AluguelMapper.AluguelParaResponseAluguel(aluguel);
     }

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "Feed", description = "Endpoints do Feed")
 @RestController
-@RequestMapping("/feed") // localhost:8080/feed
+@RequestMapping("/feed")
 public class FeedController {
     private final FeedService feedService;
 

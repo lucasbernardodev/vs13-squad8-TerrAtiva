@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 
 public class EnderecoTerrenosMapper {

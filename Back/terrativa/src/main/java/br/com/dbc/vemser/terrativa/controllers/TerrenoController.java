@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,12 @@ import javax.validation.Valid;
 @RestController
 @Tag(name = "Terreno", description = "Endpoints do CRUD de Terreno")
 @RequiredArgsConstructor
-@RequestMapping("/terreno") // localhost:8081/usuario
+@RequestMapping("/terreno")
 public class TerrenoController {
 
     private final TerrenoService terrenoService;
 
-    @GetMapping("/{idTerreno}") // GET localhost:8081/terreno/1
+    @GetMapping("/{idTerreno}")
     public ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
         log.info("Buscando terreno por id");
         ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(idTerreno);

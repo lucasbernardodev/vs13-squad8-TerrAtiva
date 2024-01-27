@@ -12,9 +12,10 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Feed")
 public class RequestFeedCreateDTO {
 
-    private int terrenoId;
+    private int Id;
 
     @Size(min = 2, max = 250, message = "O título deve ter entre 2 e 250 caracteres")
     @NotBlank
@@ -26,7 +27,7 @@ public class RequestFeedCreateDTO {
 
     @Size(min = 2, max = 20, message = "O endereço deve ter entre 2 e 20 caracteres")
     @NotBlank
-    private String preco;
+    private Double preco;
 
     @NotBlank
     private String tamanho;
@@ -39,13 +40,43 @@ public class RequestFeedCreateDTO {
     @NotEmpty(message = "Cidade não pode ser vazio ou nulo!")
     private String cidade;
 
-    @NotBlank
+
     private String cod_estado;
 
-    @NotBlank
+
     private String quantidade;
 
-    @NotBlank
+
     private String campoDeBusca;
+
+
+    private Integer proprietarioID;
+
+
+    private Integer enderecoID;
+
+
+    private String disponivel;
+
+
+    private String logradouro;
+
+
+    private Integer numero;
+
+
+    private String complemento;
+
+
+    private String bairro;
+
+
+    private Integer codigoMunicipioIBGE;
+
+
+    private Integer cep;
+
+
+    private String localizacao;
 
 }

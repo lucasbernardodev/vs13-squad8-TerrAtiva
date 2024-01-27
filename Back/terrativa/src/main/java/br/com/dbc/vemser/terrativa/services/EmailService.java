@@ -26,7 +26,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-    private String to = "leonardo.rauber@dbccompany.com.br";
+    private final String to = "leonardo.rauber@dbccompany.com.br";
 
     public void sendEmailUsuario(ResponseUsuarioDTO responseUsuario, Integer status) throws Exception {
         switch (status){
@@ -63,7 +63,6 @@ public class EmailService {
             mimeMessageHelper.setText(geContentFromTemplate(mapa, template), true);
             emailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException | IOException | TemplateException e) {
-            e.getMessage();
             throw new Exception(e.getMessage());
         }
     }
@@ -71,8 +70,7 @@ public class EmailService {
 
     public String geContentFromTemplate(Map mapa, String tamplete) throws IOException, TemplateException {
         Template template = fmConfiguration.getTemplate(tamplete);
-        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, mapa);
-        return html;
+        return FreeMarkerTemplateUtils.processTemplateIntoString(template, mapa);
     }
 }
 

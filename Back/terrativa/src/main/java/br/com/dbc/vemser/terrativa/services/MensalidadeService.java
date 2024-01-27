@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
 import lombok.Data;
@@ -27,7 +27,6 @@ public class MensalidadeService {
     }
 
     public ResponseMensalidadeDTO resgatarMensalidadePorId(Integer id) {
-        ResponseMensalidadeDTO responseMensalidade = MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
-        return responseMensalidade;
+        return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.resgatarDadosPorId(id));
     }
 }

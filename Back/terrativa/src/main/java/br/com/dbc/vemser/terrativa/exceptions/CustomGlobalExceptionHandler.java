@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -29,7 +28,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("timestamp", new Date());
         body.put("status", status.value());
 
-        //Get all errors
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -42,8 +40,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException.class)
-    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException exception,
-                                                  HttpServletRequest request) {
+    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -52,8 +49,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleException(ConstraintViolationException exception,
-                                                  HttpServletRequest request) {
+    public ResponseEntity<Object> handleException(ConstraintViolationException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -62,8 +58,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(br.com.dbc.vemser.terrativa.exceptions.DbException.class)
-    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.DbException exception,
-                                                  HttpServletRequest request) {
+    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.DbException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -72,8 +67,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException.class)
-    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException exception,
-                                                  HttpServletRequest request) {
+    public ResponseEntity<Object> handleException(br.com.dbc.vemser.terrativa.exceptions.DataNotFoundException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.BAD_REQUEST.value());

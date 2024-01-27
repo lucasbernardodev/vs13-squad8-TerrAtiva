@@ -1,17 +1,17 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.mappers.FeedUsuarioMapper;
+import br.com.dbc.vemser.terrativa.dto.mappers.FeedUsuariosAlugadosMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioAlugadosDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioDTO;
-import br.com.dbc.vemser.terrativa.entity.FeedUsuario;
-import br.com.dbc.vemser.terrativa.entity.FeedUsuariosAlugados;
 import br.com.dbc.vemser.terrativa.repository.FeedUsuarioRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,29 +22,23 @@ public class FeedUsuariosService {
     private final FeedUsuarioRepository feedUsuarioRepository;
     private final ObjectMapper objectMapper;
 
-    public ArrayList<ResponseFeedUsuarioDTO> mostrarTerrenosDisponiveis(Integer id) throws Exception{
-        ArrayList<FeedUsuario> feedUsuario = feedUsuarioRepository.mostrarTerrenosDisponiveis(id);
-        ArrayList<ResponseFeedUsuarioDTO> responseFeedUsuarioDTO = objectMapper.convertValue(feedUsuario, new TypeReference<ArrayList<ResponseFeedUsuarioDTO>>() {});
-        return responseFeedUsuarioDTO;
+    public List<ResponseFeedUsuarioDTO> mostrarTerrenosDisponiveis(Integer id) throws Exception{
+        return feedUsuarioRepository.mostrarTerrenosDisponiveis(id).stream().map(FeedUsuarioMapper::feedParaResponseFeed).toList();
     }
 
+    public List<ResponseFeedUsuarioDTO> mostrarTerrenosDoUsuario(Integer id) throws Exception {
 
-    public ArrayList<ResponseFeedUsuarioDTO> mostrarTerrenosDoUsuario(Integer id) throws Exception {
-        ArrayList<FeedUsuario> feedUsuario = feedUsuarioRepository.mostrarTerrenosDoUsuario(id);
-        ArrayList<ResponseFeedUsuarioDTO> responseFeedUsuarioDTOS = objectMapper.convertValue(feedUsuario, new TypeReference<ArrayList<ResponseFeedUsuarioDTO>>() {});
-        return responseFeedUsuarioDTOS;
+        return feedUsuarioRepository.mostrarTerrenosDoUsuario(id).stream().map(FeedUsuarioMapper::feedParaResponseFeed).toList();
     }
 
+    public List<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosAlugados(Integer id) throws Exception{
 
-    public ArrayList<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosAlugados(Integer id) throws Exception{
-        ArrayList<FeedUsuariosAlugados> feedUsuariosAlugados = feedUsuarioRepository.mostrarTerrenosAlugados(id);
-        ArrayList<ResponseFeedUsuarioAlugadosDTO> responseFeedUsuarioAlugadosDTOS = objectMapper.convertValue(feedUsuariosAlugados, new TypeReference<ArrayList<ResponseFeedUsuarioAlugadosDTO>>() {});
-        return responseFeedUsuarioAlugadosDTOS;
+        return feedUsuarioRepository.mostrarTerrenosAlugados(id).stream().map(FeedUsuariosAlugadosMapper :: feedUsuariosParaAlugados).toList();
+
     }
 
-    public ArrayList<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosArrendados(Integer id) throws Exception{
-        ArrayList<FeedUsuariosAlugados> feedUsuariosAlugados = feedUsuarioRepository.mostrarTerrenosArrendados(id);
-        ArrayList<ResponseFeedUsuarioAlugadosDTO> responseFeedUsuarioAlugadosDTOS = objectMapper.convertValue(feedUsuariosAlugados, new TypeReference<ArrayList<ResponseFeedUsuarioAlugadosDTO>>() {});
-        return responseFeedUsuarioAlugadosDTOS;
+    public List<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosArrendados(Integer id) throws Exception{
+
+        return feedUsuarioRepository.mostrarTerrenosArrendados(id).stream().map(FeedUsuariosAlugadosMapper :: feedUsuariosParaAlugados).toList();
     }
 }
