@@ -1,9 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

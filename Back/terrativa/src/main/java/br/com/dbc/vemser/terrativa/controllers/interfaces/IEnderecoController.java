@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

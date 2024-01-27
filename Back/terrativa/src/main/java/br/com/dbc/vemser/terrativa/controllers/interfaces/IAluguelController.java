@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

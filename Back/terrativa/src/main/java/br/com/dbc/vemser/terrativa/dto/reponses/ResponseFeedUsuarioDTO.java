@@ -1,15 +1,24 @@
-package br.com.dbc.vemser.terrativa.dto;
+package br.com.dbc.vemser.terrativa.dto.reponses;
 
+
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ResponseEnderecoTerrenosDTO {
+public class ResponseFeedUsuarioDTO {
 
     private Integer id;
+    private String titulo;
+    private String descricao;
+    private Integer proprietarioID;
+    private Integer enderecoID;
+    private double preco;
+    private String tamanho;
+    private String disponivel;
     private String logradouro;
     private Integer numero;
     private String complemento;

@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
-import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

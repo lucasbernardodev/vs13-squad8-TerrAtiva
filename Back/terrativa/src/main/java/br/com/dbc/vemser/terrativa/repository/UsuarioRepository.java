@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.database.GeradorID;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
@@ -171,40 +172,40 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         }
     }
 
-//    public Usuario resgatarDadosPorEmail(String email,String senha) {
-//        try {
-//
-//            conn = bancoConection.criaConexao();
-//
-//            String sqlQuery = """
-//                    SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
-//                    """;
-//            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
-//            stmt.setString(1, email);
-//            stmt.setString(2,senha);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                Usuario usuarioResponse = new Usuario();
-//                usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
-//                usuarioResponse.setNome(rs.getString("NOME"));
-//                usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
-//                usuarioResponse.setEmail(rs.getString("EMAIL"));
-//                usuarioResponse.setCpf(rs.getString("CPF"));
-//                usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
-//                usuarioResponse.setSexo(rs.getString("SEXO"));
-//                usuarioResponse.setAtivo(rs.getString("ATIVO"));
-//                usuarioResponse.setCelular(rs.getString("CELULAR"));
-//                usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
-//                return usuarioResponse;
-//            }
-//            throw new DbException("Usuario não encontrado");
-//
-//        } catch (SQLException e) {
-//            throw new DbException(e.getMessage());
-//        } finally {
-//            BancoDeDados.fechaConexao(conn);
-//        }
-//    }
+    public Usuario loginUsuario(RequestUsuarioLoginDTO usuario) {
+        try {
+
+            conn = bancoConection.criaConexao();
+
+            String sqlQuery = """
+                    SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
+                    """;
+            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Usuario usuarioResponse = new Usuario();
+                usuarioResponse.setUsuarioId(rs.getInt("USUARIO_ID"));
+                usuarioResponse.setNome(rs.getString("NOME"));
+                usuarioResponse.setSobrenome(rs.getString("SOBRENOME"));
+                usuarioResponse.setEmail(rs.getString("EMAIL"));
+                usuarioResponse.setCpf(rs.getString("CPF"));
+                usuarioResponse.setDataNascimento(rs.getDate("DATA_NASCIMENTO").toLocalDate());
+                usuarioResponse.setSexo(rs.getString("SEXO"));
+                usuarioResponse.setAtivo(rs.getString("ATIVO"));
+                usuarioResponse.setCelular(rs.getString("CELULAR"));
+                usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
+                return usuarioResponse;
+            }
+            throw new DbException("Usuario não encontrado");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            BancoDeDados.fechaConexao(conn);
+        }
+    }
 
     private Usuario mapperUsuario(ResultSet rs) throws SQLException {
         Usuario usuarioResponse = new Usuario();
@@ -221,6 +222,5 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
         usuarioResponse.setTelefoneFixo(rs.getString("TELEFONE_FIXO"));
         return usuarioResponse;
     }
-
 
 }

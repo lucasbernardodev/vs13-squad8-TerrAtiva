@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IEnderecoTerrenoController;
-import br.com.dbc.vemser.terrativa.dto.RequestEnderecoTerrenosCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

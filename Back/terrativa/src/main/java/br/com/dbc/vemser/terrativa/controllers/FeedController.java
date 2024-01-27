@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.dto.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,12 @@ public class FeedController {
         List<ResponseFeedDTO> response = feedService.buscarTerrenos(preco, campoDeBusca, estado, tamanho);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/quantidade")
+    public ResponseEntity<List<ResponseFeedDTO>> quantidadeAnuncios() {
+        List<ResponseFeedDTO> response = feedService.quantidadeAnuncios();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

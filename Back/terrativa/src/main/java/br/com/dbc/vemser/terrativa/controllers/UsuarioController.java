@@ -1,8 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,15 @@ public class UsuarioController implements IUsuarioController {
         ResponseUsuarioDTO responseUsuario = usuarioService.cadastrarUsuario(usuario);
         log.info("Criou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login") // POST localhost:8081/usuario/login
+    public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
+            @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
+        log.info("Logando usuário");
+        ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
+        log.info("Logou usuário");
+        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
     @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000

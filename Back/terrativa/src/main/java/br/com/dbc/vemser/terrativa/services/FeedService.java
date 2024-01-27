@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.FeedMapper;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.repository.FeedRepository;
@@ -45,12 +45,9 @@ public class FeedService {
         return terrenosFiltrados;
     }
 
-
-
-
-//    public ArrayList<Feed> buscarEstados() {
-//        return feedRepository.buscarEstados();
-//    }
+    public List<ResponseFeedDTO> quantidadeAnuncios() {
+        return feedRepository.quantidadeAnuncios();
+    }
 
 
 
