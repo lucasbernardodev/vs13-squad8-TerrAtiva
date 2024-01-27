@@ -32,41 +32,51 @@ public class EmailService {
         switch (status){
             case 1:
                 Map<String, Object> listaPessoasCreate = new HashMap<>();
-                listaPessoasCreate.put("nome", responseUsuario.getNome());
+                listaPessoasCreate.put("nome", responseUsuario.getNome() + " " + responseUsuario.getSobrenome());
                 listaPessoasCreate.put("id", responseUsuario.getUsuarioId());
                 listaPessoasCreate.put("email", from);
-                String templateCreate = "createusuario-template.ftl";
-                String assuntoCreate = "Usuário criado";
+                listaPessoasCreate.put("acao", "Criação de cadastro.");
+                String templateCreate = "usuario-template.ftl";
                 String emailCreate = responseUsuario.getEmail();
-                sendEmail(listaPessoasCreate, templateCreate, assuntoCreate, emailCreate);
+                sendEmail(listaPessoasCreate, templateCreate, emailCreate);
                 break;
             case 2:
                 Map<String, Object> listaPessoasUpdate = new HashMap<>();
-                listaPessoasUpdate.put("nome", responseUsuario.getNome());
+                listaPessoasUpdate.put("nome", responseUsuario.getNome() + " " + responseUsuario.getSobrenome());
                 listaPessoasUpdate.put("email", from);
-                String templateUpdate = "updateusuario-template.ftl";
-                String assuntoUpdate = "Usuário atualizado";
+                listaPessoasUpdate.put("id", responseUsuario.getUsuarioId());
+                listaPessoasUpdate.put("acao", "Atualização de cadastro.");
+                String templateUpdate = "usuario-template.ftl";
                 String emailUpdate = responseUsuario.getEmail();
-                sendEmail(listaPessoasUpdate, templateUpdate, assuntoUpdate, emailUpdate);
+                sendEmail(listaPessoasUpdate, templateUpdate, emailUpdate);
+                break;
+            case 3:
+                Map<String, Object> listaPessoasDelete = new HashMap<>();
+                listaPessoasDelete.put("nome", responseUsuario.getNome() + " " +  responseUsuario.getSobrenome());
+                listaPessoasDelete.put("email", from);
+                listaPessoasDelete.put("id", responseUsuario.getUsuarioId());
+                listaPessoasDelete.put("acao", "Remoção de cadastro.");
+                String templateDelete = "usuario-template.ftl";
+                String emailDelete = responseUsuario.getEmail();
+                sendEmail(listaPessoasDelete, templateDelete, emailDelete);
                 break;
         }
     }
 
 
-    public void sendEmail(Map mapa, String template, String assunto, String emailTO) throws Exception {
+    public void sendEmail(Map mapa, String template, String emailTO) throws Exception {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(emailTO);
-            mimeMessageHelper.setSubject(assunto);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject("Confirmação de Ação no Site TerrAtiva");
             mimeMessageHelper.setText(geContentFromTemplate(mapa, template), true);
             emailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException | IOException | TemplateException e) {
             throw new Exception(e.getMessage());
         }
     }
-
 
     public String geContentFromTemplate(Map mapa, String tamplete) throws IOException, TemplateException {
         Template template = fmConfiguration.getTemplate(tamplete);
