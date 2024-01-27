@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;

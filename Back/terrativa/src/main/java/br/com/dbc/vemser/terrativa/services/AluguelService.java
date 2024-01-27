@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestAluguelCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseAluguelDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.AluguelMapper;
 import br.com.dbc.vemser.terrativa.entity.Aluguel;
 import br.com.dbc.vemser.terrativa.repository.AluguelRepository;

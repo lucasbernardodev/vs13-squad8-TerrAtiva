@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestMensalidadeCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseMensalidadeDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;

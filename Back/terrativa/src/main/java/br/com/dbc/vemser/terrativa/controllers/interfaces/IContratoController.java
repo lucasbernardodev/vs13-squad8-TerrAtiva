@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.RequestContratoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

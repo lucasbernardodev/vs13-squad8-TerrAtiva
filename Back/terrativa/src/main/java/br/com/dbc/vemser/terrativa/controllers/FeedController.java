@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.dto.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

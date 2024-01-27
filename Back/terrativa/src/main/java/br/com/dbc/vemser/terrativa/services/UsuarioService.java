@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.RequestUsuarioLoginDTO;
-import br.com.dbc.vemser.terrativa.dto.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
