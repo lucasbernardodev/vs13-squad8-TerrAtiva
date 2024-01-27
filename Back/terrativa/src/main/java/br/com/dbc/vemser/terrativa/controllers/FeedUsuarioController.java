@@ -32,22 +32,26 @@ public class FeedUsuarioController {
     private final FeedUsuariosService feedUsuariosService;
 
     @GetMapping("/disponiveis/{id}")
-    public ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception{
+    public ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception {
+        log.info("Recebida a requisição para mostrar terrenos disponíveis para o usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosDisponiveis(id), HttpStatus.OK);
     }
 
     @GetMapping("/todosterrenos/{id}")
     public ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception{
+        log.info("Recebida a requisição para mostrar todos os terrenos do usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosDoUsuario(id), HttpStatus.OK);
     }
 
     @GetMapping("/alugados/{id}")
     public ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception{
+        log.info("Recebida a requisição para mostrar terrenos alugados pelo usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosAlugados(id), HttpStatus.OK);
     }
 
     @GetMapping("/arrendados/{id}")
     public ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception{
+        log.info("Recebida a requisição para mostrar terrenos arrendados pelo usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosArrendados(id), HttpStatus.OK);
     }
 

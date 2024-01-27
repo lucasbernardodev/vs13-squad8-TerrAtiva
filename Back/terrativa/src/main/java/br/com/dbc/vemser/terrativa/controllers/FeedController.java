@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -27,17 +28,19 @@ public class FeedController {
                                                                      @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
                                                                      @RequestParam(value = "estado", required = false, defaultValue = "") String estado,
                                                                      @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho) {
+        log.info("Mostrando terrenos disponíveis.");
 
         List<ResponseFeedDTO> response = feedService.buscarTerrenos(preco, campoDeBusca, estado, tamanho);
+        log.info("Consulta concluída. Retornando {} resultados.", response.size());
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
     @GetMapping("/quantidade")
     public ResponseEntity<List<ResponseFeedDTO>> quantidadeAnuncios() {
+        log.info("Recebida a requisição para obter a quantidade de anúncios.");
         List<ResponseFeedDTO> response = feedService.quantidadeAnuncios();
+        log.info("Consulta concluída. Retornando {} resultados.", response.size());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 }

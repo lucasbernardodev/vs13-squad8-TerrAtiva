@@ -7,6 +7,7 @@ import br.com.dbc.vemser.terrativa.entity.FeedUsuariosAlugados;
 import br.com.dbc.vemser.terrativa.repository.FeedUsuarioRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
+@Data
 @Slf4j
 public class FeedUsuariosService {
 
