@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.mappers.FeedMapper;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.repository.FeedRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FeedService {
     private final FeedRepository feedRepository;
-
+    private final ObjectMapper objectMapper;
 
     public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
         List<Feed> terrenos = feedRepository.buscarTerrenos(preco, estado, tamanho);
 
-        return filtrarTerrenos(terrenos, campoDeBusca).stream().map(FeedMapper::FeedParaResponseFeed).collect(Collectors.toList());
+        List<ResponseFeedDTO> responseFeedDTOS = terrenos.stream()
+                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
+                .toList();
+
+        return filtrarTerrenos(terrenos, campoDeBusca)
+                .stream()
+                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
+                .collect(Collectors.toList());
     }
 
     private List<Feed> filtrarTerrenos(List<Feed> terrenos, String campoDeBusca) {
@@ -46,9 +54,10 @@ public class FeedService {
     }
 
     public List<ResponseFeedDTO> quantidadeAnuncios() {
-        return feedRepository.quantidadeAnuncios();
+        List<ResponseFeedDTO> anuncios = feedRepository.quantidadeAnuncios();
+
+        return anuncios.stream()
+                .map(feed -> objectMapper.convertValue(feed, ResponseFeedDTO.class))
+                .collect(Collectors.toList());
     }
-
-
-
 }
