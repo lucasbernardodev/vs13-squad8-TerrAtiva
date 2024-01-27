@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
@@ -56,23 +57,15 @@ public class TerrenoController {
         terrenoService.deletarTerreno(idTerreno);
         log.info("Terreno deletado");
         return new ResponseEntity<>(HttpStatus.OK);
-    }}
+    }
 
-//    public String arrendarTerreno(Integer proprietarioID, Integer terrenoID, LocalDate dataAssinatura, LocalDate dataInicio, LocalDate dataFinal,
-//                                  Integer dataVencimentoAluguel, // CONTRATO
-//                                  double valorMensal, Integer anoExercicio, // MENSALIDADE
-//                                  Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento,
-//                                  double taxas, String codigoBarras, LocalDate dataPagamento) {
-//
-//            terrenoService.arrendarTerreno(proprietarioID, terrenoID, dataAssinatura, dataInicio, dataFinal, dataVencimentoAluguel,
-//                                            valorMensal, anoExercicio,
-//                                            mesReferencia, dataEmissao, dataVencimento, taxas, codigoBarras, dataPagamento);
-//
-//            return "Terreno Arrendado com Sucesso!";
-//    }
-//    public String cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
-//            terrenoService.cancelarContratoTerreno(usuarioID, contratoID);
-//            return "Contrato cancelado com sucesso!";
-//    }
-//
-//}
+    @PostMapping("/{idTerreno}/arrendar")
+    public ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
+                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception {
+        log.info("Arrendando terreno...");
+        terrenoService.arrendarTerreno(idTerreno, contrato);
+        log.info("Terreno arrendado");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+}

@@ -16,19 +16,23 @@ public class ContratoService {
 
     public ResponseContratoDTO resgatarContratoPorId(Integer id) {
         Contrato contrato = contratoRepository.resgatarDadosPorId(id);
-        return ContratoMapper.ContratoParaResponseContrato(contrato);
+        return ContratoMapper.contratoParaResponseContrato(contrato);
     }
 
     public ResponseContratoDTO criar(RequestContratoCreateDTO contrato) throws Exception {
-        return ContratoMapper.ContratoParaResponseContrato(
+        return ContratoMapper.contratoParaResponseContrato(
                 contratoRepository.adicionar(
-                        ContratoMapper.RequestContratoParaContrato(contrato)));
+                        ContratoMapper.requestContratoParaContrato(contrato)));
     }
     public ResponseContratoDTO alterar(RequestContratoCreateDTO contrato)throws Exception {
-    return ContratoMapper.ContratoParaResponseContrato(
+    return ContratoMapper.contratoParaResponseContrato(
             contratoRepository.alterar(
-                    ContratoMapper.RequestContratoParaContrato(contrato)));
-        }
+                    ContratoMapper.requestContratoParaContrato(contrato)));
+    }
+
+    public Integer getNextId() {
+        return contratoRepository.getNextId();
+    }
 
     public void deletar(Integer id) {
         contratoRepository.deletar(id);

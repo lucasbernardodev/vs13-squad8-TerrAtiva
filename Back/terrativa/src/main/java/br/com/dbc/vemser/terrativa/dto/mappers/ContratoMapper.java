@@ -6,10 +6,10 @@ import br.com.dbc.vemser.terrativa.entity.Contrato;
 
 public class ContratoMapper {
 
-    public static ResponseContratoDTO ContratoParaResponseContrato(Contrato entity) {
+    public static ResponseContratoDTO contratoParaResponseContrato(Contrato entity) {
         ResponseContratoDTO dto = new ResponseContratoDTO();
         dto.setId(entity.getId());
-        dto.setProprietarioID(entity.getProprietarioID());
+        dto.setLocatarioID(entity.getLocatarioID());
         dto.setTerrenoID(entity.getTerrenoID());
         dto.setAtivo(entity.getAtivo());
         dto.setDataAssinatura(entity.getDataAssinatura());
@@ -19,10 +19,10 @@ public class ContratoMapper {
         return dto;
     }
 
-    public static Contrato RequestContratoParaContrato(RequestContratoCreateDTO dto) {
+    public static Contrato requestContratoParaContrato(RequestContratoCreateDTO dto) {
         Contrato entity = new Contrato();
         entity.setId(dto.getId());
-        entity.setProprietarioID(dto.getProprietarioID());
+        entity.setLocatarioID(dto.getLocatarioID());
         entity.setTerrenoID(dto.getTerrenoID());
         entity.setAtivo(dto.getAtivo());
         entity.setDataAssinatura(dto.getDataAssinatura());
