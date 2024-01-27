@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Enderecos", description = "Endpoints CRUD enderecos")
-@RequestMapping("/endereco") // localhost:8081/endereco
+@RequestMapping("/endereco")
 public class EnderecoController {
 
     private final EnderecoService enderecoService;
 
-    @GetMapping ("/todos")// GET localhost:8081/endereco/todos
+    @GetMapping ("/todos")
     public ResponseEntity<List<ResponseEnderecoDTO>> listarEndereco() throws Exception {
         log.info("Buscando todos os endereço");
         List<ResponseEnderecoDTO> responseEndereco = enderecoService.listarEnderecos();
@@ -34,7 +34,7 @@ public class EnderecoController {
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")// localhost:8081/endereco/1
+    @GetMapping("/{id}")
     public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
         log.info("Buscando endereço por Id.");
         ResponseEnderecoDTO endereco = enderecoService.resgatarPorId(id);
@@ -42,7 +42,7 @@ public class EnderecoController {
         return new ResponseEntity<>(endereco, HttpStatus.OK);
     }
 
-    @PostMapping // POST localhost:8081/endereco
+    @PostMapping
     public  ResponseEntity<ResponseEnderecoDTO> cadastrarEndereco(
             @Valid @RequestBody RequestEnderecoCreateDTO endereco) throws Exception {
             log.info("Criando Endereço.");
@@ -51,7 +51,7 @@ public class EnderecoController {
 
             return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
-    @PutMapping ("/{id}") // PUT localhost:8081/endereco/1
+    @PutMapping ("/{id}")
     public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer idUsuario,
                                                                   @Valid @RequestBody RequestEnderecoCreateDTO endereco, RequestUsuarioCreateDTO usuario)throws Exception {
              log.info("Alterando Endereço.");
@@ -61,7 +61,7 @@ public class EnderecoController {
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")// DELETE localhost:8081/endereco/1
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarEndereco(@PathVariable Integer id) throws Exception {
         log.info("Deletando Endereço.");
             enderecoService.deletar(id);

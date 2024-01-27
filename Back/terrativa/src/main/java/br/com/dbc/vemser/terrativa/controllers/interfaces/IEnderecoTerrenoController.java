@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

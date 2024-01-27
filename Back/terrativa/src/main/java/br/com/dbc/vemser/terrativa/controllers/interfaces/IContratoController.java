@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,17 +22,6 @@ public interface IContratoController {
     )
     @GetMapping("/{id}")
     ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
-
-    @Operation(summary = "Criar contrato", description = "Cria um novo contrato")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "201", description = "Cria e retorna o contrato criado"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @PostMapping
-    ResponseEntity<ResponseContratoDTO> criarContrato(@Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 
     @Operation(summary = "Atualizar contrato", description = "Atualiza um contrato existente")
     @ApiResponses(

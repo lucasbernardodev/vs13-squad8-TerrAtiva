@@ -20,7 +20,6 @@ public class ContratoRepository implements DaoRepository<Contrato>{
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-    //TODO: implementar o método de adicionar contrato
     @Override
     public Contrato adicionar(Contrato contratoRequest) {
         return contratoRequest;

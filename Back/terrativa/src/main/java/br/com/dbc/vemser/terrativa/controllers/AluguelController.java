@@ -1,9 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.services.AluguelService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Aluguel", description = "Endpoints CRUD aluguel")
-@RequestMapping("/aluguel") // localhost:8081/aluguel
+@RequestMapping("/aluguel")
 
 public class AluguelController {
         private final AluguelService aluguelService;
 
-        @GetMapping("/{id}") // GET localhost:8081/aluguel/1
+        @GetMapping("/{id}")
         public ResponseEntity<ResponseAluguelDTO> listarPorId(
                 @PathVariable("id") Integer id) throws Exception {
             log.info("Buscando Aluguel por Id.");
@@ -34,14 +34,14 @@ public class AluguelController {
             return new ResponseEntity<>(aluguel, HttpStatus.OK);
         }
 
-        @PostMapping // POST localhost:8081/aluguel
+        @PostMapping
         public ResponseEntity<ResponseAluguelDTO> criar(@Valid @RequestBody RequestAluguelCreateDTO aluguel) throws Exception {
             log.info("Criando Aluguel.");
             ResponseAluguelDTO responseAluguel = aluguelService.criar(aluguel);
             log.info("Aluguel Criado!");
             return new ResponseEntity<>(responseAluguel, HttpStatus.CREATED);
         }
-        @PutMapping ("/{id}")// PUT localhost:8081/aluguel/1
+        @PutMapping ("/{id}")
         public ResponseEntity<ResponseAluguelDTO> alterar(@PathVariable("id") Integer idUsuario,
                                                           @Valid @RequestBody RequestAluguelCreateDTO aluguel, RequestUsuarioCreateDTO usuario) throws Exception {
             log.info("Criando Aluguel ");
@@ -50,7 +50,7 @@ public class AluguelController {
             log.info("Aluguel Criado!");
             return new ResponseEntity<>(responseAluguel, HttpStatus.OK);
         }
-    @DeleteMapping("/{id}")// DELETE localhost:8081/aluguel/1
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable int id) throws Exception{
         log.info("Deletando Aluguel.");
                 aluguelService.deletar(id);

@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

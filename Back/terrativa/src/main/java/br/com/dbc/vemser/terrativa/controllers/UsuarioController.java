@@ -1,9 +1,9 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ import java.util.List;
 @RestController
 @Tag(name = "Usuários", description = "Endpoints do CRUD de Usuários")
 @RequiredArgsConstructor
-@RequestMapping("/usuario") // localhost:8081/usuario
+@RequestMapping("/usuario")
 public class UsuarioController implements IUsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @GetMapping // GET localhost:8081/usuario
+    @GetMapping
     public ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception {
         log.info("Buscando todos os usuários");
         List<ResponseUsuarioDTO> responseUsuario = usuarioService.listarUsuarios();
@@ -32,7 +32,7 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
-    @GetMapping("/{idUsuario}") // GET localhost:8081/usuario/1
+    @GetMapping("/{idUsuario}")
     public ResponseEntity<ResponseUsuarioDTO> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception {
         log.info("Buscando usuario por id");
         ResponseUsuarioDTO responseUsuario = usuarioService.buscarUsuarioPorId(idUsuario);
@@ -40,7 +40,7 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
-    @PostMapping // POST localhost:8081/usuario
+    @PostMapping
     public ResponseEntity<ResponseUsuarioDTO> cadastrarUsuario(
             @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
         log.info("Criando usuário");
@@ -49,7 +49,7 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-    @PostMapping("/login") // POST localhost:8081/usuario/login
+    @PostMapping("/login")
     public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
             @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
         log.info("Logando usuário");
@@ -58,7 +58,7 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
 
-    @PutMapping("/{idUsuario}") // PUT localhost:8081/usuario/1000
+    @PutMapping("/{idUsuario}")
     public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
                                                                @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
         log.info("Atualizando usuário");

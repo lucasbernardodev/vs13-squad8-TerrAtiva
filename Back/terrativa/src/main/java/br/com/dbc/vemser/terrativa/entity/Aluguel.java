@@ -20,7 +20,4 @@ public class Aluguel {
     private LocalDate dataPagamento;
     private String pago = "N";
 
-    //TODO: remover esse método
-    public Aluguel(Integer mesReferencia, LocalDate dataEmissao, LocalDate dataVencimento, double taxas, String codigoBarras, LocalDate dataPagamento) {
-    }
 }

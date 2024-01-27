@@ -6,6 +6,7 @@ import br.com.dbc.vemser.terrativa.entity.FeedUsuariosAlugados;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
