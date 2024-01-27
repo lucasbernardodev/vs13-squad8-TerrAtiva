@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @Service
 public class AluguelService {
     private final AluguelRepository aluguelRepository;
-    public ResponseAluguelDTO resgatarAluguelPorId(Integer id) throws Exception {
+    public ResponseAluguelDTO resgatarAluguelPorId(Integer id) throws SQLException {
         Aluguel aluguel = aluguelRepository.resgatarDadosPorId(id);
         return AluguelMapper.AluguelParaResponseAluguel(aluguel);
     }

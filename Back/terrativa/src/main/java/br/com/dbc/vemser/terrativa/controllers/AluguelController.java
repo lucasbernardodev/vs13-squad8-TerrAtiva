@@ -26,7 +26,7 @@ public class AluguelController {
         private final AluguelService aluguelService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseAluguelDTO> listarPorId(
+    public ResponseEntity<ResponseAluguelDTO> listarPorId (
             @PathVariable("id") Integer id) throws Exception {
         log.info("Buscando Aluguel por Id.");
         ResponseAluguelDTO aluguel =aluguelService.resgatarAluguelPorId(id);

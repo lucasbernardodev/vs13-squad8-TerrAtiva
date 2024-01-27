@@ -73,9 +73,11 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
             BancoDeDados.fechaConexao(connection);
     }
 
+    //TODO: arrumar, parece quebrado
     @Override
     public Aluguel resgatarDadosPorId(int id) throws SQLException {
 
+        try {
             connection = bancoConection.criaConexao();
             String sqlQuery = "SELECT * FROM ALUGUEL_PAGAMENTOS WHERE PAGAMENTO_ID = " + id;
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
@@ -94,7 +96,14 @@ public class AluguelRepository  implements DaoRepository<Aluguel>{
 
             );
 
+            if (result.next()) {
+                return aluguel;
+            }
+            throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID: " + id);
+        } catch (SQLException e) {
+            throw new DataNotFoundException("Dados do Aluguel Não Encontrado. ID: " + id);
+        } finally {
             BancoDeDados.fechaConexao(connection);
-            return aluguel;
+        }
     }
 }
