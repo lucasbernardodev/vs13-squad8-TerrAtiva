@@ -28,27 +28,27 @@ public class UsuarioService {
     }
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws Exception {
-        Integer status = 1;
          ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.adicionar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
         emailService.sendEmailUsuario(responseUsuario, status);
-        return responseUsuario;
 
+        return responseUsuario;
     }
 
     public ResponseUsuarioDTO alterarUsuario(RequestUsuarioCreateDTO usuario) throws Exception{
-        Integer status = 2;
         ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.alterar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
-        //emailService.sendEmailUsuario(responseUsuario, status);
+//        emailService.sendEmailUsuario(responseUsuario, 2);
         return responseUsuario;
 
     }
 
     public void deletarUsuario(int id) throws Exception {
+        ResponseUsuarioDTO responseUsuarioDTO = buscarUsuarioPorId(id);
         usuarioRepository.deletar(id);
+//        emailService.sendEmailUsuario(responseUsuarioDTO, 3);
     }
 
     public ResponseUsuarioDTO loginUsuario(RequestUsuarioLoginDTO usuario) {
