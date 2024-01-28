@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IFeedUsuarioController {
     @Operation(summary = "Listar Terrenos Por ID", description = "Lista os terrenos por ID do banco")
@@ -24,7 +25,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/disponiveis/{id}")
-    ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Disponiveis Por ID", description = "Lista os terrenos por ID do banco")
     @ApiResponses(
@@ -35,7 +36,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/todosterrenos/{id}")
-    ResponseEntity<ArrayList<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Alugados Por ID", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses(
@@ -46,7 +47,7 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/alugados/{id}")
-    ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Listar Terrenos Arrendados Por ID", description = "Lista os terrenos arrendados por ID do banco")
     @ApiResponses(
@@ -57,5 +58,5 @@ public interface IFeedUsuarioController {
             }
     )
     @GetMapping("/arrendados/{id}")
-    ResponseEntity<ArrayList<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
 }

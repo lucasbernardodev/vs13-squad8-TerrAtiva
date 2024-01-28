@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.ITerrenoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 @Tag(name = "Terreno", description = "Endpoints do CRUD de Terreno")
 @RequiredArgsConstructor
 @RequestMapping("/terreno")
-public class TerrenoController {
+public class TerrenoController implements ITerrenoController {
 
     private final TerrenoService terrenoService;
 

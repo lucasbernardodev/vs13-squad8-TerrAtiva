@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,16 +16,18 @@ import java.util.List;
 
 public interface IUsuarioController {
 
-    @Operation(summary = "Listar usuários", description = "Lista todos os usuários do banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista dos usuários"),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping
-    ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception;
+
+    //COMENTADO PORQUE NÃO É PRA SER USADO, MAS FOI MANTIDO POIS TALVEZ SEJA NECESSÁRIO NO FUTURO
+//    @Operation(summary = "Listar usuários", description = "Lista todos os usuários do banco")
+//    @ApiResponses(
+//            value = {
+//                    @ApiResponse(responseCode = "200", description = "Retorna a lista dos usuários"),
+//                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+//                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+//            }
+//    )
+//    @GetMapping
+//    ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception;
 
     @Operation(summary = "Listar usuário pelo id", description = "Lista todos os usuários do banco que contenham o id informado")
     @ApiResponses(
@@ -59,6 +62,17 @@ public interface IUsuarioController {
     @PutMapping("/{idUsuario}")
     ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
                                                         @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
+
+    @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Login e retorna o usuário logado"),
+                    @ApiResponse(responseCode = "401", content = @Content(schema = @Schema(hidden = true)), description = "Usuário ou senha inválidos"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+            }
+    )
+    @PostMapping("/login")
+    ResponseEntity<ResponseUsuarioDTO> loginUsuario( @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception;
 
     @Operation(summary = "Deletar usuário", description = "Deletar um usuário no banco")
     @ApiResponses(

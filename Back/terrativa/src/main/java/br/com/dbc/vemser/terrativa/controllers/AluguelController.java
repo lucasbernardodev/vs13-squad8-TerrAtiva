@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IAluguelController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseAluguelDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestAluguelCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
@@ -22,7 +23,7 @@ import javax.validation.Valid;
 @Tag(name = "Aluguel", description = "Endpoints CRUD aluguel")
 @RequestMapping("/aluguel")
 
-public class AluguelController {
+public class AluguelController implements IAluguelController {
         private final AluguelService aluguelService;
 
     @GetMapping("/{id}")

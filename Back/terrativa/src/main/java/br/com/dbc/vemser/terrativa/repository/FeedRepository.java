@@ -39,12 +39,12 @@ public class FeedRepository {
                         BETWEEN\s
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 50 FROM DUAL), 0))
                         AND
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') +50 FROM DUAL), 10000000))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 50 FROM DUAL), 10000000))
                     AND TAMANHO
                         BETWEEN\s
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') * 10000 - 20000 FROM DUAL), 0))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 10000 FROM DUAL), 0))
                         AND
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') * 10000 + 20000 FROM DUAL), 10000000))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 10000 FROM DUAL), 10000000))
                     AND REGEXP_LIKE (em.ESTADO_COD, NVL(?,'[0-9]'))
                """;
 

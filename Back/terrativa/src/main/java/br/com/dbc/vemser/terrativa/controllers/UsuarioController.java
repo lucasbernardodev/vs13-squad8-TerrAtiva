@@ -24,13 +24,14 @@ public class UsuarioController implements IUsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @GetMapping
-    public ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception {
-        log.info("Buscando todos os usuários");
-        List<ResponseUsuarioDTO> responseUsuario = usuarioService.listarUsuarios();
-        log.info("Buscou todos os usuários");
-        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
-    }
+    //COMENTADO PORQUE NÃO É PRA SER USADO, MAS FOI MANTIDO POIS TALVEZ SEJA NECESSÁRIO NO FUTURO
+//    @GetMapping
+//    public ResponseEntity<List<ResponseUsuarioDTO>> listarUsuarios() throws Exception {
+//        log.info("Buscando todos os usuários");
+//        List<ResponseUsuarioDTO> responseUsuario = usuarioService.listarUsuarios();
+//        log.info("Buscou todos os usuários");
+//        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+//    }
 
     @GetMapping("/{idUsuario}")
     public ResponseEntity<ResponseUsuarioDTO> buscarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario) throws Exception {

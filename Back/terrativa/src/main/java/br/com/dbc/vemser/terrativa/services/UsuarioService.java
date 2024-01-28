@@ -32,7 +32,7 @@ public class UsuarioService {
          ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.adicionar(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
-        //emailService.sendEmailUsuario(responseUsuario, status);
+        emailService.sendEmailUsuario(responseUsuario, status);
         return responseUsuario;
 
     }

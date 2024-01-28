@@ -89,7 +89,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(6, obj.getCpf());
             stmt.setDate(7, Date.valueOf(obj.getDataNascimento()));
             stmt.setString(8, obj.getSexo());
-            stmt.setString(9, obj.getAtivo());
+            stmt.setString(9, "S");
             stmt.setString(10, obj.getCelular());
             stmt.setString(11, obj.getTelefoneFixo());
             stmt.setString(12, Instant.now().toString());

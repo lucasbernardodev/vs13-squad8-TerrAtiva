@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IEnderecoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Enderecos", description = "Endpoints CRUD enderecos")
 @RequestMapping("/endereco")
-public class EnderecoController {
+public class EnderecoController implements IEnderecoController {
 
     private final EnderecoService enderecoService;
 

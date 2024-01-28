@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +20,7 @@ import java.util.List;
 @Tag(name = "Feed", description = "Endpoints do Feed")
 @RestController
 @RequestMapping("/feed")
-public class FeedController {
+public class FeedController implements IFeedController {
     private final FeedService feedService;
 
     @GetMapping

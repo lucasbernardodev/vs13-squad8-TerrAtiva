@@ -15,11 +15,9 @@ public class ResponseUsuarioDTO {
     private String nome;
     private String sobrenome;
     private String email;
-    private String senha;
     private String cpf;
     private LocalDate dataNascimento;
     private String sexo;
-    private String ativo;
     private String celular;
     private String telefoneFixo;
 

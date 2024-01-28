@@ -38,10 +38,10 @@ public class RequestTerrenoCreateDTO {
     private double preco;
 
     @NotEmpty(message = "Tamanho é obrigatório")
-    @Schema(description = "Tamanho do Terreno.", example = "100m²")
+    @Schema(description = "Tamanho do Terreno.", example = "100000")
     private String tamanho;
 
     @NotEmpty(message = "Disponibilidade é obrigatória")
-    @Schema(description = "Disponibilidade do Terreno.", example = "Sim")
+    @Schema(description = "Disponibilidade do Terreno.", example = "S")
     private String disponivel;
 }

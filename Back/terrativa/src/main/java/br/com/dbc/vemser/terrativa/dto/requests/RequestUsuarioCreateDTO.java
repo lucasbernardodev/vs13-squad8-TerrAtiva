@@ -51,11 +51,6 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Sexo do Usuário.", example = "M")
     private String sexo;
 
-    @NotEmpty(message = "Ativo é obrigatório")
-    @Pattern(regexp="^[SN]$", message="Ativo deve ser 'S' ou 'N'")
-    @Schema(description = "Status ativo do Usuário.", example = "S")
-    private String ativo;
-
     @Length(min = 10, max = 11, message = "Celular deve ter 10 ou 11 dígitos")
     @Schema(description = "Número de celular do Usuário.", example = "999999999")
     private String celular;
