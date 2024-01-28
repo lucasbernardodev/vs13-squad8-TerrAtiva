@@ -24,7 +24,6 @@ public class SimpleErrorDecode implements ErrorDecoder {
             }
             return new Exception("Generic error");
         } catch (IOException e) {
-            e.printStackTrace();
             return e;
         }
     }

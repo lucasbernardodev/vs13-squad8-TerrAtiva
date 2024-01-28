@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,7 +26,7 @@ public interface IFeedController {
     @GetMapping
     ResponseEntity<List<ResponseFeedDTO>> mostrarTerrenosDisponveis(@RequestParam(value = "preco", required = false, defaultValue = "") String preco,
                                                                     @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
-                                                                    @RequestParam(value = "estado", required = false, defaultValue = "") String estado,
+                                                                    @RequestParam(value = "estado", required = false, defaultValue = "") Estados estado,
                                                                     @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho);
 
 

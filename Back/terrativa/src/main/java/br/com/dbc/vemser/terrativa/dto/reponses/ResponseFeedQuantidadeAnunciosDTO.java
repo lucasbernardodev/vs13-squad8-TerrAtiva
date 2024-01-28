@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class ResponseFeedQuantidadeAnunciosDTO {
 
     private String estado;
-    private String cod_estado;
-    private String quantidade;
+    private String totalAnuncios;
 }

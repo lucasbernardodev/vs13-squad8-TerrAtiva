@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class RequestFeedCreateDTO {
     private String cidade;
 
 
-    private String cod_estado;
+    private Estados cod_estado;
 
 
     private String quantidade;

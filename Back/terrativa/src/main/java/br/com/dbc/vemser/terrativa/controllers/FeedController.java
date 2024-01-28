@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class FeedController implements IFeedController {
     @GetMapping
     public ResponseEntity<List<ResponseFeedDTO>> mostrarTerrenosDisponveis(@RequestParam(value = "preco", required=false, defaultValue = "") String preco,
                                                                      @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
-                                                                     @RequestParam(value = "estado", required = false, defaultValue = "") String estado,
+                                                                     @RequestParam(value = "estado", required = false, defaultValue = "") Estados estado,
                                                                      @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho) {
         log.info("Mostrando terrenos disponíveis.");
 

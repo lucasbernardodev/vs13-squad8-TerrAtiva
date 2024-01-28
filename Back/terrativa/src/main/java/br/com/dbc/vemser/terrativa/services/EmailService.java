@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.config.PropertiesReader;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

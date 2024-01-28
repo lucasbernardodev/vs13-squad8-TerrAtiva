@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class FeedRepository {
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-    public ArrayList<Feed> buscarTerrenos(String preco, String estado, String tamanho) {
+    public ArrayList<Feed> buscarTerrenos(String preco, Estados estado, String tamanho) {
         try {
             ArrayList<Feed> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
@@ -46,7 +46,7 @@ public class FeedRepository {
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 10000 FROM DUAL), 0))
                         AND
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 10000 FROM DUAL), 10000000))
-                    AND REGEXP_LIKE (em.ESTADO_COD, NVL(?,'[0-9]'))
+                    AND em.ESTADO_COD = ?
                """;
 
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
@@ -55,7 +55,7 @@ public class FeedRepository {
             stmt.setString(2, preco);
             stmt.setString(3, tamanho);
             stmt.setString(4, tamanho);
-            stmt.setString(5, estado);
+            stmt.setInt(5, estado.getCode());
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
@@ -100,9 +100,8 @@ public class FeedRepository {
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 ResponseFeedQuantidadeAnunciosDTO terreno = new ResponseFeedQuantidadeAnunciosDTO();
-                terreno.setCod_estado(resultSet.getString("ESTADO_COD"));
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
-                terreno.setQuantidade(resultSet.getString("QUANTIDADE"));
+                terreno.setTotalAnuncios(resultSet.getString("QUANTIDADE"));
                 response.add(terreno);
             }
             return response;

@@ -22,6 +22,4 @@ public class Usuario {
     private String celular;
     private String telefoneFixo;
 
-    public Usuario(Integer id, String nome, String sobrenome, String email, String cpf, LocalDate dataNascimento, String sexo, String celular, String telefoneFixo) {
-    }
 }

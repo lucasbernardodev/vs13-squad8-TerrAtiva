@@ -22,6 +22,7 @@ import javax.validation.Valid;
 @RequestMapping("/contrato")
 public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
+
     @GetMapping("/{id}")
     public ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(
             @PathVariable("id") Integer id) throws Exception {
