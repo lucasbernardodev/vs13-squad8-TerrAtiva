@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@Tag(name = "Terreno", description = "Endpoints do CRUD de Terreno")
+@Tag(name = "Terrenos", description = "Endpoints do CRUD de Terreno")
 @RequiredArgsConstructor
 @RequestMapping("/terreno")
 public class TerrenoController implements ITerrenoController {

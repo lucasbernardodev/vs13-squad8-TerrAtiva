@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@Tag(name = "Feed", description = "Endpoints do Feed")
+@Tag(name = "Feed de Anúncios", description = "Endpoints do Feed")
 @RestController
 @RequestMapping("/feed")
 public class FeedController implements IFeedController {

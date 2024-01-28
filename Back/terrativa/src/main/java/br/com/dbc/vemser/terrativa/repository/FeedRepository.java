@@ -24,9 +24,9 @@ public class FeedRepository {
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-    public ArrayList<Feed> buscarTerrenos(String preco, Estados estado, String tamanho) {
+    public List<Feed> buscarTerrenos(String preco, Estados estado, String tamanho) {
         try {
-            ArrayList<Feed> response = new ArrayList<>();
+            List<Feed> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
 
             String sqlQuery = """
@@ -46,16 +46,23 @@ public class FeedRepository {
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 10000 FROM DUAL), 0))
                         AND
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 10000 FROM DUAL), 10000000))
-                    AND em.ESTADO_COD = ?
                """;
 
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+            PreparedStatement stmt;
+
+            if (estado != null) {
+                sqlQuery += " AND em.ESTADO_COD = ?";
+                stmt = connection.prepareStatement(sqlQuery);
+                stmt.setInt(5, estado.getCode());
+            } else {
+                stmt = connection.prepareStatement(sqlQuery);
+            }
 
             stmt.setString(1, preco);
             stmt.setString(2, preco);
             stmt.setString(3, tamanho);
             stmt.setString(4, tamanho);
-            stmt.setInt(5, estado.getCode());
+
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {

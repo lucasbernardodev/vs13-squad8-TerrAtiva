@@ -37,12 +37,12 @@ public class RequestEnderecoTerrenosCreateDTO {
     private String bairro;
 
     @NotNull(message = "Código do município não pode ser vazio")
-    @Schema(description = "Código IBGE", required = true, example = "36901")
+    @Schema(description = "Código IBGE", required = true, example = "1100015")
     private Integer codigoMunicipioIBGE;
 
     @NotNull(message = "O CEP não pode ser nulo.")
     @Digits(integer = 8, fraction = 0, message = "O CEP deve conter até 8 dígitos.")
-    @Schema(description = "CEP", required = true, example = "46859727080")
+    @Schema(description = "CEP", required = true, example = "12345678")
     private Integer cep;
 
     @Size(max = 250, message = "A Localização deve ter no máximo 250 caracteres")

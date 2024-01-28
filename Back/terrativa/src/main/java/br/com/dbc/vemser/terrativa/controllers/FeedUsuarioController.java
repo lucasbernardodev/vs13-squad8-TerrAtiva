@@ -23,9 +23,9 @@ import java.util.List;
 @Slf4j
 @Validated
 @RequiredArgsConstructor
-@Tag(name = "Feed Usuarios", description = "Endpoints do Feed para os usuários")
+@Tag(name = "Feed do Usuário", description = "Endpoints do Feed para os usuários")
 @RestController
-@RequestMapping("feed/usuario")
+@RequestMapping("feed-usuario")
 public class FeedUsuarioController implements IFeedUsuarioController {
 
     private final FeedUsuariosService feedUsuariosService;

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface IFeedUsuarioController {
-    @Operation(summary = "Listar Terrenos Por ID", description = "Lista os terrenos por ID do banco")
+    @Operation(summary = "Lista terrenos do usuário ainda disponíveis para serem alugados", description = "Lista os terrenos por ID do banco")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno por ID"),
@@ -26,7 +26,7 @@ public interface IFeedUsuarioController {
     @GetMapping("/disponiveis/{id}")
     ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
 
-    @Operation(summary = "Listar Terrenos Disponiveis Por ID", description = "Lista os terrenos por ID do banco")
+    @Operation(summary = "Lista todos terrenos do usuário", description = "Lista os terrenos por ID do banco")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno por ID"),
@@ -37,7 +37,7 @@ public interface IFeedUsuarioController {
     @GetMapping("/todosterrenos/{id}")
     ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
 
-    @Operation(summary = "Listar Terrenos Alugados Por ID", description = "Lista os terrenos alugados por ID do banco")
+    @Operation(summary = "Lista terrenos que o Usuário alugou dos outros", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno alugados por ID"),
@@ -48,7 +48,7 @@ public interface IFeedUsuarioController {
     @GetMapping("/alugados/{id}")
     ResponseEntity<List<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
 
-    @Operation(summary = "Listar Terrenos Arrendados Por ID", description = "Lista os terrenos arrendados por ID do banco")
+    @Operation(summary = "Lista terrenos do Usuário alugado por outras pessoas", description = "Lista os terrenos arrendados por ID do banco")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "Retorna terreno arrendados por ID"),

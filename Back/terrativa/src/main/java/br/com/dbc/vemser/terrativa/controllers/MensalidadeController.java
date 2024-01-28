@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 @RequestMapping("/mensalidade")
 @Slf4j
-@Tag(name = "Mensalidade", description = "Endpoints do CRUD de Mensalidades")
+@Tag(name = "Mensalidades", description = "Endpoints do CRUD de Mensalidades")
 public class MensalidadeController implements IMensalidadeController {
 
     private final MensalidadeService mensalidadeService;

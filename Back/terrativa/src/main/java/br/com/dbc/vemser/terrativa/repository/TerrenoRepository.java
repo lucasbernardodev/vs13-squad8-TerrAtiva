@@ -41,13 +41,14 @@ public class TerrenoRepository implements DaoRepository<Terreno> {
             stmt.setInt(5, terreno.getEnderecoID());
             stmt.setDouble(6, terreno.getPreco());
             stmt.setString(7, terreno.getTamanho());
-            stmt.setString(8, terreno.getDisponivel());
+            stmt.setString(8, "S");
             stmt.setString(9, Instant.now().toString());
             stmt.setString(10, Instant.now().toString());
 
             if (stmt.executeUpdate() == 0)
                 throw new UnauthorizedOperationException("Não foi possível cadastrar novo Endereço");
             BancoDeDados.fechaConexao(connection);
+            terreno.setDisponivel("S");
             return terreno;
 
         } catch (SQLException e) {
