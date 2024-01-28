@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioAlugadosDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.FeedUsuariosService;
@@ -22,10 +23,10 @@ import java.util.List;
 @Slf4j
 @Validated
 @RequiredArgsConstructor
-@Tag(name = "Feed Usuarios", description = "Endpoints do Feed para os usuários")
+@Tag(name = "Feed do Usuário", description = "Endpoints do Feed para os usuários")
 @RestController
-@RequestMapping("feed/usuario")
-public class FeedUsuarioController {
+@RequestMapping("feed-usuario")
+public class FeedUsuarioController implements IFeedUsuarioController {
 
     private final FeedUsuariosService feedUsuariosService;
 

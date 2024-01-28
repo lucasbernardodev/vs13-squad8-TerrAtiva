@@ -18,9 +18,9 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/endereco/terreno")
+@RequestMapping("/endereco-terreno")
 @Slf4j
-@Tag(name = "EndereçosTerrenos", description = "Endpoints do CRUD de EndereçosTerrenos")
+@Tag(name = "Endereços dos Terrenos", description = "Endpoints do CRUD de EndereçosTerrenos")
 public class EnderecoTerrenosController implements IEnderecoTerrenoController {
 
     private final EnderecoTerrenosService enderecoTerrenosService;

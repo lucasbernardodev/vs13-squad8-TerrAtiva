@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IEnderecoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
@@ -22,17 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Enderecos", description = "Endpoints CRUD enderecos")
 @RequestMapping("/endereco")
-public class EnderecoController {
+public class EnderecoController implements IEnderecoController {
 
     private final EnderecoService enderecoService;
-
-    @GetMapping ("/todos")
-    public ResponseEntity<List<ResponseEnderecoDTO>> listarEndereco() throws Exception {
-        log.info("Buscando todos os endereço");
-        List<ResponseEnderecoDTO> responseEndereco = enderecoService.listarEnderecos();
-        log.info("Buscou todos os endereços");
-        return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
@@ -52,11 +45,11 @@ public class EnderecoController {
             return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
     @PutMapping ("/{id}")
-    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer idUsuario,
-                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco, RequestUsuarioCreateDTO usuario)throws Exception {
-             log.info("Alterando Endereço.");
-                usuario.setUsuarioId(idUsuario);
-                ResponseEnderecoDTO responseEndereco = enderecoService.alterar(endereco);
+    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
+                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception {
+        log.info("Alterando Endereço.");
+        endereco.setId(id);
+        ResponseEnderecoDTO responseEndereco = enderecoService.alterar(endereco);
         log.info("Endereço Criado!");
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);

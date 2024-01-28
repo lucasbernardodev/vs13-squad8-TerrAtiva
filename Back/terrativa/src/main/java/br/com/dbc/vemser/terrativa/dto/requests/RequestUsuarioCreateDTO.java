@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -15,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
 public class RequestUsuarioCreateDTO {
+
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer usuarioId;
@@ -38,8 +38,8 @@ public class RequestUsuarioCreateDTO {
     private String senha;
 
     @NotBlank(message = "CPF é obrigatório")
-    @CPF(message = "CPF deve ser válido")
-    @Schema(description = "CPF do Usuário.", example = "123.456.789-00")
+    //@CPF(message = "CPF deve ser válido")
+    @Schema(description = "CPF do Usuário.", example = "12345678900")
     private String cpf;
 
     @Past(message = "Data de Nascimento deve ser no passado")
@@ -51,16 +51,11 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Sexo do Usuário.", example = "M")
     private String sexo;
 
-    @NotEmpty(message = "Ativo é obrigatório")
-    @Pattern(regexp="^[SN]$", message="Ativo deve ser 'S' ou 'N'")
-    @Schema(description = "Status ativo do Usuário.", example = "S")
-    private String ativo;
-
     @Length(min = 10, max = 11, message = "Celular deve ter 10 ou 11 dígitos")
-    @Schema(description = "Número de celular do Usuário.", example = "999999999")
+    @Schema(description = "Número de celular do Usuário.", example = "0123456789")
     private String celular;
 
     @Length(min = 10, max = 10, message = "Telefone Fixo deve ter 10 dígitos")
-    @Schema(description = "Número de telefone fixo do Usuário.", example = "888888888")
+    @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
 }

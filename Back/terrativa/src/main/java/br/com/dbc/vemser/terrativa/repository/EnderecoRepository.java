@@ -22,25 +22,6 @@ public class EnderecoRepository implements DaoRepository<Endereco> {
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-   public List<Endereco> listarEnderecos() {
-       try {
-           connection = bancoConection.criaConexao();
-           String sqlQuery = " SELECT * FROM ENDERECOS";
-
-           PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-           ResultSet result = stmt.executeQuery(sqlQuery);
-           List<Endereco> enderecoLista = new ArrayList<>();
-           while (result.next()){
-               enderecoLista.add(mapperEndereco(result));
-           }
-           BancoDeDados.fechaConexao(connection);
-           return enderecoLista;
-       } catch (SQLException e) {
-           throw new DbException(e.getMessage());
-       }
-   }
-
-
     public Endereco resgatarDadosPorId(int id) {
         try {
             connection = bancoConection.criaConexao();

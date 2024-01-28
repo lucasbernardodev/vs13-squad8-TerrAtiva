@@ -106,9 +106,17 @@ public class ContratoRepository implements DaoRepository<Contrato>{
         try {
             connection = bancoConection.criaConexao();
 
-            String sqlQuery = "SELECT * FROM CONTRATOS WHERE CONTRATO_ID = " + id;
+            String sqlQuery = """
+                    SELECT * FROM CONTRATOS cs
+                    LEFT JOIN TERRENOS t ON cs.TERRENO_ID = t.TERRENO_ID
+                    LEFT JOIN USUARIOS u ON cs.LOCATARIO_ID = u.USUARIO_ID
+                    WHERE CONTRATO_ID = + ?
+                    """;
 
             PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setInt(1, id);
+
             ResultSet result = stmt.executeQuery();
 
             if (result.next()) {

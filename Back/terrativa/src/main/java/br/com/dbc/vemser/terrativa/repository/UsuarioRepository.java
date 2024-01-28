@@ -49,7 +49,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
 
             conn = bancoConection.criaConexao();
 
-            String sqlQuery = "SELECT * FROM USUARIOS WHERE USUARIO_ID = " + id;
+            String sqlQuery = "SELECT * FROM USUARIOS WHERE ATIVO = 'S' AND USUARIO_ID = " + id;
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sqlQuery);
 
@@ -89,7 +89,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
             stmt.setString(6, obj.getCpf());
             stmt.setDate(7, Date.valueOf(obj.getDataNascimento()));
             stmt.setString(8, obj.getSexo());
-            stmt.setString(9, obj.getAtivo());
+            stmt.setString(9, "S");
             stmt.setString(10, obj.getCelular());
             stmt.setString(11, obj.getTelefoneFixo());
             stmt.setString(12, Instant.now().toString());
@@ -179,6 +179,7 @@ public class UsuarioRepository implements DaoRepository<Usuario> {
 
             String sqlQuery = """
                     SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?
+                    AND ATIVO = 'S'
                     """;
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             stmt.setString(1, usuario.getEmail());

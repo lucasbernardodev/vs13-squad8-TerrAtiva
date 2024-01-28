@@ -17,12 +17,12 @@ public class RequestUsuarioLoginDTO {
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message = "Email deve ser válido")
-    @Schema(description = "Email do Usuário.", example = "joao.silva@exemplo.com")
+    @Schema(description = "Email do Usuário.", example = "teste@teste.com")
     private String email;
 
     @NotBlank(message = "Senha é obrigatória")
     @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
-    @Schema(description = "Senha do Usuário.", example = "senha123")
+    @Schema(description = "Senha do Usuário.", example = "Teste#123")
     private String senha;
 
 }

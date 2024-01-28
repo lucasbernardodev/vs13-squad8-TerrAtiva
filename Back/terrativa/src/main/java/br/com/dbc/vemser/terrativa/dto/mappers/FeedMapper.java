@@ -14,8 +14,6 @@ public class FeedMapper {
             dto.setTamanho(entity.getTamanho());
             dto.setEstado(entity.getEstado());
             dto.setCidade(entity.getCidade());
-            dto.setCod_estado(entity.getCod_estado());
-            dto.setQuantidade(entity.getQuantidade());
             return dto;
         }
 

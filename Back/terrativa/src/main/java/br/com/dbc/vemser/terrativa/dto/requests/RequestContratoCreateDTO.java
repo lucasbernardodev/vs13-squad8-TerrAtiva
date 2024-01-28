@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Contrato")
 public class RequestContratoCreateDTO {
 
+    @Hidden
     @Schema(description = "Identificador único do Contrato.", example = "1")
     private Integer id;
 
@@ -22,11 +24,11 @@ public class RequestContratoCreateDTO {
     @Schema(description = "Identificador único do Locatário.", example = "1")
     private Integer locatarioID;
 
-    @NotNull(message = "O ID do terreno não pode ser nulo")
+    @Hidden
     @Schema(description = "Identificador único do Terreno.", example = "1")
     private Integer terrenoID;
 
-    @NotEmpty(message = "O campo ativo não pode estar vazio ou nulo")
+    @Hidden
     @Schema(description = "Status ativo do Contrato.", example = "S")
     private String ativo;
 

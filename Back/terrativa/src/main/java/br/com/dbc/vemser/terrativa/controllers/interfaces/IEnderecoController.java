@@ -15,16 +15,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface IEnderecoController {
-    @Operation(summary = "Listar Endereco", description = "Lista todas os enderecos do banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de enderecos"),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping("/todos")// GET localhost:8081/endereco/todos
-    ResponseEntity<List<ResponseEnderecoDTO>> listarEndereco() throws Exception;
 
     @Operation(summary = "Listar Endereco por ID", description = "Lista todas os enderecos do banco")
     @ApiResponses(
@@ -58,8 +48,8 @@ public interface IEnderecoController {
             }
     )
     @PutMapping("/{id}") // PUT localhost:8081/endereco/1
-    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer idUsuario,
-                                                          @Valid @RequestBody RequestEnderecoCreateDTO endereco, RequestUsuarioCreateDTO usuario)throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
+                                                          @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception;
 
     @Operation(summary = "Deletar Endereco", description = "Deletar endereco do banco")
     @ApiResponses(

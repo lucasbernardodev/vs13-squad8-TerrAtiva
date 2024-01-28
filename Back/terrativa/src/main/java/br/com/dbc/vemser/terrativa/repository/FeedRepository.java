@@ -1,7 +1,8 @@
 package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class FeedRepository {
     private static Connection connection;
     private final BancoDeDados bancoConection;
 
-    public ArrayList<Feed> buscarTerrenos(String preco, String estado, String tamanho) {
+    public List<Feed> buscarTerrenos(String preco, Estados estado, String tamanho) {
         try {
-            ArrayList<Feed> response = new ArrayList<>();
+            List<Feed> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
 
             String sqlQuery = """
@@ -39,22 +40,29 @@ public class FeedRepository {
                         BETWEEN\s
                         (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 50 FROM DUAL), 0))
                         AND
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') +50 FROM DUAL), 10000000))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 50 FROM DUAL), 10000000))
                     AND TAMANHO
                         BETWEEN\s
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') * 10000 - 20000 FROM DUAL), 0))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 10000 FROM DUAL), 0))
                         AND
-                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') * 10000 + 20000 FROM DUAL), 10000000))
-                    AND REGEXP_LIKE (em.ESTADO_COD, NVL(?,'[0-9]'))
+                        (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 10000 FROM DUAL), 10000000))
                """;
 
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
+            PreparedStatement stmt;
+
+            if (estado != null) {
+                sqlQuery += " AND em.ESTADO_COD = ?";
+                stmt = connection.prepareStatement(sqlQuery);
+                stmt.setInt(5, estado.getCode());
+            } else {
+                stmt = connection.prepareStatement(sqlQuery);
+            }
 
             stmt.setString(1, preco);
             stmt.setString(2, preco);
             stmt.setString(3, tamanho);
             stmt.setString(4, tamanho);
-            stmt.setString(5, estado);
+
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
@@ -78,9 +86,9 @@ public class FeedRepository {
         }
     }
 
-    public List<ResponseFeedDTO> quantidadeAnuncios() {
+    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
         try {
-            List<ResponseFeedDTO> response = new ArrayList<>();
+            List<ResponseFeedQuantidadeAnunciosDTO> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
 
             String sqlQuery = """
@@ -98,10 +106,9 @@ public class FeedRepository {
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-                ResponseFeedDTO terreno = new ResponseFeedDTO();
-                terreno.setCod_estado(resultSet.getString("ESTADO_COD"));
+                ResponseFeedQuantidadeAnunciosDTO terreno = new ResponseFeedQuantidadeAnunciosDTO();
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
-                terreno.setQuantidade(resultSet.getString("QUANTIDADE"));
+                terreno.setTotalAnuncios(resultSet.getString("QUANTIDADE"));
                 response.add(terreno);
             }
             return response;

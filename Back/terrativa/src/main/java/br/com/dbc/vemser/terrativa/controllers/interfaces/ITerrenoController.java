@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,4 +59,16 @@ public interface ITerrenoController {
     )
     @DeleteMapping("/{idTerreno}")
     ResponseEntity<String> deletarDados(@PathVariable Integer idTerreno) throws Exception;
+
+    @Operation(summary = "Arrendar terreno", description = "Arrenda um terreno existente")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Arrenda o terreno solicitado"),
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+            }
+    )
+    @PostMapping("/{idTerreno}/arrendar")
+    ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
+                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 }

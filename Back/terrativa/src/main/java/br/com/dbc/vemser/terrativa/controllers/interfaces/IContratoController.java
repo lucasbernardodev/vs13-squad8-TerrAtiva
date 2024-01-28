@@ -37,10 +37,10 @@ public interface IContratoController {
     ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
                                                           @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 
-    @Operation(summary = "Deletar contrato", description = "Deleta um contrato existente")
+    @Operation(summary = "Cancelar contrato", description = "Cancelar um contrato existente")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Deleta o contrato solicitado"),
+                    @ApiResponse(responseCode = "200", description = "Cancelar o contrato solicitado"),
                     @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }

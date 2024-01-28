@@ -16,11 +16,6 @@ import java.util.List;
 @Service
 public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
-    public List<ResponseEnderecoDTO> listarEnderecos() {
-        return enderecoRepository.listarEnderecos().stream()
-                .map(EnderecoMapper::EnderecoParaResponseEndereco)
-                .toList();
-    }
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) {
         Endereco endereco = enderecoRepository.resgatarDadosPorId(id);

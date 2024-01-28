@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Terreno")
 public class RequestTerrenoCreateDTO {
 
+    @Hidden
     @Schema(description = "Identificador único do Terreno.", example = "1")
     private Integer id;
 
@@ -38,10 +40,10 @@ public class RequestTerrenoCreateDTO {
     private double preco;
 
     @NotEmpty(message = "Tamanho é obrigatório")
-    @Schema(description = "Tamanho do Terreno.", example = "100m²")
+    @Schema(description = "Tamanho do Terreno.", example = "100000")
     private String tamanho;
 
-    @NotEmpty(message = "Disponibilidade é obrigatória")
-    @Schema(description = "Disponibilidade do Terreno.", example = "Sim")
+    @Hidden
+    @Schema(description = "Disponibilidade do Terreno.", example = "S")
     private String disponivel;
 }

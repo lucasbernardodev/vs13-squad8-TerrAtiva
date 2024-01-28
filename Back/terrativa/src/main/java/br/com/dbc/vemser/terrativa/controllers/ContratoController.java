@@ -17,11 +17,12 @@ import javax.validation.Valid;
 @Slf4j
 @Validated
 @RestController
-@Tag(name = "Contrato", description = "Endpoints do CRUD de Contrato")
+@Tag(name = "Contratos", description = "Endpoints do CRUD de Contrato")
 @RequiredArgsConstructor
 @RequestMapping("/contrato")
 public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
+
     @GetMapping("/{id}")
     public ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(
             @PathVariable("id") Integer id) throws Exception {

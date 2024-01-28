@@ -7,13 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseFeedDTO {
+public class ResponseFeedQuantidadeAnunciosDTO {
 
-    private int terrenoId;
-    private String titulo;
-    private String descricao;
-    private double preco;
-    private int tamanho;
     private String estado;
-    private String cidade;
+    private String totalAnuncios;
 }
