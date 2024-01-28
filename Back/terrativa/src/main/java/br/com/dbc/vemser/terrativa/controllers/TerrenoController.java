@@ -66,7 +66,7 @@ public class TerrenoController implements ITerrenoController {
         log.info("Arrendando terreno...");
         terrenoService.arrendarTerreno(idTerreno, contrato);
         log.info("Terreno arrendado");
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Operação realizada com sucesso!", HttpStatus.OK);
     }
 
 }

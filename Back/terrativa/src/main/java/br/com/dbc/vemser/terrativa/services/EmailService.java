@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.config.PropertiesReader;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -26,7 +27,6 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-    private final String to = "leonardo.rauber@dbccompany.com.br";
 
     public void sendEmailUsuario(ResponseUsuarioDTO responseUsuario, Integer status) throws Exception {
         switch (status){
@@ -69,7 +69,7 @@ public class EmailService {
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setTo(emailTO);
             mimeMessageHelper.setSubject("Confirmação de Ação no Site TerrAtiva");
             mimeMessageHelper.setText(geContentFromTemplate(mapa, template), true);
             emailSender.send(mimeMessageHelper.getMimeMessage());

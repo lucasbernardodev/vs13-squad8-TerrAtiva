@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,6 +38,6 @@ public interface IFeedController {
             }
     )
     @GetMapping("/quantidade")
-    ResponseEntity<List<ResponseFeedDTO>> quantidadeAnuncios();
+    ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnuncios();
     }
 

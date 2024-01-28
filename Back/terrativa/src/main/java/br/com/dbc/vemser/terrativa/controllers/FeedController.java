@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +38,9 @@ public class FeedController implements IFeedController {
     }
 
     @GetMapping("/quantidade")
-    public ResponseEntity<List<ResponseFeedDTO>> quantidadeAnuncios() {
+    public ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnuncios() {
         log.info("Recebida a requisição para obter a quantidade de anúncios.");
-        List<ResponseFeedDTO> response = feedService.quantidadeAnuncios();
+        List<ResponseFeedQuantidadeAnunciosDTO> response = feedService.quantidadeAnuncios();
         log.info("Consulta concluída. Retornando {} resultados.", response.size());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

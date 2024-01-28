@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.FeedMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.repository.FeedRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,7 @@ public class FeedService {
         return terrenosFiltrados;
     }
 
-    public List<ResponseFeedDTO> quantidadeAnuncios() {
+    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
         return feedRepository.quantidadeAnuncios();
     }
 }

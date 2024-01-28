@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.repository;
 
 import br.com.dbc.vemser.terrativa.database.BancoDeDados;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.Feed;
 import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import lombok.RequiredArgsConstructor;
@@ -78,9 +79,9 @@ public class FeedRepository {
         }
     }
 
-    public List<ResponseFeedDTO> quantidadeAnuncios() {
+    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
         try {
-            List<ResponseFeedDTO> response = new ArrayList<>();
+            List<ResponseFeedQuantidadeAnunciosDTO> response = new ArrayList<>();
             connection = bancoConection.criaConexao();
 
             String sqlQuery = """
@@ -98,7 +99,7 @@ public class FeedRepository {
 
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-                ResponseFeedDTO terreno = new ResponseFeedDTO();
+                ResponseFeedQuantidadeAnunciosDTO terreno = new ResponseFeedQuantidadeAnunciosDTO();
                 terreno.setCod_estado(resultSet.getString("ESTADO_COD"));
                 terreno.setEstado(resultSet.getString("NOME_ESTADO"));
                 terreno.setQuantidade(resultSet.getString("QUANTIDADE"));

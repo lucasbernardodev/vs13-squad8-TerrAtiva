@@ -18,4 +18,7 @@ public class PropertiesReader {
     @Value("${spring.jpa.properties.hibernate.default_schema}")
     private String SCHEMA;
 
+    @Value("${spring.mail.username}")
+    private String emailFrom;
+
 }
