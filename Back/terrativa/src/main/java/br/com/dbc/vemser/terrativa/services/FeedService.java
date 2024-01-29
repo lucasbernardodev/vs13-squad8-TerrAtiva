@@ -32,10 +32,11 @@ public class FeedService {
     }
 
     private List<Feed> filtrarTerrenos(List<Feed> terrenos, String campoDeBusca) {
-        boolean encontrado = true;
+
         List<Feed> terrenosFiltrados = new ArrayList<>();
         List<String> palavrasChaveList = Arrays.stream(campoDeBusca.split(" ")).toList();
         for (Feed terreno : terrenos) {
+            boolean encontrado = true;
             for (String palavraChave : palavrasChaveList) {
                 if (!terreno.getDescricao().toLowerCase().contains(palavraChave.toLowerCase()) && !terreno.getTitulo().toLowerCase().contains(palavraChave.toLowerCase())) {
                     encontrado = false;
