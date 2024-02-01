@@ -62,8 +62,7 @@ public class UsuarioController implements IUsuarioController {
     public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
                                                                @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
         log.info("Atualizando usuário");
-        usuario.setUsuarioId(idUsuario);
-        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(usuario);
+        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
         log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }

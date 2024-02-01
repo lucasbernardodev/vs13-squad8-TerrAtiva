@@ -25,6 +25,10 @@ public class BancoDeDados {
             throw new DbException(e.getMessage());
         }
     }
+
+//    public final Connection criaConexao(){
+//        return null;
+//    }
     public static void fechaConexao(Connection conn) {
             try {
                 conn.close();
