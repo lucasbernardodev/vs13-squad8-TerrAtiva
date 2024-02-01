@@ -58,4 +58,6 @@ public class RequestUsuarioCreateDTO {
     @Length(min = 10, max = 10, message = "Telefone Fixo deve ter 10 dígitos")
     @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
+
+    private String ativo;
 }

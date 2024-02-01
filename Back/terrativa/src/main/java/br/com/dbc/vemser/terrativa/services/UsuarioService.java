@@ -29,15 +29,18 @@ public class UsuarioService {
     }
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws Exception {
+        usuario.setAtivo("S");
+        usuario.setUsuarioId(null);
          ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.save(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
-        emailService.sendEmailUsuario(responseUsuario, 1);
+        //emailService.sendEmailUsuario(responseUsuario, 1);
         return responseUsuario;
     }
 
     public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioCreateDTO usuario) throws Exception{
-        usuario.setUsuarioId(idUsuario);
+        Usuario usuarioRecuperado = usuarioRepository.findById(idUsuario).get();
+        usuario.setUsuarioId(usuarioRecuperado.getUsuarioId());
         ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.save(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
