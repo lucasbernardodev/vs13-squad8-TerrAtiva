@@ -17,6 +17,7 @@ public class UsuarioMapper {
         responseUsuario.setSexo(usuario.getSexo());
         responseUsuario.setCelular(usuario.getCelular());
         responseUsuario.setTelefoneFixo(usuario.getTelefoneFixo());
+        responseUsuario.setTerrenos(usuario.getTerrenos());
         return responseUsuario;
     }
 

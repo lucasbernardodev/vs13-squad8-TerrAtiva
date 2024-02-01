@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.terrativa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -48,4 +50,8 @@ public class Usuario {
     @Column(name = "telefone_fixo")
     private String telefoneFixo;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "dono")
+    @ToString.Exclude
+    private Set<Terreno> terrenos;
 }

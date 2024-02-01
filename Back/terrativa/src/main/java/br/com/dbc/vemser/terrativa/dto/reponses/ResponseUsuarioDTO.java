@@ -1,10 +1,12 @@
 package br.com.dbc.vemser.terrativa.dto.reponses;
 
+import br.com.dbc.vemser.terrativa.entity.Terreno;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +22,6 @@ public class ResponseUsuarioDTO {
     private String sexo;
     private String celular;
     private String telefoneFixo;
+    private Set<Terreno> terrenos;
 
 }
