@@ -15,7 +15,6 @@ import java.sql.*;
 @Repository
 public interface MensalidadeRepository extends JpaRepository<Mensalidade, Integer> {
 
-
 }
 
 

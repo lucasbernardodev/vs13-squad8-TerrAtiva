@@ -9,11 +9,19 @@ import lombok.NoArgsConstructor;
 @Data
 public class ResponseFeedDTO {
 
-    private int terrenoId;
+    private Integer terrenoId;
     private String titulo;
     private String descricao;
-    private double preco;
-    private int tamanho;
-    private String estado;
+    private Double preco;
+    private Integer tamanho;
+    private String criado;
+    private String logradouro;
+    private Integer numero;
+    private String complemento;
+    private String bairro;
+    private String cep;
+    private String localizacao;
     private String cidade;
+    private String estado;
+
 }

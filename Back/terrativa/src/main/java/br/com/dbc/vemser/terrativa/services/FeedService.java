@@ -23,12 +23,13 @@ public class FeedService {
 
     public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, Estados estado, String tamanho) {
 
-        List<Feed> terrenos = feedRepository.buscarTerrenos(preco, estado, tamanho);
+        List<ResponseFeedDTO> terrenos = feedRepository.findAll();
 
-        return filtrarTerrenos(terrenos, campoDeBusca)
-                .stream()
-                .map(FeedMapper::FeedParaResponseFeed)
-                .collect(Collectors.toList());
+//        return filtrarTerrenos(terrenos, campoDeBusca)
+//                .stream()
+//                .map(FeedMapper::FeedParaResponseFeed)
+//                .collect(Collectors.toList());
+        return terrenos;
     }
 
     private List<Feed> filtrarTerrenos(List<Feed> terrenos, String campoDeBusca) {
