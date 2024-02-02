@@ -20,7 +20,7 @@ public class RequestContratoCreateDTO {
     @Schema(description = "Identificador único do Contrato.", example = "1")
     private Integer id;
 
-@   NotNull(message = "O ID do locatário não pode ser nulo")
+    @NotNull(message = "O ID do locatário não pode ser nulo")
     @Schema(description = "Identificador único do Locatário.", example = "1")
     private Integer locatarioID;
 
