@@ -1,11 +1,10 @@
 package br.com.dbc.vemser.terrativa.services;
 
 
-import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
@@ -15,31 +14,42 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TerrenoService {
-//   private final TerrenoRepository terrenoRepository;
-//   private final ContratoService contratoService;
-//
-//    public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) {
-//        return TerrenoMapper.terrenoParaResponseTerreno(
-//                terrenoRepository.resgatarDadosPorId(idTerreno));
-//    }
-//
-//    public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) {
-//        return TerrenoMapper.terrenoParaResponseTerreno(
-//                terrenoRepository.adicionar(
-//                        TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));
-//    }
-//
-//    public ResponseTerrenoDTO alterarTerreno(RequestTerrenoCreateDTO requestTerreno) {
-//        return TerrenoMapper.terrenoParaResponseTerreno(
-//                terrenoRepository.alterar(
-//                        TerrenoMapper.requestTerrenoParaTerreno(requestTerreno)));
-//    }
-//
-//
-//    public void deletarTerreno(int idTerreno) {
-//        terrenoRepository.deletar(idTerreno);
-//    }
-//
+   private final TerrenoRepository terrenoRepository;
+   private final ContratoService contratoService;
+   private final TerrenoMapper terrenoMapper;
+   private final UsuarioService usuarioService;
+
+    public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
+        return terrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado")));
+    }
+
+    public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws Exception {
+        requestTerreno.setId(null);
+        requestTerreno.setDisponivel("S");
+        Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
+        terrenoCadastro.setDono(usuarioService.getUsuarioById(requestTerreno.getProprietarioID()));
+        return terrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.save(terrenoCadastro));
+    }
+
+    public ResponseTerrenoDTO alterarTerreno(Integer idTerreno, RequestTerrenoUpdateDTO requestTerreno) {
+        requestTerreno.setId(idTerreno);
+        Terreno terrenoCadastro =  terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
+        terrenoCadastro.setDono(usuarioService.getUsuarioById(requestTerreno.getProprietarioID()));
+        return terrenoMapper.terrenoParaResponseTerreno(
+                terrenoRepository.save(terrenoCadastro));
+    }
+
+    public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
+        Terreno terrenoRecuperado = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado"));
+        if (terrenoRecuperado.getDisponivel().equals("N")) {
+            throw new RegraDeNegocioException("Terreno não existe ou está alugado");
+        }
+        terrenoRecuperado.setDisponivel("N");
+        terrenoRepository.save(terrenoRecuperado);
+    }
+
 //    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception{
 //
 //        contrato.setTerrenoID(idTerreno);
@@ -51,8 +61,5 @@ public class TerrenoService {
 //
 //        terrenoRepository.arrendarTerreno(ContratoMapper.requestContratoParaContrato(contrato), terreno);
 //    }
-//
-//    public void cancelarContratoTerreno(Integer usuarioID, Integer contratoID) {
-//        terrenoRepository.cancelarContratoTerreno(usuarioID, contratoID);
-//    }
+
 }

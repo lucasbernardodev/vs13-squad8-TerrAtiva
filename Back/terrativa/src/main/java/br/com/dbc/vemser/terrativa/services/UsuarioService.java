@@ -24,6 +24,10 @@ public class UsuarioService {
                 .map(UsuarioMapper::usuarioParaResponseUsuario).toList();
     }
 
+    public Usuario getUsuarioById(Integer id) {
+        return usuarioRepository.findById(id).orElseThrow();
+    }
+
     public ResponseUsuarioDTO buscarUsuarioPorId(Integer id) throws Exception {
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.findAllByUsuarioIdAndAtivoEquals(id, "S"));
     }

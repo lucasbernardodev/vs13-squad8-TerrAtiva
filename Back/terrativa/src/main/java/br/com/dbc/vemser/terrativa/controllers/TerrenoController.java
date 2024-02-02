@@ -1,9 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.interfaces.ITerrenoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,45 +19,44 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/terreno")
 public class TerrenoController {
-//
-//    private final TerrenoService terrenoService;
-//
-//    @GetMapping("/{idTerreno}")
-//    public ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
-//        log.info("Buscando terreno por id");
-//        ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(idTerreno);
-//        log.info("Buscou terreno por id");
-//        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<ResponseTerrenoDTO> cadastrarTerreno(
-//                                        @Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception {
-//        log.info("Criando terreno");
-//        ResponseTerrenoDTO responseTerreno = terrenoService.cadastrarTerreno(terreno);
-//        log.info("Criando terreno");
-//        return new ResponseEntity<>(responseTerreno, HttpStatus.CREATED);
-//
-//    }
-//
-//    @PutMapping("/{idTerreno}")
-//    public ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
-//                                                               @Valid @RequestBody RequestTerrenoCreateDTO terreno) {
-//        log.info("Atualizando terreno");
-//        terreno.setId(idTerreno);
-//        ResponseTerrenoDTO responseTerreno = terrenoService.alterarTerreno(terreno);
-//        log.info("Atualizou terreno");
-//        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
-//
-//    }
-//
-//    @DeleteMapping("/{idTerreno}")
-//    public ResponseEntity<String> deletarDados(@PathVariable Integer idTerreno) throws Exception {
-//        log.info("Deletando terreno...");
-//        terrenoService.deletarTerreno(idTerreno);
-//        log.info("Terreno deletado");
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+
+    private final TerrenoService terrenoService;
+
+    @GetMapping("/{idTerreno}")
+    public ResponseEntity<ResponseTerrenoDTO> buscarTerrenoPorId(@PathVariable("idTerreno") Integer idTerreno) throws Exception {
+        log.info("Buscando terreno por id");
+        ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(idTerreno);
+        log.info("Buscou terreno por id");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseTerrenoDTO> cadastrarTerreno(
+                                        @Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception {
+        log.info("Criando terreno");
+        ResponseTerrenoDTO responseTerreno = terrenoService.cadastrarTerreno(terreno);
+        log.info("Criando terreno");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/{idTerreno}")
+    public ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
+                                                               @Valid @RequestBody RequestTerrenoUpdateDTO terreno) {
+        log.info("Atualizando terreno");
+        ResponseTerrenoDTO responseTerreno = terrenoService.alterarTerreno(idTerreno, terreno);
+        log.info("Atualizou terreno");
+        return new ResponseEntity<>(responseTerreno, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/{idTerreno}")
+    public ResponseEntity<String> deletarDados(@PathVariable Integer idTerreno) throws Exception {
+        log.info("Deletando terreno...");
+        terrenoService.deletarTerreno(idTerreno);
+        log.info("Terreno deletado");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 //
 //    @PostMapping("/{idTerreno}/arrendar")
 //    public ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
