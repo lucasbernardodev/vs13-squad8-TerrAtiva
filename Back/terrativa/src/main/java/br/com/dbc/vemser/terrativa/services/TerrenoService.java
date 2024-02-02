@@ -8,6 +8,7 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
+import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class TerrenoService {
    private final TerrenoRepository terrenoRepository;
    private final ContratoService contratoService;
    private final TerrenoMapper terrenoMapper;
-   private final UsuarioService usuarioService;
+   private final UsuarioRepository usuarioRepository;
 
     public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
         return terrenoMapper.terrenoParaResponseTerreno(
@@ -30,7 +31,7 @@ public class TerrenoService {
         requestTerreno.setId(null);
         requestTerreno.setDisponivel("S");
         Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
-        terrenoCadastro.setDono(usuarioService.getUsuarioById(requestTerreno.getProprietarioID()));
+        terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).get());
         return terrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.save(terrenoCadastro));
     }
@@ -38,7 +39,7 @@ public class TerrenoService {
     public ResponseTerrenoDTO alterarTerreno(Integer idTerreno, RequestTerrenoUpdateDTO requestTerreno) {
         requestTerreno.setId(idTerreno);
         Terreno terrenoCadastro =  terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
-        terrenoCadastro.setDono(usuarioService.getUsuarioById(requestTerreno.getProprietarioID()));
+        terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).get());
         return terrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.save(terrenoCadastro));
     }
@@ -53,7 +54,7 @@ public class TerrenoService {
     }
 
     public void alterarTerrenosUsuarioDeletado(Integer donoID) throws Exception{
-            List<Terreno> listaTerrenos = terrenoRepository.findAllByDonoID(donoID);
+            List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
             for (Terreno terreno: listaTerrenos){
                 terreno.setDisponivel("N");
                 terrenoRepository.save(terreno);

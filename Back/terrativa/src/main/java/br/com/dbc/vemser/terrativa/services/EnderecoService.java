@@ -19,8 +19,8 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) {
-        Optional<Endereco> enderecoOptional = enderecoRepository.findById(id);
-        Endereco endereco = enderecoOptional.orElse(null);
+        log.info(String.valueOf(id));
+        Endereco endereco = enderecoRepository.findById(id).get();
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 

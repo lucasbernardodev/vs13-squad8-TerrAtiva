@@ -75,7 +75,4 @@ public class UsuarioService {
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
     }
 
-    public Usuario findById(Integer id){
-        return usuarioRepository.findById(id).get();
-    }
 }

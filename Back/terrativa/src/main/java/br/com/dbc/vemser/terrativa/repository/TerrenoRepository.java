@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
 
-    List<Terreno> findAllByDonoID(Integer donoID);
+    List<Terreno> findAllByProprietarioID(Integer donoID);
 
 }

@@ -7,8 +7,10 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
+import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -20,11 +22,11 @@ import java.util.List;
 public class ContratoService {
 
     private final ContratoRepository contratoRepository;
-    private final UsuarioService usuarioService;
+    private final UsuarioRepository usuarioRepository;
 
     public ResponseContratoDTO resgatarContratoPorId(Integer id) throws Exception {
         Contrato contrato = contratoRepository.findById(id).get();
-        Usuario usuario = usuarioService.findById(contrato.getLocatarioID());
+        Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).get();
         contrato.setUsuarioID(usuario);
         return ContratoMapper.contratoParaResponseContrato(contrato);
     }
