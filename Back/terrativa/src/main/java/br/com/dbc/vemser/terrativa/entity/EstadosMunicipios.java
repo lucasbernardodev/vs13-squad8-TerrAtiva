@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@Entity(name = "ESTADOS_MUNICIPIOS")
+@Entity(name = "ESTADO_MUNICIPIOS")
 public class EstadosMunicipios {
 
     @Id

@@ -1,14 +1,17 @@
 package br.com.dbc.vemser.terrativa.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity(name = "ENDERECOS")
 public class Endereco {
 
@@ -33,10 +36,12 @@ public class Endereco {
     @Column(name = "bairro")
     private String bairro;
 
-    @Column(name = "municipio_cod_ibge")
+    @Column(name = "municipio_cod_ibge", insertable = false, updatable = false)
     private Integer codigoMunicipioIBGE;
 
+    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "MUNICIPIO_COD_IBGE", referencedColumnName = "MUNICIPIO_COD_IBGE")
     private EstadosMunicipios municipioCodIBGE;
 
     @Column(name = "cep")

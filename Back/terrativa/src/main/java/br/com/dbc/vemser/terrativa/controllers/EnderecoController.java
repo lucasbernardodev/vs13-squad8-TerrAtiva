@@ -48,8 +48,7 @@ public class EnderecoController implements IEnderecoController {
     public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
                                                                   @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception {
         log.info("Alterando Endereço.");
-        endereco.setId(id);
-        ResponseEnderecoDTO responseEndereco = enderecoService.alterar(endereco);
+        ResponseEnderecoDTO responseEndereco = enderecoService.alterar(id, endereco);
         log.info("Endereço Criado!");
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);

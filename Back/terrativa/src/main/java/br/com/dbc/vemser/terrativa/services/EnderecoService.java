@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
+    private final EstadoMunicipiosService estadoMunicipioService;
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) {
         log.info(String.valueOf(id));
@@ -25,16 +26,20 @@ public class EnderecoService {
     }
 
 
-    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) {
+    public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws Exception {
+        Endereco enderecoNovo = EnderecoMapper.RequestEnderecoParaEndereco(endereco);
+        enderecoNovo.setMunicipioCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
        return EnderecoMapper.EnderecoParaResponseEndereco(
-               enderecoRepository.save(
-                       EnderecoMapper.RequestEnderecoParaEndereco(endereco)));
-            }
+               enderecoRepository.save(enderecoNovo));
+    }
 
-    public ResponseEnderecoDTO alterar(RequestEnderecoCreateDTO endereco) throws Exception {
+    public ResponseEnderecoDTO alterar(Integer id, RequestEnderecoCreateDTO endereco) throws Exception {
+        Endereco enderecoRecuperado = EnderecoMapper.RequestEnderecoParaEndereco(endereco);
+        enderecoRecuperado.setId(id);
+        enderecoRecuperado.setMunicipioCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
         return EnderecoMapper.EnderecoParaResponseEndereco(
         enderecoRepository.save(
-                EnderecoMapper.RequestEnderecoParaEndereco(endereco)));
+                enderecoRecuperado));
     }
 
     public void deletar(Integer id) {
