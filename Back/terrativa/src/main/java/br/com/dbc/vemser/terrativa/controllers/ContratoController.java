@@ -36,7 +36,7 @@ public class ContratoController implements IContratoController {
     public ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
                                                                  @Valid @RequestBody RequestContratoCreateDTO contrato)throws Exception {
         log.info("Alterando Contrato.");
-        ResponseContratoDTO responseContrato = contratoService.alterar(contrato);
+        ResponseContratoDTO responseContrato = contratoService.alterar(id, contrato);
         log.info("Contrato Criado!");
         return new ResponseEntity<>(responseContrato, HttpStatus.OK);
     }
