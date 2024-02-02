@@ -2,10 +2,8 @@ package br.com.dbc.vemser.terrativa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,12 +35,16 @@ public class Endereco {
     private String bairro;
 
     @Column(name = "municipio_cod_ibge", insertable = false, updatable = false)
-    private Integer codigoMunicipioIBGE;
+    private Integer codMunIBGE;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ENDERECO_ID", referencedColumnName = "ENDERECO_TERRENO_ID")
+    private Terreno terreno;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "MUNICIPIO_COD_IBGE", referencedColumnName = "MUNICIPIO_COD_IBGE")
-    private EstadosMunicipios municipioCodIBGE;
+    private EstadosMunicipios codIBGE;
 
     @Column(name = "cep")
     private Integer cep;

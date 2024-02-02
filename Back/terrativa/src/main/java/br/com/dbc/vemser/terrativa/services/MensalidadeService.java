@@ -9,8 +9,6 @@ import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
-
 @Service
 @Data
 public class MensalidadeService {

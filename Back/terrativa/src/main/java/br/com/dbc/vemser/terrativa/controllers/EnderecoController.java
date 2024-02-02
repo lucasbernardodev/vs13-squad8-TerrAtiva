@@ -3,7 +3,6 @@ package br.com.dbc.vemser.terrativa.controllers;
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IEnderecoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.services.EnderecoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Slf4j

@@ -48,7 +48,8 @@ public class Contrato {
     private String editado;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCATARIO_ID", referencedColumnName = "USUARIO_ID")
+    @ToString.Exclude
     private Usuario usuarioID;
 }

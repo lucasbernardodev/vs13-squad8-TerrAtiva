@@ -8,7 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Data
+@ToString
 @Entity(name = "MENSALIDADES")
 public class Mensalidade {
 

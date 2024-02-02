@@ -2,7 +2,6 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 public interface IEnderecoController {
 

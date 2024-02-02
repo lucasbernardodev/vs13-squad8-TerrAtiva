@@ -1,7 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestFeedCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.FeedUsuario;
 
 public class FeedUsuarioMapper {
@@ -27,24 +26,24 @@ public class FeedUsuarioMapper {
         return dto;
     }
 
-    public static FeedUsuario requestFeedParaFeed(RequestFeedCreateDTO dto) {
-        FeedUsuario entity = new FeedUsuario();
-        entity.setId(dto.getId());
-        entity.setTitulo(dto.getTitulo());
-        entity.setDescricao(dto.getDescricao());
-        entity.setProprietarioID(dto.getProprietarioID());
-        entity.setEnderecoID(dto.getEnderecoID());
-        entity.setPreco(dto.getPreco());
-        entity.setTamanho(dto.getTamanho());
-        entity.setDisponivel(dto.getDisponivel());
-        entity.setLogradouro(dto.getLogradouro());
-        entity.setNumero(dto.getNumero());
-        entity.setComplemento(dto.getComplemento());
-        entity.setBairro(dto.getBairro());
-        entity.setCodigoMunicipioIBGE(dto.getCodigoMunicipioIBGE());
-        entity.setCep(dto.getCep());
-        entity.setLocalizacao(dto.getLocalizacao());
-        return entity;
-    }
+//    public static FeedUsuario requestFeedParaFeed(RequestFeedCreateDTO dto) {
+//        FeedUsuario entity = new FeedUsuario();
+//        entity.setId(dto.getId());
+//        entity.setTitulo(dto.getTitulo());
+//        entity.setDescricao(dto.getDescricao());
+//        entity.setProprietarioID(dto.getProprietarioID());
+//        entity.setEnderecoID(dto.getEnderecoID());
+//        entity.setPreco(dto.getPreco());
+//        entity.setTamanho(dto.getTamanho());
+//        entity.setDisponivel(dto.getDisponivel());
+//        entity.setLogradouro(dto.getLogradouro());
+//        entity.setNumero(dto.getNumero());
+//        entity.setComplemento(dto.getComplemento());
+//        entity.setBairro(dto.getBairro());
+//        entity.setCodigoMunicipioIBGE(dto.getCodigoMunicipioIBGE());
+//        entity.setCep(dto.getCep());
+//        entity.setLocalizacao(dto.getLocalizacao());
+//        return entity;
+//    }
 
 }

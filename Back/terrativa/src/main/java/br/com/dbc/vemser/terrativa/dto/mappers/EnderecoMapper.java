@@ -14,7 +14,7 @@ public class EnderecoMapper {
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
         dto.setBairro(entity.getBairro());
-        dto.setCodigoMunicipioIBGE(entity.getCodigoMunicipioIBGE());
+        dto.setCodigoMunicipioIBGE(entity.getCodMunIBGE());
         dto.setCep(entity.getCep());
         return dto;
     }
@@ -27,7 +27,7 @@ public class EnderecoMapper {
         entity.setNumero(dto.getNumero());
         entity.setComplemento(dto.getComplemento());
         entity.setBairro(dto.getBairro());
-        entity.setCodigoMunicipioIBGE(dto.getCodigoMunicipioIBGE());
+        entity.setCodMunIBGE(dto.getCodigoMunicipioIBGE());
         entity.setCep(dto.getCep());
 
         return entity;

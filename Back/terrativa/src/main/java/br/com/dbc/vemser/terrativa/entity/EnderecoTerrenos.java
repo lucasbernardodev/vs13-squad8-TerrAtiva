@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.terrativa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity(name = "ENDERECO_TERRENOS")
 public class EnderecoTerrenos {
 
@@ -29,8 +32,8 @@ public class EnderecoTerrenos {
     @Column(name = "bairro")
     private String bairro;
 
-    @Column(name = "municipio_cod_ibge")
-    private Integer codigoMunicipioIBGE;
+    @Column(name = "municipio_cod_ibge", insertable = false, updatable = false)
+    private Integer codMunicipioIBGE;
 
     @Column(name = "cep")
     private Integer cep;
@@ -38,7 +41,14 @@ public class EnderecoTerrenos {
     @Column(name = "localizacao")
     private String localizacao;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "enderecoTerrenoID")
+    @ToString.Exclude
+    private Terreno terreno;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
-    private EstadosMunicipios municipioCodIBGE;
+    @JoinColumn(name = "municipio_cod_ibge", referencedColumnName = "municipio_cod_ibge")
+    private EstadosMunicipios codIBGE;
 
 }

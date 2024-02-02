@@ -1,21 +1,17 @@
 package br.com.dbc.vemser.terrativa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,16 +33,9 @@ public class Terreno {
     @Column(name = "descricao")
     private String descricao;
 
+    @JsonIgnore
     @Column(name = "dono_id", insertable = false, updatable = false)
     private Integer proprietarioID;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "dono_id", referencedColumnName = "USUARIO_ID")
-    private Usuario dono;
-
-    @Column(name = "ENDERECO_TERRENO_ID")
-    private Integer enderecoID;
 
     @Column(name = "preco")
     private double preco;
@@ -65,16 +54,19 @@ public class Terreno {
     @UpdateTimestamp
     private Timestamp editado;
 
-//    @PrePersist
-//    protected void onCreate() {
-//        log.info(LocalDateTime.now());
-//        criado = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    protected void onUpdate() {
-//        log.info(LocalDateTime.now());
-//        editado = LocalDateTime.now();
-//    }
+    @Column(name = "ENDERECO_TERRENO_ID", insertable = false, updatable = false)
+    private Integer enderecoID;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dono_id", referencedColumnName = "USUARIO_ID")
+    @ToString.Exclude
+    private Usuario dono;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ENDERECO_TERRENO_ID", referencedColumnName = "endereco_terreno_id")
+    @ToString.Exclude
+    private EnderecoTerrenos enderecoTerrenoID;
 
 }

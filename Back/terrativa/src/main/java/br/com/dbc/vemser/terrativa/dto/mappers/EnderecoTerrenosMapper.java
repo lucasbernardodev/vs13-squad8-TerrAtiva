@@ -13,7 +13,7 @@ public class EnderecoTerrenosMapper {
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
         dto.setBairro(entity.getBairro());
-        dto.setCodigoMunicipioIBGE(entity.getCodigoMunicipioIBGE());
+        dto.setCodigoMunicipioIBGE(entity.getCodMunicipioIBGE());
         dto.setCep(entity.getCep());
         dto.setLocalizacao(entity.getLocalizacao());
         return dto;
@@ -26,7 +26,7 @@ public class EnderecoTerrenosMapper {
         entity.setNumero(dto.getNumero());
         entity.setComplemento(dto.getComplemento());
         entity.setBairro(dto.getBairro());
-        entity.setCodigoMunicipioIBGE(dto.getCodigoMunicipioIBGE());
+        entity.setCodMunicipioIBGE(dto.getCodigoMunicipioIBGE());
         entity.setCep(dto.getCep());
         entity.setLocalizacao(dto.getLocalizacao());
         return entity;

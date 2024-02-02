@@ -19,6 +19,8 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer usuarioId;
 
+    private RequestEnderecoCreateDTO endereco;
+
     @NotBlank(message = "Nome é obrigatório")
     @Schema(description = "Primeiro nome do Usuário.", example = "João")
     private String nome;

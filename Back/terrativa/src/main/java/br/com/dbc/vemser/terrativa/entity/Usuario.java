@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.terrativa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -51,11 +54,12 @@ public class Usuario {
     private String telefoneFixo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "dono")
+    @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Terreno> terrenos;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "usuarioID" )
-    private Contrato contrato;
+    @OneToMany(mappedBy = "usuarioID")
+    @ToString.Exclude
+    private Set<Contrato> contrato;
 }

@@ -1,6 +1,9 @@
 package br.com.dbc.vemser.terrativa.entity;
-import lombok.*;
-import lombok.extern.log4j.Log4j2;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,12 +31,13 @@ public class EstadosMunicipios {
     private String nomeMunicipio;
 
 
-    @OneToMany(mappedBy = "municipioCodIBGE")
+    @JsonIgnore
+    @OneToMany(mappedBy = "codIBGE")
     @ToString.Exclude
     private Set<Endereco> endereco;
 
-
-    @OneToMany(mappedBy = "municipioCodIBGE")
+    @JsonIgnore
+    @OneToMany(mappedBy = "codIBGE")
     @ToString.Exclude
     private Set<EnderecoTerrenos> enderecoTerrenos;
 

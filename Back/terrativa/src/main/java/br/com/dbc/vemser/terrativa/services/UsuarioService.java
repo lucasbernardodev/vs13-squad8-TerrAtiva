@@ -58,6 +58,9 @@ public class UsuarioService {
 
     public void deletarUsuario(int id) throws Exception {
         Usuario usuarioRecuperado = usuarioRepository.findAllByUsuarioIdAndAtivoEquals(id, "S");
+        if (usuarioRecuperado == null) {
+            throw new RegraDeNegocioException("Usuário não encontrado");
+        }
         List<Contrato> listaContratos = contratoService.buscarContratoPorLocatario(usuarioRecuperado.getUsuarioId());
         for (Contrato contrato: listaContratos){
             if(contrato.getAtivo().equals("S")){

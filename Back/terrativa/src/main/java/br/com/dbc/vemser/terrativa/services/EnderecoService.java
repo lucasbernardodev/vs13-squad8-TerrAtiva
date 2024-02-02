@@ -9,9 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -28,7 +25,7 @@ public class EnderecoService {
 
     public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws Exception {
         Endereco enderecoNovo = EnderecoMapper.RequestEnderecoParaEndereco(endereco);
-        enderecoNovo.setMunicipioCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
+        enderecoNovo.setCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
        return EnderecoMapper.EnderecoParaResponseEndereco(
                enderecoRepository.save(enderecoNovo));
     }
@@ -36,7 +33,7 @@ public class EnderecoService {
     public ResponseEnderecoDTO alterar(Integer id, RequestEnderecoCreateDTO endereco) throws Exception {
         Endereco enderecoRecuperado = EnderecoMapper.RequestEnderecoParaEndereco(endereco);
         enderecoRecuperado.setId(id);
-        enderecoRecuperado.setMunicipioCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
+        enderecoRecuperado.setCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
         return EnderecoMapper.EnderecoParaResponseEndereco(
         enderecoRepository.save(
                 enderecoRecuperado));
