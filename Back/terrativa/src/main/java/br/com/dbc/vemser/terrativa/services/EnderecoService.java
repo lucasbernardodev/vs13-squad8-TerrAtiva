@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,24 +19,26 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) {
-        Endereco endereco = enderecoRepository.resgatarDadosPorId(id);
+        Optional<Endereco> enderecoOptional = enderecoRepository.findById(id);
+        Endereco endereco = enderecoOptional.orElse(null);
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 
+
     public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) {
        return EnderecoMapper.EnderecoParaResponseEndereco(
-               enderecoRepository.adicionar(
+               enderecoRepository.save(
                        EnderecoMapper.RequestEnderecoParaEndereco(endereco)));
             }
 
     public ResponseEnderecoDTO alterar(RequestEnderecoCreateDTO endereco) throws Exception {
         return EnderecoMapper.EnderecoParaResponseEndereco(
-        enderecoRepository.alterar(
+        enderecoRepository.save(
                 EnderecoMapper.RequestEnderecoParaEndereco(endereco)));
     }
 
     public void deletar(Integer id) {
-        enderecoRepository.deletar(id);
+        enderecoRepository.deleteById(id);
     }
 
 }
