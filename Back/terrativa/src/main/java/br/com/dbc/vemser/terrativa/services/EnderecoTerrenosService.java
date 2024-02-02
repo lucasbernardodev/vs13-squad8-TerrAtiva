@@ -18,21 +18,26 @@ public class EnderecoTerrenosService {
     public ResponseEnderecoTerrenosDTO adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) {
         estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.adicionar(enderecoTerrenos));
+        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.save(enderecoTerrenos));
     }
 
     //TODO: verificar o que o buscarCodIBGE está fazendo
-    public ResponseEnderecoTerrenosDTO alterar(Integer id, RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception{
+    public ResponseEnderecoTerrenosDTO alterar(Integer id, RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
         estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.alterar(id, enderecoTerrenos));
+
+        enderecoTerrenos.setId(id);
+        enderecoTerrenos = enderecoTerrenosRepository.save(enderecoTerrenos);
+
+        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos);
     }
 
-    public void deletar(Integer id) throws Exception{
-        enderecoTerrenosRepository.deletar(id);
+    public void deletar(Integer id) {
+        enderecoTerrenosRepository.deleteById(id);
     }
 
     public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id) {
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.resgatarDadosPorId(id));
+        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
     }
 }
