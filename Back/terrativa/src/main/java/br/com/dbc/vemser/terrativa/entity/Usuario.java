@@ -54,4 +54,8 @@ public class Usuario {
     @OneToMany(mappedBy = "dono")
     @ToString.Exclude
     private Set<Terreno> terrenos;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "usuarioID" )
+    private Contrato contrato;
 }

@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.reponses;
 
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,5 @@ public class ResponseContratoDTO {
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private Integer dataVencimentoAluguel;
+    private Usuario usuarioID;
 }

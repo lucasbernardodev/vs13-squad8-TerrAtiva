@@ -4,7 +4,9 @@ import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final EmailService emailService;
+    private final ContratoService contratoService;
+    private final TerrenoService terrenoService;
 
     public List<ResponseUsuarioDTO> listarUsuarios() throws Exception{
         return usuarioRepository.findAllByAtivoEquals("S").stream()
@@ -54,6 +58,13 @@ public class UsuarioService {
 
     public void deletarUsuario(int id) throws Exception {
         Usuario usuarioRecuperado = usuarioRepository.findAllByUsuarioIdAndAtivoEquals(id, "S");
+        List<Contrato> listaContratos = contratoService.buscarContratoPorLocatario(usuarioRecuperado.getUsuarioId());
+        for (Contrato contrato: listaContratos){
+            if(contrato.getAtivo().equals("S")){
+                throw new RegraDeNegocioException("Você possui contratos ativos, antes de deletar seu cadastro, finalize todos seus contratos!");
+            }
+        }
+        terrenoService.alterarTerrenosUsuarioDeletado(id);
         usuarioRecuperado.setAtivo("N");
         usuarioRepository.save(usuarioRecuperado);
 //        emailService.sendEmailUsuario(responseUsuarioDTO, 3);
@@ -62,5 +73,9 @@ public class UsuarioService {
     public ResponseUsuarioDTO loginUsuario(RequestUsuarioLoginDTO usuario) {
         Usuario usuarioLogin = usuarioRepository.findByEmailAndSenhaAndAtivoEquals(usuario.getEmail(), usuario.getSenha(), "S");
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
+    }
+
+    public Usuario findById(Integer id){
+        return usuarioRepository.findById(id).get();
     }
 }

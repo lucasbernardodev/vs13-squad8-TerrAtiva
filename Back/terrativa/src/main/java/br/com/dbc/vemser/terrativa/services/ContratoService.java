@@ -2,14 +2,17 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,9 +20,12 @@ import java.time.Instant;
 public class ContratoService {
 
     private final ContratoRepository contratoRepository;
+    private final UsuarioService usuarioService;
 
-    public ResponseContratoDTO resgatarContratoPorId(Integer id) {
+    public ResponseContratoDTO resgatarContratoPorId(Integer id) throws Exception {
         Contrato contrato = contratoRepository.findById(id).get();
+        Usuario usuario = usuarioService.findById(contrato.getLocatarioID());
+        contrato.setUsuarioID(usuario);
         return ContratoMapper.contratoParaResponseContrato(contrato);
     }
 
@@ -27,7 +33,6 @@ public class ContratoService {
         Contrato contrato = ContratoMapper.requestContratoParaContrato(contratCrate);
         Contrato contratSalvo = contratoRepository.save(contrato);
         return ContratoMapper.contratoParaResponseContrato(contrato);
-
     }
 
     public ResponseContratoDTO alterar(Integer id, RequestContratoCreateDTO contratoCreate)throws Exception {
@@ -47,6 +52,10 @@ public class ContratoService {
         Contrato contrato = findByID(id);
         contrato.setAtivo("N");
         contratoRepository.save(contrato);
+    }
+
+    public List<Contrato> buscarContratoPorLocatario(Integer id){
+        return contratoRepository.findAllByLocatarioID(id);
     }
 
     private Contrato findByID(Integer id){

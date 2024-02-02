@@ -16,6 +16,7 @@ public class ContratoMapper {
         dto.setDataInicio(entity.getDataInicio());
         dto.setDataFinal(entity.getDataFinal());
         dto.setDataVencimentoAluguel(entity.getDataVencimentoAluguel());
+        dto.setUsuarioID(entity.getUsuarioID());
         return dto;
     }
 

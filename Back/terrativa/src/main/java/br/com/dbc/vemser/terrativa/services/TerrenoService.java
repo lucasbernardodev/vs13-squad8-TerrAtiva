@@ -11,6 +11,8 @@ import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TerrenoService {
@@ -48,6 +50,14 @@ public class TerrenoService {
         }
         terrenoRecuperado.setDisponivel("N");
         terrenoRepository.save(terrenoRecuperado);
+    }
+
+    public void alterarTerrenosUsuarioDeletado(Integer donoID) throws Exception{
+            List<Terreno> listaTerrenos = terrenoRepository.findAllByDonoID(donoID);
+            for (Terreno terreno: listaTerrenos){
+                terreno.setDisponivel("N");
+                terrenoRepository.save(terreno);
+            }
     }
 
 //    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception{

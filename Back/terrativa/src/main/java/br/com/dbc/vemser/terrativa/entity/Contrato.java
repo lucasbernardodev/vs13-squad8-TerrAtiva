@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Contrato {
     @Column(name = "CONTRATO_ID")
     private Integer id;
 
-    @Column(name = "LOCATARIO_ID")
+    @Column(name = "LOCATARIO_ID", updatable = false, insertable = false)
     private Integer locatarioID;
 
     @Column(name = "TERRENO_ID")
@@ -45,4 +46,9 @@ public class Contrato {
 
     @Column(name = "EDITADO")
     private String editado;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "LOCATARIO_ID", referencedColumnName = "USUARIO_ID")
+    private Usuario usuarioID;
 }
