@@ -36,6 +36,9 @@ public class Endereco {
     @Column(name = "municipio_cod_ibge")
     private Integer codigoMunicipioIBGE;
 
+    @ManyToOne
+    private EstadosMunicipios municipioCodIBGE;
+
     @Column(name = "cep")
     private Integer cep;
 

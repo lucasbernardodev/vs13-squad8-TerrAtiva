@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EnderecoTerrenosService {
     private final EnderecoTerrenosRepository enderecoTerrenosRepository;
-    private final EstadosMunicipioService estadosMunicipioService;
+    private final EstadoMunicipiosService estadoMunicipiosService;
 
 
     public ResponseEnderecoTerrenosDTO adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) {
-        estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+        estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
         return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.save(enderecoTerrenos));
     }
 
     //TODO: verificar o que o buscarCodIBGE está fazendo
     public ResponseEnderecoTerrenosDTO alterar(Integer id, RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
-        estadosMunicipioService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+        estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
 
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
 

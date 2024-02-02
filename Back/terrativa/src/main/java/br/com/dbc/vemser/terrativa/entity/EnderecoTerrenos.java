@@ -38,4 +38,7 @@ public class EnderecoTerrenos {
     @Column(name = "localizacao")
     private String localizacao;
 
+    @ManyToOne
+    private EstadosMunicipios municipioCodIBGE;
+
 }

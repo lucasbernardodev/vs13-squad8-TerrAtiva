@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EstadosMunicipioService {
+public class EstadoMunicipiosService {
 
     private final EstadoMunicipioRepository estadoMunicipioRepository;
 
     public EstadosMunicipios buscarCodIBGE(Integer id){
-        return estadoMunicipioRepository.buscarCodIBGE(id);
+
+        return estadoMunicipioRepository.findById(id).orElseThrow(()-> new RuntimeException("Estado não encontrado"));
     }
 }
