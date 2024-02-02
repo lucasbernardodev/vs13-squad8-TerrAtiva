@@ -1,14 +1,13 @@
 package br.com.dbc.vemser.terrativa.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity(name = "ENDERECO_TERRENOS")
 public class EnderecoTerrenos {
 
@@ -30,7 +29,7 @@ public class EnderecoTerrenos {
     @Column(name = "bairro")
     private String bairro;
 
-    @Column(name = "municipio_codigo_ibge")
+    @Column(name = "municipio_cod_ibge")
     private Integer codigoMunicipioIBGE;
 
     @Column(name = "cep")

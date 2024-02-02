@@ -7,100 +7,15 @@ import br.com.dbc.vemser.terrativa.exceptions.DbException;
 import br.com.dbc.vemser.terrativa.exceptions.UnauthorizedOperationException;
 import br.com.dbc.vemser.terrativa.exceptions.UnvailableOperationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-@RequiredArgsConstructor
-public class MensalidadeRepository implements DaoRepository<Mensalidade> {
-
-    private static Connection connection;
-    private final BancoDeDados bancoConection;
+public interface MensalidadeRepository extends JpaRepository<Mensalidade, Integer> {
 
 
-    @Override
-    public Mensalidade adicionar(Mensalidade mensalidade) {
-        throw new UnvailableOperationException("Essa Funcionalidade não está Disponível");
-    }
-
-    @Override
-    public Mensalidade alterar(Mensalidade mensalidade) {
-        try {
-            connection = bancoConection.criaConexao();
-            String sqlQuery = """
-                    UPDATE MENSALIDADES
-                        set
-                        CONTRATO_ID = ?,
-                        VALOR_MENSAL = ?,
-                        ANO_EXERCICIO = ?
-                    WHERE MENSALIDADE_ID = ?
-                    """;
-
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-
-            stmt.setInt(1, mensalidade.getContratoID());
-            stmt.setDouble(2, mensalidade.getValorMensal());
-            stmt.setInt(3, mensalidade.getAnoExercicio());
-            stmt.setInt(4, mensalidade.getMensalidadeID());
-
-
-            if (stmt.executeUpdate() == 0) throw new DataNotFoundException("Dados do Usuário Não Encontrado. ID");
-            BancoDeDados.fechaConexao(connection);
-            return mensalidade;
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
-
-    @Override
-    public void deletar(int id) {
-        try {
-            connection = bancoConection.criaConexao();
-            String sqlQuery = "UPDATE VS_13_EQUIPE_8.MENSALIDADES SET ATIVO='N' WHERE MENSALIDADE_ID=" + id;
-            Statement stmt = connection.createStatement();
-
-            int rowsAffected = stmt.executeUpdate(sqlQuery);
-            if (rowsAffected == 0)
-                throw new UnauthorizedOperationException("Operação de Deletar Mensalidade Não Autorizada");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
-
-    @Override
-    public Mensalidade resgatarDadosPorId(int id) {
-        try {
-            connection = bancoConection.criaConexao();
-            String sqlQuery = "SELECT * FROM MENSALIDADES WHERE MENSALIDADE_ID = " + id;
-            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
-            ResultSet result = stmt.executeQuery();
-
-
-            if (result.next()) {
-               return new Mensalidade(
-                  result.getInt("MENSALIDADE_ID"),
-                  result.getInt("CONTRATO_ID"),
-                  result.getInt("VALOR_MENSAL"),
-                  result.getInt("ANO_EXERCICIO"),
-                  result.getString("ATIVO")
-               );
-            }
-            throw new DataNotFoundException("Não foi possível resgatar dados");
-
-        } catch (SQLException e) {
-            throw new DbException(e.getCause().getMessage());
-        } finally {
-            BancoDeDados.fechaConexao(connection);
-        }
-    }
 }
 
 
