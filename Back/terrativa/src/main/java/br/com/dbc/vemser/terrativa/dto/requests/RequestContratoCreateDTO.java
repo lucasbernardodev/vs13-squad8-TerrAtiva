@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -48,5 +50,11 @@ public class RequestContratoCreateDTO {
     private Integer dataVencimentoAluguel;
 
     private RequestMensalidadeCreateDTO mensalidade;
+
+    @Hidden
+    private Terreno terreno;
+
+    @Hidden
+    private Usuario locatario;
 
 }

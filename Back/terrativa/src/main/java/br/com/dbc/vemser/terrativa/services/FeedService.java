@@ -28,37 +28,10 @@ public class FeedService {
         return terrenos.map(terrenoMapper::terrenoToFeedDTO);
     }
 
-//    public List<Terreno> listarTerrenos(Integer id) {
-//        return terrenoRepository.findById(id).stream().toList();
-//    }
-//
-//
-//    public List<Terreno> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
-//        return null;
-//    }
-//
-//    public List<Terreno> quantidadeAnuncios() {
-//        return null;
-//    }
-
-//    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnunciosPorEstado() {
-//        List<Terreno> terrenos = terrenoRepository.findAll();
-//
-//        Map<String, Long> quantidadePorEstado = terrenos.stream()
-//                .collect(Collectors.groupingBy(terreno -> terreno.getEnderecoTerrenoID().getLocalizacao(), Collectors.counting()));
-//
-//        List<ResponseFeedQuantidadeAnunciosDTO> result = quantidadePorEstado.entrySet().stream()
-//                .map(entry -> new ResponseFeedQuantidadeAnunciosDTO(entry.getKey(), String.valueOf(entry.getValue())))
-//                .collect(Collectors.toList());
-//
-//        return result;
-//    }
-
-
 
 //    public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, Estados estado, String tamanho) {
 //
-//        List<ResponseFeedDTO> terrenos = feedRepository.findAll();
+//        List<ResponseFeedDTO> terrenos = terrenoRepository.;
 //
 ////        return filtrarTerrenos(terrenos, campoDeBusca)
 ////                .stream()
@@ -85,7 +58,7 @@ public class FeedService {
 //        }
 //        return terrenosFiltrados;
 //    }
-//
+
     public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
         return terrenoRepository.quantidadeAnuncios();
     }

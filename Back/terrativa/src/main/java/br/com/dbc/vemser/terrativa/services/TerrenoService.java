@@ -88,6 +88,8 @@ public class TerrenoService {
     public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno indisponível para aluguel"));
+        contrato.setTerreno(terreno);
+        contrato.setLocatario(usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
         if (terreno.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException("Terreno indisponível para aluguel");
         }

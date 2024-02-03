@@ -6,6 +6,7 @@ import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelat
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,10 +33,11 @@ public class ContratoService {
         return ContratoMapper.responseContratoRelatorioDTO(contrato);
     }
 
-    public ResponseContratoDTO createContrato(RequestContratoCreateDTO contratoCreate){
+    public ResponseContratoDTO createContrato(RequestContratoCreateDTO contratoCreate) throws RegraDeNegocioException {
         Contrato contrato = ContratoMapper.requestContratoParaContrato(contratoCreate);
+
         Contrato contratSalvo = contratoRepository.save(contrato);
-        return ContratoMapper.contratoParaResponseContrato(contrato);
+        return ContratoMapper.contratoParaResponseContrato(contratSalvo);
     }
 
     public ResponseContratoDTO alterar(Integer id, RequestContratoCreateDTO contratoCreate)throws Exception {

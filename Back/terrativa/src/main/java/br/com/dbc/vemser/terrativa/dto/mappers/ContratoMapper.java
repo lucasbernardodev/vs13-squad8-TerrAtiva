@@ -22,8 +22,10 @@ public class ContratoMapper {
         Contrato entity = new Contrato();
         entity.setId(dto.getId());
         entity.setLocatarioID(dto.getLocatarioID());
+        entity.setLocatario(dto.getLocatario());
         entity.setTerrenoID(dto.getTerrenoID());
-        entity.setAtivo(dto.getAtivo());
+        entity.setTerreno(dto.getTerreno());
+        entity.setAtivo("S");
         entity.setDataAssinatura(dto.getDataAssinatura());
         entity.setDataInicio(dto.getDataInicio());
         entity.setDataFinal(dto.getDataFinal());
