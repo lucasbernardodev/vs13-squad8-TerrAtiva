@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
@@ -28,20 +29,20 @@ public class TerrenoMapper {
         terreno.setTitulo(requestTerreno.getTitulo());
         terreno.setDescricao(requestTerreno.getDescricao());
         terreno.setProprietarioID(requestTerreno.getProprietarioID());
-        terreno.setEnderecoID(requestTerreno.getEnderecoID());
+        terreno.setEnderecoID(requestTerreno.getEndereco().getId());
         terreno.setPreco(requestTerreno.getPreco());
         terreno.setTamanho(requestTerreno.getTamanho());
         terreno.setDisponivel(requestTerreno.getDisponivel());
         return terreno;
     }
 
-    public final ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno){
+    public final ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno, ResponseEnderecoTerrenosDTO endereco){
         ResponseTerrenoDTO responseTerreno = new ResponseTerrenoDTO();
         responseTerreno.setId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());
         responseTerreno.setDescricao(terreno.getDescricao());
         responseTerreno.setProprietarioID(terreno.getProprietarioID());
-        responseTerreno.setEnderecoID(terreno.getEnderecoID());
+        responseTerreno.setEndereco(endereco);
         responseTerreno.setPreco(terreno.getPreco());
         responseTerreno.setTamanho(terreno.getTamanho());
         responseTerreno.setDisponivel(terreno.getDisponivel());

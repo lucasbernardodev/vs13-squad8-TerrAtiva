@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
+import br.com.dbc.vemser.terrativa.services.EnderecoTerrenosService;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class TerrenoController {
 
     @PutMapping("/{idTerreno}")
     public ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
-                                                               @Valid @RequestBody RequestTerrenoUpdateDTO terreno) {
+                                                               @Valid @RequestBody RequestTerrenoUpdateDTO terreno) throws Exception {
         log.info("Atualizando terreno");
         ResponseTerrenoDTO responseTerreno = terrenoService.alterarTerreno(idTerreno, terreno);
         log.info("Atualizou terreno");

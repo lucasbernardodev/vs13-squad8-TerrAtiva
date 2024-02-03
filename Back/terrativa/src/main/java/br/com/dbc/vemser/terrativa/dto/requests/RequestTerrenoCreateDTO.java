@@ -31,8 +31,7 @@ public class RequestTerrenoCreateDTO {
     @Schema(description = "Identificador único do Proprietário.", example = "1")
     private Integer proprietarioID;
 
-    @NotNull(message = "O ID do endereço não pode ser nulo")
-    @Schema(description = "Identificador único do Endereço.", example = "1")
+    @Hidden
     private Integer enderecoID;
 
     @NotNull(message = "Preço é obrigatório")
@@ -42,6 +41,8 @@ public class RequestTerrenoCreateDTO {
     @NotEmpty(message = "Tamanho é obrigatório")
     @Schema(description = "Tamanho do Terreno.", example = "100000")
     private String tamanho;
+
+    private RequestEnderecoTerrenosCreateDTO endereco;
 
     @Hidden
     @Schema(description = "Disponibilidade do Terreno.", example = "S")

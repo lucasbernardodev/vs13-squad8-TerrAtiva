@@ -15,18 +15,17 @@ public class EnderecoTerrenosService {
     private final EstadoMunicipiosService estadoMunicipiosService;
 
 
-    public ResponseEnderecoTerrenosDTO adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
+    public EnderecoTerrenos adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
         estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.save(enderecoTerrenos));
+        enderecoTerrenos.setCodIBGE(estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE()));
+        return enderecoTerrenosRepository.save(enderecoTerrenos);
     }
 
     //TODO: verificar o que o buscarCodIBGE está fazendo
     public ResponseEnderecoTerrenosDTO alterar(Integer id, RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
         estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
-
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
-
         enderecoTerrenos.setId(id);
         enderecoTerrenos = enderecoTerrenosRepository.save(enderecoTerrenos);
 

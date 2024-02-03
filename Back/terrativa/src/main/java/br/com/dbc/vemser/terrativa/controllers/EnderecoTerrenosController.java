@@ -21,25 +21,10 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/endereco-terreno")
 @Slf4j
 @Tag(name = "Endereços dos Terrenos", description = "Endpoints do CRUD de EndereçosTerrenos")
-public class EnderecoTerrenosController implements IEnderecoTerrenoController {
+public class EnderecoTerrenosController {
 
     private final EnderecoTerrenosService enderecoTerrenosService;
 
-    @PostMapping
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> cadastrarEnderecoTerrenos(@Valid @RequestBody RequestEnderecoTerrenosCreateDTO endereco) throws Exception {
-        log.info("Adicionado endereço para os terrenos");
-        ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(endereco);
-        log.info("Endereço adicionado");
-        return new ResponseEntity<>(responseEnderecoTerrenos, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseEnderecoTerrenosDTO> atualizarEndereco(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestEnderecoTerrenosCreateDTO endereco) throws Exception {
-            log.info("Atualizando endereço");
-            ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.alterar(id, endereco);
-            return new ResponseEntity<>(responseEnderecoTerrenos, HttpStatus.OK);
-
-    }
     @GetMapping("/{id}")
     public ResponseEntity<ResponseEnderecoTerrenosDTO> resgatarEnderecoPorID(@PathVariable("id") @NotNull Integer id) throws Exception{
         ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.resgatarPorId(id);

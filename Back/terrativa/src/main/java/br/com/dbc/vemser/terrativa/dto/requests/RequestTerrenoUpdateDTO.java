@@ -31,9 +31,7 @@ public class RequestTerrenoUpdateDTO {
     @Schema(description = "Identificador único do Proprietário.", example = "1")
     private Integer proprietarioID;
 
-    @NotNull(message = "O ID do endereço não pode ser nulo")
-    @Schema(description = "Identificador único do Endereço.", example = "1")
-    private Integer enderecoID;
+    private RequestEnderecoTerrenosCreateDTO endereco;
 
     @NotNull(message = "Preço é obrigatório")
     @Schema(description = "Preço do Terreno.", example = "500.00")
