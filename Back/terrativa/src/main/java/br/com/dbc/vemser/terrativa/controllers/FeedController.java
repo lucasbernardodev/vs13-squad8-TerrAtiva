@@ -1,11 +1,17 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.FeedService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +30,22 @@ public class FeedController {
     private final FeedService feedService;
 
     @GetMapping
-    public ResponseEntity<List<Terreno>> mostrarTerrenosDisponveis(@RequestParam(value = "preco", required=false, defaultValue = "") String preco,
-                                                                     @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
-                                                                     @RequestParam(value = "estado", required = false, defaultValue = "") Estados estado,
-                                                                     @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho) {
+    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponveis(
+            @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("Mostrando terrenos disponíveis.");
-
-//        List<Terreno> response = feedService.listarTerrenos();
-        List<Terreno> response = feedService.listarTerrenos(55);
-        log.info("Consulta concluída. Retornando {} resultados.", response.size());
+        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable);
+        log.info("Consulta concluída. Retornando {} resultados.", response.getTotalElements());
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
+//    @GetMapping("/buscar")
+//    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponveis(
+//            @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable) {
+//        log.info("Mostrando terrenos disponíveis.");
+//        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable);
+//        log.info("Consulta concluída. Retornando {} resultados.", response.getTotalElements());
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
 //    @GetMapping("/quantidade")
 //    public ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnuncios() {

@@ -1,9 +1,13 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedService {
     private final TerrenoRepository terrenoRepository;
+    private final TerrenoMapper terrenoMapper;
 
-    public List<Terreno> listarTerrenos() {
-        return terrenoRepository.findAll();
+    public Page<ResponseFeedDTO> listarTerrenos(Pageable pageable) {
+        Page<Terreno> terrenos = terrenoRepository.findAll(pageable);
+        return terrenos.map(terrenoMapper::terrenoToFeedDTO);
     }
 
     public List<Terreno> listarTerrenos(Integer id) {
