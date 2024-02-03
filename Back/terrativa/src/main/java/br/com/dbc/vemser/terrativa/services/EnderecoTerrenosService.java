@@ -4,6 +4,8 @@ import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.entity.EstadosMunicipios;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class EnderecoTerrenosService {
     private final EstadoMunicipiosService estadoMunicipiosService;
 
 
-    public EnderecoTerrenos adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
+    public EnderecoTerrenos adicionarEnderecoTerrenos(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws RegraDeNegocioException {
         estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
         enderecoTerrenos.setCodIBGE(estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE()));
@@ -23,13 +25,11 @@ public class EnderecoTerrenosService {
     }
 
     //TODO: verificar o que o buscarCodIBGE está fazendo
-    public ResponseEnderecoTerrenosDTO alterar(Integer id, RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws Exception {
-        estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
+    public EnderecoTerrenos alterar(RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenos) throws RegraDeNegocioException {
+        EstadosMunicipios estadosMunicipios = estadoMunicipiosService.buscarCodIBGE(requestEnderecoTerrenos.getCodigoMunicipioIBGE());
         EnderecoTerrenos enderecoTerrenos = EnderecoTerrenosMapper.RequestEnderecoTerrenosParaEnderecoTerrenos(requestEnderecoTerrenos);
-        enderecoTerrenos.setId(id);
-        enderecoTerrenos = enderecoTerrenosRepository.save(enderecoTerrenos);
-
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos);
+        enderecoTerrenos.setCodIBGE(estadosMunicipios);
+        return enderecoTerrenosRepository.save(enderecoTerrenos);
     }
 
     public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id) {

@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -62,4 +65,16 @@ public class Usuario {
     @OneToMany(mappedBy = "locatario", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Contrato> contrato;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @Column(name = "criado", updatable = false)
+    @CreationTimestamp
+    private Timestamp criado;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @Column(name = "editado")
+    @UpdateTimestamp
+    private Timestamp editado;
 }
