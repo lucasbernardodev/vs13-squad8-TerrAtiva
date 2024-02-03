@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,7 @@ public class Usuario {
     private Set<Terreno> terrenos;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuarioID")
+    @OneToMany(mappedBy = "locatario", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Contrato> contrato;
 }

@@ -2,11 +2,13 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,13 @@ public class ContratoService {
 
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final ObjectMapper objectMapper;
 
-    public ResponseContratoDTO resgatarContratoPorId(Integer id) throws Exception {
-        Contrato contrato = contratoRepository.findById(id).get();
+    public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws Exception {
+        Contrato contrato = contratoRepository.retornaContratoPorID(id);
         Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).get();
-        contrato.setUsuarioID(usuario);
-        return ContratoMapper.contratoParaResponseContrato(contrato);
+        contrato.setLocatario(usuario);
+        return ContratoMapper.responseContratoRelatorioDTO(contrato);
     }
 
     public ResponseContratoDTO createContrato(RequestContratoCreateDTO contratCrate){

@@ -47,7 +47,7 @@ public class EnderecoTerrenos {
     private Terreno terreno;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "municipio_cod_ibge", referencedColumnName = "municipio_cod_ibge")
     private EstadosMunicipios codIBGE;
 

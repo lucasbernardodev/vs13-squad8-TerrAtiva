@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,7 +24,7 @@ public interface IContratoController {
             }
     )
     @GetMapping("/{id}")
-    ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
+    ResponseEntity<ResponseContratoRelatorioDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Atualizar contrato", description = "Atualiza um contrato existente")
     @ApiResponses(

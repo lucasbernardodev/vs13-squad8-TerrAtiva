@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -32,12 +29,12 @@ public class EstadosMunicipios {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "codIBGE")
+    @OneToMany(mappedBy = "codIBGE", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Endereco> endereco;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "codIBGE")
+    @OneToMany(mappedBy = "codIBGE", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<EnderecoTerrenos> enderecoTerrenos;
 

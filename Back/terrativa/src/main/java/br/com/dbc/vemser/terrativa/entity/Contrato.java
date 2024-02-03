@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity(name = "CONTRATOS")
 public class Contrato {
 
@@ -23,7 +22,7 @@ public class Contrato {
     @Column(name = "LOCATARIO_ID", updatable = false, insertable = false)
     private Integer locatarioID;
 
-    @Column(name = "TERRENO_ID")
+    @Column(name = "TERRENO_ID", updatable = false, insertable = false)
     private Integer terrenoID;
 
     @Column(name = "ATIVO")
@@ -48,8 +47,16 @@ public class Contrato {
     private String editado;
 
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCATARIO_ID", referencedColumnName = "USUARIO_ID")
-    @ToString.Exclude
-    private Usuario usuarioID;
+    private Usuario locatario;
+
+    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TERRENO_ID", referencedColumnName = "TERRENO_ID")
+    private Terreno terreno;
+
+
 }
