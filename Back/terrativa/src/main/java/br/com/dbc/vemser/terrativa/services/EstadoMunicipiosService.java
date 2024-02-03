@@ -12,7 +12,7 @@ public class EstadoMunicipiosService {
 
     private final EstadoMunicipioRepository estadoMunicipioRepository;
 
-    public EstadosMunicipios buscarCodIBGE(Integer id) throws Exception{
+    public EstadosMunicipios buscarCodIBGE(Integer id) throws RegraDeNegocioException{
 
         return estadoMunicipioRepository.findById(id).orElseThrow(()-> new RegraDeNegocioException("Estado não encontrado"));
     }

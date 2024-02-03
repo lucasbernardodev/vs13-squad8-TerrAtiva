@@ -24,7 +24,7 @@ public class FeedController {
     private final FeedService feedService;
 
     @GetMapping
-    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponveis(
+    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
             @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("Mostrando terrenos disponíveis.");
         Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable);
@@ -33,7 +33,7 @@ public class FeedController {
     }
 
 //    @GetMapping("/buscar")
-//    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponveis(
+//    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
 //            @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable) {
 //        log.info("Mostrando terrenos disponíveis.");
 //        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable);

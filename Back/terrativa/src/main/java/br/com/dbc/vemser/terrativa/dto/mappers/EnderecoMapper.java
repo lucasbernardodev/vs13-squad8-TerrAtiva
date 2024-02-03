@@ -8,13 +8,12 @@ public class EnderecoMapper {
 
     public static ResponseEnderecoDTO EnderecoParaResponseEndereco(Endereco entity) {
         ResponseEnderecoDTO dto = new ResponseEnderecoDTO();
-        dto.setId(entity.getId());
-        dto.setUsuarioID(entity.getUsuarioID());
         dto.setLogradouro(entity.getLogradouro());
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
         dto.setBairro(entity.getBairro());
-        dto.setCodigoMunicipioIBGE(entity.getCodMunIBGE());
+        dto.setEstado(entity.getCodIBGE().getNomeEstado());
+        dto.setCidade(entity.getCodIBGE().getNomeMunicipio());
         dto.setCep(entity.getCep());
         return dto;
     }

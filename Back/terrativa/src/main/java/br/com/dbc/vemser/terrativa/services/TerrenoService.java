@@ -39,22 +39,24 @@ public class TerrenoService {
         EnderecoTerrenos enderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(requestTerreno.getEndereco());
         requestTerreno.setEnderecoID(enderecoTerrenos.getId());
         Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
-        terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).get());
+        terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
         terrenoCadastro.setEnderecoTerrenoID(enderecoTerrenos);
         return terrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.save(terrenoCadastro), EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos));
     }
 
-    public ResponseTerrenoDTO alterarTerreno(Integer idTerreno, RequestTerrenoUpdateDTO requestTerreno) throws Exception {
+    public ResponseTerrenoDTO alterarTerreno(Integer idTerreno, RequestTerrenoUpdateDTO requestTerreno) throws RegraDeNegocioException {
         requestTerreno.setId(idTerreno);
+        requestTerreno.getEndereco().setId(idTerreno);
+        EnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.alterar(requestTerreno.getEndereco());
         Terreno terrenoCadastro =  terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
         terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
-        ResponseEnderecoTerrenosDTO responseEnderecoTerrenos = enderecoTerrenosService.alterar(requestTerreno.getProprietarioID(), requestTerreno.getEndereco());
+        terrenoCadastro.setEnderecoTerrenoID(responseEnderecoTerrenos);
         terrenoCadastro.setEnderecoID(responseEnderecoTerrenos.getId());
         Terreno terreno = terrenoRepository.save(terrenoCadastro);
 
         return terrenoMapper.terrenoParaResponseTerreno(
-                terreno, responseEnderecoTerrenos);
+                terreno, EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(responseEnderecoTerrenos));
     }
 
     public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
@@ -66,8 +68,11 @@ public class TerrenoService {
         terrenoRepository.save(terrenoRecuperado);
     }
 
-    public void alterarTerrenosUsuarioDeletado(Integer donoID) throws Exception{
+    public void alterarTerrenosUsuarioDeletado(Integer donoID) throws RegraDeNegocioException {
             List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
+            if (listaTerrenos.isEmpty()){
+                throw new RegraDeNegocioException("Usuário não possui terrenos");
+            }
             for (Terreno terreno: listaTerrenos){
                 terreno.setDisponivel("N");
                 terrenoRepository.save(terreno);

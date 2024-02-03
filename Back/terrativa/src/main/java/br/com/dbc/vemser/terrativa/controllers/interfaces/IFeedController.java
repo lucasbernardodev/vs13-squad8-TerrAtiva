@@ -10,7 +10,7 @@ public interface IFeedController {
 //            }
 //    )
 //    @GetMapping
-//    ResponseEntity<List<ResponseFeedDTO>> mostrarTerrenosDisponveis(@RequestParam(value = "preco", required = false, defaultValue = "") String preco,
+//    ResponseEntity<List<ResponseFeedDTO>> mostrarTerrenosDisponiveis(@RequestParam(value = "preco", required = false, defaultValue = "") String preco,
 //                                                                    @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
 //                                                                    @RequestParam(value = "estado", required = false, defaultValue = "") Estados estado,
 //                                                                    @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho);
