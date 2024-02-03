@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Tag(name = "Contratos", description = "Endpoints do CRUD de Contrato")
 @RequiredArgsConstructor
 @RequestMapping("/contrato")
-public class ContratoController implements IContratoController {
+public class ContratoController {
     private final ContratoService contratoService;
 
     @GetMapping("/{id}")
@@ -32,18 +32,11 @@ public class ContratoController implements IContratoController {
         return new ResponseEntity<>(contrato, HttpStatus.OK);
            }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
-                                                                 @Valid @RequestBody RequestContratoCreateDTO contrato)throws Exception {
-        log.info("Alterando Contrato.");
-        ResponseContratoDTO responseContrato = contratoService.alterar(id, contrato);
-        log.info("Contrato Criado!");
-        return new ResponseEntity<>(responseContrato, HttpStatus.OK);
-    }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>deletarContrato(@PathVariable Integer id) {
-        log.info("Deletando Contrato.");
+    public ResponseEntity<String>encerrarContrato(@PathVariable Integer id) {
+        log.info("encerrado Contrato.");
         contratoService.deletar(id);
-        log.info("Contrato Deletado!");
-        return new ResponseEntity<>("Contrato deletado com Sucesso", HttpStatus.OK);
-    }}
+        log.info("Contrato encerrado!");
+        return new ResponseEntity<>("Contrato encerrado com sucesso", HttpStatus.OK);
+    }
+}

@@ -1,9 +1,12 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.services.EnderecoService;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import javax.validation.Valid;
 public class UsuarioController implements IUsuarioController {
 
     private final UsuarioService usuarioService;
+    private final EnderecoService enderecoService;
 
     //COMENTADO PORQUE NÃO É PRA SER USADO, MAS FOI MANTIDO POIS TALVEZ SEJA NECESSÁRIO NO FUTURO
 //    @GetMapping
@@ -73,5 +77,23 @@ public class UsuarioController implements IUsuarioController {
         usuarioService.deletarUsuario(idUsuario);
         log.info("Deletou usuário");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/endereco")
+    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
+        log.info("Buscando endereço por Id.");
+        ResponseEnderecoDTO endereco = enderecoService.resgatarPorId(id);
+        log.info("Endereço Listado!");
+        return new ResponseEntity<>(endereco, HttpStatus.OK);
+    }
+
+    @PutMapping ("/{id}/endereco")
+    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
+                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception {
+        log.info("Alterando Endereço.");
+        ResponseEnderecoDTO responseEndereco = enderecoService.alterar(id, endereco);
+        log.info("Endereço Criado!");
+
+        return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
 }

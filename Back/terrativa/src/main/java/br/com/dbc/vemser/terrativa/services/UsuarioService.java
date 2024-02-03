@@ -22,6 +22,7 @@ public class UsuarioService {
     private final EmailService emailService;
     private final ContratoService contratoService;
     private final TerrenoService terrenoService;
+    private final EnderecoService enderecoService;
 
     public List<ResponseUsuarioDTO> listarUsuarios() throws Exception{
         return usuarioRepository.findAllByAtivoEquals("S").stream()
@@ -39,6 +40,8 @@ public class UsuarioService {
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws Exception {
         usuario.setAtivo("S");
         usuario.setUsuarioId(null);
+        enderecoService.adicionarEndereco(usuario.getEndereco());
+        //TODO: salvar endereço para o retorno
          ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(
                 usuarioRepository.save(
                         UsuarioMapper.requestUsuarioParaUsuario(usuario)));
