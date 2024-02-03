@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class RequestUsuarioCreateDTO {
 
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
+    @Hidden
     private Integer usuarioId;
 
     private RequestEnderecoCreateDTO endereco;
@@ -61,5 +63,7 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
 
+    @Schema(description = "Ativo.", example = "S")
+    @Hidden
     private String ativo;
 }

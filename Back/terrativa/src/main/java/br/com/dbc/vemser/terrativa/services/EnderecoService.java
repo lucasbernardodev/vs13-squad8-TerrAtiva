@@ -17,7 +17,6 @@ public class EnderecoService {
     private final EstadoMunicipiosService estadoMunicipioService;
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) {
-        log.info(String.valueOf(id));
         Endereco endereco = enderecoRepository.findById(id).get();
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
@@ -37,10 +36,6 @@ public class EnderecoService {
         return EnderecoMapper.EnderecoParaResponseEndereco(
         enderecoRepository.save(
                 enderecoRecuperado));
-    }
-
-    public void deletar(Integer id) {
-        enderecoRepository.deleteById(id);
     }
 
 }

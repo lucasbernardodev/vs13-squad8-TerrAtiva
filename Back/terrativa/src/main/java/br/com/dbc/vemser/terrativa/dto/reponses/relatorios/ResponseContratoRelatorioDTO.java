@@ -1,9 +1,10 @@
 package br.com.dbc.vemser.terrativa.dto.reponses.relatorios;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor

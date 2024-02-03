@@ -32,10 +32,6 @@ public class EnderecoTerrenosService {
         return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos);
     }
 
-    public void deletar(Integer id) {
-        enderecoTerrenosRepository.deleteById(id);
-    }
-
     public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id) {
         return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
     }

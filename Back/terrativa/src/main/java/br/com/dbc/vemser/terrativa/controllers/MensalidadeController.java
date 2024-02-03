@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.interfaces.IMensalidadeController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
@@ -21,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/mensalidade")
 @Slf4j
 @Tag(name = "Mensalidades", description = "Endpoints do CRUD de Mensalidades")
-public class MensalidadeController implements IMensalidadeController {
+public class MensalidadeController {
 
     private final MensalidadeService mensalidadeService;
 
@@ -34,15 +33,8 @@ public class MensalidadeController implements IMensalidadeController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseMensalidadeDTO> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception{
+    public ResponseEntity<ResponseMensalidadeDTO> resgatarMensalidadePorId(@PathVariable Integer id) throws Exception{
         return new ResponseEntity<>(mensalidadeService.resgatarMensalidadePorId(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarMensalidade(@PathVariable Integer id) throws Exception {
-        log.info("Deletando mensalidade");
-        mensalidadeService.deletarMensalidade(id);
-        log.info("Mensalidade deletada");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

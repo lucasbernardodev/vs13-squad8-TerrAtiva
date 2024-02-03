@@ -22,6 +22,7 @@ public class ResponseUsuarioDTO {
     private String sexo;
     private String celular;
     private String telefoneFixo;
+    private ResponseEnderecoDTO endereco;
     private Set<Terreno> terrenos;
 
 }

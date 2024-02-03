@@ -82,7 +82,7 @@ public class UsuarioController implements IUsuarioController {
     @GetMapping("/{id}/endereco")
     public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
         log.info("Buscando endereço por Id.");
-        ResponseEnderecoDTO endereco = enderecoService.resgatarPorId(id);
+        ResponseEnderecoDTO endereco = usuarioService.resgatarPorId(id);
         log.info("Endereço Listado!");
         return new ResponseEntity<>(endereco, HttpStatus.OK);
     }

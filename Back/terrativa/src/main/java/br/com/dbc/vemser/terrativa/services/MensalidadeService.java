@@ -23,10 +23,6 @@ public class MensalidadeService {
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.save(mensalidade));
     }
 
-    public void deletarMensalidade(Integer id) {
-        mensalidadeRepository.deleteById(id);
-    }
-
     public ResponseMensalidadeDTO resgatarMensalidadePorId(Integer id) throws RegraDeNegocioException {
         Mensalidade mensalidade = mensalidadeRepository.findById(id)
                 .orElseThrow(() -> new RegraDeNegocioException("Mensalidade não encontrada"));

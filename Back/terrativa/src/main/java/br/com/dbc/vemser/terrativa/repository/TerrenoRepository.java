@@ -1,10 +1,7 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

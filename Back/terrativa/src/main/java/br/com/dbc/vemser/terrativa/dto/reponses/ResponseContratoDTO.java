@@ -1,11 +1,11 @@
 package br.com.dbc.vemser.terrativa.dto.reponses;
 
-import br.com.dbc.vemser.terrativa.entity.Terreno;
-import br.com.dbc.vemser.terrativa.entity.Usuario;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor

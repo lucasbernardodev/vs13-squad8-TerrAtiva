@@ -1,9 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
-import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelatorioDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Slf4j
 @Validated
