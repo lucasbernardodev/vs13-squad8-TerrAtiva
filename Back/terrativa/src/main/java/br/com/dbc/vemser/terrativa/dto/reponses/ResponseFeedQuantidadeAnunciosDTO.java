@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ResponseFeedQuantidadeAnunciosDTO {
 
-    private String estado;
-    private String totalAnuncios;
+    private String nomeEstado;
+    private Long quantidadeAnuncios;
+    private Integer codigoEstado;
 }

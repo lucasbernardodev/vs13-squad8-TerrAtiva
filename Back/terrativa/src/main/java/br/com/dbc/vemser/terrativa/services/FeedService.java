@@ -2,6 +2,8 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,18 +28,33 @@ public class FeedService {
         return terrenos.map(terrenoMapper::terrenoToFeedDTO);
     }
 
-    public List<Terreno> listarTerrenos(Integer id) {
-        return terrenoRepository.findById(id).stream().toList();
-    }
+//    public List<Terreno> listarTerrenos(Integer id) {
+//        return terrenoRepository.findById(id).stream().toList();
+//    }
+//
+//
+//    public List<Terreno> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
+//        return null;
+//    }
+//
+//    public List<Terreno> quantidadeAnuncios() {
+//        return null;
+//    }
+
+//    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnunciosPorEstado() {
+//        List<Terreno> terrenos = terrenoRepository.findAll();
+//
+//        Map<String, Long> quantidadePorEstado = terrenos.stream()
+//                .collect(Collectors.groupingBy(terreno -> terreno.getEnderecoTerrenoID().getLocalizacao(), Collectors.counting()));
+//
+//        List<ResponseFeedQuantidadeAnunciosDTO> result = quantidadePorEstado.entrySet().stream()
+//                .map(entry -> new ResponseFeedQuantidadeAnunciosDTO(entry.getKey(), String.valueOf(entry.getValue())))
+//                .collect(Collectors.toList());
+//
+//        return result;
+//    }
 
 
-    public List<Terreno> buscarTerrenos(String preco, String campoDeBusca, String estado, String tamanho) {
-        return null;
-    }
-
-    public List<Terreno> quantidadeAnuncios() {
-        return null;
-    }
 
 //    public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, Estados estado, String tamanho) {
 //
@@ -67,7 +86,7 @@ public class FeedService {
 //        return terrenosFiltrados;
 //    }
 //
-//    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
-//        return feedRepository.quantidadeAnuncios();
-//    }
+    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
+        return terrenoRepository.quantidadeAnuncios();
+    }
 }
