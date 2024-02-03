@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,10 +25,10 @@ public class ContratoController {
     private final ContratoService contratoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseContratoDTO> resgatarContratoPorID(
+    public ResponseEntity<ResponseContratoRelatorioDTO> resgatarContratoPorID(
             @PathVariable("id") Integer id) throws Exception {
         log.info("Buscando contrato por Id.");
-        ResponseContratoDTO contrato = contratoService.resgatarContratoPorId(id);
+        ResponseContratoRelatorioDTO contrato = contratoService.resgatarContratoPorId(id);
         log.info("Contrato Listado!");
         return new ResponseEntity<>(contrato, HttpStatus.OK);
            }
@@ -39,4 +40,5 @@ public class ContratoController {
         log.info("Contrato encerrado!");
         return new ResponseEntity<>("Contrato encerrado com sucesso", HttpStatus.OK);
     }
+
 }

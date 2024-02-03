@@ -1,23 +1,22 @@
 package br.com.dbc.vemser.terrativa.entity;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@Log4j2
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Entity(name = "TERRENOS")
 public class Terreno {
 
@@ -68,5 +67,10 @@ public class Terreno {
     @JoinColumn(name = "ENDERECO_TERRENO_ID", referencedColumnName = "endereco_terreno_id")
     @ToString.Exclude
     private EnderecoTerrenos enderecoTerrenoID;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(mappedBy = "terreno", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Contrato contrato;
 
 }
