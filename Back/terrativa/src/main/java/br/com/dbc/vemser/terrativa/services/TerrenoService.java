@@ -1,12 +1,17 @@
 package br.com.dbc.vemser.terrativa.services;
 
 
+import br.com.dbc.vemser.terrativa.dto.mappers.ContratoMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
@@ -25,6 +30,7 @@ public class TerrenoService {
    private final TerrenoMapper terrenoMapper;
    private final UsuarioRepository usuarioRepository;
    private final EnderecoTerrenosService enderecoTerrenosService;
+   private final MensalidadeService mensalidadeService;
 
     public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado"));
@@ -79,16 +85,19 @@ public class TerrenoService {
             }
     }
 
-//    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception{
-//
-//        contrato.setTerrenoID(idTerreno);
-//        Terreno terreno = terrenoRepository.resgatarDadosPorId(idTerreno);
-//        if (terreno.getDisponivel().equals("N")) {
-//            throw new RegraDeNegocioException("Terreno já está alugado");
-//        }
-//        contrato.setId(contratoService.getNextId());
-//
-//        terrenoRepository.arrendarTerreno(ContratoMapper.requestContratoParaContrato(contrato), terreno);
-//    }
+    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception {
+        contrato.setTerrenoID(idTerreno);
+        Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno indisponível para aluguel"));
+        if (terreno.getDisponivel().equals("N")) {
+            throw new RegraDeNegocioException("Terreno indisponível para aluguel");
+        }
+        ResponseContratoDTO contratoResponse = contratoService.createContrato(contrato);
+        RequestMensalidadeCreateDTO mensalidade = contrato.getMensalidade();
+        mensalidade.setContratoID(contratoResponse.getId());
+        mensalidadeService.criarMensalidade(contrato.getMensalidade());
+        terreno.setDisponivel("N");
+        terrenoRepository.save(terreno);
+
+    }
 
 }

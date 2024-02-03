@@ -16,6 +16,11 @@ public class MensalidadeService {
     private final MensalidadeRepository mensalidadeRepository;
     private final ContratoService contratoService;
 
+    public ResponseMensalidadeDTO criarMensalidade(RequestMensalidadeCreateDTO requestMensalidade) throws Exception {
+        contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());
+        Mensalidade mensalidade = MensalidadeMapper.RequestMensalidadeParaMensalidade(requestMensalidade);
+        return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.save(mensalidade));
+    }
 
     public ResponseMensalidadeDTO alterarMensalidade(Integer id, RequestMensalidadeCreateDTO requestMensalidade) throws Exception {
         contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());

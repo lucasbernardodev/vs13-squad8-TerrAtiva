@@ -32,8 +32,8 @@ public class ContratoService {
         return ContratoMapper.responseContratoRelatorioDTO(contrato);
     }
 
-    public ResponseContratoDTO createContrato(RequestContratoCreateDTO contratCrate){
-        Contrato contrato = ContratoMapper.requestContratoParaContrato(contratCrate);
+    public ResponseContratoDTO createContrato(RequestContratoCreateDTO contratoCreate){
+        Contrato contrato = ContratoMapper.requestContratoParaContrato(contratoCreate);
         Contrato contratSalvo = contratoRepository.save(contrato);
         return ContratoMapper.contratoParaResponseContrato(contrato);
     }

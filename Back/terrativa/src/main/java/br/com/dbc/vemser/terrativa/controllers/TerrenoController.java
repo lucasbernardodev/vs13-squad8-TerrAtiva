@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
@@ -57,14 +58,14 @@ public class TerrenoController {
         log.info("Terreno deletado");
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//
-//    @PostMapping("/{idTerreno}/arrendar")
-//    public ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
-//                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception {
-//        log.info("Arrendando terreno...");
-//        terrenoService.arrendarTerreno(idTerreno, contrato);
-//        log.info("Terreno arrendado");
-//        return new ResponseEntity<>("Operação realizada com sucesso!", HttpStatus.OK);
-//    }
+
+    @PostMapping("/{idTerreno}/arrendar")
+    public ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
+                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception {
+        log.info("Arrendando terreno...");
+        terrenoService.arrendarTerreno(idTerreno, contrato);
+        log.info("Terreno arrendado");
+        return new ResponseEntity<>("Operação realizada com sucesso!", HttpStatus.OK);
+    }
 
 }

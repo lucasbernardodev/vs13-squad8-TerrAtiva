@@ -48,7 +48,7 @@ public class RequestEnderecoTerrenosCreateDTO {
     private Integer cep;
 
     @Size(max = 250, message = "A Localização deve ter no máximo 250 caracteres")
-    @Schema(description = "Localização", required = true, example = "Prédio das rosas")
+    @Schema(description = "Localização", required = true, example = "")
     private String localizacao;
 
 }

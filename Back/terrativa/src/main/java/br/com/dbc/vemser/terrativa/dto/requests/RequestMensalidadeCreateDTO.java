@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class RequestMensalidadeCreateDTO {
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer mensalidadeID;
 
-    @NotNull
+    @Hidden
     @Schema(description = "Identificador único do contrato.", example = "1")
     private Integer contratoID;
 
