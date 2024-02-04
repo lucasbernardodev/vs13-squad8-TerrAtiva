@@ -42,11 +42,6 @@ public class FeedController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//    @GetMapping("/quantidade/estado")
-//    public ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado() {
-//        List<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios();
-//        return new ResponseEntity<>(resultado, HttpStatus.OK);
-//    }
     @GetMapping("/quantidade/estado")
     public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(@PageableDefault(sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
         Page<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios(pageable);

@@ -58,7 +58,6 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
     WHERE t.disponivel = 'S'
     GROUP BY t.enderecoTerrenoID.codIBGE.nomeEstado, em.estadoCod
     """)
-//    List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios();
     Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable);
 
 
