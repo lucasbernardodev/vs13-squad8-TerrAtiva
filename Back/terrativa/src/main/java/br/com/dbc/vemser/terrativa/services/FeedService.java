@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,17 @@ public class FeedService {
     private final TerrenoRepository terrenoRepository;
     private final TerrenoMapper terrenoMapper;
 
-    public Page<ResponseFeedDTO> listarTerrenos(Pageable pageable) {
-        Page<Terreno> terrenos = terrenoRepository.findAll(pageable);
+    public Page<ResponseFeedDTO> listarTerrenos(Pageable pageable, String campoDebusca, Integer precoInicial, Integer precoFinal, Estados estados) {
+        Integer estadosINT = null;
+        if (estados != null){
+            estadosINT = estados.getCode();
+        }
+        Page<Terreno> terrenos = terrenoRepository.buscarFeedComFiltros(pageable, campoDebusca, campoDebusca, precoInicial, precoFinal, estadosINT);
         return terrenos.map(terrenoMapper::terrenoToFeedDTO);
     }
+
+//    Page<Terreno> terrenos = terrenoRepository.findAll(pageable);
+//        return terrenos.map(terrenoMapper::terrenoToFeedDTO);
 
 
 //    public List<ResponseFeedDTO> buscarTerrenos(String preco, String campoDeBusca, Estados estado, String tamanho) {
