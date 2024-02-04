@@ -23,6 +23,7 @@ public class MensalidadeService {
     }
 
     public ResponseMensalidadeDTO alterarMensalidade(Integer id, RequestMensalidadeCreateDTO requestMensalidade) throws Exception {
+        requestMensalidade.setMensalidadeID(id);
         contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());
         Mensalidade mensalidade = MensalidadeMapper.RequestMensalidadeParaMensalidade(requestMensalidade);
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.save(mensalidade));
