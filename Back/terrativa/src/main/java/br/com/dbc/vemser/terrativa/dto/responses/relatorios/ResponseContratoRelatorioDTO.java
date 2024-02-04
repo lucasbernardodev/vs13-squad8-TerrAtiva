@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.dto.reponses.relatorios;
+package br.com.dbc.vemser.terrativa.dto.responses.relatorios;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

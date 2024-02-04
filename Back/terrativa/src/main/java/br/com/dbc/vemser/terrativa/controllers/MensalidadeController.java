@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IMensalidadeController;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
 import io.swagger.v3.oas.annotations.tags.Tag;

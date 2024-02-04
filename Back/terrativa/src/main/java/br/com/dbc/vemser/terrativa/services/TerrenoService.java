@@ -3,8 +3,8 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseContratoDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;

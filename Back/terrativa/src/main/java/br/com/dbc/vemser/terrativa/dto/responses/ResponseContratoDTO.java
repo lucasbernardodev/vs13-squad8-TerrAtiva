@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.dto.reponses;
+package br.com.dbc.vemser.terrativa.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
