@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.reponses.relatorios.ResponseContratoRelatorioDTO;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +30,11 @@ public class ContratoController {
            }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>encerrarContrato(@PathVariable Integer id) {
+    public ResponseEntity<String>encerrarContrato(@PathVariable Integer id) throws RegraDeNegocioException {
         log.info("encerrado Contrato.");
         contratoService.deletar(id);
         log.info("Contrato encerrado!");
-        return new ResponseEntity<>("Contrato encerrado com sucesso", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

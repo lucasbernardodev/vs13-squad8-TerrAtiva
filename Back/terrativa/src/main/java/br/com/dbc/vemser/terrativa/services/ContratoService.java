@@ -24,11 +24,10 @@ public class ContratoService {
 
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
-    private final ObjectMapper objectMapper;
 
     public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws Exception {
         Contrato contrato = contratoRepository.retornaContratoPorID(id);
-        Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).get();
+        Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
         contrato.setLocatario(usuario);
         return ContratoMapper.responseContratoRelatorioDTO(contrato);
     }
@@ -40,21 +39,11 @@ public class ContratoService {
         return ContratoMapper.contratoParaResponseContrato(contratSalvo);
     }
 
-    public ResponseContratoDTO alterar(Integer id, RequestContratoCreateDTO contratoCreate)throws Exception {
+    public void deletar(Integer id) throws RegraDeNegocioException {
         Contrato contrato = findByID(id);
-        contrato.setLocatarioID(contratoCreate.getLocatarioID());
-        contrato.setDataAssinatura(contratoCreate.getDataAssinatura());
-        contrato.setDataInicio(contratoCreate.getDataInicio());
-        contrato.setDataFinal(contratoCreate.getDataFinal());
-        contrato.setDataVencimentoAluguel(contratoCreate.getDataVencimentoAluguel());
-        contrato.setEditado(Instant.now().toString());
-        contratoRepository.save(contrato);
-        ResponseContratoDTO responseContratoDTO = ContratoMapper.contratoParaResponseContrato(contrato);
-        return responseContratoDTO;
-    }
-
-    public void deletar(Integer id) {
-        Contrato contrato = findByID(id);
+        if (contrato.getAtivo().equals("N")) {
+            throw new RegraDeNegocioException("Contrato já encerrado");
+        }
         contrato.setAtivo("N");
         contratoRepository.save(contrato);
     }
@@ -63,8 +52,8 @@ public class ContratoService {
         return contratoRepository.findAllByLocatarioID(id);
     }
 
-    private Contrato findByID(Integer id){
-        return contratoRepository.findById(id).get();
+    private Contrato findByID(Integer id) throws RegraDeNegocioException {
+        return contratoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException("Contrato não encontrado"));
     }
 
 }
