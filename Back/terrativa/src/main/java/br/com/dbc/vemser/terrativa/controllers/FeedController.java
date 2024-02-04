@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedController;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.services.FeedService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +45,8 @@ public class FeedController {
     }
 
     @GetMapping("/quantidade/estado")
-    public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(@PageableDefault(sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
+    public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(
+            @PageableDefault(page = 0, size = 5, sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
         Page<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios(pageable);
         return new ResponseEntity<>(resultado, HttpStatus.OK);
     }

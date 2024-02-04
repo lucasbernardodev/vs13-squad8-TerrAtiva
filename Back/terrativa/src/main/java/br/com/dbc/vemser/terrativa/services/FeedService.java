@@ -9,7 +9,9 @@ import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class FeedService {
     }
 
     public Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable) {
-        return terrenoRepository.quantidadeAnuncios(pageable);
+        Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("enderecoTerrenoID.codIBGE.nomeEstado").ascending());
+        return terrenoRepository.quantidadeAnuncios(page);
     }
 }
