@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.services.FeedUsuariosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,25 +31,25 @@ public class FeedUsuarioController {
     private final FeedUsuariosService feedUsuariosService;
 
     @GetMapping("/disponiveis/{id}")
-    public ResponseEntity<List<Terreno>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception {
+    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception {
         log.info("Recebida a requisição para mostrar terrenos disponíveis para o usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosDisponiveis(id), HttpStatus.OK);
     }
 
     @GetMapping("/todosterrenos/{id}")
-    public ResponseEntity<List<Terreno>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception{
+    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception{
         log.info("Recebida a requisição para mostrar todos os terrenos do usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosDoUsuario(id), HttpStatus.OK);
     }
 
     @GetMapping("/alugados/{id}")
-    public ResponseEntity<List<Terreno>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception{
+    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception{
         log.info("Recebida a requisição para mostrar terrenos alugados pelo usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosAlugados(id), HttpStatus.OK);
     }
 
     @GetMapping("/arrendados/{id}")
-    public ResponseEntity<List<Terreno>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception{
+    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception{
         log.info("Recebida a requisição para mostrar terrenos arrendados pelo usuário com ID {}", id);
         return new ResponseEntity<>(feedUsuariosService.mostrarTerrenosArrendados(id), HttpStatus.OK);
     }

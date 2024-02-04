@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
@@ -23,31 +26,62 @@ public class FeedUsuariosService {
     private final TerrenoRepository terrenoRepository;
     private final ContratoRepository contratoRepository;
     private final TerrenoMapper terrenoMapper;
+    private final EnderecoTerrenosService enderecoTerrenosService;
 
-    public List<Terreno> mostrarTerrenosDisponiveis(Integer id) throws Exception{
-        return terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("S", id);
+    List<ResponseEnderecoTerrenosDTO> enderecos = new ArrayList<>();
+
+    public List<ResponseTerrenoDTO> mostrarTerrenosDisponiveis(Integer id) throws Exception{
+        List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("S", id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return  responseTerreno;
     }
 
-    public List<Terreno> mostrarTerrenosDoUsuario(Integer id) throws Exception {
-
-        return terrenoRepository.findAllByProprietarioID(id);
+    public List<ResponseTerrenoDTO> mostrarTerrenosDoUsuario(Integer id) throws Exception {
+        List<Terreno> terrenos = terrenoRepository.findAllByProprietarioID(id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return responseTerreno;
     }
 
-    public List<Terreno> mostrarTerrenosAlugados(Integer id) throws Exception{
+    public List<ResponseTerrenoDTO> mostrarTerrenosAlugados(Integer id) throws Exception{
 
         List<Contrato> contrato = contratoRepository.findAllByLocatarioID(id);
         List<Terreno> terrenos = new ArrayList<>();
         for (Contrato c : contrato) {
-            terrenos.add(terrenoRepository.findById(
+            Terreno terreno = terrenoRepository.findById(
                     c.getTerrenoID()).orElseThrow(() -> new RegraDeNegocioException(
-                            "Ocorreu um erro interno, tente novamente mais tarde.")));
+                    "Ocorreu um erro interno, tente novamente mais tarde."));
+            terrenos.add(terreno);
+            enderecos.add(enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
         }
-        return terrenos.stream().filter(terreno -> terreno.getDisponivel().equals("N")).toList();
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
 
+        return responseTerreno;
     }
 
-    public List<Terreno> mostrarTerrenosArrendados(Integer id) throws Exception{
-
-        return terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("N", id);
+    public List<ResponseTerrenoDTO> mostrarTerrenosArrendados(Integer id) throws Exception{
+        List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("N", id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return responseTerreno;
     }
 }
