@@ -1,9 +1,6 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedFiltradoDTO;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
-import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -53,19 +53,11 @@ public class TerrenoMapper {
         ResponseFeedDTO responseTerreno = new ResponseFeedDTO();
         responseTerreno.setTerrenoId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());
-        responseTerreno.setDescricao(terreno.getDescricao());
-        responseTerreno.setPropietario(terreno.getDono().getNome() + " " + terreno.getDono().getSobrenome());
         responseTerreno.setPreco(terreno.getPreco());
         responseTerreno.setTamanho(terreno.getTamanho());
         if (terreno.getCriado() != null) {
             responseTerreno.setCriado(terreno.getCriado().toString());
         }
-        responseTerreno.setLogradouro(terreno.getEnderecoTerrenoID().getLogradouro());
-        responseTerreno.setNumero(terreno.getEnderecoTerrenoID().getNumero());
-        responseTerreno.setComplemento(terreno.getEnderecoTerrenoID().getComplemento());
-        responseTerreno.setBairro(terreno.getEnderecoTerrenoID().getBairro());
-        responseTerreno.setCep(terreno.getEnderecoTerrenoID().getCep());
-        responseTerreno.setLocalizacao(terreno.getEnderecoTerrenoID().getLocalizacao());
         responseTerreno.setCidade(terreno.getEnderecoTerrenoID().getCodIBGE().getNomeMunicipio());
         responseTerreno.setEstado(terreno.getEnderecoTerrenoID().getCodIBGE().getNomeEstado());
 
