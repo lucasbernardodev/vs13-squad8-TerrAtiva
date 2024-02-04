@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedUsuarioAlugadosDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,7 +24,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/disponiveis/{id}")
-    ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Lista todos terrenos do usuário", description = "Lista os terrenos por ID do banco")
     @ApiResponses({
@@ -32,7 +33,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/todosterrenos/{id}")
-    ResponseEntity<List<ResponseFeedUsuarioDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Lista terrenos que o Usuário alugou dos outros", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses({
@@ -41,7 +42,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/alugados/{id}")
-    ResponseEntity<List<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
 
     @Operation(summary = "Lista terrenos do Usuário alugado por outras pessoas", description = "Lista os terrenos arrendados por ID do banco")
     @ApiResponses({
@@ -50,5 +51,5 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/arrendados/{id}")
-    ResponseEntity<List<ResponseFeedUsuarioAlugadosDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
 }

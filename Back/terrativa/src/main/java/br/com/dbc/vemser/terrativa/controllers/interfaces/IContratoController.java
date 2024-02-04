@@ -36,5 +36,5 @@ public interface IContratoController {
             }
     )
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deletarContrato(@PathVariable Integer id) throws RegraDeNegocioException;
+    public ResponseEntity<String>encerrarContrato(@PathVariable Integer id) throws RegraDeNegocioException;
 }

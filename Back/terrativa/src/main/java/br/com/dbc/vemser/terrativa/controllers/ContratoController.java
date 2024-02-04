@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IContratoController;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.services.ContratoService;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Contratos", description = "Endpoints do CRUD de Contrato")
 @RequiredArgsConstructor
 @RequestMapping("/contrato")
-public class ContratoController {
+public class ContratoController implements IContratoController {
     private final ContratoService contratoService;
 
     @GetMapping("/{id}")

@@ -18,21 +18,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface IFeedController {
-//    @Operation(summary = "Listar Terrenos", description = "Lista todas os terrenos do banco")
-//    @ApiResponses(
-//            value = {
-//                    @ApiResponse(responseCode = "200", description = "Retorna a lista de terrenos"),
-//                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-//                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-//            }
-//    )
-//    @GetMapping
-//    ResponseEntity<List<ResponseFeedDTO>> mostrarTerrenosDisponiveis(@RequestParam(value = "preco", required = false, defaultValue = "") String preco,
-//                                                                    @RequestParam(value = "campodebusca", required = false, defaultValue = "") String campoDeBusca,
-//                                                                    @RequestParam(value = "estado", required = false, defaultValue = "") Estados estado,
-//                                                                    @RequestParam(value = "tamanho", required = false, defaultValue = "") String tamanho);
-//
-//
+    @Operation(summary = "Listar Terrenos", description = "Lista todas os terrenos do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de terrenos"),
+                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping
+public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
+        @PageableDefault(sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable,
+        @RequestParam(value = "campoDeBusca", required = false) String campoDebusca,
+        @RequestParam(value = "precoInicial", required = false) Integer precoIncial,
+        @RequestParam(value = "precoFinal", required = false) Integer precoFinal,
+        @RequestParam(value = "estado", required = false)Estados estados);
+
 
     @Operation(summary = "Quantidade de Anúncios por Estado", description = "Retorna a quantidade de anúncios por estado")
     @ApiResponses(
@@ -44,20 +45,6 @@ public interface IFeedController {
     )
     @GetMapping("/quantidade/estado")
     ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(@PageableDefault(sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) @Schema(example = "{\"page\": 0, \"size\": 5}") Pageable pageable);
-
-//    @GetMapping
-//    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
-//            @PageableDefault(sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable,
-//            @RequestParam(value = "campoDeBusca", required = false) String campoDebusca,
-//            @RequestParam(value = "precoInicial", required = false) Integer precoIncial,
-//            @RequestParam(value = "precoFinal", required = false) Integer precoFinal,
-//            @RequestParam(value = "estado", required = false) Estados estados) {
-//
-//        log.info("Mostrando terrenos disponíveis.");
-//        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable, campoDebusca, precoIncial, precoFinal, estados);
-//        log.info("Consulta concluída. Retornando {} resultados.", response.getTotalElements());
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
 }
 

@@ -25,7 +25,7 @@ import java.util.List;
 @Tag(name = "Feed do Usuário", description = "Endpoints do Feed para os usuários")
 @RestController
 @RequestMapping("feed-usuario")
-public class FeedUsuarioController{
+public class FeedUsuarioController implements IFeedUsuarioController{
 
     private final FeedUsuariosService feedUsuariosService;
 
