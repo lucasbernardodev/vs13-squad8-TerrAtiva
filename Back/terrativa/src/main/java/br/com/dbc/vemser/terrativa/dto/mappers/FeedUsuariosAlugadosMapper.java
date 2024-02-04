@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioAlugadosDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedUsuarioAlugadosDTO;
 import br.com.dbc.vemser.terrativa.entity.FeedUsuariosAlugados;
 
 public class FeedUsuariosAlugadosMapper {

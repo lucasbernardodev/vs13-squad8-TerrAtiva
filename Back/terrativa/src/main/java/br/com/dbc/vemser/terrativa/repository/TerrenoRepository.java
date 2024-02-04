@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.repository;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +47,7 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
 
 
     @Query("""
-            SELECT new br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedQuantidadeAnunciosDTO(
+            SELECT new br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO(
                 em.nomeEstado,
                 COUNT(*),
                 em.estadoCod
@@ -65,7 +65,7 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
 
 
 //    @Query("""
-//    SELECT new br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedFiltradoDTO(
+//    SELECT new br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedFiltradoDTO(
 //        t.id,
 //        t.titulo,
 //        t.preco,
