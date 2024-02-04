@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 @Tag(name = "Usuários", description = "Endpoints do CRUD de Usuários")
 @RequiredArgsConstructor
 @RequestMapping("/usuario")
-public class UsuarioController {
+public class UsuarioController implements IUsuarioController {
 
     private final UsuarioService usuarioService;
 

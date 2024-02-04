@@ -36,7 +36,7 @@ public class TerrenoService {
                 terreno, enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
     }
 
-    public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws Exception {
+    public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws RegraDeNegocioException {
         requestTerreno.setId(null);
         requestTerreno.setDisponivel("S");
         usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
@@ -88,7 +88,7 @@ public class TerrenoService {
             }
     }
 
-    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws Exception {
+    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno indisponível para aluguel"));
         contrato.setTerreno(terreno);

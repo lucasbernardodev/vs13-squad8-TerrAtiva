@@ -27,7 +27,7 @@ import java.util.List;
 @Tag(name = "Feed de Anúncios", description = "Endpoints do Feed")
 @RestController
 @RequestMapping("/feed")
-public class FeedController {
+public class FeedController implements IFeedController{
     private final FeedService feedService;
 
     @GetMapping

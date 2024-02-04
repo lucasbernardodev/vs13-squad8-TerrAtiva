@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,17 +51,15 @@ public interface IUsuarioController {
     @PostMapping
     ResponseEntity<ResponseUsuarioDTO> cadastrarUsuario(@Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
 
-    @Operation(summary = "Editar usuário", description = "Editar um usuário no banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Editar e retorna o usuário atualizado"),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
+    @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Atualiza e retorna o usuário atualizado"),
+            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+    })
     @PutMapping("/{idUsuario}")
     ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                        @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
+                                                        @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception;
 
     @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
     @ApiResponses(

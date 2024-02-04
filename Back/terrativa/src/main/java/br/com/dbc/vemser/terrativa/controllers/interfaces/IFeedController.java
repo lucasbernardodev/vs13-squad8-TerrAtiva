@@ -59,5 +59,5 @@ public interface IFeedController {
 //        return new ResponseEntity<>(response, HttpStatus.OK);
 //    }
 
-    }
+}
 

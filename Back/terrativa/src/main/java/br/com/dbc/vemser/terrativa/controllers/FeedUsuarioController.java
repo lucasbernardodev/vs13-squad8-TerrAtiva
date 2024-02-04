@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IFeedUsuarioController;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.services.FeedUsuariosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +25,7 @@ import java.util.List;
 @Tag(name = "Feed do Usuário", description = "Endpoints do Feed para os usuários")
 @RestController
 @RequestMapping("feed-usuario")
-public class FeedUsuarioController {
+public class FeedUsuarioController{
 
     private final FeedUsuariosService feedUsuariosService;
 

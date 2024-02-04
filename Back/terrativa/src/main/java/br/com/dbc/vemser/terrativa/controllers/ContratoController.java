@@ -22,7 +22,7 @@ public class ContratoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseContratoRelatorioDTO> resgatarContratoPorID(
-            @PathVariable("id") Integer id) throws Exception {
+            @PathVariable("id") Integer id) throws RegraDeNegocioException {
         log.info("Buscando contrato por Id.");
         ResponseContratoRelatorioDTO contrato = contratoService.resgatarContratoPorId(id);
         log.info("Contrato Listado!");

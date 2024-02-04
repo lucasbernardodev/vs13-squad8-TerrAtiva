@@ -23,7 +23,7 @@ public class ContratoService {
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws Exception {
+    public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws RegraDeNegocioException {
         Contrato contrato = contratoRepository.retornaContratoPorID(id);
         Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
         contrato.setLocatario(usuario);

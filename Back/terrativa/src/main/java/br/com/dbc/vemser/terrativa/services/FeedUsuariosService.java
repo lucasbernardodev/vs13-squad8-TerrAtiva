@@ -53,7 +53,7 @@ public class FeedUsuariosService {
         return responseTerreno;
     }
 
-    public List<ResponseTerrenoDTO> mostrarTerrenosAlugados(Integer id) throws Exception{
+    public List<ResponseTerrenoDTO> mostrarTerrenosAlugados(Integer id) throws RegraDeNegocioException{
 
         List<Contrato> contrato = contratoRepository.findAllByLocatarioID(id);
         List<Terreno> terrenos = new ArrayList<>();

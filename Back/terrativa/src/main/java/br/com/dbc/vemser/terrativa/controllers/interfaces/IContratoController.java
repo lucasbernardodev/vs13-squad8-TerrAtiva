@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.controllers.interfaces;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,19 +25,7 @@ public interface IContratoController {
             }
     )
     @GetMapping("/{id}")
-    ResponseEntity<ResponseContratoRelatorioDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws Exception;
-
-    @Operation(summary = "Atualizar contrato", description = "Atualiza um contrato existente")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Atualiza e retorna o contrato atualizado"),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @PutMapping("/{id}")
-    ResponseEntity<ResponseContratoDTO> atualizarContrato(@PathVariable("id") Integer id,
-                                                          @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
+    ResponseEntity<ResponseContratoRelatorioDTO> resgatarContratoPorID(@PathVariable("id") Integer id) throws RegraDeNegocioException;
 
     @Operation(summary = "Cancelar contrato", description = "Cancelar um contrato existente")
     @ApiResponses(
@@ -47,5 +36,5 @@ public interface IContratoController {
             }
     )
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deletarContrato(@PathVariable Integer id) throws Exception;
+    ResponseEntity<String> deletarContrato(@PathVariable Integer id) throws RegraDeNegocioException;
 }
