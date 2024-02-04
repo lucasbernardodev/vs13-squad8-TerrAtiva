@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
@@ -17,8 +17,8 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final EstadoMunicipiosService estadoMunicipioService;
 
-    public ResponseEnderecoDTO resgatarPorId(Integer id) {
-        Endereco endereco = enderecoRepository.findById(id).get();
+    public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException("Endereço não encontrado"));
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
 

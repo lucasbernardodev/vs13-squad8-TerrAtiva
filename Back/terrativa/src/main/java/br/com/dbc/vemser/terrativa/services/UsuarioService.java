@@ -1,12 +1,12 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;

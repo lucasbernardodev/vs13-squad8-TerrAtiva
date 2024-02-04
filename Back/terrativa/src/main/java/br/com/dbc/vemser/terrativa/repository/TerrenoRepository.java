@@ -47,48 +47,19 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
 
 
     @Query("""
-            SELECT new br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO(
-                em.nomeEstado,
-                COUNT(*),
-                em.estadoCod
-            )
-            FROM TERRENOS t
-            JOIN ENDERECO_TERRENOS et ON t.enderecoID = et.id
-            JOIN ESTADO_MUNICIPIOS em ON et.codMunicipioIBGE = em.municipioCodIBGE
-            WHERE t.disponivel = 'S'
-            GROUP BY em.nomeEstado, em.estadoCod
-            ORDER BY em.nomeEstado
-        """)
-    List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios();
+    SELECT new br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO(
+        t.enderecoTerrenoID.codIBGE.nomeEstado,
+        COUNT(*),
+        em.estadoCod
+    )
+    FROM TERRENOS t
+    JOIN ENDERECO_TERRENOS et ON t.enderecoID = et.id
+    JOIN ESTADO_MUNICIPIOS em ON et.codMunicipioIBGE = em.municipioCodIBGE
+    WHERE t.disponivel = 'S'
+    GROUP BY t.enderecoTerrenoID.codIBGE.nomeEstado, em.estadoCod
+    """)
+//    List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios();
+    Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable);
 
 
-
-
-//    @Query("""
-//    SELECT new br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedFiltradoDTO(
-//        t.id,
-//        t.titulo,
-//        t.preco,
-//        t.tamanho,
-//        t.criado,
-//        em.nomeMunicipio,
-//        em.nomeEstado)
-//     FROM TERRENOS t
-//        JOIN ENDERECO_TERRENOS et
-//        ON t.enderecoID = et.id
-//        JOIN ESTADO_MUNICIPIOS em
-//        ON et.codMunicipioIBGE = em.municipioCodIBGE
-//        WHERE t.disponivel = 'S'
-//            AND t.preco BETWEEN
-//                (NVL(SELECT regexp_replace(?, '[^0-9]', ''), 0))
-//                AND
-//                (NVL(SELECT regexp_replace(?, '[^0-9]', ''), 100000000))
-//            AND t.tamanho
-//                BETWEEN
-//                (NVL((SELECT regexp_replace(?, '[^0-9]', '') - 10000 FROM DUAL), 0))
-//                AND
-//                (NVL((SELECT regexp_replace(?, '[^0-9]', '') + 10000 FROM DUAL), 100000000))
-//            AND (NVL(em.estadoCod = ?, 0))
-//    """)
-//        List<ResponseFeedFiltradoDTO> feedFiltrado(Double precoMinimo, Double precoMaximo, Integer tamanhoMinimo, Integer tamanhoMaximo, Estados estado, String tamanho);
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EnderecoTerrenosRepository extends JpaRepository<EnderecoTerrenos, Integer> {
-    EnderecoTerrenos getById(Integer id);
+
 }

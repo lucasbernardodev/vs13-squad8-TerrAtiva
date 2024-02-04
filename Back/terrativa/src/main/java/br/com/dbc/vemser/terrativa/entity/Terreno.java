@@ -65,7 +65,7 @@ public class Terreno {
     private EnderecoTerrenos enderecoTerrenoID;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(mappedBy = "terreno", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "terreno")
     @ToString.Exclude
     private Contrato contrato;
 

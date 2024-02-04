@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.dto.mappers;
 
+import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 
 public class ContratoMapper {

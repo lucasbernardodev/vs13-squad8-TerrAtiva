@@ -39,6 +39,7 @@ public class Endereco {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENDERECO_ID", referencedColumnName = "ENDERECO_TERRENO_ID")
+    @ToString.Exclude
     private Terreno terreno;
 
     @JsonIgnore

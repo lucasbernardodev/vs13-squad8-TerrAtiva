@@ -4,7 +4,6 @@ import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
-import br.com.dbc.vemser.terrativa.entity.Endereco;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
@@ -30,7 +29,7 @@ public class FeedUsuariosService {
 
     List<ResponseEnderecoTerrenosDTO> enderecos = new ArrayList<>();
 
-    public List<ResponseTerrenoDTO> mostrarTerrenosDisponiveis(Integer id) throws Exception{
+    public List<ResponseTerrenoDTO> mostrarTerrenosDisponiveis(Integer id) {
         List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("S", id);
         for (Terreno t : terrenos) {
             enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
@@ -42,7 +41,7 @@ public class FeedUsuariosService {
         return  responseTerreno;
     }
 
-    public List<ResponseTerrenoDTO> mostrarTerrenosDoUsuario(Integer id) throws Exception {
+    public List<ResponseTerrenoDTO> mostrarTerrenosDoUsuario(Integer id) {
         List<Terreno> terrenos = terrenoRepository.findAllByProprietarioID(id);
         for (Terreno t : terrenos) {
             enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
@@ -73,7 +72,7 @@ public class FeedUsuariosService {
         return responseTerreno;
     }
 
-    public List<ResponseTerrenoDTO> mostrarTerrenosArrendados(Integer id) throws Exception{
+    public List<ResponseTerrenoDTO> mostrarTerrenosArrendados(Integer id) {
         List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("N", id);
         for (Terreno t : terrenos) {
             enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));

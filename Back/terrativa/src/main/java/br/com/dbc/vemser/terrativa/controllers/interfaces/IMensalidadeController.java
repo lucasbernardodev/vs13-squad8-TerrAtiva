@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseMensalidadeDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,7 +27,7 @@ public interface IMensalidadeController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
+    ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
 
     @Operation(summary = "Resgata Mensalidade", description = "Resgata mensalidade por ID.")
     @ApiResponses(
@@ -38,7 +38,7 @@ public interface IMensalidadeController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseMensalidadeDTO> resgatarMensalidadePorId(@PathVariable Integer id) throws Exception;
+    ResponseEntity<ResponseMensalidadeDTO> resgatarMensalidadePorId(@PathVariable Integer id) throws Exception;
 
 
 

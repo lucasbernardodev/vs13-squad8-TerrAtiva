@@ -1,8 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoTerrenosCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.entity.EstadosMunicipios;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;

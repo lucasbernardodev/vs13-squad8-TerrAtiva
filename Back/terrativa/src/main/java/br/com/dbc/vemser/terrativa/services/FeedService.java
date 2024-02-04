@@ -30,7 +30,10 @@ public class FeedService {
         return terrenos.map(terrenoMapper::terrenoToFeedDTO);
     }
 
-    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
-        return terrenoRepository.quantidadeAnuncios();
+//    public List<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios() {
+//        return terrenoRepository.quantidadeAnuncios();
+//    }
+    public Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable) {
+        return terrenoRepository.quantidadeAnuncios(pageable);
     }
 }

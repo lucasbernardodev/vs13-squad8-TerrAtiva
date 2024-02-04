@@ -30,7 +30,7 @@ public class FeedController {
 
     @GetMapping
     public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
-            @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(value = "campoDeBusca", required = false) String campoDebusca,
             @RequestParam(value = "precoInicial", required = false) Integer precoIncial,
             @RequestParam(value = "precoFinal", required = false) Integer precoFinal,
@@ -42,20 +42,14 @@ public class FeedController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-
-//    @GetMapping("/buscar")
-//    public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
-//            @PageableDefault(size = 10, page = 0, sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable) {
-//        log.info("Mostrando terrenos disponíveis.");
-//        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable);
-//        log.info("Consulta concluída. Retornando {} resultados.", response.getTotalElements());
-//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    @GetMapping("/quantidade/estado")
+//    public ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado() {
+//        List<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios();
+//        return new ResponseEntity<>(resultado, HttpStatus.OK);
 //    }
-
     @GetMapping("/quantidade/estado")
-    public ResponseEntity<List<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado() {
-        List<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios();
+    public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(@PageableDefault(sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
+        Page<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios(pageable);
         return new ResponseEntity<>(resultado, HttpStatus.OK);
     }
 }

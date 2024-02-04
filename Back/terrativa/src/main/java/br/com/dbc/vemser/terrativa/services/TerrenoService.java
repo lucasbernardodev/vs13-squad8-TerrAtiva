@@ -3,12 +3,12 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
@@ -39,6 +39,7 @@ public class TerrenoService {
     public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws Exception {
         requestTerreno.setId(null);
         requestTerreno.setDisponivel("S");
+        usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
         EnderecoTerrenos enderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(requestTerreno.getEndereco());
         requestTerreno.setEnderecoID(enderecoTerrenos.getId());
         Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
@@ -49,17 +50,22 @@ public class TerrenoService {
     }
 
     public ResponseTerrenoDTO alterarTerreno(Integer idTerreno, RequestTerrenoUpdateDTO requestTerreno) throws RegraDeNegocioException {
-        requestTerreno.setId(idTerreno);
+        Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado"));
+        requestTerreno.setId(terreno.getId());
+        requestTerreno.setProprietarioID(terreno.getDono().getUsuarioId());
+        if (terreno.getDisponivel().equals("N")) {
+            throw new RegraDeNegocioException("Terreno não existe ou está alugado");
+        }
         requestTerreno.getEndereco().setId(idTerreno);
         EnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.alterar(requestTerreno.getEndereco());
         Terreno terrenoCadastro =  terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
-        terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
+        terrenoCadastro.setDono(usuarioRepository.findById(terreno.getDono().getUsuarioId()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
         terrenoCadastro.setEnderecoTerrenoID(responseEnderecoTerrenos);
         terrenoCadastro.setEnderecoID(responseEnderecoTerrenos.getId());
-        Terreno terreno = terrenoRepository.save(terrenoCadastro);
+        Terreno terrenoRetorno = terrenoRepository.save(terrenoCadastro);
 
         return terrenoMapper.terrenoParaResponseTerreno(
-                terreno, EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(responseEnderecoTerrenos));
+                terrenoRetorno, EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(responseEnderecoTerrenos));
     }
 
     public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
@@ -86,7 +92,10 @@ public class TerrenoService {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno indisponível para aluguel"));
         contrato.setTerreno(terreno);
-        contrato.setLocatario(usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
+        contrato.setLocatario(usuarioRepository.findById(contrato.getLocatarioID()) .orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado")));
+        if (contrato.getLocatario().getAtivo().equals("N")) {
+            throw new RegraDeNegocioException("Usuário inativo");
+        }
         if (terreno.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException("Terreno indisponível para aluguel");
         }
