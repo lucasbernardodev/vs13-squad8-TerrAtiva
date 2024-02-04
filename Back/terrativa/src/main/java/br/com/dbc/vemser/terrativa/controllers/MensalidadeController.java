@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
+import br.com.dbc.vemser.terrativa.controllers.interfaces.IMensalidadeController;
 import br.com.dbc.vemser.terrativa.dto.reponses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.services.MensalidadeService;
@@ -20,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/mensalidade")
 @Slf4j
 @Tag(name = "Mensalidades", description = "Endpoints do CRUD de Mensalidades")
-public class MensalidadeController {
+public class MensalidadeController implements IMensalidadeController {
 
     private final MensalidadeService mensalidadeService;
 

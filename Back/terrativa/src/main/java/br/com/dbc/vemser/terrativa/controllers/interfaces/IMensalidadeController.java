@@ -24,30 +24,19 @@ public interface IMensalidadeController {
             }
     )
     @PutMapping("/{id}")
-    ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
+    public ResponseEntity<ResponseMensalidadeDTO> atualizarMensalidade(@PathVariable("id") @NotNull Integer id, @RequestBody @Valid RequestMensalidadeCreateDTO requestMensalidade) throws Exception;
 
-
-    @Operation(summary = "Retorna mensalidade", description = "Retorna mensalidade do respectivo ID.")
+    @Operation(summary = "Resgata Mensalidade", description = "Resgata mensalidade por ID.")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna mensalidade."),
+                    @ApiResponse(responseCode = "200", description = "Retorna mensalidade atualizada"),
                     @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
     @GetMapping("/{id}")
-    ResponseEntity<ResponseMensalidadeDTO> resgatarEnderecoPorID(@PathVariable Integer id) throws Exception;
+    public ResponseEntity<ResponseMensalidadeDTO> resgatarMensalidadePorId(@PathVariable Integer id) throws Exception;
 
 
-    @Operation(summary = "Deleta mensalidade", description = "Deleta mensalidade do respectivo ID.")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Mensalidade deletada."),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deletarMensalidade(@PathVariable Integer id) throws Exception;
 
 }
