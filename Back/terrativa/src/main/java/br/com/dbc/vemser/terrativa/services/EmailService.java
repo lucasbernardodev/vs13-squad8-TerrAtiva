@@ -21,7 +21,6 @@ import java.util.Map;
 public class EmailService {
 
     private final freemarker.template.Configuration fmConfiguration;
-
     private final JavaMailSender emailSender;
 
     @Value("${spring.mail.username}")

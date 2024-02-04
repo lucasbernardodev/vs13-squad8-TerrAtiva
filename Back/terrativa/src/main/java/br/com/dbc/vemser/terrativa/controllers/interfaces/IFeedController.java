@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +31,7 @@ public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
         @RequestParam(value = "campoDeBusca", required = false) String campoDebusca,
         @RequestParam(value = "precoInicial", required = false) Integer precoIncial,
         @RequestParam(value = "precoFinal", required = false) Integer precoFinal,
-        @RequestParam(value = "estado", required = false)Estados estados);
+        @RequestParam(value = "estado", required = false) Estados estados);
 
 
     @Operation(summary = "Quantidade de Anúncios por Estado", description = "Retorna a quantidade de anúncios por estado")

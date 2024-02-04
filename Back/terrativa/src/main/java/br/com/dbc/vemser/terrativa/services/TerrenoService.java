@@ -31,7 +31,6 @@ public class TerrenoService {
 
     public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado"));
-
         return terrenoMapper.terrenoParaResponseTerreno(
                 terreno, enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
     }
@@ -78,14 +77,14 @@ public class TerrenoService {
     }
 
     public void alterarTerrenosUsuarioDeletado(Integer donoID) throws RegraDeNegocioException {
-            List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
-            if (listaTerrenos.isEmpty()){
-                throw new RegraDeNegocioException("Usuário não possui terrenos");
-            }
-            for (Terreno terreno: listaTerrenos){
-                terreno.setDisponivel("N");
-                terrenoRepository.save(terreno);
-            }
+        List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
+        if (listaTerrenos.isEmpty()){
+            throw new RegraDeNegocioException("Usuário não possui terrenos");
+        }
+        for (Terreno terreno: listaTerrenos){
+            terreno.setDisponivel("N");
+            terrenoRepository.save(terreno);
+        }
     }
 
     public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {

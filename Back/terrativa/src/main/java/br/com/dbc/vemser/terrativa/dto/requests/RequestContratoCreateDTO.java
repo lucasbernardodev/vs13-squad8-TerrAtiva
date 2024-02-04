@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Contrato")
+@Hidden
 public class RequestContratoCreateDTO {
 
     @Hidden
@@ -48,6 +49,7 @@ public class RequestContratoCreateDTO {
     @NotNull(message = "A data de vencimento do aluguel não pode ser nula")
     @Schema(description = "Data de vencimento do aluguel do Contrato.", example = "5")
     private Integer dataVencimentoAluguel;
+
 
     private RequestMensalidadeCreateDTO mensalidade;
 

@@ -5,7 +5,6 @@ import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedQuantidadeAnunciosDTO;
 import br.com.dbc.vemser.terrativa.entity.Estados;
 import br.com.dbc.vemser.terrativa.services.FeedService;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "Feed de Anúncios", description = "Endpoints do Feed")
 @RestController
 @RequestMapping("/feed")
-public class FeedController implements IFeedController{
+public class FeedController implements IFeedController {
     private final FeedService feedService;
 
     @GetMapping

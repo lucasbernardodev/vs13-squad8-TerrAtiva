@@ -42,7 +42,6 @@ public class UsuarioService {
         Usuario usuarioSalvo = usuarioRepository.save(UsuarioMapper.requestUsuarioParaUsuario(usuario));
         endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
         ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
-        //TODO: salvar endereço para o retorno
          ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
          responseUsuario.setEndereco(enderecoDTO);
         //emailService.sendEmailUsuario(responseUsuario, 1);

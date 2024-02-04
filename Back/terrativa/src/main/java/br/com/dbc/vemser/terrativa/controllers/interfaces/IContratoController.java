@@ -1,7 +1,5 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,9 +8,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface IContratoController {
 
@@ -36,5 +34,5 @@ public interface IContratoController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>encerrarContrato(@PathVariable Integer id) throws RegraDeNegocioException;
+    ResponseEntity<String>encerrarContrato(@PathVariable Integer id) throws RegraDeNegocioException;
 }

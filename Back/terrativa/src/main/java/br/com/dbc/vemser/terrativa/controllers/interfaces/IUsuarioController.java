@@ -83,7 +83,7 @@ public interface IUsuarioController {
             }
     )
     @GetMapping("/{id}/endereco")
-    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception;
 
     @Operation(summary = "Atualizar endereço", description = "Atualiza o endereço de um usuário")
     @ApiResponses(
@@ -94,7 +94,7 @@ public interface IUsuarioController {
             }
     )
     @PutMapping ("/{id}/endereco")
-    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
+    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
                                                                   @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception;
 
     @Operation(summary = "Deletar usuário", description = "Deletar um usuário no banco")

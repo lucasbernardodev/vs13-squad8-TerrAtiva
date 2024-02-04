@@ -14,12 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class FeedService {
+
     private final TerrenoRepository terrenoRepository;
     private final TerrenoMapper terrenoMapper;
 
