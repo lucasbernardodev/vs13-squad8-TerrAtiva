@@ -27,6 +27,7 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
             WHERE (UPPER(t.TITULO) LIKE UPPER('%'||:campoDeBuscaTitulo||'%') OR
             UPPER(t.DESCRICAO) LIKE UPPER('%'||:campoDeBuscaDescricao||'%')) AND
             (t.PRECO BETWEEN NVL(TO_NUMBER(:precoInicial), t.PRECO) AND NVL(TO_NUMBER(:precoFinal), t.PRECO)) AND
+            (t.DISPONIVEL = 'S') AND
             (em.ESTADO_COD = NVL(TO_NUMBER(:estadoCod), em.ESTADO_COD))
             """,
             nativeQuery = true,
@@ -38,7 +39,8 @@ public interface TerrenoRepository extends JpaRepository<Terreno, Integer> {
                     WHERE (UPPER(t.TITULO) LIKE UPPER('%'||:campoDeBuscaTitulo||'%') OR
                     UPPER(t.DESCRICAO) LIKE UPPER('%'||:campoDeBuscaDescricao||'%')) AND
                     (t.PRECO BETWEEN NVL(TO_NUMBER(:precoInicial), t.PRECO) AND NVL(TO_NUMBER(:precoFinal), t.PRECO)) AND
-                    (em.ESTADO_COD = NVL(TO_NUMBER(:estadoCod), em.ESTADO_COD))
+                    (t.DISPONIVEL = 'S') AND
+                    (em.ESTADO_COD = NVL(TO_NUMBER(:estadoCod), em.ESTADO_COD))    
             """)
     Page<Terreno> buscarFeedComFiltros(Pageable pageable, @Param("campoDeBuscaTitulo") String campoDeBuscaTitulo,
                                        @Param("campoDeBuscaDescricao") String campoDeBuscaDescricao, @Param("precoInicial") Integer precoInicial,
