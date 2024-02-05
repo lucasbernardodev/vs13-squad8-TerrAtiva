@@ -1,16 +1,19 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.mappers.FeedUsuarioMapper;
-import br.com.dbc.vemser.terrativa.dto.mappers.FeedUsuariosAlugadosMapper;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioAlugadosDTO;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseFeedUsuarioDTO;
-import br.com.dbc.vemser.terrativa.repository.FeedUsuarioRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
+import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,26 +22,65 @@ import java.util.List;
 @Slf4j
 public class FeedUsuariosService {
 
-    private final FeedUsuarioRepository feedUsuarioRepository;
-    private final ObjectMapper objectMapper;
+    private final TerrenoRepository terrenoRepository;
+    private final ContratoRepository contratoRepository;
+    private final TerrenoMapper terrenoMapper;
+    private final EnderecoTerrenosService enderecoTerrenosService;
 
-    public List<ResponseFeedUsuarioDTO> mostrarTerrenosDisponiveis(Integer id) throws Exception{
-        return feedUsuarioRepository.mostrarTerrenosDisponiveis(id).stream().map(FeedUsuarioMapper::feedParaResponseFeed).toList();
+    List<ResponseEnderecoTerrenosDTO> enderecos = new ArrayList<>();
+
+    public List<ResponseTerrenoDTO> mostrarTerrenosDisponiveis(Integer id) {
+        List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("S", id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return  responseTerreno;
     }
 
-    public List<ResponseFeedUsuarioDTO> mostrarTerrenosDoUsuario(Integer id) throws Exception {
-
-        return feedUsuarioRepository.mostrarTerrenosDoUsuario(id).stream().map(FeedUsuarioMapper::feedParaResponseFeed).toList();
+    public List<ResponseTerrenoDTO> mostrarTerrenosDoUsuario(Integer id) {
+        List<Terreno> terrenos = terrenoRepository.findAllByProprietarioID(id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return responseTerreno;
     }
 
-    public List<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosAlugados(Integer id) throws Exception{
+    public List<ResponseTerrenoDTO> mostrarTerrenosAlugados(Integer id) throws RegraDeNegocioException{
 
-        return feedUsuarioRepository.mostrarTerrenosAlugados(id).stream().map(FeedUsuariosAlugadosMapper :: feedUsuariosParaAlugados).toList();
+        List<Contrato> contrato = contratoRepository.findAllByLocatarioID(id);
+        List<Terreno> terrenos = new ArrayList<>();
+        for (Contrato c : contrato) {
+            Terreno terreno = terrenoRepository.findById(
+                    c.getTerrenoID()).orElseThrow(() -> new RegraDeNegocioException(
+                    "Ocorreu um erro interno, tente novamente mais tarde."));
+            terrenos.add(terreno);
+            enderecos.add(enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
 
+        return responseTerreno;
     }
 
-    public List<ResponseFeedUsuarioAlugadosDTO> mostrarTerrenosArrendados(Integer id) throws Exception{
-
-        return feedUsuarioRepository.mostrarTerrenosArrendados(id).stream().map(FeedUsuariosAlugadosMapper :: feedUsuariosParaAlugados).toList();
+    public List<ResponseTerrenoDTO> mostrarTerrenosArrendados(Integer id) {
+        List<Terreno> terrenos = terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("N", id);
+        for (Terreno t : terrenos) {
+            enderecos.add(enderecoTerrenosService.resgatarPorId(t.getEnderecoID()));
+        }
+        List<ResponseTerrenoDTO> responseTerreno = new ArrayList<>();
+        for (int i = 0; i < terrenos.size(); i++) {
+            responseTerreno.add(terrenoMapper.terrenoParaResponseTerreno(terrenos.get(i), enderecos.get(i)));
+        }
+        return responseTerreno;
     }
 }

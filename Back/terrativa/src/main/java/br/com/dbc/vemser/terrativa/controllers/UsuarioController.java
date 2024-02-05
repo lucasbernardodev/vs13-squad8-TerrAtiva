@@ -1,9 +1,12 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +63,9 @@ public class UsuarioController implements IUsuarioController {
 
     @PutMapping("/{idUsuario}")
     public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                               @Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception {
+                                                               @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception {
         log.info("Atualizando usuário");
-        usuario.setUsuarioId(idUsuario);
-        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(usuario);
+        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
         log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
     }
@@ -74,5 +76,23 @@ public class UsuarioController implements IUsuarioController {
         usuarioService.deletarUsuario(idUsuario);
         log.info("Deletou usuário");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/endereco")
+    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception {
+        log.info("Buscando endereço por Id.");
+        ResponseEnderecoDTO endereco = usuarioService.resgatarPorId(id);
+        log.info("Endereço Listado!");
+        return new ResponseEntity<>(endereco, HttpStatus.OK);
+    }
+
+    @PutMapping ("/{id}/endereco")
+    public  ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
+                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception {
+        log.info("Alterando Endereço.");
+        ResponseEnderecoDTO responseEndereco = usuarioService.alterarEndereco(id, endereco);
+        log.info("Endereço Criado!");
+
+        return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
 }

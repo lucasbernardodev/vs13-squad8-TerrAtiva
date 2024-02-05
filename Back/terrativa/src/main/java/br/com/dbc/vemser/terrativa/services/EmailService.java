@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import java.util.Map;
 public class EmailService {
 
     private final freemarker.template.Configuration fmConfiguration;
-
     private final JavaMailSender emailSender;
 
     @Value("${spring.mail.username}")

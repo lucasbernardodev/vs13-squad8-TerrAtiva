@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Terreno")
-public class RequestTerrenoCreateDTO {
+public class RequestTerrenoUpdateDTO {
 
     @Hidden
     @Schema(description = "Identificador único do Terreno.", example = "1")
@@ -31,8 +31,7 @@ public class RequestTerrenoCreateDTO {
     @Schema(description = "Identificador único do Proprietário.", example = "1")
     private Integer proprietarioID;
 
-    @Hidden
-    private Integer enderecoID;
+    private RequestEnderecoTerrenosCreateDTO endereco;
 
     @NotNull(message = "Preço é obrigatório")
     @Schema(description = "Preço do Terreno.", example = "500.00")
@@ -42,9 +41,6 @@ public class RequestTerrenoCreateDTO {
     @Schema(description = "Tamanho do Terreno.", example = "100000")
     private String tamanho;
 
-    private RequestEnderecoTerrenosCreateDTO endereco;
-
-    @Hidden
     @Schema(description = "Disponibilidade do Terreno.", example = "S")
     private String disponivel;
 }

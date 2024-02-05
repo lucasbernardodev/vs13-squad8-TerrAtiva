@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 public class PropertiesReader {
     @Value("${admin}")
     private Boolean admin;
-    @Value("${dbuser}")
+    @Value("${spring.datasource.username}")
     private String dbuser;
-    @Value("${dbpassword}")
+    @Value("${spring.datasource.password}")
     private String dbpassword;
-    @Value("${dburl}")
+    @Value("${spring.datasource.url}")
     private String dburl;
     @Value("${spring.jpa.properties.hibernate.default_schema}")
     private String SCHEMA;

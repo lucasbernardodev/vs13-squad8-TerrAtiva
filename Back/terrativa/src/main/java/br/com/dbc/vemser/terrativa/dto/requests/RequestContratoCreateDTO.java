@@ -1,12 +1,13 @@
 package br.com.dbc.vemser.terrativa.dto.requests;
 
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -20,7 +21,7 @@ public class RequestContratoCreateDTO {
     @Schema(description = "Identificador único do Contrato.", example = "1")
     private Integer id;
 
-@   NotNull(message = "O ID do locatário não pode ser nulo")
+    @NotNull(message = "O ID do locatário não pode ser nulo")
     @Schema(description = "Identificador único do Locatário.", example = "1")
     private Integer locatarioID;
 
@@ -47,5 +48,14 @@ public class RequestContratoCreateDTO {
     @NotNull(message = "A data de vencimento do aluguel não pode ser nula")
     @Schema(description = "Data de vencimento do aluguel do Contrato.", example = "5")
     private Integer dataVencimentoAluguel;
+
+
+    private RequestMensalidadeCreateDTO mensalidade;
+
+    @Hidden
+    private Terreno terreno;
+
+    @Hidden
+    private Usuario locatario;
 
 }

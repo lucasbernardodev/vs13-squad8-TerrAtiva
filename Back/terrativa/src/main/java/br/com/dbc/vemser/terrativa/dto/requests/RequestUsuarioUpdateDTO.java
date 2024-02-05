@@ -14,14 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuarioCreateDTO {
-
+public class RequestUsuarioUpdateDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     @Hidden
     private Integer usuarioId;
-
-    private RequestEnderecoCreateDTO endereco;
 
     @NotBlank(message = "Nome é obrigatório")
     @Schema(description = "Primeiro nome do Usuário.", example = "João")
@@ -63,7 +60,4 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
 
-    @Schema(description = "Ativo.", example = "S")
-    @Hidden
-    private String ativo;
 }
