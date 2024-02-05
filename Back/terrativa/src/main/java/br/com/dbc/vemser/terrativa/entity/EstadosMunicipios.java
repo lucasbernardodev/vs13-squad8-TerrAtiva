@@ -1,15 +1,41 @@
 package br.com.dbc.vemser.terrativa.entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Getter
+@Setter
+@ToString
+@Entity(name = "ESTADO_MUNICIPIOS")
 public class EstadosMunicipios {
 
-    private String nomeEstado;
-    private Integer estadoCod;
-    private String nomeMunicipio;
+    @Id
+    @Column(name = "MUNICIPIO_COD_IBGE")
     private Integer municipioCodIBGE;
+
+    @Column(name = "NOME_ESTADO")
+    private String nomeEstado;
+
+    @Column(name = "ESTADO_COD")
+    private Integer estadoCod;
+
+    @Column(name = "NOME_MUNICIPIO")
+    private String nomeMunicipio;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "codIBGE", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<Endereco> endereco;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "codIBGE", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<EnderecoTerrenos> enderecoTerrenos;
+
 }

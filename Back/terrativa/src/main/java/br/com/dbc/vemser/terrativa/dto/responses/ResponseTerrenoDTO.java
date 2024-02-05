@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.dto.reponses;
+package br.com.dbc.vemser.terrativa.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ public class ResponseTerrenoDTO {
     private String titulo;
     private String descricao;
     private Integer proprietarioID;
-    private Integer enderecoID;
+    private ResponseEnderecoTerrenosDTO endereco;
     private double preco;
     private String tamanho;
     private String disponivel;

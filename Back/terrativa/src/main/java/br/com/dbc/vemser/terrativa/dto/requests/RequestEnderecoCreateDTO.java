@@ -18,7 +18,7 @@ public class RequestEnderecoCreateDTO {
     @Hidden
     private Integer id;
 
-    @NotNull(message = "O ID do usuário não pode ser nulo")
+    @Hidden
     @Schema(description = "Identificador único do Usuário.", example = "1")
     private Integer usuarioID;
 

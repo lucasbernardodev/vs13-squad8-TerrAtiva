@@ -1,8 +1,10 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
-import br.com.dbc.vemser.terrativa.dto.reponses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,16 +40,14 @@ public interface ITerrenoController {
     ResponseEntity<ResponseTerrenoDTO> cadastrarTerreno(@Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception;
 
     @Operation(summary = "Atualizar terreno", description = "Atualiza um terreno existente")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Atualiza e retorna o terreno atualizado"),
-                    @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Atualiza e retorna o terreno atualizado"),
+            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+    })
     @PutMapping("/{idTerreno}")
     ResponseEntity<ResponseTerrenoDTO> atualizarTerreno(@PathVariable("idTerreno") Integer idTerreno,
-                                                        @Valid @RequestBody RequestTerrenoCreateDTO terreno) throws Exception;
+                                                        @Valid @RequestBody RequestTerrenoUpdateDTO terreno) throws Exception;
 
     @Operation(summary = "Deletar terreno", description = "Deleta um terreno existente")
     @ApiResponses(
@@ -69,6 +69,6 @@ public interface ITerrenoController {
             }
     )
     @PostMapping("/{idTerreno}/arrendar")
-    ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
-                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
+    ResponseEntity<ResponseContratoRelatorioDTO> arrendarTerreno(@PathVariable Integer idTerreno,
+                                                                 @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 }

@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.terrativa.dto.reponses;
+package br.com.dbc.vemser.terrativa.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class ResponseFeedDTO {
 
-    private int terrenoId;
+    private Integer terrenoId;
     private String titulo;
-    private String descricao;
-    private double preco;
-    private int tamanho;
-    private String estado;
+    private Double preco;
+    private String tamanho;
+    private String criado;
     private String cidade;
+    private String estado;
+
 }
