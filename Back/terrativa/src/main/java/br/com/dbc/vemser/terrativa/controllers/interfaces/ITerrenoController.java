@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -68,6 +69,6 @@ public interface ITerrenoController {
             }
     )
     @PostMapping("/{idTerreno}/arrendar")
-    ResponseEntity<String> arrendarTerreno(@PathVariable Integer idTerreno,
-                                                  @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
+    ResponseEntity<ResponseContratoRelatorioDTO> arrendarTerreno(@PathVariable Integer idTerreno,
+                                                                 @Valid @RequestBody RequestContratoCreateDTO contrato) throws Exception;
 }

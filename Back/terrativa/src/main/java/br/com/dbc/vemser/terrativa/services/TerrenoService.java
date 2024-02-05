@@ -9,8 +9,10 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
@@ -31,6 +33,9 @@ public class TerrenoService {
 
     public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno não encontrado"));
+        if (terreno.getDisponivel().equals("N")) {
+            throw new RegraDeNegocioException("Terreno não existe ou está alugado");
+        }
         return terrenoMapper.terrenoParaResponseTerreno(
                 terreno, enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
     }
@@ -38,7 +43,10 @@ public class TerrenoService {
     public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws RegraDeNegocioException {
         requestTerreno.setId(null);
         requestTerreno.setDisponivel("S");
-        usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
+        Usuario usuario = usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
+        if (usuario.getAtivo().equals("N")) {
+            throw new RegraDeNegocioException("Usuário inativo");
+        }
         EnderecoTerrenos enderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(requestTerreno.getEndereco());
         requestTerreno.setEnderecoID(enderecoTerrenos.getId());
         Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
@@ -79,7 +87,7 @@ public class TerrenoService {
     public void alterarTerrenosUsuarioDeletado(Integer donoID) throws RegraDeNegocioException {
         List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
         if (listaTerrenos.isEmpty()){
-            throw new RegraDeNegocioException("Usuário não possui terrenos");
+            return;
         }
         for (Terreno terreno: listaTerrenos){
             terreno.setDisponivel("N");
@@ -87,7 +95,7 @@ public class TerrenoService {
         }
     }
 
-    public void arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {
+    public ResponseContratoRelatorioDTO arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException("Terreno indisponível para aluguel"));
         contrato.setTerreno(terreno);
@@ -104,7 +112,7 @@ public class TerrenoService {
         mensalidadeService.criarMensalidade(contrato.getMensalidade());
         terreno.setDisponivel("N");
         terrenoRepository.save(terreno);
-
+        return contratoService.resgatarContratoPorId(contratoResponse.getId());
     }
 
 }

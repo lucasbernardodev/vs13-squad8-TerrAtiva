@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Contrato")
-@Hidden
 public class RequestContratoCreateDTO {
 
     @Hidden
