@@ -21,8 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-
-    private final br.com.dbc.vemser.pessoaapi.security.TokenService tokenService;
+    private final TokenService tokenService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,9 +30,15 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/auth", "/").permitAll()
+                        //.antMatchers("/pessoa").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
+                        .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
+                        .antMatchers("/contato/**").hasRole("ADMIN")
+                        .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
+                        .antMatchers("/pet").hasRole("MARKETING")
                         .anyRequest().authenticated()
                 );
-        http.addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new TokenAuthenticationFilter((org.springframework.security.core.token.TokenService) tokenService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

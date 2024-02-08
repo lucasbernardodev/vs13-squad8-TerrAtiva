@@ -1,8 +1,10 @@
-package br.com.dbc.vemser.pessoaapi.security;
+package br.com.dbc.vemser.terrativa.security;
 
-import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
-import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +19,21 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UsuarioEntity> usuarioEntityOptional = usuarioService.findByLogin(username);
-        return usuarioEntityOptional
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario inválido"));
+        RequestUsuarioLoginDTO requestUsuarioLoginDTO = new RequestUsuarioLoginDTO();
+        requestUsuarioLoginDTO.setEmail(username);
+        requestUsuarioLoginDTO.setSenha("");
+
+        Usuario usuario = usuarioService.loginUsuario(requestUsuarioLoginDTO);
+
+        if (usuario != null) {
+            return User.builder()
+                    .username(usuario.getEmail())
+                    .password(usuario.getSenha())
+                    .roles("USER")
+                    .build();
+        } else {
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        }
     }
 }
+

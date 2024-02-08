@@ -1,6 +1,5 @@
-package br.com.dbc.vemser.pessoaapi.security;
+package br.com.dbc.vemser.terrativa.security;
 
-import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,8 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
@@ -23,18 +21,19 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String tokenFromHeader = getTokenFromHeader(request);
+
         UsernamePasswordAuthenticationToken user = tokenService.isValid(tokenFromHeader);
         SecurityContextHolder.getContext().setAuthentication(user);
+
         filterChain.doFilter(request, response);
     }
 
-
     private String getTokenFromHeader(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (token == null) {
-            return null;
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            return header.substring(7);
         }
-        return token.replace(BEARER, "");
+        return null;
     }
 
 }

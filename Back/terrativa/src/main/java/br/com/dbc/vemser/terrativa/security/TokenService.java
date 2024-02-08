@@ -1,8 +1,7 @@
-package br.com.dbc.vemser.pessoaapi.security;
+package br.com.dbc.vemser.terrativa.security;
 
-import br.com.dbc.vemser.pessoaapi.entity.CargoEntity;
-import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
-import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
+import br.com.dbc.vemser.terrativa.entity.Cargo;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,18 +11,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
-
     static final String HEADER_STRING = "Authorization";
+
     private static final String TOKEN_PREFIX = "Bearer";
-
     private static final String CARGOS_CLAIM = "cargos";
-
-    private final UsuarioService usuarioService;
 
     @Value("${jwt.expiration}")
     private String expiration;
@@ -31,19 +29,19 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String secret;
 
-
-    public String generateToken(UsuarioEntity usuarioEntity) {
+    // Novo
+    public String generateToken(Usuario usuarioEntity) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + Long.parseLong(expiration));
 
         List<String> cargos = usuarioEntity.getCargos().stream()
-                .map(CargoEntity::getAuthority)
+                .map(Cargo::getAuthority)
                 .toList();
 
         return TOKEN_PREFIX + " " +
                 Jwts.builder()
                         .setIssuer("pessoa-api")
-                        .claim(Claims.ID, usuarioEntity.getIdUsuario().toString())
+                        .claim(Claims.ID, usuarioEntity.getUsuarioId().toString())
                         .claim(CARGOS_CLAIM, cargos)
                         .setIssuedAt(now)
                         .setExpiration(exp)
@@ -63,6 +61,7 @@ public class TokenService {
                 List<SimpleGrantedAuthority> authorities = cargos.stream()
                         .map(SimpleGrantedAuthority::new)
                         .toList();
+
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(user, null, authorities);
                 return usernamePasswordAuthenticationToken;
@@ -70,5 +69,4 @@ public class TokenService {
         }
         return null;
     }
-
 }
