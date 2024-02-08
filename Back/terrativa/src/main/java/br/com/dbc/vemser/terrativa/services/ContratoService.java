@@ -23,9 +23,13 @@ public class ContratoService {
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
 
+    private final String NOT_FOUND_MESSAGE = "Usuário não encontrado";
+    private final String NOT_FOUND_CONTRACT = "Contrato já encerrado";
+    private final String NOT_FOUND_CONTRACT_NULL = "Contrato não encontrado";
+
     public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws RegraDeNegocioException {
         Contrato contrato = contratoRepository.retornaContratoPorID(id);
-        Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
+        Usuario usuario = usuarioRepository.findById(contrato.getLocatarioID()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE));
         contrato.setLocatario(usuario);
         return ContratoMapper.responseContratoRelatorioDTO(contrato);
     }
@@ -40,7 +44,7 @@ public class ContratoService {
     public void deletar(Integer id) throws RegraDeNegocioException {
         Contrato contrato = findByID(id);
         if (contrato.getAtivo().equals("N")) {
-            throw new RegraDeNegocioException("Contrato já encerrado");
+            throw new RegraDeNegocioException(NOT_FOUND_CONTRACT);
         }
         contrato.setAtivo("N");
         contratoRepository.save(contrato);
@@ -51,7 +55,7 @@ public class ContratoService {
     }
 
     private Contrato findByID(Integer id) throws RegraDeNegocioException {
-        return contratoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException("Contrato não encontrado"));
+        return contratoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_CONTRACT_NULL));
     }
 
 }

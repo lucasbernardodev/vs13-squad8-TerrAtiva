@@ -27,10 +27,14 @@ public class UsuarioService {
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
 
+    private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
+    private final String NOT_FOUND_MESSAGE_CONTRATOS = "Você possui contratos ativos, antes de deletar seu cadastro, finalize todos seus contratos!";
+
+
     public ResponseUsuarioDTO buscarUsuarioPorId(Integer id) throws RegraDeNegocioException {
         Usuario usuario = usuarioRepository.findByUsuarioIdAndAtivoEquals(id, "S");
         if (usuario == null || usuario.getAtivo().equals("N")) {
-            throw new RegraDeNegocioException("Usuário não encontrado");
+            throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
         return UsuarioMapper.usuarioParaResponseUsuario(usuario);
     }
@@ -60,12 +64,12 @@ public class UsuarioService {
     public void deletarUsuario(int id) throws RegraDeNegocioException {
         Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(id, "S");
         if (usuarioRecuperado == null) {
-            throw new RegraDeNegocioException("Usuário não encontrado");
+            throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
         List<Contrato> listaContratos = contratoService.buscarContratoPorLocatario(usuarioRecuperado.getUsuarioId());
         for (Contrato contrato: listaContratos){
             if(contrato.getAtivo().equals("S")){
-                throw new RegraDeNegocioException("Você possui contratos ativos, antes de deletar seu cadastro, finalize todos seus contratos!");
+                throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_CONTRATOS);
             }
         }
         terrenoService.alterarTerrenosUsuarioDeletado(id);
@@ -77,7 +81,7 @@ public class UsuarioService {
     public ResponseUsuarioDTO loginUsuario(RequestUsuarioLoginDTO usuario) throws RegraDeNegocioException {
         Usuario usuarioLogin = usuarioRepository.findByEmailAndSenhaAndAtivoEquals(usuario.getEmail(), usuario.getSenha(), "S");
         if (usuarioLogin == null) {
-            throw new RegraDeNegocioException("Usuário não encontrado");
+            throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
         return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
     }

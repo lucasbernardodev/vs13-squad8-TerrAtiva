@@ -17,11 +17,12 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final EstadoMunicipiosService estadoMunicipioService;
 
+    private final String NOT_FOUND_MESSAGE_END = "Endereço não encontrado";
+
     public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
-        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException("Endereço não encontrado"));
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_END));
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }
-
 
     public ResponseEnderecoDTO adicionarEndereco(RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
         Endereco enderecoNovo = EnderecoMapper.RequestEnderecoParaEndereco(endereco);

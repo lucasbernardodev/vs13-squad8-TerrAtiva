@@ -27,6 +27,9 @@ public class FeedUsuariosService {
     private final TerrenoMapper terrenoMapper;
     private final EnderecoTerrenosService enderecoTerrenosService;
 
+    private final String NOT_FOUND_MESSAGE = "Ocorreu um erro interno, tente novamente mais tarde.";
+
+
     List<ResponseEnderecoTerrenosDTO> enderecos = new ArrayList<>();
 
     public List<ResponseTerrenoDTO> mostrarTerrenosDisponiveis(Integer id) {
@@ -60,7 +63,7 @@ public class FeedUsuariosService {
         for (Contrato c : contrato) {
             Terreno terreno = terrenoRepository.findById(
                     c.getTerrenoID()).orElseThrow(() -> new RegraDeNegocioException(
-                    "Ocorreu um erro interno, tente novamente mais tarde."));
+                    NOT_FOUND_MESSAGE));
             terrenos.add(terreno);
             enderecos.add(enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
         }

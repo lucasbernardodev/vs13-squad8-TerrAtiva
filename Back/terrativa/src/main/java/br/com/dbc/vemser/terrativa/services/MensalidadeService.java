@@ -16,6 +16,9 @@ public class MensalidadeService {
     private final MensalidadeRepository mensalidadeRepository;
     private final ContratoService contratoService;
 
+    private final String NOT_FOUND_MESSAGE = "Mensalidade não encontrada";
+
+
     public void criarMensalidade(RequestMensalidadeCreateDTO requestMensalidade) throws RegraDeNegocioException {
         contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());
         Mensalidade mensalidade = MensalidadeMapper.RequestMensalidadeParaMensalidade(requestMensalidade);
@@ -31,7 +34,7 @@ public class MensalidadeService {
 
     public ResponseMensalidadeDTO resgatarMensalidadePorId(Integer id) throws RegraDeNegocioException {
         Mensalidade mensalidade = mensalidadeRepository.findById(id)
-                .orElseThrow(() -> new RegraDeNegocioException("Mensalidade não encontrada"));
+                .orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE));
 
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidade);
     }
