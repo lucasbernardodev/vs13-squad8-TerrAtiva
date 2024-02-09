@@ -33,6 +33,7 @@ public class RequestUsuarioUpdateDTO {
     @Schema(description = "Email do Usuário.", example = "joao.silva@exemplo.com")
     private String email;
 
+    @Hidden
     @NotBlank(message = "Senha é obrigatória")
     @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
     @Schema(description = "Senha do Usuário.", example = "senha123")
