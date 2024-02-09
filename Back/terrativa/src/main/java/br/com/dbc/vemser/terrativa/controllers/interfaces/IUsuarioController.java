@@ -63,16 +63,16 @@ public interface IUsuarioController {
     ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
                                                         @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception;
 
-    @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Login e retorna o usuário logado"),
-                    @ApiResponse(responseCode = "401", content = @Content(schema = @Schema(hidden = true)), description = "Usuário ou senha inválidos"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @PostMapping("/login")
-    ResponseEntity<ResponseUsuarioDTO> loginUsuario( @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception;
+//    @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
+//    @ApiResponses(
+//            value = {
+//                    @ApiResponse(responseCode = "200", description = "Login e retorna o usuário logado"),
+//                    @ApiResponse(responseCode = "401", content = @Content(schema = @Schema(hidden = true)), description = "Usuário ou senha inválidos"),
+//                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+//            }
+//    )
+//    @PostMapping("/login")
+//    ResponseEntity<ResponseUsuarioDTO> loginUsuario( @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception;
 
     @Operation(summary = "Resgatar endereço por id", description = "Resgata o endereço de um usuário pelo id")
     @ApiResponses(

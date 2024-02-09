@@ -52,14 +52,14 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
-            @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
-        log.info("Logando usuário");
-        ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
-        log.info("Logou usuário");
-        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
+//            @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
+//        log.info("Logando usuário");
+//        ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
+//        log.info("Logou usuário");
+//        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+//    }
 
     @PutMapping("/{idUsuario}")
     public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,

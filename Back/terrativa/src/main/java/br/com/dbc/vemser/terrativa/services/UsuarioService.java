@@ -3,7 +3,6 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
@@ -90,27 +89,27 @@ public class UsuarioService {
 //        return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
 //    }
 
-
+//Login
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
 
-    public Optional<Usuario> findByLogin(String username) {
-        return usuarioRepository.findByLogin(username);
+    public Optional<Usuario> findByEmail(String username) {
+        return usuarioRepository.findByEmail(username);
     }
 
     public Optional<Usuario> getLoggedUser() throws RegraDeNegocioException {
         return findById(getIdLoggedUser());
     }
 
+    public Optional<Usuario> findByEmailAndSenha(String email, String senha) {
+        return usuarioRepository.findByEmailAndSenha(email, senha);
+    }
+
     public Integer getIdLoggedUser() {
         Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         return findUserId;
     }
-
-
-
-
     public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
         buscarUsuarioPorId(id);
         return enderecoService.resgatarPorId(id);

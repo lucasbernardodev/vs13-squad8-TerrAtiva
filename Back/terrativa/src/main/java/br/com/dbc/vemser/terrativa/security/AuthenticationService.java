@@ -19,21 +19,15 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        RequestUsuarioLoginDTO requestUsuarioLoginDTO = new RequestUsuarioLoginDTO();
-        requestUsuarioLoginDTO.setEmail(username);
-        requestUsuarioLoginDTO.setSenha("");
+        Usuario usuario = usuarioService.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        Usuario usuario = usuarioService.loginUsuario(requestUsuarioLoginDTO);
-
-        if (usuario != null) {
-            return User.builder()
-                    .username(usuario.getEmail())
-                    .password(usuario.getSenha())
-                    .roles("USER")
-                    .build();
-        } else {
-            throw new UsernameNotFoundException("Usuário não encontrado");
-        }
+        return User.builder()
+                .username(usuario.getEmail())
+                .password(usuario.getSenha())
+                .roles("USER")
+                .build();
     }
 }
+
 

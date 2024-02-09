@@ -30,15 +30,17 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/auth", "/").permitAll()
-                        //.antMatchers("/pessoa").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
                         .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
                         .antMatchers("/contato/**").hasRole("ADMIN")
                         .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
                         .antMatchers("/pet").hasRole("MARKETING")
+                        .antMatchers("/usuario/login").permitAll()
+                        .antMatchers("/usuario").permitAll()
                         .anyRequest().authenticated()
                 );
-        http.addFilterBefore(new TokenAuthenticationFilter((org.springframework.security.core.token.TokenService) tokenService), UsernamePasswordAuthenticationFilter.class);
+
+        http.addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
