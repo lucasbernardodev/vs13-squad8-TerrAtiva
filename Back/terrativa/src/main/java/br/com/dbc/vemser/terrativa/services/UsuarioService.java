@@ -1,10 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestSenhaDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.*;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
@@ -46,23 +44,32 @@ public class UsuarioService {
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws RegraDeNegocioException {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (usuario.getSenha().equals(usuario.getSenhaConf())) {
-            usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
-            usuario.setAtivo("S");
-            usuario.setUsuarioId(null);
-            RequestEnderecoCreateDTO endereco = usuario.getEndereco();
-            Usuario usuarioEntity = UsuarioMapper.requestUsuarioParaUsuario(usuario);
-            usuarioEntity.setCargos(cargoRepository.findCargosByIdCargo(2));
-            Usuario usuarioSalvo = usuarioRepository.save(usuarioEntity);
-            endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
-            ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
-            ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
-            responseUsuario.setEndereco(enderecoDTO);
-            //emailService.sendEmailUsuario(responseUsuario, 1);
-            return responseUsuario;
-        } else {
-            throw new RegraDeNegocioException("As senhas não conferem!");
-        }
+        conferirSenha(usuario.getSenha(), usuario.getSenhaConf());
+        usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+        usuario.setAtivo("S");
+        usuario.setUsuarioId(null);
+        RequestEnderecoCreateDTO endereco = usuario.getEndereco();
+        Usuario usuarioEntity = UsuarioMapper.requestUsuarioParaUsuario(usuario);
+        usuarioEntity.setCargos(cargoRepository.findCargosByIdCargo(2));
+        Usuario usuarioSalvo = usuarioRepository.save(usuarioEntity);
+        endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
+        ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
+        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
+        responseUsuario.setEndereco(enderecoDTO);
+        //emailService.sendEmailUsuario(responseUsuario, 1);
+        return responseUsuario;
+
+    }
+
+    public ResponseAdminDTO criarAdmin(RequestAdminDTO admin) throws Exception {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        conferirSenha(admin.getSenha(), admin.getSenhaConf());
+        admin.setSenha(bCryptPasswordEncoder.encode(admin.getSenha()));
+        Usuario usuario = UsuarioMapper.usuarioParaRequestAdminUsuario(admin);
+        usuario.setAtivo("S");
+        usuario.setCargos(cargoRepository.findCargosByIdCargo(1));
+        Usuario usuarioCadastrado = usuarioRepository.save(usuario);
+        return UsuarioMapper.usuarioParaRequestAdminUsuario(usuarioCadastrado);
     }
 
     public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
@@ -77,19 +84,17 @@ public class UsuarioService {
     public String alterarSenha(Integer idUsuario, RequestSenhaDTO senha) throws Exception{
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Usuario usuarioRecuperado = findById(idUsuario).get();
-        if (bCryptPasswordEncoder.matches(usuarioRecuperado.getSenha(), senha.getSenhaAtual())){
-            if(senha.getSenhaNova().equals(senha.getSenhaNovaConf())){
-                String senhaCripto = bCryptPasswordEncoder.encode(senha.getSenhaNova());
-                usuarioRecuperado.setSenha(senhaCripto);
-                usuarioRepository.save(usuarioRecuperado);
-            } else {
-                new RegraDeNegocioException("Senhas não conferem!");
-            }
+        if (bCryptPasswordEncoder.matches(senha.getSenhaAtual(), usuarioRecuperado.getSenha())){
+            conferirSenha(senha.getSenhaNova(), senha.getSenhaNovaConf());
+            String senhaCripto = bCryptPasswordEncoder.encode(senha.getSenhaNova());
+            usuarioRecuperado.setSenha(senhaCripto);
+            usuarioRepository.save(usuarioRecuperado);
+            return "Senha alterada com sucesso!";
         }else{
-            new RegraDeNegocioException("Senha atual apresentada não confere com a atual");
+            throw new RegraDeNegocioException("Senha apresentada não confere com a atual");
         }
-        return "Senha alterada com sucesso!";
     }
+
 
     public void deletarUsuario(int id) throws RegraDeNegocioException {
         Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(id, "S");
@@ -146,5 +151,13 @@ public class UsuarioService {
     public ResponseEnderecoDTO alterarEndereco(Integer id, RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
         buscarUsuarioPorId(id);
         return enderecoService.alterar(id, endereco);
+    }
+
+    public String conferirSenha(String senha, String senhaConf) throws RegraDeNegocioException {
+        if(senha.equals(senhaConf)){
+            return null;
+        }else {
+            throw new RegraDeNegocioException("As senhas informadas não são iguais!");
+        }
     }
 }
