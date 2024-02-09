@@ -41,6 +41,11 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Senha do Usuário.", example = "senha123")
     private String senha;
 
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres, e deve ser igual a digitada anterioirmente.")
+    @Schema(description = "Senha do Usuário.", example = "senha123")
+    private String senhaConf;
+
     @NotBlank(message = "CPF é obrigatório")
     //@CPF(message = "CPF deve ser válido")
     @Schema(description = "CPF do Usuário.", example = "12345678900")

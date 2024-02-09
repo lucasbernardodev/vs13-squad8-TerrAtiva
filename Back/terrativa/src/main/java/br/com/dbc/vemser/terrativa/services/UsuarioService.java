@@ -10,12 +10,11 @@ import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.terrativa.repository.CargoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import br.com.dbc.vemser.terrativa.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +29,7 @@ public class UsuarioService {
     private final ContratoService contratoService;
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
+    private final CargoRepository cargoRepository;
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
@@ -46,17 +46,23 @@ public class UsuarioService {
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws RegraDeNegocioException {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        usuario.setAtivo("S");
-        usuario.setUsuarioId(null);
-        usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
-        RequestEnderecoCreateDTO endereco = usuario.getEndereco();
-        Usuario usuarioSalvo = usuarioRepository.save(UsuarioMapper.requestUsuarioParaUsuario(usuario));
-        endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
-        ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
-        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
-        responseUsuario.setEndereco(enderecoDTO);
-        //emailService.sendEmailUsuario(responseUsuario, 1);
-        return responseUsuario;
+        if (usuario.getSenha().equals(usuario.getSenhaConf())) {
+            usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+            usuario.setAtivo("S");
+            usuario.setUsuarioId(null);
+            RequestEnderecoCreateDTO endereco = usuario.getEndereco();
+            Usuario usuarioEntity = UsuarioMapper.requestUsuarioParaUsuario(usuario);
+            usuarioEntity.setCargos(cargoRepository.findCargosByIdCargo(2));
+            Usuario usuarioSalvo = usuarioRepository.save(usuarioEntity);
+            endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
+            ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
+            ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
+            responseUsuario.setEndereco(enderecoDTO);
+            //emailService.sendEmailUsuario(responseUsuario, 1);
+            return responseUsuario;
+        } else {
+            throw new RegraDeNegocioException("As senhas não conferem!");
+        }
     }
 
     public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
