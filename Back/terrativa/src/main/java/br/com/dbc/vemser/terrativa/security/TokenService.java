@@ -40,7 +40,7 @@ public class TokenService {
 
         return TOKEN_PREFIX + " " +
                 Jwts.builder()
-                        .setIssuer("pessoa-api")
+                        .setIssuer("terrativa")
                         .claim(Claims.ID, usuarioEntity.getUsuarioId().toString())
                         .claim(CARGOS_CLAIM, cargos)
                         .setIssuedAt(now)

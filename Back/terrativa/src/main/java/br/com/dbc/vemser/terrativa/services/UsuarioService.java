@@ -12,6 +12,7 @@ import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,11 +90,12 @@ public class UsuarioService {
 //        return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
 //    }
 
+
 //Login
+
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
-
     public Optional<Usuario> findByEmail(String username) {
         return usuarioRepository.findByEmail(username);
     }
@@ -107,9 +109,21 @@ public class UsuarioService {
     }
 
     public Integer getIdLoggedUser() {
-        Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        return findUserId;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            Optional<Usuario> usuarioOptional = findByEmail(username);
+            if (usuarioOptional.isPresent()) {
+                return usuarioOptional.get().getUsuarioId();
+            } else {
+                throw new RuntimeException("Usuário não encontrado para o nome de usuário: " + username);
+            }
+        } else {
+            throw new RuntimeException("Usuário não autenticado");
+        }
     }
+
+
     public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
         buscarUsuarioPorId(id);
         return enderecoService.resgatarPorId(id);

@@ -29,15 +29,15 @@ public class SecurityConfiguration {
                 .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-                        .antMatchers("/auth", "/").permitAll()
-                        .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
-                        .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
-                        .antMatchers("/contato/**").hasRole("ADMIN")
-                        .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
-                        .antMatchers("/pet").hasRole("MARKETING")
-                        .antMatchers("/usuario/login").permitAll()
-                        .antMatchers("/usuario").permitAll()
-                        .anyRequest().authenticated()
+//                        .antMatchers("/auth", "/", "/auth/login").permitAll()
+//                        .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
+//                        .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
+//                        .antMatchers("/contato/**").hasRole("ADMIN")
+//                        .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
+//                        .antMatchers("/pet").hasRole("MARKETING")
+//                        .antMatchers("/usuario").permitAll()
+//                        .antMatchers("/auth/usuario/logado").permitAll()
+                        .anyRequest().permitAll()
                 );
 
         http.addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);

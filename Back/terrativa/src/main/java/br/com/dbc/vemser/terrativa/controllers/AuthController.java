@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.requests.LoginDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import br.com.dbc.vemser.terrativa.security.TokenService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -22,7 +20,7 @@ import java.util.Optional;
 @RestController
 @Tag(name = "Login", description = "Endpoints de login usuario")
 @RequiredArgsConstructor
-@RequestMapping("/usuario")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UsuarioService usuarioService;
@@ -40,5 +38,10 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
         }
+    }
+
+    @GetMapping("usuario/logado")
+    public ResponseEntity<Optional<Usuario>> usuarioLogado() throws RegraDeNegocioException {
+        return new ResponseEntity<>(usuarioService.getLoggedUser(), HttpStatus.OK);
     }
 }
