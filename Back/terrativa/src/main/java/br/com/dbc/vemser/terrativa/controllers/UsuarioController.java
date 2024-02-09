@@ -1,10 +1,7 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.controllers.interfaces.IUsuarioController;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
@@ -68,6 +65,12 @@ public class UsuarioController implements IUsuarioController {
         ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
         log.info("Atualizou usuário");
         return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
+    }
+
+    @PostMapping("/{idUsuario}/alterarsenha")
+    public ResponseEntity<String> alterarSenha(@PathVariable("idUsuario") Integer idusuario, @RequestBody @Valid RequestSenhaDTO senha) throws Exception{
+        usuarioService.alterarSenha(idusuario, senha);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{idUsuario}")

@@ -2,6 +2,7 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestSenhaDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
@@ -10,8 +11,10 @@ import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
+import br.com.dbc.vemser.terrativa.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +30,6 @@ public class UsuarioService {
     private final ContratoService contratoService;
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
-    private final PasswordEncoder passwordEncoder;
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
@@ -43,14 +45,16 @@ public class UsuarioService {
     }
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws RegraDeNegocioException {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         usuario.setAtivo("S");
         usuario.setUsuarioId(null);
+        usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
         RequestEnderecoCreateDTO endereco = usuario.getEndereco();
         Usuario usuarioSalvo = usuarioRepository.save(UsuarioMapper.requestUsuarioParaUsuario(usuario));
         endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
         ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
-         ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
-         responseUsuario.setEndereco(enderecoDTO);
+        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
+        responseUsuario.setEndereco(enderecoDTO);
         //emailService.sendEmailUsuario(responseUsuario, 1);
         return responseUsuario;
     }
@@ -62,6 +66,23 @@ public class UsuarioService {
         ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.save(usuarioAtualizado));
 //        emailService.sendEmailUsuario(responseUsuario, 2);
         return responseUsuario;
+    }
+
+    public String alterarSenha(Integer idUsuario, RequestSenhaDTO senha) throws Exception{
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        Usuario usuarioRecuperado = findById(idUsuario).get();
+        if (bCryptPasswordEncoder.matches(usuarioRecuperado.getSenha(), senha.getSenhaAtual())){
+            if(senha.getSenhaNova().equals(senha.getSenhaNovaConf())){
+                String senhaCripto = bCryptPasswordEncoder.encode(senha.getSenhaNova());
+                usuarioRecuperado.setSenha(senhaCripto);
+                usuarioRepository.save(usuarioRecuperado);
+            } else {
+                new RegraDeNegocioException("Senhas não conferem!");
+            }
+        }else{
+            new RegraDeNegocioException("Senha atual apresentada não confere com a atual");
+        }
+        return "Senha alterada com sucesso!";
     }
 
     public void deletarUsuario(int id) throws RegraDeNegocioException {
@@ -110,6 +131,7 @@ public class UsuarioService {
         Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         return findUserId;
     }
+
     public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
         buscarUsuarioPorId(id);
         return enderecoService.resgatarPorId(id);
