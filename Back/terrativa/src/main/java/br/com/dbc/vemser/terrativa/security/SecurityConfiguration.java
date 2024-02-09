@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-//                        .antMatchers("/auth", "/", "/auth/login").permitAll()
+                        .antMatchers("/auth", "/", "/auth/login").permitAll()
 //                        .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
 //                        .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
 //                        .antMatchers("/contato/**").hasRole("ADMIN")
@@ -37,7 +37,7 @@ public class SecurityConfiguration {
 //                        .antMatchers("/pet").hasRole("MARKETING")
 //                        .antMatchers("/usuario").permitAll()
 //                        .antMatchers("/auth/usuario/logado").permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 );
 
         http.addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);

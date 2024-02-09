@@ -15,7 +15,7 @@ import java.util.Set;
 public class Cargo implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_CARGO")
+    @Column(name = "CARGO_ID")
     private int idCargo;
 
     @Column(name = "NOME")
@@ -24,7 +24,7 @@ public class Cargo implements GrantedAuthority {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "USUARIOS_CARGOS",
+            name = "USUARIO_CARGOS",
             joinColumns = @JoinColumn(name = "CARGO_ID"),
             inverseJoinColumns = @JoinColumn(name = "USUARIO_ID")
     )

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,15 +31,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> auth(@RequestBody @Valid LoginDTO loginDTO) {
-        Optional<Usuario> usuarioOptional = usuarioService.findByEmailAndSenha(loginDTO.getEmail(), loginDTO.getSenha());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.getEmail(),
+                        loginDTO.getSenha()
+                );
 
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            String token = tokenService.generateToken(usuario);
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
-        }
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        usernamePasswordAuthenticationToken);
+
+        Usuario usuarioValidado = (Usuario) authentication.getPrincipal();
+
+        return new ResponseEntity<>(tokenService.generateToken(usuarioValidado), HttpStatus.OK);
     }
 
     @GetMapping("usuario/logado")

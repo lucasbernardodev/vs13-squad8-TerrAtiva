@@ -17,16 +17,23 @@ import java.util.Optional;
 public class AuthenticationService implements UserDetailsService {
     private final UsuarioService usuarioService;
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Usuario usuario = usuarioService.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+//
+//        return User.builder()
+//                .username(usuario.getEmail())
+//                .password(usuario.getSenha())
+//                .roles("USER")
+//                .build();
+//    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioService.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-        return User.builder()
-                .username(usuario.getEmail())
-                .password(usuario.getSenha())
-                .roles("USER")
-                .build();
+        Optional<Usuario> usuarioEntityOptional = usuarioService.findByEmail(username);
+        return usuarioEntityOptional
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario inválido"));
     }
 }
 

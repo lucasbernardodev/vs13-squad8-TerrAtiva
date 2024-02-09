@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TokenService {
-    static final String HEADER_STRING = "Authorization";
 
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String CARGOS_CLAIM = "cargos";

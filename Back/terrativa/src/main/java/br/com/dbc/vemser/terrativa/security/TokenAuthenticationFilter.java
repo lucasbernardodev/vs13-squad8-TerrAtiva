@@ -15,7 +15,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
-    private final String BEARER = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -29,9 +28,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getTokenFromHeader(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            return header.substring(7);
+        String AUTHORIZATION = "Authorization";
+        String header = request.getHeader(AUTHORIZATION);
+        String BEARER = "Bearer ";
+        if (header != null && header.startsWith(BEARER)) {
+            return header.replace(BEARER, "");
         }
         return null;
     }

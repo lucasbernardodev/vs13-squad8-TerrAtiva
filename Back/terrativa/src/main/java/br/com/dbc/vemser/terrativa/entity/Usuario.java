@@ -82,9 +82,9 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "USUARIO_CARGO",
-            joinColumns = @JoinColumn(name = "ID_USUARIO"),
-            inverseJoinColumns = @JoinColumn(name = "ID_CARGO")
+            name = "USUARIO_CARGOS",
+            joinColumns = @JoinColumn(name = "USUARIO_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CARGO_ID")
     )
     private Set<Cargo> cargos;
 
