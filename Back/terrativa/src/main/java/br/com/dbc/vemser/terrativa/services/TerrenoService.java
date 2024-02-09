@@ -17,6 +17,7 @@ import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -82,9 +83,13 @@ public class TerrenoService {
     }
 
     public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
+        Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         Terreno terrenoRecuperado = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
         if (terrenoRecuperado.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST);
+        }
+        if (!terrenoRecuperado.getDono().getUsuarioId().equals(findUserId)) {
+            throw new RegraDeNegocioException("Usuário não é o proprietário do terreno");
         }
         terrenoRecuperado.setDisponivel("N");
         terrenoRepository.save(terrenoRecuperado);

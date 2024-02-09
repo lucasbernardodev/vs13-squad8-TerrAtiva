@@ -128,8 +128,7 @@ public class UsuarioService {
     }
 
     public Integer getIdLoggedUser() {
-        Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        return findUserId;
+        return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
     public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
