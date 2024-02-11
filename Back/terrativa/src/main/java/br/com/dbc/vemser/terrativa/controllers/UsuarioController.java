@@ -49,23 +49,14 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<ResponseUsuarioDTO> loginUsuario(
-//            @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception {
-//        log.info("Logando usuário");
-//        ResponseUsuarioDTO responseUsuario = usuarioService.loginUsuario(usuario);
-//        log.info("Logou usuário");
+//    @PutMapping("/{idUsuario}")
+//    public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
+//                                                               @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception {
+//        log.info("Atualizando usuário");
+//        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
+//        log.info("Atualizou usuário");
 //        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
 //    }
-
-    @PutMapping("/{idUsuario}")
-    public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                               @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception {
-        log.info("Atualizando usuário");
-        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
-        log.info("Atualizou usuário");
-        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
-    }
 
     @PostMapping("/{idUsuario}/alterarsenha")
     public ResponseEntity<String> alterarSenha(@PathVariable("idUsuario") Integer idusuario, @RequestBody @Valid RequestSenhaDTO senha) throws Exception{
@@ -98,4 +89,16 @@ public class UsuarioController implements IUsuarioController {
 
         return new ResponseEntity<>(responseEndereco, HttpStatus.OK);
     }
+
+
+    @PutMapping("/alterar")
+    public ResponseEntity<ResponseUsuarioDTO> alterarUsuarioComToken(@RequestHeader("Authorization") String token,
+                                                                     @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception {
+        log.info("Alterando usuário com base no token");
+        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuarioComToken(token, usuario);
+        log.info("Usuário alterado com sucesso");
+        return ResponseEntity.ok(responseUsuario);
+    }
+
+
 }

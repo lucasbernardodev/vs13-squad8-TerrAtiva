@@ -68,4 +68,21 @@ public class TokenService {
         }
         return null;
     }
+
+    public String getUserIdFromToken(String token) {
+        if (token != null) {
+            try {
+                Claims body = Jwts.parser()
+                        .setSigningKey(secret)
+                        .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                        .getBody();
+                return body.get(Claims.ID, String.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
 }

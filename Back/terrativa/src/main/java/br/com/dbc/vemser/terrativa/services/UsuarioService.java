@@ -11,13 +11,14 @@ import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import br.com.dbc.vemser.terrativa.security.SecurityConfiguration;
+import br.com.dbc.vemser.terrativa.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class UsuarioService {
     private final ContratoService contratoService;
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
+    private final TokenService tokenService;
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
@@ -59,14 +61,14 @@ public class UsuarioService {
         return responseUsuario;
     }
 
-    public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
-        buscarUsuarioPorId(idUsuario);
-        usuario.setUsuarioId(idUsuario);
-        Usuario usuarioAtualizado = UsuarioMapper.requestUsuarioParaUsuario(usuario);
-        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.save(usuarioAtualizado));
-//        emailService.sendEmailUsuario(responseUsuario, 2);
-        return responseUsuario;
-    }
+//    public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
+//        buscarUsuarioPorId(idUsuario);
+//        usuario.setUsuarioId(idUsuario);
+//        Usuario usuarioAtualizado = UsuarioMapper.requestUsuarioParaUsuario(usuario);
+//        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.save(usuarioAtualizado));
+////        emailService.sendEmailUsuario(responseUsuario, 2);
+//        return responseUsuario;
+//    }
 
     public String alterarSenha(Integer idUsuario, RequestSenhaDTO senha) throws Exception{
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -99,18 +101,8 @@ public class UsuarioService {
         terrenoService.alterarTerrenosUsuarioDeletado(id);
         usuarioRecuperado.setAtivo("N");
         usuarioRepository.save(usuarioRecuperado);
-//        emailService.sendEmailUsuario(responseUsuarioDTO, 3);
     }
 
-//    public ResponseUsuarioDTO loginUsuario(RequestUsuarioLoginDTO usuario) throws RegraDeNegocioException {
-//        Usuario usuarioLogin = usuarioRepository.findByEmailAndSenhaAndAtivoEquals(usuario.getEmail(), usuario.getSenha(), "S");
-//        if (usuarioLogin == null) {
-//            throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
-//        }
-//        return UsuarioMapper.usuarioParaResponseUsuario(usuarioLogin);
-//    }
-
-//Login
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
@@ -140,5 +132,41 @@ public class UsuarioService {
     public ResponseEnderecoDTO alterarEndereco(Integer id, RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
         buscarUsuarioPorId(id);
         return enderecoService.alterar(id, endereco);
+    }
+
+
+
+
+    public ResponseUsuarioDTO alterarUsuarioComToken(String token, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
+        String userId = tokenService.getUserIdFromToken(token);
+
+        Usuario usuarioExistente = buscarUsuarioPorToken(userId);
+
+        usuarioExistente.setNome(usuario.getNome());
+        usuarioExistente.setSobrenome(usuario.getSobrenome());
+        usuarioExistente.setEmail(usuario.getEmail());
+
+        usuarioRepository.save(usuarioExistente);
+
+        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioExistente);
+
+        return responseUsuario;
+    }
+
+
+    private Usuario buscarUsuarioPorToken(String userId) throws RegraDeNegocioException {
+        if (userId == null) {
+            throw new RegraDeNegocioException("Token inválido");
+        }
+
+        Integer userIdInteger = null;
+        try {
+            userIdInteger = Integer.valueOf(userId);
+        } catch (NumberFormatException e) {
+            throw new RegraDeNegocioException("Token inválido");
+        }
+
+        return usuarioRepository.findById(userIdInteger)
+                .orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
     }
 }

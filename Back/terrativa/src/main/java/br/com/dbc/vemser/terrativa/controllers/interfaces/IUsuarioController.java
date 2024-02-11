@@ -53,15 +53,15 @@ public interface IUsuarioController {
     @PostMapping
     ResponseEntity<ResponseUsuarioDTO> cadastrarUsuario(@Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
 
-    @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário existente")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Atualiza e retorna o usuário atualizado"),
-            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-    })
-    @PutMapping("/{idUsuario}")
-    ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                        @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception;
+//    @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário existente")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Atualiza e retorna o usuário atualizado"),
+//            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
+//            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
+//    })
+//    @PutMapping("/{idUsuario}")
+//    ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
+//                                                        @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception;
 
 //    @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
 //    @ApiResponses(
