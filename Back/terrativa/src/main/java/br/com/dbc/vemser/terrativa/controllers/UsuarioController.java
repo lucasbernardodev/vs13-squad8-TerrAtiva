@@ -60,8 +60,7 @@ public class UsuarioController implements IUsuarioController {
 
     @PostMapping("/{idUsuario}/alterarsenha")
     public ResponseEntity<String> alterarSenha(@PathVariable("idUsuario") Integer idusuario, @RequestBody @Valid RequestSenhaDTO senha) throws Exception{
-        usuarioService.alterarSenha(idusuario, senha);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(usuarioService.alterarSenha(idusuario, senha), HttpStatus.OK);
     }
 
     @DeleteMapping("/{idUsuario}")

@@ -10,18 +10,14 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuarioCreateDTO {
-
+public class RequestAdminDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     @Hidden
     private Integer usuarioId;
-
-    private RequestEnderecoCreateDTO endereco;
 
     @NotBlank(message = "Nome é obrigatório")
     @Schema(description = "Primeiro nome do Usuário.", example = "João")
@@ -68,7 +64,4 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
 
-    @Schema(description = "Ativo.", example = "S")
-    @Hidden
-    private String ativo;
 }

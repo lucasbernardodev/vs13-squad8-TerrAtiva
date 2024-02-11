@@ -1,27 +1,22 @@
-package br.com.dbc.vemser.terrativa.dto.requests;
+package br.com.dbc.vemser.terrativa.dto.responses;
 
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuarioCreateDTO {
-
+@AllArgsConstructor
+@Getter
+@Setter
+public class ResponseAdminDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
-    @Hidden
     private Integer usuarioId;
-
-    private RequestEnderecoCreateDTO endereco;
 
     @NotBlank(message = "Nome é obrigatório")
     @Schema(description = "Primeiro nome do Usuário.", example = "João")
@@ -35,16 +30,6 @@ public class RequestUsuarioCreateDTO {
     @Email(message = "Email deve ser válido")
     @Schema(description = "Email do Usuário.", example = "joao.silva@exemplo.com")
     private String email;
-
-    @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
-    @Schema(description = "Senha do Usuário.", example = "senha123")
-    private String senha;
-
-    @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres, e deve ser igual a digitada anterioirmente.")
-    @Schema(description = "Senha do Usuário.", example = "senha123")
-    private String senhaConf;
 
     @NotBlank(message = "CPF é obrigatório")
     //@CPF(message = "CPF deve ser válido")
@@ -71,4 +56,5 @@ public class RequestUsuarioCreateDTO {
     @Schema(description = "Ativo.", example = "S")
     @Hidden
     private String ativo;
+
 }

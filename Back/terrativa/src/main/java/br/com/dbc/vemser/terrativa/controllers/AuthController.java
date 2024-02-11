@@ -1,6 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers;
 
 import br.com.dbc.vemser.terrativa.dto.requests.LoginDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAdminDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
@@ -50,4 +52,10 @@ public class AuthController {
     public ResponseEntity<Optional<Usuario>> usuarioLogado() throws RegraDeNegocioException {
         return new ResponseEntity<>(usuarioService.getLoggedUser(), HttpStatus.OK);
     }
+
+    @PostMapping("/criaradmin")
+    public ResponseEntity<ResponseAdminDTO> criarAdmin(@RequestBody @Valid RequestAdminDTO admin) throws Exception{
+        return new ResponseEntity<>(usuarioService.criarAdmin(admin), HttpStatus.CREATED);
+    }
+
 }
