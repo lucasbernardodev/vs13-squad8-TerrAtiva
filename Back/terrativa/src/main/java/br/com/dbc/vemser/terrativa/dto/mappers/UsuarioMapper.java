@@ -46,7 +46,6 @@ public class UsuarioMapper {
         usuario.setSobrenome(requestUsuario.getSobrenome());
         usuario.setEmail(requestUsuario.getEmail());
         usuario.setAtivo("S");
-        usuario.setSenha(requestUsuario.getSenha());
         usuario.setCpf(requestUsuario.getCpf());
         usuario.setDataNascimento(requestUsuario.getDataNascimento());
         usuario.setSexo(requestUsuario.getSexo());

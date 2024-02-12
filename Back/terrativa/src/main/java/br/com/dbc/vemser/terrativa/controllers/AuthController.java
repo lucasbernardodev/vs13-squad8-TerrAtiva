@@ -53,9 +53,9 @@ public class AuthController {
         return new ResponseEntity<>(usuarioService.getLoggedUser(), HttpStatus.OK);
     }
 
-//    @PostMapping("/criaradmin")
-//    public ResponseEntity<ResponseAdminDTO> criarAdmin(@RequestBody @Valid RequestAdminDTO admin) throws Exception{
-//        return new ResponseEntity<>(usuarioService.criarAdmin(admin), HttpStatus.CREATED);
-//    }
+    @PostMapping("/criaradmin")
+    public ResponseEntity<ResponseAdminDTO> criarAdmin(@RequestBody @Valid RequestAdminDTO admin) throws Exception{
+        return new ResponseEntity<>(usuarioService.criarAdmin(admin), HttpStatus.CREATED);
+    }
 
 }
