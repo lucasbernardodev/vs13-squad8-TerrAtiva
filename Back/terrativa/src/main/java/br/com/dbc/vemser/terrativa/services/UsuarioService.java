@@ -32,6 +32,7 @@ public class UsuarioService {
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
     private final TokenService tokenService;
+    private final PasswordEncoder passwordEncoder;
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
@@ -47,10 +48,12 @@ public class UsuarioService {
     }
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws RegraDeNegocioException {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         usuario.setAtivo("S");
         usuario.setUsuarioId(null);
-        usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+        if (!usuario.getSenha().equals(usuario.getSenhaConf())) {
+            throw new RegraDeNegocioException("Senhas não conferem!");
+        }
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         RequestEnderecoCreateDTO endereco = usuario.getEndereco();
         Usuario usuarioSalvo = usuarioRepository.save(UsuarioMapper.requestUsuarioParaUsuario(usuario));
         endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
@@ -71,11 +74,10 @@ public class UsuarioService {
 //    }
 
     public String alterarSenha(Integer idUsuario, RequestSenhaDTO senha) throws Exception{
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Usuario usuarioRecuperado = findById(idUsuario).get();
-        if (bCryptPasswordEncoder.matches(usuarioRecuperado.getSenha(), senha.getSenhaAtual())){
+        if (passwordEncoder.matches(usuarioRecuperado.getSenha(), senha.getSenhaAtual())){
             if(senha.getSenhaNova().equals(senha.getSenhaNovaConf())){
-                String senhaCripto = bCryptPasswordEncoder.encode(senha.getSenhaNova());
+                String senhaCripto = passwordEncoder.encode(senha.getSenhaNova());
                 usuarioRecuperado.setSenha(senhaCripto);
                 usuarioRepository.save(usuarioRecuperado);
             } else {
