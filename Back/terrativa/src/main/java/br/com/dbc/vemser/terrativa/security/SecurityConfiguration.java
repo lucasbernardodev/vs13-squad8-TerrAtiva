@@ -26,7 +26,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable().and()
-                .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/auth", "/", "/auth/login").permitAll()
@@ -61,6 +60,7 @@ public class SecurityConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .allowedOrigins("https://vs13-front-squad-8-terra-ativa.vercel.app/**")
                         .allowedMethods("*")
                         .exposedHeaders("Authorization");
             }
