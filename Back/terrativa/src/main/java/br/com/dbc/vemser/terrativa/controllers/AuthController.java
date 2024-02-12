@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @GetMapping("usuario/logado")
-    public ResponseEntity<Optional<Usuario>> usuarioLogado() throws RegraDeNegocioException {
+    public ResponseEntity<Usuario> usuarioLogado() throws RegraDeNegocioException {
         return new ResponseEntity<>(usuarioService.getLoggedUser(), HttpStatus.OK);
     }
 

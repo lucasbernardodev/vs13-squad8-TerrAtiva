@@ -1,10 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestSenhaDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
@@ -14,11 +11,9 @@ import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import br.com.dbc.vemser.terrativa.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +68,8 @@ public class UsuarioService {
 //        return responseUsuario;
 //    }
 
-    public String alterarSenha(Integer idUsuario, RequestSenhaDTO senha) throws Exception{
-        Usuario usuarioRecuperado = findById(idUsuario).get();
+    public String alterarSenha(RequestSenhaDTO senha) throws Exception{
+        Usuario usuarioRecuperado = findById(getIdLoggedUser()).get();
         if (passwordEncoder.matches(usuarioRecuperado.getSenha(), senha.getSenhaAtual())){
             if(senha.getSenhaNova().equals(senha.getSenhaNovaConf())){
                 String senhaCripto = passwordEncoder.encode(senha.getSenhaNova());
@@ -89,8 +84,11 @@ public class UsuarioService {
         return "Senha alterada com sucesso!";
     }
 
-    public void deletarUsuario(int id) throws RegraDeNegocioException {
-        Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(id, "S");
+    public void deletarUsuario(DeletarContaDTO confirmacao) throws RegraDeNegocioException {
+        if (!confirmacao.getConfirmacao().equals("DELETAR MINHA CONTA")) {
+            throw new RegraDeNegocioException("Operação cancelada!");
+        }
+        Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(getIdLoggedUser(), "S");
         if (usuarioRecuperado == null) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
@@ -100,7 +98,7 @@ public class UsuarioService {
                 throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_CONTRATOS);
             }
         }
-        terrenoService.alterarTerrenosUsuarioDeletado(id);
+        terrenoService.alterarTerrenosUsuarioDeletado(getIdLoggedUser());
         usuarioRecuperado.setAtivo("N");
         usuarioRepository.save(usuarioRecuperado);
     }
@@ -113,9 +111,13 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(username);
     }
 
-    public Optional<Usuario> getLoggedUser() throws RegraDeNegocioException {
-        return findById(getIdLoggedUser());
+    public Usuario getLoggedUser() throws RegraDeNegocioException {
+        return findById(getIdLoggedUser()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
     }
+    public ResponseUsuarioDTO getUserDTO() throws RegraDeNegocioException {
+        return UsuarioMapper.usuarioParaResponseUsuario(getLoggedUser());
+    }
+
 
     public Optional<Usuario> findByEmailAndSenha(String email, String senha) {
         return usuarioRepository.findByEmailAndSenha(email, senha);
@@ -125,24 +127,23 @@ public class UsuarioService {
         return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
-    public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
-        buscarUsuarioPorId(id);
-        return enderecoService.resgatarPorId(id);
+    public ResponseEnderecoDTO resgatarPorId() throws RegraDeNegocioException {
+        buscarUsuarioPorId(getIdLoggedUser());
+        return enderecoService.resgatarPorId(getIdLoggedUser());
     }
 
 
-    public ResponseEnderecoDTO alterarEndereco(Integer id, RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
-        buscarUsuarioPorId(id);
-        return enderecoService.alterar(id, endereco);
+    public ResponseEnderecoDTO alterarEndereco(RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
+        buscarUsuarioPorId(getIdLoggedUser());
+        return enderecoService.alterar(getIdLoggedUser(), endereco);
     }
 
 
 
 
-    public ResponseUsuarioDTO alterarUsuarioComToken(String token, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
-        String userId = tokenService.getUserIdFromToken(token);
+    public ResponseUsuarioDTO alterarUsuarioComToken(RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
 
-        Usuario usuarioExistente = buscarUsuarioPorToken(userId);
+        Usuario usuarioExistente = findById(getIdLoggedUser()).get();
 
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setSobrenome(usuario.getSobrenome());
@@ -155,20 +156,4 @@ public class UsuarioService {
         return responseUsuario;
     }
 
-
-    private Usuario buscarUsuarioPorToken(String userId) throws RegraDeNegocioException {
-        if (userId == null) {
-            throw new RegraDeNegocioException("Token inválido");
-        }
-
-        Integer userIdInteger = null;
-        try {
-            userIdInteger = Integer.valueOf(userId);
-        } catch (NumberFormatException e) {
-            throw new RegraDeNegocioException("Token inválido");
-        }
-
-        return usuarioRepository.findById(userIdInteger)
-                .orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado"));
-    }
 }
