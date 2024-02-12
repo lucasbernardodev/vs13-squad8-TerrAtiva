@@ -4,6 +4,7 @@ import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.entity.Endereco;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +32,11 @@ public class EnderecoService {
                enderecoRepository.save(enderecoNovo));
     }
 
-    public ResponseEnderecoDTO alterar(Integer id, RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public ResponseEnderecoDTO alterar(Usuario usuario, RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = EnderecoMapper.RequestEnderecoParaEndereco(endereco);
-        enderecoRecuperado.setId(id);
-        enderecoRecuperado.setUsuarioID(id);
+        enderecoRecuperado.setId(usuario.getUsuarioId());
+        enderecoRecuperado.setUsuarioID(usuario.getUsuarioId());
+        enderecoRecuperado.setUsuario(usuario);
         enderecoRecuperado.setCodIBGE(estadoMunicipioService.buscarCodIBGE(endereco.getCodigoMunicipioIBGE()));
         return EnderecoMapper.EnderecoParaResponseEndereco(
         enderecoRepository.save(

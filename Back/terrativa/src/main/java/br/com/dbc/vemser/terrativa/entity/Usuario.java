@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.terrativa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,12 +13,12 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
 @ToString
-@Data
 @RequiredArgsConstructor
 @Entity(name = "USUARIOS")
 public class Usuario implements UserDetails {
@@ -57,6 +59,12 @@ public class Usuario implements UserDetails {
     @Column(name = "telefone_fixo")
     private String telefoneFixo;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USUARIO_ID", referencedColumnName = "endereco_id")
+    @ToString.Exclude
+    private Endereco enderecoID;
+
     @JsonIgnore
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     @ToString.Exclude
@@ -86,6 +94,7 @@ public class Usuario implements UserDetails {
             joinColumns = @JoinColumn(name = "USUARIO_ID"),
             inverseJoinColumns = @JoinColumn(name = "CARGO_ID")
     )
+    @ToString.Exclude
     private Set<Cargo> cargos;
 
     @Override

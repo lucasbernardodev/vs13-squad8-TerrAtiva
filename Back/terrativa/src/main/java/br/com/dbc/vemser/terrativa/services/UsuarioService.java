@@ -56,6 +56,7 @@ public class UsuarioService {
         Usuario usuarioEntity = UsuarioMapper.requestUsuarioParaUsuario(usuario);
         usuarioEntity.setCargos(cargoRepository.findCargosByIdCargo(2));
         Usuario usuarioSalvo = usuarioRepository.save(usuarioEntity);
+        endereco.setId(usuarioSalvo.getUsuarioId());
         endereco.setUsuarioID(usuarioSalvo.getUsuarioId());
         ResponseEnderecoDTO enderecoDTO = enderecoService.adicionarEndereco(endereco);
         ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioSalvo);
@@ -147,8 +148,7 @@ public class UsuarioService {
 
 
     public ResponseEnderecoDTO alterarEndereco(RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
-        buscarUsuarioPorId(getIdLoggedUser());
-        return enderecoService.alterar(getIdLoggedUser(), endereco);
+        return enderecoService.alterar(getLoggedUser(), endereco);
     }
 
     public String conferirSenha(String senha, String senhaConf) throws Exception{
