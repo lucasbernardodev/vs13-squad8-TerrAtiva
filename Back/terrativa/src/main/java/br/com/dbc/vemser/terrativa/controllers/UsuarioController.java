@@ -49,15 +49,6 @@ public class UsuarioController implements IUsuarioController {
         return new ResponseEntity<>(responseUsuario, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{idUsuario}")
-//    public ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-//                                                               @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception {
-//        log.info("Atualizando usuário");
-//        ResponseUsuarioDTO responseUsuario = usuarioService.alterarUsuario(idUsuario, usuario);
-//        log.info("Atualizou usuário");
-//        return new ResponseEntity<>(responseUsuario, HttpStatus.OK);
-//    }
-
     @PostMapping("/alterarsenha")
     public ResponseEntity<String> alterarSenha(@RequestBody @Valid RequestSenhaDTO senha) throws Exception{
         return new ResponseEntity<>(usuarioService.alterarSenha(senha), HttpStatus.OK);

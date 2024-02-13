@@ -35,6 +35,8 @@ public class UsuarioService {
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
+    private final String OPERATION_CANCELED = "Operação cancelada!";
+    private final String PASSWORD_NOT_CHECK = "Senha atual apresentada não confere com a atual";
     private final String NOT_FOUND_MESSAGE_CONTRATOS = "Você possui contratos ativos, antes de deletar seu cadastro, finalize todos seus contratos!";
 
 
@@ -75,15 +77,6 @@ public class UsuarioService {
         return UsuarioMapper.usuarioParaRequestAdminUsuario(usuarioCadastrado);
     }
 
-//    public ResponseUsuarioDTO alterarUsuario(Integer idUsuario, RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
-//        buscarUsuarioPorId(idUsuario);
-//        usuario.setUsuarioId(idUsuario);
-//        Usuario usuarioAtualizado = UsuarioMapper.requestUsuarioParaUsuario(usuario);
-//        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioRepository.save(usuarioAtualizado));
-////        emailService.sendEmailUsuario(responseUsuario, 2);
-//        return responseUsuario;
-//    }
-
     public String alterarSenha(RequestSenhaDTO senha) throws Exception{
         Usuario usuarioRecuperado = findById(getIdLoggedUser()).get();
         if (passwordEncoder.matches(senha.getSenhaAtual(), usuarioRecuperado.getSenha())){
@@ -93,13 +86,13 @@ public class UsuarioService {
                 usuarioRepository.save(usuarioRecuperado);
                 return "Senha alterada com sucesso!";
         }else{
-            throw new RegraDeNegocioException("Senha atual apresentada não confere com a atual");
+            throw new RegraDeNegocioException(PASSWORD_NOT_CHECK);
         }
     }
 
     public void deletarUsuario(DeletarContaDTO confirmacao) throws RegraDeNegocioException {
         if (!confirmacao.getConfirmacao().equals("DELETAR MINHA CONTA")) {
-            throw new RegraDeNegocioException("Operação cancelada!");
+            throw new RegraDeNegocioException(OPERATION_CANCELED);
         }
         Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(getIdLoggedUser(), "S");
         if (usuarioRecuperado == null) {
@@ -154,7 +147,7 @@ public class UsuarioService {
         if (senha.equals(senhaConf)){
             return null;
         }else {
-            throw new RegraDeNegocioException("As senhas informadas não conferem");
+            throw new RegraDeNegocioException(PASSWORD_NOT_CHECK);
         }
     }
 
