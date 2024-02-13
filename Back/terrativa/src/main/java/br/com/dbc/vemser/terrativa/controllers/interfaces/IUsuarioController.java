@@ -1,9 +1,8 @@
 package br.com.dbc.vemser.terrativa.controllers.interfaces;
 
+import br.com.dbc.vemser.terrativa.dto.requests.DeletarContaDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,27 +52,6 @@ public interface IUsuarioController {
     @PostMapping
     ResponseEntity<ResponseUsuarioDTO> cadastrarUsuario(@Valid @RequestBody RequestUsuarioCreateDTO usuario) throws Exception;
 
-    @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário existente")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Atualiza e retorna o usuário atualizado"),
-            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(hidden = true)), description = "Você não tem permissão para acessar este recurso"),
-            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-    })
-    @PutMapping("/{idUsuario}")
-    ResponseEntity<ResponseUsuarioDTO> atualizarUsuario(@PathVariable("idUsuario") Integer idUsuario,
-                                                        @Valid @RequestBody RequestUsuarioUpdateDTO usuario) throws Exception;
-
-    @Operation(summary = "Login usuário", description = "Login de um usuário no banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Login e retorna o usuário logado"),
-                    @ApiResponse(responseCode = "401", content = @Content(schema = @Schema(hidden = true)), description = "Usuário ou senha inválidos"),
-                    @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
-            }
-    )
-    @PostMapping("/login")
-    ResponseEntity<ResponseUsuarioDTO> loginUsuario( @Valid @RequestBody RequestUsuarioLoginDTO usuario) throws Exception;
-
     @Operation(summary = "Resgatar endereço por id", description = "Resgata o endereço de um usuário pelo id")
     @ApiResponses(
             value = {
@@ -83,7 +61,7 @@ public interface IUsuarioController {
             }
     )
     @GetMapping("/{id}/endereco")
-    ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID(@PathVariable("id") Integer id) throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID() throws Exception;
 
     @Operation(summary = "Atualizar endereço", description = "Atualiza o endereço de um usuário")
     @ApiResponses(
@@ -94,8 +72,7 @@ public interface IUsuarioController {
             }
     )
     @PutMapping ("/{id}/endereco")
-    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@PathVariable("id") Integer id,
-                                                                  @Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception;
+    ResponseEntity<ResponseEnderecoDTO> atualizarEndereco(@Valid @RequestBody RequestEnderecoCreateDTO endereco)throws Exception;
 
     @Operation(summary = "Deletar usuário", description = "Deletar um usuário no banco")
     @ApiResponses(
@@ -105,6 +82,6 @@ public interface IUsuarioController {
                     @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
             }
     )
-    @DeleteMapping("/{idUsuario}")
-    ResponseEntity<String> deletarDados(@PathVariable Integer idUsuario) throws Exception;
+    @PostMapping("/deletar-conta")
+    ResponseEntity<String> deletarDados(@RequestBody @Valid DeletarContaDTO confirmacao) throws Exception;
 }

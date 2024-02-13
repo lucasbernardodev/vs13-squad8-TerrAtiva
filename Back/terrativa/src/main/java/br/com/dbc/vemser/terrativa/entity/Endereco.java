@@ -14,13 +14,18 @@ import javax.persistence.*;
 public class Endereco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ENDERECO")
-    @SequenceGenerator(name = "SEQ_ENDERECO", sequenceName = "SEQ_ENDERECO", allocationSize = 1)
     @Column(name = "ENDERECO_ID")
     private Integer id;
 
+    @JsonIgnore
     @Column(name = "usuario_id")
+    @ToString.Exclude
     private Integer usuarioID;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "enderecoID")
+    @ToString.Exclude
+    private Usuario usuario;
 
     @Column(name = "logradouro")
     private String logradouro;
@@ -36,11 +41,6 @@ public class Endereco {
 
     @Column(name = "municipio_cod_ibge", insertable = false, updatable = false)
     private Integer codMunIBGE;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ENDERECO_ID", referencedColumnName = "ENDERECO_TERRENO_ID")
-    @ToString.Exclude
-    private Terreno terreno;
 
     @JsonIgnore
     @ManyToOne

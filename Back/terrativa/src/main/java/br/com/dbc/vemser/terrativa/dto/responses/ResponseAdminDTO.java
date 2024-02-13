@@ -1,10 +1,11 @@
-package br.com.dbc.vemser.terrativa.dto.requests;
+package br.com.dbc.vemser.terrativa.dto.responses;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -13,14 +14,13 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuarioUpdateDTO {
+@AllArgsConstructor
+@Getter
+@Setter
+public class ResponseAdminDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
-    @Hidden
     private Integer usuarioId;
 
     @NotBlank(message = "Nome é obrigatório")
@@ -35,7 +35,6 @@ public class RequestUsuarioUpdateDTO {
     @Email(message = "Email deve ser válido")
     @Schema(description = "Email do Usuário.", example = "joao.silva@exemplo.com")
     private String email;
-
 
     @NotBlank(message = "CPF é obrigatório")
     //@CPF(message = "CPF deve ser válido")
@@ -58,5 +57,9 @@ public class RequestUsuarioUpdateDTO {
     @Length(min = 10, max = 10, message = "Telefone Fixo deve ter 10 dígitos")
     @Schema(description = "Número de telefone fixo do Usuário.", example = "0123456789")
     private String telefoneFixo;
+
+    @Schema(description = "Ativo.", example = "S")
+    @Hidden
+    private String ativo;
 
 }

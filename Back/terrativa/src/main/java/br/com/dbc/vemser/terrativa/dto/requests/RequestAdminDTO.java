@@ -7,17 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-@Schema(description = "Objeto de Transferência de Dados (DTO) para Solicitação de Usuário")
-public class RequestUsuarioUpdateDTO {
+public class RequestAdminDTO {
 
     @Schema(description = "Identificador único do Usuário.", example = "1")
     @Hidden
@@ -36,6 +32,15 @@ public class RequestUsuarioUpdateDTO {
     @Schema(description = "Email do Usuário.", example = "joao.silva@exemplo.com")
     private String email;
 
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
+    @Schema(description = "Senha do Usuário.", example = "senha123")
+    private String senha;
+
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres, e deve ser igual a digitada anterioirmente.")
+    @Schema(description = "Senha do Usuário.", example = "senha123")
+    private String senhaConf;
 
     @NotBlank(message = "CPF é obrigatório")
     //@CPF(message = "CPF deve ser válido")
