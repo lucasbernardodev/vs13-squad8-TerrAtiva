@@ -22,7 +22,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/disponiveis/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis() throws Exception;
 
     @Operation(summary = "Lista todos terrenos do usuário", description = "Lista os terrenos por ID do banco")
     @ApiResponses({
@@ -31,7 +31,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/todosterrenos/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario(@PathVariable("id") @NotNull Integer id) throws Exception;
+    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario() throws Exception;
 
     @Operation(summary = "Lista terrenos que o Usuário alugou dos outros", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses({
@@ -40,7 +40,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/alugados/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosAlugados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosAlugados() throws Exception;
 
     @Operation(summary = "Lista terrenos do Usuário alugado por outras pessoas", description = "Lista os terrenos arrendados por ID do banco")
     @ApiResponses({
@@ -49,5 +49,5 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/arrendados/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados(@PathVariable("id") @NotNull Integer id) throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados() throws Exception;
 }
