@@ -1,10 +1,8 @@
 package br.com.dbc.vemser.terrativa.security;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioLoginDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

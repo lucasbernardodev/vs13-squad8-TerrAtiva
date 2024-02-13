@@ -28,16 +28,12 @@ public class SecurityConfiguration {
         http.headers().frameOptions().disable().and()
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-                        .antMatchers("/auth", "/", "/auth/login").permitAll()
+                        .antMatchers("/", "/auth/login", "/feed/**").permitAll()
+                        .antMatchers(HttpMethod.PUT, "/mensalidade/{id}").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.GET, "/usuario/endereco", "/usuario/logado").hasRole("USUARIOS")
+                        .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST, "/usuario").permitAll()
-
-//                        .antMatchers(HttpMethod.POST, "/pessoa").permitAll()
-//                        .antMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
-//                        .antMatchers("/contato/**").hasRole("ADMIN")
-//                        .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
-//                        .antMatchers("/pet").hasRole("MARKETING")
-                        .antMatchers("/usuario").permitAll()
-                        .antMatchers("/auth/usuario/logado").permitAll()
+                        .antMatchers("/auth/criaradmin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 

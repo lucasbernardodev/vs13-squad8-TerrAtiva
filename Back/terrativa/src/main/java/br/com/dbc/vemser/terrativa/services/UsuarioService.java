@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;

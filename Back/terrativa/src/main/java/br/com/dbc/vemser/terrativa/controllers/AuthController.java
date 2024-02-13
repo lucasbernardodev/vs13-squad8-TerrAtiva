@@ -5,8 +5,8 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestAdminDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
-import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import br.com.dbc.vemser.terrativa.security.TokenService;
+import br.com.dbc.vemser.terrativa.services.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Slf4j
 @RestController
