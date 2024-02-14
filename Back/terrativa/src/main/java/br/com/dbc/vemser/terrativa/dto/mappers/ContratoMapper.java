@@ -21,7 +21,6 @@ public class ContratoMapper {
     public static Contrato requestContratoParaContrato(RequestContratoCreateDTO dto) {
         Contrato entity = new Contrato();
         entity.setId(dto.getId());
-        entity.setLocatarioID(dto.getLocatarioID());
         entity.setLocatario(dto.getLocatario());
         entity.setTerrenoID(dto.getTerrenoID());
         entity.setTerreno(dto.getTerreno());

@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -67,6 +68,10 @@ public class TerrenoService {
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
         requestTerreno.setId(terreno.getId());
         requestTerreno.setProprietarioID(terreno.getDono().getUsuarioId());
+        Integer usuarioId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        if (!terreno.getDono().getUsuarioId().equals(usuarioId)) {
+            throw new RegraDeNegocioException("Usuário não é o proprietário do terreno");
+        }
         if (terreno.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST);
         }
@@ -109,8 +114,12 @@ public class TerrenoService {
     public ResponseContratoRelatorioDTO arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST));
+        Integer usuarioId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        if (terreno.getDono().getUsuarioId().equals(usuarioId)) {
+            throw new RegraDeNegocioException("Usuário não pode alugar seu próprio terreno");
+        }
         contrato.setTerreno(terreno);
-        contrato.setLocatario(usuarioRepository.findById(contrato.getLocatarioID()) .orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO)));
+        contrato.setLocatario(usuarioRepository.findById(usuarioId).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO)));
         if (contrato.getLocatario().getAtivo().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_INATIVO);
         }
