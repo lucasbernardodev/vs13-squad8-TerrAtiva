@@ -30,7 +30,6 @@ public class ContratoService {
     private final String NOT_FOUND_MESSAGE = "Usuário não encontrado";
     private final String NOT_FOUND_CONTRACT = "Contrato já encerrado";
     private final String NOT_FOUND_CONTRACT_NULL = "Contrato não encontrado";
-
     private final String NOT_FOUND_DONO = "Você não tem acesso a este contrato.";
 
     public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws RegraDeNegocioException {
