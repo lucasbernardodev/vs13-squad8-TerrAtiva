@@ -23,6 +23,7 @@ public class MensalidadeService {
 
     private final MensalidadeRepository mensalidadeRepository;
     private final ContratoService contratoService;
+    private final SessaoUsuarioService sessaoUsuarioService;
 
     private final String NOT_FOUND_MESSAGE = "Mensalidade não encontrada";
     private final String NOT_FOUND_DONO = "Você não tem acesso a esta mensalidade";
@@ -53,7 +54,7 @@ public class MensalidadeService {
     }
 
     private String verificaUsuario(Integer id) throws RegraDeNegocioException {
-        Integer idUsuario = getIdLoggedUser();
+        Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Mensalidade mensalidade = mensalidadeRepository.findById(id).get();
         Contrato contrato = contratoService.findByID(mensalidade.getContratoID());
         if(Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || Objects.equals(contrato.getLocatarioID(), idUsuario)){
@@ -63,7 +64,4 @@ public class MensalidadeService {
         }
     }
 
-    private Integer getIdLoggedUser() {
-        return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-    }
 }

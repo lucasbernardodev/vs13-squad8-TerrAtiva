@@ -32,6 +32,7 @@ public class TerrenoService {
    private final UsuarioRepository usuarioRepository;
    private final EnderecoTerrenosService enderecoTerrenosService;
    private final MensalidadeService mensalidadeService;
+    private final SessaoUsuarioService sessaoUsuarioService;
 
     private final String NOT_FOUND_MESSAGE_TERRENO = "Terreno não encontrado";
     private final String NOT_FOUND_MESSAGE_TERRENO_EXIST = "Terreno não existe ou está alugado";
@@ -68,7 +69,7 @@ public class TerrenoService {
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
         requestTerreno.setId(terreno.getId());
         requestTerreno.setProprietarioID(terreno.getDono().getUsuarioId());
-        Integer usuarioId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        Integer usuarioId = sessaoUsuarioService.getIdLoggedUserId();
         if (!terreno.getDono().getUsuarioId().equals(usuarioId)) {
             throw new RegraDeNegocioException("Usuário não é o proprietário do terreno");
         }
@@ -88,7 +89,7 @@ public class TerrenoService {
     }
 
     public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
-        Integer findUserId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        Integer findUserId = sessaoUsuarioService.getIdLoggedUserId();
         Terreno terrenoRecuperado = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
         if (terrenoRecuperado.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST);
@@ -114,7 +115,7 @@ public class TerrenoService {
     public ResponseContratoRelatorioDTO arrendarTerreno(Integer idTerreno, RequestContratoCreateDTO contrato) throws RegraDeNegocioException {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST));
-        Integer usuarioId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        Integer usuarioId = sessaoUsuarioService.getIdLoggedUserId();
         if (terreno.getDono().getUsuarioId().equals(usuarioId)) {
             throw new RegraDeNegocioException("Usuário não pode alugar seu próprio terreno");
         }

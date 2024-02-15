@@ -29,9 +29,9 @@ public class UsuarioService {
     private final ContratoService contratoService;
     private final TerrenoService terrenoService;
     private final EnderecoService enderecoService;
-    private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final CargoRepository cargoRepository;
+    private final SessaoUsuarioService sessaoUsuarioService;
 
 
     private final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
@@ -78,7 +78,7 @@ public class UsuarioService {
     }
 
     public String alterarSenha(RequestSenhaDTO senha) throws Exception{
-        Usuario usuarioRecuperado = findById(getIdLoggedUser()).get();
+        Usuario usuarioRecuperado = findById(sessaoUsuarioService.getIdLoggedUserId()).get();
         if (passwordEncoder.matches(senha.getSenhaAtual(), usuarioRecuperado.getSenha())){
                 conferirSenha(senha.getSenhaNova(), senha.getSenhaNovaConf());
                 String senhaCripto = passwordEncoder.encode(senha.getSenhaNova());
@@ -94,7 +94,7 @@ public class UsuarioService {
         if (!confirmacao.getConfirmacao().equals("DELETAR MINHA CONTA")) {
             throw new RegraDeNegocioException(OPERATION_CANCELED);
         }
-        Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(getIdLoggedUser(), "S");
+        Usuario usuarioRecuperado = usuarioRepository.findByUsuarioIdAndAtivoEquals(sessaoUsuarioService.getIdLoggedUserId(), "S");
         if (usuarioRecuperado == null) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
@@ -104,7 +104,7 @@ public class UsuarioService {
                 throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_CONTRATOS);
             }
         }
-        terrenoService.alterarTerrenosUsuarioDeletado(getIdLoggedUser());
+        terrenoService.alterarTerrenosUsuarioDeletado(sessaoUsuarioService.getIdLoggedUserId());
         usuarioRecuperado.setAtivo("N");
         usuarioRepository.save(usuarioRecuperado);
     }
@@ -118,7 +118,7 @@ public class UsuarioService {
     }
 
     public Usuario getLoggedUser() throws RegraDeNegocioException {
-        return findById(getIdLoggedUser()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
+        return findById(sessaoUsuarioService.getIdLoggedUserId()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
     }
 
     public ResponseUsuarioDTO getUserDTO() throws RegraDeNegocioException {
@@ -129,13 +129,9 @@ public class UsuarioService {
         return usuarioRepository.findByEmailAndSenha(email, senha);
     }
 
-    public Integer getIdLoggedUser() {
-        return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-    }
-
     public ResponseEnderecoDTO resgatarPorId() throws RegraDeNegocioException {
-        buscarUsuarioPorId(getIdLoggedUser());
-        return enderecoService.resgatarPorId(getIdLoggedUser());
+        buscarUsuarioPorId(sessaoUsuarioService.getIdLoggedUserId());
+        return enderecoService.resgatarPorId(sessaoUsuarioService.getIdLoggedUserId());
     }
 
 
@@ -154,7 +150,7 @@ public class UsuarioService {
 
     public ResponseUsuarioDTO alterarUsuarioComToken(RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
 
-        Usuario usuarioExistente = findById(getIdLoggedUser()).get();
+        Usuario usuarioExistente = findById(sessaoUsuarioService.getIdLoggedUserId()).get();
 
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setSobrenome(usuario.getSobrenome());

@@ -25,6 +25,7 @@ public class ContratoService {
 
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final SessaoUsuarioService sessaoUsuarioService;
 
     private final String NOT_FOUND_MESSAGE = "Usuário não encontrado";
     private final String NOT_FOUND_CONTRACT = "Contrato já encerrado";
@@ -66,17 +67,13 @@ public class ContratoService {
     }
 
     private String verificaUsuario(Integer id) throws RegraDeNegocioException {
-        Integer idUsuario = getIdLoggedUser();
+        Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Contrato contrato = contratoRepository.findById(id).get();
         if(Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || Objects.equals(contrato.getLocatarioID(), idUsuario)){
             return null;
         } else {
             throw new RegraDeNegocioException(NOT_FOUND_DONO);
         }
-    }
-
-    private Integer getIdLoggedUser() {
-        return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
 }
