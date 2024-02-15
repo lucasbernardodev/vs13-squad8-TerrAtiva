@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ContratoService - Test")
@@ -47,8 +49,9 @@ class ContratoServiceTest {
 
         //THEN
         assertNotNull(responseContratoDTO);
-        assertEquals(responseContratoDTO.getId(), responseContratoDTOMock.getId());
-        assertEquals(responseContratoDTO.getDataAssinatura(), responseContratoDTOMock.getDataAssinatura());
+        assertTrue(new ReflectionEquals(responseContratoDTO).matches(responseContratoDTOMock));
+//        assertEquals(responseContratoDTO.getId(), responseContratoDTOMock.getId());
+//        assertEquals(responseContratoDTO.getDataAssinatura(), responseContratoDTOMock.getDataAssinatura());
 
     }
 
