@@ -4,8 +4,10 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
+import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,11 +17,12 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ContratoService - Test")
@@ -31,6 +34,7 @@ class ContratoServiceTest {
     private UsuarioRepository usuarioRepository;
     @Mock
     private SessaoUsuarioService sessaoUsuarioService;
+
     @InjectMocks
     private ContratoService contratoService;
 
@@ -50,9 +54,23 @@ class ContratoServiceTest {
         //THEN
         assertNotNull(responseContratoDTO);
         assertTrue(new ReflectionEquals(responseContratoDTO).matches(responseContratoDTOMock));
-//        assertEquals(responseContratoDTO.getId(), responseContratoDTOMock.getId());
-//        assertEquals(responseContratoDTO.getDataAssinatura(), responseContratoDTOMock.getDataAssinatura());
 
+    }
+
+    @Test
+    @DisplayName("Deve deletar um contrato com sucesso")
+    public void deletarContratoComSucesso() throws RegraDeNegocioException {
+        //GIVEN
+        Optional<Contrato> contrato = Optional.of(retornaContratoEntity());
+
+        //WHEN
+        when(contratoService.verificaUsuario(anyInt())).thenReturn(null);
+        when(contratoRepository.findById(anyInt())).thenReturn(contrato);
+
+        contratoService.deletar(1);
+
+        //THEN
+        verify(contratoRepository, times(1)).delete(contrato.get());
     }
 
 
