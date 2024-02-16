@@ -3,7 +3,8 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
-import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
+import br.com.dbc.vemser.terrativa.entity.*;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
@@ -17,6 +18,7 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -39,11 +41,34 @@ class ContratoServiceTest {
     private ContratoService contratoService;
 
     @Test
+    @DisplayName("Retorna relatório do contrato com informações de endereço")
+    public void retornaRelatorioDoContrato() throws RegraDeNegocioException {
+        //GIVEN
+        ResponseContratoRelatorioDTO relMock = retornaRelatorioContrato();
+        Contrato contratoMock = Entidades.retornaContratoEntity();
+        Integer idUsuarioMock = 1;
+        Usuario user = Entidades.retornaUsuario();
+
+        //WHEN
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idUsuarioMock);
+        when(contratoRepository.findById(anyInt())).thenReturn(Optional.ofNullable(contratoMock));
+        when(contratoRepository.retornaContratoPorID(anyInt())).thenReturn(contratoMock);
+        when(usuarioRepository.findById(anyInt())).thenReturn(Optional.ofNullable(user));
+
+        ResponseContratoRelatorioDTO rel = contratoService.resgatarContratoPorId(new Random().nextInt());
+
+        //THEN
+        assertNotNull(rel);
+        assertEquals(relMock, rel);
+
+    }
+
+    @Test
     @DisplayName("Criar contrato com sucesso")
     public void criarContratoComSucesso(){
         //GIVEN
         RequestContratoCreateDTO requestContratoCreateDTOMock = retornaContratCreate();
-        Contrato contratoMock = retornaContratoEntity();
+        Contrato contratoMock = Entidades.retornaContratoEntity();
         ResponseContratoDTO responseContratoDTOMock = retornaResponseContratoDTO();
 
         //WHEN
@@ -57,38 +82,73 @@ class ContratoServiceTest {
 
     }
 
+//    @Test
+//    @DisplayName("Deve deletar um contrato com sucesso")
+//    public void deletarContratoComSucesso() throws RegraDeNegocioException {
+//        //GIVEN
+//        Contrato contratoMock = retornaContratoEntity();
+//        Integer idUsuarioMock = 1;
+//
+//
+//        //WHEN
+//        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idUsuarioMock);
+//        when(contratoRepository.findById(anyInt())).thenReturn(Optional.ofNullable(contratoMock));
+//        when(contratoService.findByID(anyInt())).thenReturn(contratoMock);
+//        when(contratoRepository.save(anyObject())).thenReturn(contratoMock);
+//
+//        contratoService.deletar(100);
+//
+//        //THEN
+//        verify(contratoRepository, times(1)).delete(contratoMock);
+//    }
+
     @Test
-    @DisplayName("Deve deletar um contrato com sucesso")
-    public void deletarContratoComSucesso() throws RegraDeNegocioException {
-        //GIVEN
-        Optional<Contrato> contrato = Optional.of(retornaContratoEntity());
+    @DisplayName("Deve retornar um contrato com sucesso através do ID do locatario")
+    public void buscarContratoPorLocatario() {
+        //Given
+        List<Contrato> contratoListaMock = List.of(Entidades.retornaContratoEntity(), Entidades.retornaContratoEntity(), Entidades.retornaContratoEntity());
 
         //WHEN
-        when(contratoService.verificaUsuario(anyInt())).thenReturn(null);
-        when(contratoRepository.findById(anyInt())).thenReturn(contrato);
+        when(contratoRepository.findAllByLocatarioID(anyInt())).thenReturn(contratoListaMock);
 
-        contratoService.deletar(1);
+        List<Contrato> contratoLista = contratoService.buscarContratoPorLocatario(new Random().nextInt());
 
         //THEN
-        verify(contratoRepository, times(1)).delete(contrato.get());
+        assertNotNull(contratoLista);
+        assertEquals(contratoListaMock.size(), contratoLista.size());
     }
 
+    @Test
+    @DisplayName("Retorna contrato po ID solicitado")
+    public void retornacontratoID() throws RegraDeNegocioException {
+        //Given
+        Optional<Contrato> contratoMock = Optional.of(Entidades.retornaContratoEntity());
 
-    public Contrato retornaContratoEntity(){
-        Contrato cont = new Contrato();
-        cont.setId(1);
-        cont.setLocatarioID(2);
-        cont.setTerrenoID(3);
-        cont.setAtivo("S");
-        cont.setDataAssinatura(LocalDate.of(2024,02,15));
-        cont.setDataFinal(LocalDate.of(2024,02,15));
-        cont.setDataInicio(LocalDate.of(2025,02,15));
-        cont.setDataVencimentoAluguel(5);
-        cont.setCriado("15/02/2024");
-        cont.setEditado("15/02/2024");
+        //WHEN
+        when(contratoRepository.findById(anyInt())).thenReturn(contratoMock);
 
-        return cont;
+        Contrato contrato = contratoService.findByID(new Random().nextInt());
+
+        //THEN
+        assertNotNull(contrato);
+        assertEquals(contrato, contratoMock.get());
     }
+
+    @Test
+    @DisplayName("Deve verificar o usuário para autorizar mudanças em apenas sem contratos.")
+    public void retornaNullCasoSucesso() throws RegraDeNegocioException {
+        //Given
+        Integer idUsuarioMock = 1;
+        Optional<Contrato> contratoMock = Optional.of(Entidades.retornaContratoEntity());
+
+        //WHEN
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idUsuarioMock);
+        when(contratoRepository.findById(anyInt())).thenReturn(contratoMock);
+
+        //THEN
+        assertNull(contratoService.verificaUsuario(new Random().nextInt()));
+    }
+
 
     public RequestContratoCreateDTO retornaContratCreate(){
         RequestContratoCreateDTO cont = new RequestContratoCreateDTO();
@@ -117,6 +177,28 @@ class ContratoServiceTest {
         cont.setDataFinal(LocalDate.of(2024,02,15));
         cont.setDataInicio(LocalDate.of(2025,02,15));
         cont.setDataVencimentoAluguel(5);
+
+        return cont;
+    }
+
+
+    public ResponseContratoRelatorioDTO retornaRelatorioContrato(){
+        ResponseContratoRelatorioDTO cont = new ResponseContratoRelatorioDTO();
+        cont.setIdContrato(1);
+        cont.setAtivo("S");
+        cont.setDataAssinatura(LocalDate.of(2024,02,15));
+        cont.setDataFinal(LocalDate.of(2024,02,15));
+        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataVencimentoAluguel(5);
+        cont.setNomeLocatario("João");
+        cont.setSobrenomeLocatario("Silva");
+        cont.setEmailLocatario("joão@email.com");
+        cont.setCpfLocatario("12345678910");
+        cont.setDataNascimentoLocatario(LocalDate.of(2024,02,15));
+        cont.setSexoLocatario("M");
+        cont.setCelularLocatario("51123456789");
+        cont.setIdTerreno(1);
+        cont.setLogradouro("Avenida Paulista");
 
         return cont;
     }

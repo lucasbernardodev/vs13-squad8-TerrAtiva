@@ -65,7 +65,7 @@ public class ContratoService {
         return contratoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_CONTRACT_NULL));
     }
 
-    public String verificaUsuario(Integer id) throws RegraDeNegocioException {
+    public Void verificaUsuario(Integer id) throws RegraDeNegocioException {
         Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Contrato contrato = contratoRepository.findById(id).get();
         if(Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || Objects.equals(contrato.getLocatarioID(), idUsuario)){
