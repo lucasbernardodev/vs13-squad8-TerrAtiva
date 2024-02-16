@@ -8,7 +8,7 @@ public class Entidades {
 
     public static Usuario retornaUsuario(){
         Usuario usuario = new Usuario();
-        usuario.setUsuarioId(1);
+        usuario.setUsuarioId(2);
         usuario.setNome("João");
         usuario.setSobrenome("Silva");
         usuario.setEmail("joão@email.com");
@@ -27,7 +27,7 @@ public class Entidades {
         terreno.setId(1);
         terreno.setTitulo("Terreno para Compra");
         terreno.setDescricao("Descrição do Terreno");
-        terreno.setProprietarioID(1);
+        terreno.setProprietarioID(2);
         terreno.setPreco(2000);
         terreno.setTamanho("1500");
         terreno.setDisponivel("S");

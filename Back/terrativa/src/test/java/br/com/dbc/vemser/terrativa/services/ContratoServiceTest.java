@@ -8,12 +8,12 @@ import br.com.dbc.vemser.terrativa.entity.*;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,7 +36,7 @@ class ContratoServiceTest {
     private UsuarioRepository usuarioRepository;
     @Mock
     private SessaoUsuarioService sessaoUsuarioService;
-
+    @Spy
     @InjectMocks
     private ContratoService contratoService;
 
@@ -46,7 +46,7 @@ class ContratoServiceTest {
         //GIVEN
         ResponseContratoRelatorioDTO relMock = retornaRelatorioContrato();
         Contrato contratoMock = Entidades.retornaContratoEntity();
-        Integer idUsuarioMock = 1;
+        Integer idUsuarioMock = 2;
         Usuario user = Entidades.retornaUsuario();
 
         //WHEN
@@ -82,25 +82,24 @@ class ContratoServiceTest {
 
     }
 
-//    @Test
-//    @DisplayName("Deve deletar um contrato com sucesso")
-//    public void deletarContratoComSucesso() throws RegraDeNegocioException {
-//        //GIVEN
-//        Contrato contratoMock = retornaContratoEntity();
-//        Integer idUsuarioMock = 1;
-//
-//
-//        //WHEN
-//        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idUsuarioMock);
-//        when(contratoRepository.findById(anyInt())).thenReturn(Optional.ofNullable(contratoMock));
-//        when(contratoService.findByID(anyInt())).thenReturn(contratoMock);
-//        when(contratoRepository.save(anyObject())).thenReturn(contratoMock);
-//
-//        contratoService.deletar(100);
-//
-//        //THEN
-//        verify(contratoRepository, times(1)).delete(contratoMock);
-//    }
+    @Test
+    @DisplayName("Deve deletar um contrato com sucesso")
+    public void deletarContratoComSucesso() throws RegraDeNegocioException {
+        //GIVEN
+        Contrato contratoMock = Entidades.retornaContratoEntity();
+        Integer idUsuarioMock = 2;
+
+        //WHEN
+        doReturn(null).when(contratoService).verificaUsuario(idUsuarioMock);
+        doReturn(contratoMock).when(contratoService).findByID(idUsuarioMock);
+        when(contratoRepository.save(anyObject())).thenReturn(contratoMock);
+
+        contratoService.deletar(2);
+
+        //THEN
+        verify(contratoRepository, times(1)).save(contratoMock);
+    }
+
 
     @Test
     @DisplayName("Deve retornar um contrato com sucesso através do ID do locatario")
@@ -138,7 +137,7 @@ class ContratoServiceTest {
     @DisplayName("Deve verificar o usuário para autorizar mudanças em apenas sem contratos.")
     public void retornaNullCasoSucesso() throws RegraDeNegocioException {
         //Given
-        Integer idUsuarioMock = 1;
+        Integer idUsuarioMock = 2;
         Optional<Contrato> contratoMock = Optional.of(Entidades.retornaContratoEntity());
 
         //WHEN
@@ -147,6 +146,21 @@ class ContratoServiceTest {
 
         //THEN
         assertNull(contratoService.verificaUsuario(new Random().nextInt()));
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma RegraDeNegocioException quando não foi o usuario correto para alteração.")
+    public void retornaExceptionVerificaUsuario(){
+        //Given
+        Integer idDonoErradoMock = new Random().nextInt();
+        Optional<Contrato> contratoMock = Optional.of(Entidades.retornaContratoEntity());
+
+        //WHEN
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idDonoErradoMock);
+        when(contratoRepository.findById(anyInt())).thenReturn(contratoMock);
+
+        //THEN
+        assertThrows(RegraDeNegocioException.class, () -> contratoService.verificaUsuario(idDonoErradoMock));
     }
 
 
@@ -196,9 +210,28 @@ class ContratoServiceTest {
         cont.setCpfLocatario("12345678910");
         cont.setDataNascimentoLocatario(LocalDate.of(2024,02,15));
         cont.setSexoLocatario("M");
-        cont.setCelularLocatario("51123456789");
+        cont.setCelularLocatario("123456789");
+        cont.setTelefoneFixoLocatario("123456789");
         cont.setIdTerreno(1);
+        cont.setPreco(2000.0);
+        cont.setTamanho("1500");
+        cont.setNomeDono("João");
+        cont.setSobrenomeDono("Silva");
+        cont.setEmailDono("joão@email.com");
+        cont.setCpfDono("12345678910");
+        cont.setDataNascimentoDono(LocalDate.of(2024,02,15));
+        cont.setSexoDono("M");
+        cont.setCelularDono("123456789");
+        cont.setTelefoneFixoDono("123456789");
         cont.setLogradouro("Avenida Paulista");
+        cont.setNumero(123);
+        cont.setComplemento(null);
+        cont.setBairro("Jardins");
+        cont.setCep(12345678);
+        cont.setLocalizacao("12345");
+        cont.setNomeMunicipio("Porto Alegre");
+        cont.setNomeEstado("Rio Grande Do Sul");
+
 
         return cont;
     }
