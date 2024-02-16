@@ -10,6 +10,9 @@ import br.com.dbc.vemser.terrativa.repository.EnderecoTerrenosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class EnderecoTerrenosService {
@@ -32,7 +35,15 @@ public class EnderecoTerrenosService {
         return enderecoTerrenosRepository.save(enderecoTerrenos);
     }
 
-    public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id){
-        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
+//    public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id){
+//        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
+//    }
+
+    public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id) throws EntityNotFoundException {
+        Optional<EnderecoTerrenos> enderecoTerrenosOptional = enderecoTerrenosRepository.findById(id);
+        EnderecoTerrenos enderecoTerrenos = enderecoTerrenosOptional.orElseThrow(() -> new EntityNotFoundException("EnderecoTerrenos não encontrado com o ID: " + id));
+        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos);
     }
+
+
 }
