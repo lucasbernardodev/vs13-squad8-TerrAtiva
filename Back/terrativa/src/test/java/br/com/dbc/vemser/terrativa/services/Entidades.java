@@ -74,6 +74,7 @@ public class Entidades {
     public static RequestEnderecoCreateDTO retornaRequestEnderecoCreateDTO(){
         RequestEnderecoCreateDTO end = new RequestEnderecoCreateDTO(1, 1, "Avenida Paulista", 1500,
                 "Jardins", "Jardins", 12345, 12345678);
+        end.setUsuarioID(1);
         return end;
     }
 
@@ -87,8 +88,9 @@ public class Entidades {
         end.setCodMunIBGE(12345);
         end.setCep(12345678);
         end.setCodIBGE(retornaEstadosMunicipios());
-        end.setUsuarioID(2);
         end.setUsuario(retornaUsuario());
+        end.setUsuarioID(1);
+        end.getUsuario().setUsuarioId(1);
 
         return end;
     }

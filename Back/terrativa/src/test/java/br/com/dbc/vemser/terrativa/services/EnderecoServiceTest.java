@@ -49,36 +49,35 @@ class EnderecoServiceTest {
     @Test
     void adicionarEndereco() throws RegraDeNegocioException {
         // Given
-//        Endereco enderecoMock = Entidades.retornaEndereco();
-//        enderecoMock.setCodIBGE(Entidades.retornaEstadosMunicipios());
-//
-//        when(enderecoRepository.save(any(Endereco.class))).thenReturn(enderecoMock);
-//
-//        // When
-//        ResponseEnderecoDTO result = enderecoService.adicionarEndereco(request);
-//
-//        // Then
-//        assertEquals(EnderecoMapper.EnderecoParaResponseEndereco(enderecoMock), result);
+        Optional<Endereco> enderecoMock = Optional.of(Entidades.retornaEnderecoEntityMock());
+
+        // When
+        when(enderecoRepository.save(any(Endereco.class))).thenReturn(enderecoMock.get());
+        ResponseEnderecoDTO result = enderecoService.adicionarEndereco(Entidades.retornaRequestEnderecoCreateDTO());
+
+        // Then
+        assertEquals(EnderecoMapper.EnderecoParaResponseEndereco(enderecoMock.get()), result);
     }
 
     @Test
     void alterar() throws RegraDeNegocioException {
         // Given
-        Usuario usuario = new Usuario();
-        RequestEnderecoCreateDTO request = retornaRequestEnderecoCreateDTOMock();
-        Endereco enderecoMock = EnderecoMapper.RequestEnderecoParaEndereco(request);
-        when(enderecoRepository.save(any(Endereco.class))).thenReturn(enderecoMock);
+        Usuario usuarioMock = Entidades.retornaUsuario();
+        RequestEnderecoCreateDTO request = Entidades.retornaRequestEnderecoCreateDTO();
+        Endereco enderecoMock = Entidades.retornaEnderecoEntityMock();
+        ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(enderecoMock);
+//        enderecoMock.setCodIBGE(Entidades.retornaEstadosMunicipios());
 
         // When
-        ResponseEnderecoDTO result = enderecoService.alterar(usuario, request);
+        when(estadoMunicipioService.buscarCodIBGE(
+                request.getCodigoMunicipioIBGE())).thenReturn(Entidades.retornaEstadosMunicipios());
+        when(enderecoRepository.save(any(Endereco.class))).thenReturn(enderecoMock);
+
+        ResponseEnderecoDTO result = enderecoService.alterar(usuarioMock, request);
 
         // Then
-        assertEquals(EnderecoMapper.EnderecoParaResponseEndereco(enderecoMock), result);
+        assertEquals(responseEnderecoDTO, result);
     }
 
-    public RequestEnderecoCreateDTO retornaRequestEnderecoCreateDTOMock() {
-        return new RequestEnderecoCreateDTO(1, 1, "Avenida Paulista", 1500,
-                "Apto 208", "Centro", 1100015, 90900000);
-    }
 
 }
