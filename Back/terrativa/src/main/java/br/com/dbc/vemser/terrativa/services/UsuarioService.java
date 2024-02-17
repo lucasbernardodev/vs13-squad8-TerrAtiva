@@ -10,9 +10,7 @@ import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.CargoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
-import br.com.dbc.vemser.terrativa.security.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,11 +39,27 @@ public class UsuarioService {
 
 
     public ResponseUsuarioDTO buscarUsuarioPorId(Integer id) throws RegraDeNegocioException {
-        Usuario usuario = usuarioRepository.findByUsuarioIdAndAtivoEquals(id, "S");
-        if (usuario == null || usuario.getAtivo().equals("N")) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
+        if (usuario.getAtivo().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO);
         }
         return UsuarioMapper.usuarioParaResponseUsuario(usuario);
+    }
+
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
+    public Usuario getLoggedUser() throws RegraDeNegocioException {
+        return usuarioRepository.findById(sessaoUsuarioService.getIdLoggedUserId()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
+    }
+
+    public ResponseUsuarioDTO getUserDTO() throws RegraDeNegocioException {
+        return UsuarioMapper.usuarioParaResponseUsuario(getLoggedUser());
+    }
+
+    public ResponseEnderecoDTO resgatarEnderecoUsuario() throws RegraDeNegocioException {
+        return enderecoService.resgatarPorId(sessaoUsuarioService.getIdLoggedUserId());
     }
 
     public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws Exception {
@@ -78,7 +92,7 @@ public class UsuarioService {
     }
 
     public String alterarSenha(RequestSenhaDTO senha) throws Exception{
-        Usuario usuarioRecuperado = findById(sessaoUsuarioService.getIdLoggedUserId()).get();
+        Usuario usuarioRecuperado = getLoggedUser();
         if (passwordEncoder.matches(senha.getSenhaAtual(), usuarioRecuperado.getSenha())){
                 conferirSenha(senha.getSenhaNova(), senha.getSenhaNovaConf());
                 String senhaCripto = passwordEncoder.encode(senha.getSenhaNova());
@@ -109,48 +123,19 @@ public class UsuarioService {
         usuarioRepository.save(usuarioRecuperado);
     }
 
-    public Optional<Usuario> findById(Integer idUsuario) {
-        return usuarioRepository.findById(idUsuario);
-    }
-
-    public Optional<Usuario> findByEmail(String username) {
-        return usuarioRepository.findByEmail(username);
-    }
-
-    public Usuario getLoggedUser() throws RegraDeNegocioException {
-        return findById(sessaoUsuarioService.getIdLoggedUserId()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO));
-    }
-
-    public ResponseUsuarioDTO getUserDTO() throws RegraDeNegocioException {
-        return UsuarioMapper.usuarioParaResponseUsuario(getLoggedUser());
-    }
-
-    public Optional<Usuario> findByEmailAndSenha(String email, String senha) {
-        return usuarioRepository.findByEmailAndSenha(email, senha);
-    }
-
-    public ResponseEnderecoDTO resgatarPorId() throws RegraDeNegocioException {
-        buscarUsuarioPorId(sessaoUsuarioService.getIdLoggedUserId());
-        return enderecoService.resgatarPorId(sessaoUsuarioService.getIdLoggedUserId());
-    }
-
-
     public ResponseEnderecoDTO alterarEndereco(RequestEnderecoCreateDTO endereco) throws RegraDeNegocioException {
         return enderecoService.alterar(getLoggedUser(), endereco);
     }
 
-    public String conferirSenha(String senha, String senhaConf) throws Exception{
-        if (senha.equals(senhaConf)){
-            return null;
-        }else {
+    public void conferirSenha(String senha, String senhaConf) throws Exception{
+        if (!senha.equals(senhaConf)){
             throw new RegraDeNegocioException(PASSWORD_NOT_CHECK);
         }
     }
 
-
     public ResponseUsuarioDTO alterarUsuarioComToken(RequestUsuarioUpdateDTO usuario) throws RegraDeNegocioException {
 
-        Usuario usuarioExistente = findById(sessaoUsuarioService.getIdLoggedUserId()).get();
+        Usuario usuarioExistente = getLoggedUser();
 
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setSobrenome(usuario.getSobrenome());
@@ -158,9 +143,7 @@ public class UsuarioService {
 
         usuarioRepository.save(usuarioExistente);
 
-        ResponseUsuarioDTO responseUsuario = UsuarioMapper.usuarioParaResponseUsuario(usuarioExistente);
-
-        return responseUsuario;
+        return UsuarioMapper.usuarioParaResponseUsuario(usuarioExistente);
     }
 
 }
