@@ -1,10 +1,15 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
 import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.*;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.terrativa.repository.CargoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,9 +17,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +39,16 @@ class UsuarioServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private SessaoUsuarioService sessaoUsuarioService;
+    @Mock
+    private ContratoService contratoService;
+    @Mock
+    private TerrenoService terrenoService;
+    @Mock
+    private EnderecoService enderecoService;
+    @Mock
+    private CargoRepository cargoRepository;
 
     @Spy
     @InjectMocks
@@ -54,6 +72,21 @@ class UsuarioServiceTest {
     }
 
     @Test
+    @DisplayName("Buscar usuário inativo deve lançar exceção")
+    void buscarUsuarioInativo() {
+        // Given
+        Integer id = anyInt();
+        Usuario usuarioMock = Entidades.retornaUsuario();
+        usuarioMock.setAtivo("N");
+
+        // When
+        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuarioMock));
+
+        // Then
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.buscarUsuarioPorId(id));
+    }
+
+    @Test
     @DisplayName("Confere se senhas são iguais")
     void conferirSenha() {
 
@@ -65,30 +98,46 @@ class UsuarioServiceTest {
 
     @Test
     @DisplayName("Cadastrar usuário")
-    void cadastrarUsuario() {
+    void cadastrarUsuario() throws RegraDeNegocioException {
     // Given
-//    RequestUsuarioCreateDTO requestUsuarioCreateDTO = Entidades.r;
-    // TODO: Set the properties of requestUsuarioCreateDTO
+        RequestUsuarioCreateDTO requestUsuarioCreateDTO = Entidades.retornaRequestUsuarioCreateDTO();
+        Usuario usuario = Entidades.retornaUsuario();
+        ResponseUsuarioDTO responseUsuarioDTO = Entidades.retornaResponseUsuarioDTO();
+        ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(Entidades.retornaEnderecoEntityMock());
+        responseUsuarioDTO.setEndereco(responseEnderecoDTO);
 
     // When
-    // TODO: Mock the necessary methods
+        doNothing().when(usuarioService).conferirSenha(any(), any());
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        when(passwordEncoder.encode(any())).thenReturn("senha321");
+        when(cargoRepository.findCargosByIdCargo(anyInt())).thenReturn(Entidades.retornaCargos());
+        when(enderecoService.adicionarEndereco(any(RequestEnderecoCreateDTO.class))).thenReturn(responseEnderecoDTO);
 
+        ResponseUsuarioDTO result = usuarioService.cadastrarUsuario(requestUsuarioCreateDTO);
     // Then
-    // TODO: Perform the necessary assertions
+        verify(usuarioService, times(1)).cadastrarUsuario(requestUsuarioCreateDTO);
+        assertNotNull(result);
+        assertEquals(responseUsuarioDTO, result);
 }
 
     @Test
     @DisplayName("Criar admin")
-    void criarAdmin() {
+    void criarAdmin() throws RegraDeNegocioException {
     // Given
-//    RequestAdminDTO requestAdminDTO = new RequestAdminDTO();
-    // TODO: Set the properties of requestAdminDTO
+        RequestAdminDTO requestAdminDTO = Entidades.retornaRequestAdminDTO();
+        ResponseAdminDTO responseAdminDTO = Entidades.retornaResponseAdminDTO();
+        Usuario usuario = Entidades.retornaUsuario();
 
     // When
-    // TODO: Mock the necessary methods
+        doNothing().when(usuarioService).conferirSenha(any(), any());
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        when(passwordEncoder.encode(any())).thenReturn("senha123");
+        when(cargoRepository.findCargosByIdCargo(anyInt())).thenReturn(Entidades.retornaCargos());
+
+        ResponseAdminDTO result = usuarioService.criarAdmin(requestAdminDTO);
 
     // Then
-    // TODO: Perform the necessary assertions
+        assertTrue(new ReflectionEquals(responseAdminDTO).matches(result));
 }
 
     @Test
@@ -99,34 +148,98 @@ class UsuarioServiceTest {
         Usuario usuario = Entidades.retornaUsuario();
 
     // When
-         doReturn(usuario).when(usuarioService).getLoggedUser();
-         doNothing().when(usuarioService).conferirSenha(any(), any());
-         when(passwordEncoder.matches(any(), any())).thenReturn(true);
-         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
-         when(passwordEncoder.encode(any())).thenReturn("senha321");
+        doReturn(usuario).when(usuarioService).getLoggedUser();
+        doNothing().when(usuarioService).conferirSenha(any(), any());
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        when(passwordEncoder.encode(any())).thenReturn("senha321");
 
         usuarioService.alterarSenha(requestSenhaDTO);
 
     // Then
         verify(usuarioService, times(1)).alterarSenha(requestSenhaDTO);
-    // TODO: Perform the necessary assertions
-}
+    }
+
+    @Test
+    @DisplayName("Alterar senha com senha atual incorreta")
+    void alterarSenhaComSenhaAtualIncorreta() throws RegraDeNegocioException {
+        // Given
+        RequestSenhaDTO requestSenhaDTO = new RequestSenhaDTO();
+        Usuario usuario = Entidades.retornaUsuario();
+
+        // When
+        doReturn(usuario).when(usuarioService).getLoggedUser();
+        when(passwordEncoder.matches(any(), any())).thenReturn(false);
+
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.alterarSenha(requestSenhaDTO));
+
+    }
 
     @Test
     @DisplayName("Deletar usuário")
-    void deletarUsuario() {
+    void deletarUsuario() throws RegraDeNegocioException {
     // Given
-//    DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
-    // TODO: Set the properties of deletarContaDTO
+        DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
+        deletarContaDTO.setConfirmacao("DELETAR MINHA CONTA");
+        Usuario usuario = Entidades.retornaUsuario();
+        List<Contrato> listaContratos = new ArrayList<>();
+        Contrato contrato = Entidades.retornaContratoEntity();
+        contrato.setAtivo("N");
+        listaContratos.add(contrato);
 
     // When
-    // TODO: Mock the necessary methods
+        when(contratoService.buscarContratoPorLocatario(anyInt())).thenReturn(listaContratos);
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findByUsuarioIdAndAtivoEquals(anyInt(), any())).thenReturn(usuario);
+        doNothing().when(terrenoService).alterarTerrenosUsuarioDeletado(anyInt());
 
+        usuarioService.deletarUsuario(deletarContaDTO);
     // Then
-    // TODO: Perform the necessary assertions
+        verify(usuarioService, times(1)).deletarUsuario(deletarContaDTO);
 }
 
+    @Test
+    @DisplayName("Deveria verificar se não tem contratos ativos antes de deletar usuário")
+    void deletarUsuarioComContratosAtivos() {
+        // Given
+        DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
+        deletarContaDTO.setConfirmacao("DELETAR MINHA CONTA");
+        Usuario usuario = Entidades.retornaUsuario();
+        List<Contrato> listaContratos = new ArrayList<>();
+        listaContratos.add(Entidades.retornaContratoEntity());
 
+        // When
+        when(contratoService.buscarContratoPorLocatario(anyInt())).thenReturn(listaContratos);
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findByUsuarioIdAndAtivoEquals(anyInt(), any())).thenReturn(usuario);
+
+        // Then
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.deletarUsuario(deletarContaDTO));
+    }
+    @Test
+    @DisplayName("Deveria jogar erro quando confirmação para deletar conta não está correta")
+    void deletarUsuarioComConfirmacaoIncorreta() {
+        // Given
+        DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
+        deletarContaDTO.setConfirmacao("DELETAR MINHA CONTA (ERRADO)");
+
+        // When
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.deletarUsuario(deletarContaDTO));
+    }
+
+    @Test
+    @DisplayName("Deveria jogar erro quando usuário não é encontrado")
+    void deletarUsuarioComUsuarioNaoEncontrado() {
+        // Given
+        DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
+        deletarContaDTO.setConfirmacao("DELETAR MINHA CONTA");
+
+        // When
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findByUsuarioIdAndAtivoEquals(anyInt(), any())).thenReturn(null);
+
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.deletarUsuario(deletarContaDTO));
+    }
 
     @Test
     @DisplayName("Alterar usuário com token")
@@ -147,4 +260,88 @@ class UsuarioServiceTest {
 
 }
 
+    @Test
+    @DisplayName("Retorna usuário de acordo com o email")
+    void retornaUsuarioPorEmail() {
+        // Given
+        String email = anyString();
+        // When
+        when(usuarioRepository.findByEmail(email)).thenReturn(Optional.of(Entidades.retornaUsuario()));
+
+        Optional<Usuario> result = usuarioService.findByEmail(email);
+        // Then
+        assertTrue(result.isPresent());
+
+    }
+
+    @Test
+    @DisplayName("Retorna usuário logado")
+    void getLoggedUser() throws RegraDeNegocioException {
+        // Given
+        Usuario usuario = Entidades.retornaUsuario();
+        // When
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
+
+        Usuario result = usuarioService.getLoggedUser();
+        // Then
+        assertEquals(usuario, result);
+    }
+
+    @Test
+    @DisplayName("Retorna erro para usuário não encontrado")
+    void getLoggedUserNotFound() {
+        // Given
+        // When
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findById(1)).thenReturn(Optional.empty());
+
+        // Then
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.getLoggedUser());
+    }
+
+    @Test
+    @DisplayName("Retorna DTO do usuário logado")
+    void getUserDTO() throws RegraDeNegocioException {
+        // Given
+        Usuario usuario = Entidades.retornaUsuario();
+        ResponseUsuarioDTO responseUsuarioDTO = Entidades.retornaResponseUsuarioDTO();
+        // When
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
+
+        ResponseUsuarioDTO result = usuarioService.getUserDTO();
+        // Then
+        assertEquals(responseUsuarioDTO, result);
+    }
+
+    @Test
+    @DisplayName("Retorna endereço do usuário")
+    void resgatarEnderecoUsuario() throws RegraDeNegocioException {
+        // Given
+        ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(Entidades.retornaEnderecoEntityMock());
+        // When
+        when(enderecoService.resgatarPorId(anyInt())).thenReturn(responseEnderecoDTO);
+
+        ResponseEnderecoDTO result = usuarioService.resgatarEnderecoUsuario();
+        // Then
+        assertEquals(responseEnderecoDTO, result);
+    }
+
+    @Test
+    @DisplayName("Alterar o endereco do usuario")
+    void alterarEnderecoUsuario() throws RegraDeNegocioException {
+        // Given
+        RequestEnderecoCreateDTO requestEnderecoUpdateDTO = Entidades.retornaRequestEnderecoCreateDTO();
+        ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(Entidades.retornaEnderecoEntityMock());
+        Usuario usuario = Entidades.retornaUsuario();
+
+        // When
+        when(enderecoService.alterar(usuario, requestEnderecoUpdateDTO)).thenReturn(responseEnderecoDTO);
+        doReturn(usuario).when(usuarioService).getLoggedUser();
+
+        ResponseEnderecoDTO result = usuarioService.alterarEndereco(requestEnderecoUpdateDTO);
+        // Then
+        assertEquals(responseEnderecoDTO, result);
+    }
 }

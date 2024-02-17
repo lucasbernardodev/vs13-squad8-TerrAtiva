@@ -62,7 +62,7 @@ public class UsuarioService {
         return enderecoService.resgatarPorId(sessaoUsuarioService.getIdLoggedUserId());
     }
 
-    public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws Exception {
+    public ResponseUsuarioDTO cadastrarUsuario(RequestUsuarioCreateDTO usuario) throws RegraDeNegocioException {
         usuario.setAtivo("S");
         usuario.setUsuarioId(null);
         conferirSenha(usuario.getSenha(), usuario.getSenhaConf());
@@ -80,10 +80,9 @@ public class UsuarioService {
         return responseUsuario;
     }
 
-    public ResponseAdminDTO criarAdmin(RequestAdminDTO admin) throws Exception {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    public ResponseAdminDTO criarAdmin(RequestAdminDTO admin) throws RegraDeNegocioException {
         conferirSenha(admin.getSenha(), admin.getSenhaConf());
-        admin.setSenha(bCryptPasswordEncoder.encode(admin.getSenha()));
+        admin.setSenha(passwordEncoder.encode(admin.getSenha()));
         Usuario usuario = UsuarioMapper.usuarioParaRequestAdminUsuario(admin);
         usuario.setAtivo("S");
         usuario.setCargos(cargoRepository.findCargosByIdCargo(1));

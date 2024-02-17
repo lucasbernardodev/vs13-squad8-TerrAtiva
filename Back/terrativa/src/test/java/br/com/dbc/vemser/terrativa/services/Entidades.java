@@ -1,12 +1,14 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.requests.*;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Entidades {
@@ -100,6 +102,22 @@ public class Entidades {
         return dto;
     }
 
+    public static ResponseAdminDTO retornaResponseAdminDTO() {
+        Usuario usuario = retornaUsuario();
+        ResponseAdminDTO dto = new ResponseAdminDTO();
+        dto.setUsuarioId(usuario.getUsuarioId());
+        dto.setNome(usuario.getNome());
+        dto.setSobrenome(usuario.getSobrenome());
+        dto.setEmail(usuario.getEmail());
+        dto.setCpf(usuario.getCpf());
+        dto.setDataNascimento(usuario.getDataNascimento());
+        dto.setSexo(usuario.getSexo());
+        dto.setCelular(usuario.getCelular());
+        dto.setTelefoneFixo(usuario.getTelefoneFixo());
+
+        return dto;
+    }
+
     public static RequestSenhaDTO retornaRequestSenhaDTO() {
         RequestSenhaDTO dto = new RequestSenhaDTO();
         dto.setSenhaAtual("senha123");
@@ -111,11 +129,18 @@ public class Entidades {
 
     // CARGOS
     public static Set<Cargo> retornaCargos(){
+        Set<Cargo> cargos = new HashSet<>();
         Cargo cargo = new Cargo();
         cargo.setIdCargo(2);
         cargo.setNome("ROLE_USUARIOS");
+        cargos.add(cargo);
 
-        return Set.of(cargo);
+        Cargo cargo2 = new Cargo();
+        cargo2.setIdCargo(1);
+        cargo2.setNome("ROLE_ADMIN");
+        cargos.add(cargo2);
+
+        return cargos;
     }
 
     // TERRENO
