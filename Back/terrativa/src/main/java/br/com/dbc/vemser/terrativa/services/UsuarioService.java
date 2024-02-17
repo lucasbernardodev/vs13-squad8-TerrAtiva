@@ -91,14 +91,13 @@ public class UsuarioService {
         return UsuarioMapper.usuarioParaRequestAdminUsuario(usuarioCadastrado);
     }
 
-    public String alterarSenha(RequestSenhaDTO senha) throws Exception{
+    public void alterarSenha(RequestSenhaDTO senha) throws RegraDeNegocioException {
         Usuario usuarioRecuperado = getLoggedUser();
         if (passwordEncoder.matches(senha.getSenhaAtual(), usuarioRecuperado.getSenha())){
                 conferirSenha(senha.getSenhaNova(), senha.getSenhaNovaConf());
                 String senhaCripto = passwordEncoder.encode(senha.getSenhaNova());
                 usuarioRecuperado.setSenha(senhaCripto);
                 usuarioRepository.save(usuarioRecuperado);
-                return "Senha alterada com sucesso!";
         }else{
             throw new RegraDeNegocioException(PASSWORD_NOT_CHECK);
         }
@@ -127,7 +126,7 @@ public class UsuarioService {
         return enderecoService.alterar(getLoggedUser(), endereco);
     }
 
-    public void conferirSenha(String senha, String senhaConf) throws Exception{
+    public void conferirSenha(String senha, String senhaConf) throws RegraDeNegocioException {
         if (!senha.equals(senhaConf)){
             throw new RegraDeNegocioException(PASSWORD_NOT_CHECK);
         }

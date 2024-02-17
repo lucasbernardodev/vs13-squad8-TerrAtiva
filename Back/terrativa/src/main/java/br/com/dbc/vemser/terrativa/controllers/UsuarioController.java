@@ -50,8 +50,9 @@ public class UsuarioController implements IUsuarioController {
     }
 
     @PostMapping("/alterarsenha")
-    public ResponseEntity<String> alterarSenha(@RequestBody @Valid RequestSenhaDTO senha) throws Exception{
-        return new ResponseEntity<>(usuarioService.alterarSenha(senha), HttpStatus.OK);
+    public ResponseEntity<String> alterarSenha(@RequestBody @Valid RequestSenhaDTO senha) throws Exception {
+        usuarioService.alterarSenha(senha);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/deletar-conta")

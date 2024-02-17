@@ -13,14 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("UsuarioService - Test")
@@ -28,6 +28,9 @@ class UsuarioServiceTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Spy
     @InjectMocks
@@ -90,15 +93,22 @@ class UsuarioServiceTest {
 
     @Test
     @DisplayName("Alterar senha")
-    void alterarSenha() {
+    void alterarSenha() throws RegraDeNegocioException {
     // Given
-//    RequestSenhaDTO requestSenhaDTO = new RequestSenhaDTO();
-    // TODO: Set the properties of requestSenhaDTO
+        RequestSenhaDTO requestSenhaDTO = new RequestSenhaDTO();
+        Usuario usuario = Entidades.retornaUsuario();
 
     // When
-    // TODO: Mock the necessary methods
+         doReturn(usuario).when(usuarioService).getLoggedUser();
+         doNothing().when(usuarioService).conferirSenha(any(), any());
+         when(passwordEncoder.matches(any(), any())).thenReturn(true);
+         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+         when(passwordEncoder.encode(any())).thenReturn("senha321");
+
+        usuarioService.alterarSenha(requestSenhaDTO);
 
     // Then
+        verify(usuarioService, times(1)).alterarSenha(requestSenhaDTO);
     // TODO: Perform the necessary assertions
 }
 
