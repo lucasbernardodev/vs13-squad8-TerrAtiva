@@ -7,6 +7,7 @@ import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRela
 import br.com.dbc.vemser.terrativa.entity.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class Entidades {
 
@@ -79,6 +80,7 @@ public class Entidades {
         dto.setSexo(usuario.getSexo());
         dto.setCelular(usuario.getCelular());
         dto.setTelefoneFixo(usuario.getTelefoneFixo());
+        dto.setEndereco(retornaRequestEnderecoCreateDTO());
         return dto;
     }
 
@@ -105,6 +107,15 @@ public class Entidades {
         dto.setSenhaNovaConf("senha321");
 
         return dto;
+    }
+
+    // CARGOS
+    public static Set<Cargo> retornaCargos(){
+        Cargo cargo = new Cargo();
+        cargo.setIdCargo(2);
+        cargo.setNome("ROLE_USUARIOS");
+
+        return Set.of(cargo);
     }
 
     // TERRENO
@@ -240,4 +251,5 @@ public class Entidades {
 
         return cont;
     }
+
 }
