@@ -1,6 +1,8 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.*;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
@@ -8,6 +10,7 @@ import java.time.LocalDate;
 
 public class Entidades {
 
+    // USUARIO
     public static Usuario retornaUsuario(){
         Usuario usuario = new Usuario();
         usuario.setUsuarioId(2);
@@ -23,6 +26,88 @@ public class Entidades {
 
         return usuario;
     }
+
+    public static ResponseUsuarioDTO retornaResponseUsuarioDTO(){
+        ResponseUsuarioDTO usuario = new ResponseUsuarioDTO();
+        usuario.setUsuarioId(2);
+        usuario.setNome("João");
+        usuario.setSobrenome("Silva");
+        usuario.setEmail("joão@email.com");
+        usuario.setCpf("12345678910");
+        usuario.setDataNascimento(LocalDate.of(2024,02,15));
+        usuario.setSexo("M");
+        usuario.setCelular("123456789");
+        usuario.setTelefoneFixo("123456789");
+
+        return usuario;
+    }
+
+    public static RequestUsuarioUpdateDTO retornaRequestUsuarioUpdateDTO() {
+        Usuario usuario = retornaUsuario();
+        RequestUsuarioUpdateDTO dto = new RequestUsuarioUpdateDTO();
+        dto.setUsuarioId(usuario.getUsuarioId());
+        dto.setNome(usuario.getNome());
+        dto.setSobrenome(usuario.getSobrenome());
+        dto.setEmail(usuario.getEmail());
+        dto.setCpf(usuario.getCpf());
+        dto.setDataNascimento(usuario.getDataNascimento());
+        dto.setSexo(usuario.getSexo());
+        dto.setCelular(usuario.getCelular());
+        dto.setTelefoneFixo(usuario.getTelefoneFixo());
+        return dto;
+    }
+
+    public static RequestUsuarioLoginDTO retornaRequestUsuarioLoginDTO() {
+        Usuario usuario = retornaUsuario();
+        RequestUsuarioLoginDTO dto = new RequestUsuarioLoginDTO();
+        dto.setEmail(usuario.getEmail());
+        dto.setSenha("senha123");
+
+        return dto;
+    }
+
+    public static RequestUsuarioCreateDTO retornaRequestUsuarioCreateDTO() {
+        Usuario usuario = retornaUsuario();
+        RequestUsuarioCreateDTO dto = new RequestUsuarioCreateDTO();
+        dto.setUsuarioId(usuario.getUsuarioId());
+        dto.setNome(usuario.getNome());
+        dto.setSobrenome(usuario.getSobrenome());
+        dto.setEmail(usuario.getEmail());
+        dto.setSenha("senha123");
+        dto.setCpf(usuario.getCpf());
+        dto.setDataNascimento(usuario.getDataNascimento());
+        dto.setSexo(usuario.getSexo());
+        dto.setCelular(usuario.getCelular());
+        dto.setTelefoneFixo(usuario.getTelefoneFixo());
+        return dto;
+    }
+
+    public static RequestAdminDTO retornaRequestAdminDTO() {
+        Usuario usuario = retornaUsuario();
+        RequestAdminDTO dto = new RequestAdminDTO();
+        dto.setUsuarioId(usuario.getUsuarioId());
+        dto.setNome(usuario.getNome());
+        dto.setSobrenome(usuario.getSobrenome());
+        dto.setEmail(usuario.getEmail());
+        dto.setSenha("senha123");
+        dto.setCpf(usuario.getCpf());
+        dto.setDataNascimento(usuario.getDataNascimento());
+        dto.setSexo(usuario.getSexo());
+        dto.setCelular(usuario.getCelular());
+        dto.setTelefoneFixo(usuario.getTelefoneFixo());
+        return dto;
+    }
+
+    public static RequestSenhaDTO retornaRequestSenhaDTO() {
+        RequestSenhaDTO dto = new RequestSenhaDTO();
+        dto.setSenhaAtual("senha123");
+        dto.setSenhaNova("senha321");
+        dto.setSenhaNovaConf("senha321");
+
+        return dto;
+    }
+
+    // TERRENO
 
     public static Terreno retornaTerreno(){
         Terreno terreno = new Terreno();

@@ -35,7 +35,7 @@ public class EnderecoTerrenosService {
         return enderecoTerrenosRepository.save(enderecoTerrenos);
     }
 
-//    public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id){
+//    public ResponseEnderecoTerrenosDTO resgatarEnderecoUsuario(Integer id){
 //        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
 //    }
 
