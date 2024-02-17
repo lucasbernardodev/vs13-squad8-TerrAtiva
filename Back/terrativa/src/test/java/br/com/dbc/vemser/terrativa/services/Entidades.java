@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
 import java.time.LocalDate;

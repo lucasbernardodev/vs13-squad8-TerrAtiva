@@ -18,7 +18,6 @@ import java.util.Objects;
 
 @Service
 @Data
-
 public class MensalidadeService {
 
     private final MensalidadeRepository mensalidadeRepository;
@@ -33,7 +32,7 @@ public class MensalidadeService {
     public void criarMensalidade(RequestMensalidadeCreateDTO requestMensalidade) throws RegraDeNegocioException {
         contratoService.resgatarContratoPorId(requestMensalidade.getContratoID());
         Mensalidade mensalidade = MensalidadeMapper.RequestMensalidadeParaMensalidade(requestMensalidade);
-        MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidadeRepository.save(mensalidade));
+        mensalidadeRepository.save(mensalidade);
     }
 
     public ResponseMensalidadeDTO alterarMensalidade(Integer id, RequestMensalidadeCreateDTO requestMensalidade) throws RegraDeNegocioException {
@@ -53,7 +52,7 @@ public class MensalidadeService {
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidade);
     }
 
-    private String verificaUsuario(Integer id) throws RegraDeNegocioException {
+    public String verificaUsuario(Integer id) throws RegraDeNegocioException {
         Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Mensalidade mensalidade = mensalidadeRepository.findById(id).get();
         Contrato contrato = contratoService.findByID(mensalidade.getContratoID());
