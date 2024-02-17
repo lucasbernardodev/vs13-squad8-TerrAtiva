@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
 import java.time.LocalDate;
@@ -77,5 +78,56 @@ public class Entidades {
         est.setNomeEstado("Rio Grande Do Sul");
 
         return est;
+    }
+
+    public static Mensalidade retornaMensalidade(){
+        Mensalidade men = new Mensalidade();
+        men.setMensalidadeID(1);
+        men.setContratoID(1);
+        men.setValorMensal(2000);
+        men.setAnoExercicio(2024);
+        men.setAtivo("S");
+
+        return men;
+    }
+
+    public static ResponseContratoRelatorioDTO retornaRelatorioContrato(){
+        ResponseContratoRelatorioDTO cont = new ResponseContratoRelatorioDTO();
+        cont.setIdContrato(1);
+        cont.setAtivo("S");
+        cont.setDataAssinatura(LocalDate.of(2024,02,15));
+        cont.setDataFinal(LocalDate.of(2024,02,15));
+        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataVencimentoAluguel(5);
+        cont.setNomeLocatario("João");
+        cont.setSobrenomeLocatario("Silva");
+        cont.setEmailLocatario("joão@email.com");
+        cont.setCpfLocatario("12345678910");
+        cont.setDataNascimentoLocatario(LocalDate.of(2024,02,15));
+        cont.setSexoLocatario("M");
+        cont.setCelularLocatario("123456789");
+        cont.setTelefoneFixoLocatario("123456789");
+        cont.setIdTerreno(1);
+        cont.setPreco(2000.0);
+        cont.setTamanho("1500");
+        cont.setNomeDono("João");
+        cont.setSobrenomeDono("Silva");
+        cont.setEmailDono("joão@email.com");
+        cont.setCpfDono("12345678910");
+        cont.setDataNascimentoDono(LocalDate.of(2024,02,15));
+        cont.setSexoDono("M");
+        cont.setCelularDono("123456789");
+        cont.setTelefoneFixoDono("123456789");
+        cont.setLogradouro("Avenida Paulista");
+        cont.setNumero(123);
+        cont.setComplemento(null);
+        cont.setBairro("Jardins");
+        cont.setCep(12345678);
+        cont.setLocalizacao("12345");
+        cont.setNomeMunicipio("Porto Alegre");
+        cont.setNomeEstado("Rio Grande Do Sul");
+
+
+        return cont;
     }
 }
