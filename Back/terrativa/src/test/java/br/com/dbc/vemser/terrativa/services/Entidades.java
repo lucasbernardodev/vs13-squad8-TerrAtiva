@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
 import java.time.LocalDate;
@@ -66,6 +65,28 @@ public class Entidades {
         end.setCep(12345678);
         end.setLocalizacao("12345");
         end.setCodIBGE(retornaEstadosMunicipios());
+
+        return end;
+    }
+
+    public static RequestEnderecoCreateDTO retornaRequestEnderecoCreateDTO(){
+        RequestEnderecoCreateDTO end = new RequestEnderecoCreateDTO(1, 1, "Avenida Paulista", 1500,
+                "Jardins", "Jardins", 12345, 12345678);
+        return end;
+    }
+
+    public static Endereco retornaEnderecoEntityMock(){
+        Endereco end = new Endereco();
+        end.setId(1);
+        end.setLogradouro("Avenida Paulista");
+        end.setNumero(123);
+        end.setComplemento(null);
+        end.setBairro("Jardins");
+        end.setCodMunIBGE(12345);
+        end.setCep(12345678);
+        end.setCodIBGE(retornaEstadosMunicipios());
+        end.setUsuarioID(2);
+        end.setUsuario(retornaUsuario());
 
         return end;
     }
