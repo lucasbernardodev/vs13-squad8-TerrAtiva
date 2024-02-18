@@ -1,10 +1,7 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.requests.*;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.*;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
@@ -149,6 +146,7 @@ public class Entidades {
     public static Terreno retornaTerreno(){
         Terreno terreno = new Terreno();
         terreno.setId(1);
+        terreno.setEnderecoID(1);
         terreno.setTitulo("Terreno para Compra");
         terreno.setDescricao("Descrição do Terreno");
         terreno.setProprietarioID(2);
@@ -159,6 +157,20 @@ public class Entidades {
         terreno.setEnderecoTerrenoID(retornaEnderecoTerreno());
 
         return terreno;
+    }
+
+    public static ResponseTerrenoDTO retronaResponseTerrenoDTO(){
+        ResponseTerrenoDTO res = new ResponseTerrenoDTO();
+        res.setId(1);
+        res.setTitulo("Terreno para Compra");
+        res.setDescricao("Descrição do Terreno");
+        res.setProprietarioID(2);
+        res.setPreco(2000);
+        res.setTamanho("1500");
+        res.setDisponivel("S");
+        res.setEndereco(responseEnderecoTerrenosDTO());
+
+        return res;
     }
 
     public static Contrato retornaContratoEntity(){
@@ -199,6 +211,22 @@ public class Entidades {
         end.setUsuarioID(1);
         return end;
     }
+
+    public static ResponseEnderecoTerrenosDTO responseEnderecoTerrenosDTO(){
+        ResponseEnderecoTerrenosDTO res = new ResponseEnderecoTerrenosDTO();
+        res.setId(1);
+        res.setLogradouro("Avenida Paulista");
+        res.setNumero(123);
+        res.setComplemento(null);
+        res.setBairro("Jardins");
+        res.setCodigoMunicipioIBGE(12345);
+        res.setCep(12345678);
+        res.setLocalizacao("12345");
+
+        return res;
+    }
+
+
 
     public static Endereco retornaEnderecoEntityMock(){
         Endereco end = new Endereco();

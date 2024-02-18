@@ -9,9 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -37,6 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -49,8 +48,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TerrenoServiceTest {
-    @InjectMocks
-    private TerrenoService terrenoService;
 
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -68,50 +65,108 @@ class TerrenoServiceTest {
     private EnderecoTerrenosMapper enderecoTerrenosMapper;
 
     @Mock
-    SessaoUsuarioService sessaoUsuarioService;
+    private SessaoUsuarioService sessaoUsuarioService;
+
+    @InjectMocks
+    private TerrenoService terrenoService;
 
     private static final Integer PROPRIETARIO_ID = 1;
     private static final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
     private static final String NOT_FOUND_MESSAGE_INATIVO = "Usuário inativo";
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
+//    @BeforeEach
+//    public void setup() {
+//        MockitoAnnotations.openMocks(this);
+//    }
 
+
+    //Buscar
     @Test
     @DisplayName("Teste buscar terreno")
-    public void testBuscarTerreno() throws RegraDeNegocioException {
-        Terreno terreno = new Terreno();
-        terreno.setId(1);
-        terreno.setDisponivel("S");
-        terreno.setEnderecoID(1);
+    public void testBuscarTerrenoComSucesso() throws RegraDeNegocioException {
+        Optional<Terreno> terrenoMock = Optional.of(Entidades.retornaTerreno());
+        ResponseEnderecoTerrenosDTO enderecoTerrenosMock = Entidades.responseEnderecoTerrenosDTO();
+        ResponseTerrenoDTO responseTerrenoMock = Entidades.retronaResponseTerrenoDTO();
 
-        when(terrenoRepository.findById(1)).thenReturn(Optional.of(terreno));
-        when(enderecoTerrenosService.resgatarPorId(1)).thenReturn(null);
+        when(terrenoRepository.findById(anyInt())).thenReturn(terrenoMock);
+        when(enderecoTerrenosService.resgatarPorId(anyInt())).thenReturn(enderecoTerrenosMock);
 
-        ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(1);
+        ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(new Random().nextInt());
 
-        assertEquals(terreno.getId(), responseTerreno.getId());
+//        assertTrue(new ReflectionEquals(responseTerreno).matches(Entidades.retronaResponseTerrenoDTO()));
+        assertEquals(responseTerreno, responseTerrenoMock);
     }
 
+    @Test
+    @DisplayName("Não consegue buscar o terreno e joga uma exception")
+    public void retornaExceptionSemTerreno(){
+        Integer idMock = null;
 
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.buscarTerreno(idMock));
+    }
 
     @Test
+    @DisplayName("Não consegue buscar o terreno pois não esta disponivel e joga uma exception")
+    public void retornaExceptionTerrenoIndisponivel(){
+        Optional<Terreno> terrenoMock = Optional.of(Entidades.retornaTerreno());
+        terrenoMock.get().setDisponivel("N");
+
+        when(terrenoRepository.findById(anyInt())).thenReturn(terrenoMock);
+
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.buscarTerreno(new Random().nextInt()));
+    }
+
+    //Deletar
+    @Test
     @DisplayName("Teste deletar terreno com sucesso")
-    public void testDeletarTerrenoSucesso() throws RegraDeNegocioException {
-        Terreno terreno = new Terreno();
-        terreno.setId(1);
-        terreno.setDisponivel("S");
-        terreno.setEnderecoID(1);
+    public void testeDeletarTerrenoSucesso() throws RegraDeNegocioException {
+        Integer idMock = 2;
+        Terreno terreno = Entidades.retornaTerreno();
 
-        when(terrenoRepository.findById(1)).thenReturn(Optional.of(terreno));
-        doNothing().when(terrenoRepository).delete(terreno);
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idMock);
+        when(terrenoRepository.findById(anyInt())).thenReturn(Optional.of(terreno));
 
-        terrenoService.deletarTerreno(1);
+        terrenoService.deletarTerreno(new Random().nextInt());
 
-        verify(terrenoRepository).delete(terreno);
+        verify(terrenoRepository, times(1)).save(terreno);
+    }
 
+    @Test
+    @DisplayName("Não consegue buscar o terreno pois não esta disponivel e joga uma exception")
+    public void retornaExceptionTerrenoIndisponivelParaDeletar(){
+        Optional<Terreno> terrenoMock = Optional.of(Entidades.retornaTerreno());
+        terrenoMock.get().setDisponivel("N");
+        Integer idMock = 2;
+
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idMock);
+        when(terrenoRepository.findById(anyInt())).thenReturn(terrenoMock);
+
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.deletarTerreno(new Random().nextInt()));
+    }
+
+    @Test
+    @DisplayName("Usuario que esta tentando deletar não tem permissão")
+    public void retornaExceptionUsuarioSemPermissaoParaDeletar(){
+        Optional<Terreno> terrenoMock = Optional.of(Entidades.retornaTerreno());
+        Integer idMock = 3;
+
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idMock);
+        when(terrenoRepository.findById(anyInt())).thenReturn(terrenoMock);
+
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.deletarTerreno(new Random().nextInt()));
+    }
+
+    @Test
+    @DisplayName("Altera os terrenos de um determinado usuario para indiponíveis quando o usuario é deletado.")
+    public void deletaTerrenosQuandoUsuarioDeletado() throws RegraDeNegocioException {
+        List<Terreno> listaTerrenosMock = List.of(Entidades.retornaTerreno(), Entidades.retornaTerreno(), Entidades.retornaTerreno(), Entidades.retornaTerreno());
+
+        when(terrenoRepository.findAllByProprietarioID(anyInt())).thenReturn(listaTerrenosMock);
+        when(terrenoRepository.save(anyObject())).thenReturn(Entidades.retornaTerreno());
+
+        terrenoService.alterarTerrenosUsuarioDeletado(new Random().nextInt());
+
+        verify(terrenoRepository, times(listaTerrenosMock.size())).save(any(Terreno.class));
     }
 
 
