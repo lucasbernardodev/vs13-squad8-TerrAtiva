@@ -214,54 +214,29 @@ class TerrenoServiceTest {
         assertThrows(RegraDeNegocioException.class, () -> terrenoService.alterarTerreno(idTerreno, requestTerrenoUpdateDTO));
     }
 
-
-
-
     @Test
     @DisplayName("Deve lançar uma exceção ao tentar alterar um terreno indisponível")
-    public void testAlterarTerreno() throws RegraDeNegocioException {
-        // Configuração do mock
+    public void testAlterarTerreno() {
         Terreno terreno = new Terreno();
         terreno.setId(1);
         Usuario donoTerreno = new Usuario();
-        donoTerreno.setUsuarioId(1); // ID de usuário fictício
+        donoTerreno.setUsuarioId(1);
         terreno.setDono(donoTerreno);
-        terreno.setDisponivel("S");
+        terreno.setDisponivel("N");
 
         RequestTerrenoUpdateDTO requestTerreno = new RequestTerrenoUpdateDTO();
         requestTerreno.setId(1);
 
-        // Configuração de comportamento do mock
-        when(terrenoRepository.findById(1)).thenReturn(java.util.Optional.of(terreno));
-        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1); // ID de usuário fictício
-        when(usuarioRepository.findById(1)).thenReturn(java.util.Optional.of(donoTerreno));
+        when(terrenoRepository.findById(1)).thenReturn(Optional.of(terreno));
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(1);
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(donoTerreno));
 
-        // Execução do método a ser testado
-        ResponseTerrenoDTO response = terrenoService.alterarTerreno(1, requestTerreno);
+        Assertions.assertThrows(RegraDeNegocioException.class, () -> {
+            terrenoService.alterarTerreno(1, requestTerreno);
+        });
 
-        // Verificação do resultado
-        Assertions.assertNotNull(response);
-
-        verify(terrenoRepository, times(1)).save(terreno);
-
-
-
+        verify(terrenoRepository, never()).save(any());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Test
