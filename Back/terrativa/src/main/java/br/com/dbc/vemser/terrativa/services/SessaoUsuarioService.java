@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SessaoUsuarioService {
 
+
     public Integer getIdLoggedUserId() {
         return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
