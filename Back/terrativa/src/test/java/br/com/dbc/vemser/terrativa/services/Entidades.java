@@ -3,6 +3,7 @@ package br.com.dbc.vemser.terrativa.services;
 import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;

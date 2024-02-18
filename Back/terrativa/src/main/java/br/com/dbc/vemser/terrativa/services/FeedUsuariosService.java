@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Data
 @Slf4j
 public class FeedUsuariosService {
 

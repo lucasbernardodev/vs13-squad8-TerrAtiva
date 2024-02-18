@@ -88,6 +88,7 @@ public class TerrenoService {
                 terrenoRetorno, EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(responseEnderecoTerrenos));
     }
 
+
     public void deletarTerreno(int idTerreno) throws RegraDeNegocioException {
         Integer findUserId = sessaoUsuarioService.getIdLoggedUserId();
         Terreno terrenoRecuperado = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
