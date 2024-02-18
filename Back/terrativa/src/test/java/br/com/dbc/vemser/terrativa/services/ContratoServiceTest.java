@@ -195,6 +195,22 @@ class ContratoServiceTest {
         return cont;
     }
 
+    @Test
+    @DisplayName("Deve retornar uma RegraDeNegocioException quando o contrato está inativo/não existe.")
+    public void retornaExceptionContratoInativo() {
+        //Given
+        Integer idMock = 2;
+        Contrato contratoMock = Entidades.retornaContratoEntity();
+        contratoMock.setAtivo("N");
+
+        //WHEN
+        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idMock);
+        when(contratoRepository.findById(anyInt())).thenReturn(Optional.of(contratoMock));
+
+        //THEN
+        assertThrows(RegraDeNegocioException.class, () -> contratoService.deletar(new Random().nextInt()));
+    }
+
 
 
 }
