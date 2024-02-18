@@ -55,7 +55,7 @@ class UsuarioServiceTest {
     private UsuarioService usuarioService;
 
     @Test
-    @DisplayName("Buscar usuário por id")
+    @DisplayName("Deveria buscar usuário por ID")
     void buscarUsuarioPorId() throws RegraDeNegocioException {
         // Given
         Integer id = anyInt();
@@ -72,7 +72,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Buscar usuário inativo deve lançar exceção")
+    @DisplayName("Deveria lançar uma exceção ao buscar usuário inativo")
     void buscarUsuarioInativo() {
         // Given
         Integer id = anyInt();
@@ -87,7 +87,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Confere se senhas são iguais")
+    @DisplayName("Deveria lançar uma exceção ao conferir senhas diferentes")
     void conferirSenha() {
 
         String senha = "senha123";
@@ -97,7 +97,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Cadastrar usuário")
+    @DisplayName("Deveria cadastrar usuário com sucesso")
     void cadastrarUsuario() throws RegraDeNegocioException {
     // Given
         RequestUsuarioCreateDTO requestUsuarioCreateDTO = Entidades.retornaRequestUsuarioCreateDTO();
@@ -121,7 +121,7 @@ class UsuarioServiceTest {
 }
 
     @Test
-    @DisplayName("Criar admin")
+    @DisplayName("Deveria criar um admin com sucesso")
     void criarAdmin() throws RegraDeNegocioException {
     // Given
         RequestAdminDTO requestAdminDTO = Entidades.retornaRequestAdminDTO();
@@ -141,7 +141,7 @@ class UsuarioServiceTest {
 }
 
     @Test
-    @DisplayName("Alterar senha")
+    @DisplayName("Deveria alterar senha com sucesso")
     void alterarSenha() throws RegraDeNegocioException {
     // Given
         RequestSenhaDTO requestSenhaDTO = new RequestSenhaDTO();
@@ -161,7 +161,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Alterar senha com senha atual incorreta")
+    @DisplayName("Deveria lançar exceção ao alterar senha com senha atual incorreta")
     void alterarSenhaComSenhaAtualIncorreta() throws RegraDeNegocioException {
         // Given
         RequestSenhaDTO requestSenhaDTO = new RequestSenhaDTO();
@@ -176,7 +176,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Deletar usuário")
+    @DisplayName("Deveria deletar usuário com sucesso")
     void deletarUsuario() throws RegraDeNegocioException {
     // Given
         DeletarContaDTO deletarContaDTO = new DeletarContaDTO();
@@ -275,7 +275,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Retorna usuário logado")
+    @DisplayName("Deveria retornar usuário logado com sucesso")
     void getLoggedUser() throws RegraDeNegocioException {
         // Given
         Usuario usuario = Entidades.retornaUsuario();
@@ -289,7 +289,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Retorna erro para usuário não encontrado")
+    @DisplayName("Deveria lançar exceção ao não encontrar usuário logado")
     void getLoggedUserNotFound() {
         // Given
         // When
@@ -301,7 +301,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Retorna DTO do usuário logado")
+    @DisplayName("Deveria retornar DTO do usuário logado com sucesso")
     void getUserDTO() throws RegraDeNegocioException {
         // Given
         Usuario usuario = Entidades.retornaUsuario();
@@ -316,7 +316,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Retorna endereço do usuário")
+    @DisplayName("Deveria retornar endereço do usuário logado com sucesso")
     void resgatarEnderecoUsuario() throws RegraDeNegocioException {
         // Given
         ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(Entidades.retornaEnderecoEntityMock());
@@ -329,7 +329,7 @@ class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Alterar o endereco do usuario")
+    @DisplayName("Deveria alterar endereço do usuário com sucesso")
     void alterarEnderecoUsuario() throws RegraDeNegocioException {
         // Given
         RequestEnderecoCreateDTO requestEnderecoUpdateDTO = Entidades.retornaRequestEnderecoCreateDTO();

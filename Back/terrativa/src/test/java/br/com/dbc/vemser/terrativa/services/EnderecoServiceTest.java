@@ -33,7 +33,7 @@ class EnderecoServiceTest {
     private EnderecoService enderecoService;
 
     @Test
-    @DisplayName("Retorna endereço por id")
+    @DisplayName("Deveria retornar o endereço de acordo com o ID passado por argumento")
     void resgatarPorId() throws RegraDeNegocioException {
         // Given
         Integer id = 1;
@@ -48,7 +48,7 @@ class EnderecoServiceTest {
     }
 
     @Test
-    @DisplayName("Adiciona endereço")
+    @DisplayName("Deveria salvar um novo endereço no banco de dados com sucesso")
     void adicionarEndereco() throws RegraDeNegocioException {
         // Given
         Optional<Endereco> enderecoMock = Optional.of(Entidades.retornaEnderecoEntityMock());
@@ -62,7 +62,7 @@ class EnderecoServiceTest {
     }
 
     @Test
-    @DisplayName("Altera endereço")
+    @DisplayName("Deveria alterar um endereço no banco de dados com sucesso")
     void alterar() throws RegraDeNegocioException {
         // Given
         Usuario usuarioMock = Entidades.retornaUsuario();
