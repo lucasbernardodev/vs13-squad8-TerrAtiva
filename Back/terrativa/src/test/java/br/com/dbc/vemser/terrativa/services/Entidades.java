@@ -306,4 +306,29 @@ public class Entidades {
         return cont;
     }
 
+    public static RequestEnderecoTerrenosCreateDTO retornaRequestEnderecoTerrenosCreateDTO() {
+        RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenosCreateDTO = new RequestEnderecoTerrenosCreateDTO();
+        requestEnderecoTerrenosCreateDTO.setId(1);
+        requestEnderecoTerrenosCreateDTO.setLogradouro("Rua das Flores");
+        requestEnderecoTerrenosCreateDTO.setNumero(123);
+        requestEnderecoTerrenosCreateDTO.setComplemento("Casa");
+        requestEnderecoTerrenosCreateDTO.setBairro("Jardim das Flores");
+        requestEnderecoTerrenosCreateDTO.setCodigoMunicipioIBGE(12345);
+        requestEnderecoTerrenosCreateDTO.setCep(12345678);
+        requestEnderecoTerrenosCreateDTO.setLocalizacao("Localização");
+        return requestEnderecoTerrenosCreateDTO;
+    }
+
+
+    public static RequestTerrenoUpdateDTO retornaRequestTerrenoUpdateDTO() {
+        RequestTerrenoUpdateDTO requestTerrenoUpdateDTO = new RequestTerrenoUpdateDTO();
+        requestTerrenoUpdateDTO.setTitulo("Terreno para Compra");
+        requestTerrenoUpdateDTO.setDescricao("Descrição do Terreno");
+        requestTerrenoUpdateDTO.setProprietarioID(2);
+        requestTerrenoUpdateDTO.setPreco(2000);
+        requestTerrenoUpdateDTO.setTamanho("1500");
+        requestTerrenoUpdateDTO.setDisponivel("S");
+        requestTerrenoUpdateDTO.setEndereco(retornaRequestEnderecoTerrenosCreateDTO());
+        return requestTerrenoUpdateDTO;
+    }
 }

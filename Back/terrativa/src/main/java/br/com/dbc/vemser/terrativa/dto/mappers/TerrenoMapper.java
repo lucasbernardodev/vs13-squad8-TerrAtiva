@@ -36,7 +36,7 @@ public class TerrenoMapper {
         return terreno;
     }
 
-    public final ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno, ResponseEnderecoTerrenosDTO endereco){
+    public static final ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno, ResponseEnderecoTerrenosDTO endereco){
         ResponseTerrenoDTO responseTerreno = new ResponseTerrenoDTO();
         responseTerreno.setId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());
