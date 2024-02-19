@@ -1,7 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoMapper;
-import br.com.dbc.vemser.terrativa.dto.mappers.UsuarioMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoDTO;
@@ -26,8 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -317,7 +314,7 @@ class UsuarioServiceTest {
 
     @Test
     @DisplayName("Deveria retornar endereço do usuário logado com sucesso")
-    void resgatarEnderecoUsuario() throws RegraDeNegocioException {
+    void resgatarEnderecoUsuario() {
         // Given
         ResponseEnderecoDTO responseEnderecoDTO = EnderecoMapper.EnderecoParaResponseEndereco(Entidades.retornaEnderecoEntityMock());
         // When

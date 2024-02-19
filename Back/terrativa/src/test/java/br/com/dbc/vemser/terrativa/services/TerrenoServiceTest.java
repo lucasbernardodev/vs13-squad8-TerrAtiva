@@ -3,36 +3,31 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
-import br.com.dbc.vemser.terrativa.entity.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import java.util.*;
-
-import static br.com.dbc.vemser.terrativa.services.Entidades.*;
-import static org.mockito.Mockito.*;
-
-import br.com.dbc.vemser.terrativa.dto.mappers.EnderecoTerrenosMapper;
-import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
+import br.com.dbc.vemser.terrativa.entity.Terreno;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
+import static br.com.dbc.vemser.terrativa.services.Entidades.retornaTerreno;
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TerrenoServiceTest {
@@ -50,13 +45,7 @@ class TerrenoServiceTest {
     private TerrenoRepository terrenoRepository;
 
     @Mock
-    private TerrenoMapper terrenoMapper;
-
-    @Mock
     private MensalidadeService mensalidadeService;
-
-    @Mock
-    private EnderecoTerrenosMapper enderecoTerrenosMapper;
 
     @Mock
     private SessaoUsuarioService sessaoUsuarioService;
@@ -64,7 +53,6 @@ class TerrenoServiceTest {
     @InjectMocks
     private TerrenoService terrenoService;
 
-    private static final Integer PROPRIETARIO_ID = 1;
     private static final String NOT_FOUND_MESSAGE_USUARIO = "Usuário não encontrado";
     private static final String NOT_FOUND_MESSAGE_INATIVO = "Usuário inativo";
     private static final String NOT_FOUND_MESSAGE_TERRENO_EXIST = "Terreno não existe ou está alugado";
@@ -107,7 +95,7 @@ class TerrenoServiceTest {
 
     @Test
     @DisplayName("Testar se a exceção é lançada quando o usuário está inativo")
-    public void testUsuarioInativo() throws RegraDeNegocioException {
+    public void testUsuarioInativo() {
         RequestTerrenoCreateDTO requestTerreno = new RequestTerrenoCreateDTO();
         requestTerreno.setProprietarioID(1);
 
@@ -121,10 +109,9 @@ class TerrenoServiceTest {
             terrenoService.cadastrarTerreno(requestTerreno);
         });
 
-        String expectedMessage = NOT_FOUND_MESSAGE_INATIVO;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(NOT_FOUND_MESSAGE_INATIVO));
     }
 
     //Buscar
@@ -146,9 +133,8 @@ class TerrenoServiceTest {
     @Test
     @DisplayName("Não consegue buscar o terreno e joga uma exception")
     public void retornaExceptionSemTerreno(){
-        Integer idMock = null;
 
-        assertThrows(RegraDeNegocioException.class, () -> terrenoService.buscarTerreno(idMock));
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.buscarTerreno(null));
     }
 
     @Test
@@ -204,11 +190,11 @@ class TerrenoServiceTest {
 
     @Test
     @DisplayName("Altera os terrenos de um determinado usuario para indiponíveis quando o usuario é deletado.")
-    public void deletaTerrenosQuandoUsuarioDeletado() throws RegraDeNegocioException {
+    public void deletaTerrenosQuandoUsuarioDeletado() {
         List<Terreno> listaTerrenosMock = List.of(retornaTerreno(), retornaTerreno(), retornaTerreno(), retornaTerreno());
 
         when(terrenoRepository.findAllByProprietarioID(anyInt())).thenReturn(listaTerrenosMock);
-        when(terrenoRepository.save(anyObject())).thenReturn(retornaTerreno());
+        when(terrenoRepository.save(any())).thenReturn(retornaTerreno());
 
         terrenoService.alterarTerrenosUsuarioDeletado(new Random().nextInt());
 
@@ -218,10 +204,9 @@ class TerrenoServiceTest {
     @Test
     @DisplayName("Não consegue alterar o terreno e joga uma exception")
     public void retornaExceptionAoAlterarTerreno() {
-        Integer idTerreno = null;
         RequestTerrenoUpdateDTO requestTerrenoUpdateDTO = new RequestTerrenoUpdateDTO();
 
-        assertThrows(RegraDeNegocioException.class, () -> terrenoService.alterarTerreno(idTerreno, requestTerrenoUpdateDTO));
+        assertThrows(RegraDeNegocioException.class, () -> terrenoService.alterarTerreno(null, requestTerrenoUpdateDTO));
     }
 
     @Test
@@ -386,9 +371,7 @@ class TerrenoServiceTest {
         when(terrenoRepository.findById(idTerreno)).thenReturn(Optional.of(terreno));
         when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(usuarioId);
 
-        Exception exception = assertThrows(RegraDeNegocioException.class, () -> {
-            terrenoService.arrendarTerreno(idTerreno, contrato);
-        });
+        Exception exception = assertThrows(RegraDeNegocioException.class, () -> terrenoService.arrendarTerreno(idTerreno, contrato));
 
         String expectedMessage = "Usuário não pode alugar seu próprio terreno";
         String actualMessage = exception.getMessage();
@@ -398,7 +381,7 @@ class TerrenoServiceTest {
 
     @Test
     @DisplayName("Testar se a exceção é lançada quando o locatário está inativo")
-    public void testLocatarioInativo() throws RegraDeNegocioException {
+    public void testLocatarioInativo() {
         Integer idTerreno = 1;
         RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
         contrato.setTerrenoID(idTerreno);
@@ -416,19 +399,16 @@ class TerrenoServiceTest {
         when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(usuarioId);
         when(usuarioRepository.findById(usuarioId)).thenReturn(Optional.of(usuario));
 
-        Exception exception = assertThrows(RegraDeNegocioException.class, () -> {
-            terrenoService.arrendarTerreno(idTerreno, contrato);
-        });
+        Exception exception = assertThrows(RegraDeNegocioException.class, () -> terrenoService.arrendarTerreno(idTerreno, contrato));
 
-        String expectedMessage = NOT_FOUND_MESSAGE_INATIVO;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(NOT_FOUND_MESSAGE_INATIVO));
     }
 
     @Test
     @DisplayName("Testar se a exceção é lançada quando o terreno não está disponível para alteração")
-    public void testTerrenoNaoDisponivelAlteracao() throws RegraDeNegocioException {
+    public void testTerrenoNaoDisponivelAlteracao() {
         // Preparar os dados de teste
         Integer idTerreno = 1;
         RequestTerrenoUpdateDTO requestTerreno = new RequestTerrenoUpdateDTO();
@@ -444,19 +424,16 @@ class TerrenoServiceTest {
         when(terrenoRepository.findById(idTerreno)).thenReturn(Optional.of(terreno));
         when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(dono.getUsuarioId());
 
-        Exception exception = assertThrows(RegraDeNegocioException.class, () -> {
-            terrenoService.alterarTerreno(idTerreno, requestTerreno);
-        });
+        Exception exception = assertThrows(RegraDeNegocioException.class, () -> terrenoService.alterarTerreno(idTerreno, requestTerreno));
 
-        String expectedMessage = NOT_FOUND_MESSAGE_TERRENO_EXIST;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(NOT_FOUND_MESSAGE_TERRENO_EXIST));
     }
 
     @Test
     @DisplayName("Testar se a exceção é lançada quando o terreno não está disponível para arrendamento")
-    public void testTerrenoNaoDisponivelArrendamento() throws RegraDeNegocioException {
+    public void testTerrenoNaoDisponivelArrendamento() {
         Integer idTerreno = 1;
         RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
 
@@ -476,24 +453,19 @@ class TerrenoServiceTest {
         when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(locatario.getUsuarioId());
         when(usuarioRepository.findById(locatario.getUsuarioId())).thenReturn(Optional.of(locatario));
 
-        Exception exception = assertThrows(RegraDeNegocioException.class, () -> {
-            terrenoService.arrendarTerreno(idTerreno, contrato);
-        });
+        Exception exception = assertThrows(RegraDeNegocioException.class, () -> terrenoService.arrendarTerreno(idTerreno, contrato));
 
-        String expectedMessage = NOT_FOUND_MESSAGE_TERRENO_EXIST;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(NOT_FOUND_MESSAGE_TERRENO_EXIST));
     }
 
     private RequestContratoCreateDTO criarContratoComLocatarioInativo() {
-        RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
-        return contrato;
+        return new RequestContratoCreateDTO();
     }
 
     private RequestContratoCreateDTO criarContratoComMesmoProprietario() {
-        RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
-        return contrato;
+        return new RequestContratoCreateDTO();
     }
 
 }

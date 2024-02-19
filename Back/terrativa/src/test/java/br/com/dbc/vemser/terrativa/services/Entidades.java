@@ -1,7 +1,13 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.*;
-import br.com.dbc.vemser.terrativa.dto.responses.*;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestAdminDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
+import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
 
@@ -19,7 +25,7 @@ public class Entidades {
         usuario.setSobrenome("Silva");
         usuario.setEmail("joão@email.com");
         usuario.setCpf("12345678910");
-        usuario.setDataNascimento(LocalDate.of(2024,02,15));
+        usuario.setDataNascimento(LocalDate.of(2024,2,15));
         usuario.setSexo("M");
         usuario.setAtivo("S");
         usuario.setCelular("123456789");
@@ -35,7 +41,7 @@ public class Entidades {
         usuario.setSobrenome("Silva");
         usuario.setEmail("joão@email.com");
         usuario.setCpf("12345678910");
-        usuario.setDataNascimento(LocalDate.of(2024,02,15));
+        usuario.setDataNascimento(LocalDate.of(2024,2,15));
         usuario.setSexo("M");
         usuario.setCelular("123456789");
         usuario.setTelefoneFixo("123456789");
@@ -55,15 +61,6 @@ public class Entidades {
         dto.setSexo(usuario.getSexo());
         dto.setCelular(usuario.getCelular());
         dto.setTelefoneFixo(usuario.getTelefoneFixo());
-        return dto;
-    }
-
-    public static RequestUsuarioLoginDTO retornaRequestUsuarioLoginDTO() {
-        Usuario usuario = retornaUsuario();
-        RequestUsuarioLoginDTO dto = new RequestUsuarioLoginDTO();
-        dto.setEmail(usuario.getEmail());
-        dto.setSenha("senha123");
-
         return dto;
     }
 
@@ -112,15 +109,6 @@ public class Entidades {
         dto.setSexo(usuario.getSexo());
         dto.setCelular(usuario.getCelular());
         dto.setTelefoneFixo(usuario.getTelefoneFixo());
-
-        return dto;
-    }
-
-    public static RequestSenhaDTO retornaRequestSenhaDTO() {
-        RequestSenhaDTO dto = new RequestSenhaDTO();
-        dto.setSenhaAtual("senha123");
-        dto.setSenhaNova("senha321");
-        dto.setSenhaNovaConf("senha321");
 
         return dto;
     }
@@ -179,9 +167,9 @@ public class Entidades {
         cont.setLocatarioID(2);
         cont.setTerrenoID(3);
         cont.setAtivo("S");
-        cont.setDataAssinatura(LocalDate.of(2024,02,15));
-        cont.setDataFinal(LocalDate.of(2024,02,15));
-        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataAssinatura(LocalDate.of(2024,2,15));
+        cont.setDataFinal(LocalDate.of(2024,2,15));
+        cont.setDataInicio(LocalDate.of(2025,2,15));
         cont.setDataVencimentoAluguel(5);
         cont.setCriado("15/02/2024");
         cont.setEditado("15/02/2024");
@@ -270,15 +258,15 @@ public class Entidades {
         ResponseContratoRelatorioDTO cont = new ResponseContratoRelatorioDTO();
         cont.setIdContrato(1);
         cont.setAtivo("S");
-        cont.setDataAssinatura(LocalDate.of(2024,02,15));
-        cont.setDataFinal(LocalDate.of(2024,02,15));
-        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataAssinatura(LocalDate.of(2024,2,15));
+        cont.setDataFinal(LocalDate.of(2024,2,15));
+        cont.setDataInicio(LocalDate.of(2025,2,15));
         cont.setDataVencimentoAluguel(5);
         cont.setNomeLocatario("João");
         cont.setSobrenomeLocatario("Silva");
         cont.setEmailLocatario("joão@email.com");
         cont.setCpfLocatario("12345678910");
-        cont.setDataNascimentoLocatario(LocalDate.of(2024,02,15));
+        cont.setDataNascimentoLocatario(LocalDate.of(2024,2,15));
         cont.setSexoLocatario("M");
         cont.setCelularLocatario("123456789");
         cont.setTelefoneFixoLocatario("123456789");
@@ -289,7 +277,7 @@ public class Entidades {
         cont.setSobrenomeDono("Silva");
         cont.setEmailDono("joão@email.com");
         cont.setCpfDono("12345678910");
-        cont.setDataNascimentoDono(LocalDate.of(2024,02,15));
+        cont.setDataNascimentoDono(LocalDate.of(2024,2,15));
         cont.setSexoDono("M");
         cont.setCelularDono("123456789");
         cont.setTelefoneFixoDono("123456789");
@@ -306,69 +294,4 @@ public class Entidades {
         return cont;
     }
 
-    public static RequestEnderecoTerrenosCreateDTO retornaRequestEnderecoTerrenosCreateDTO() {
-        RequestEnderecoTerrenosCreateDTO requestEnderecoTerrenosCreateDTO = new RequestEnderecoTerrenosCreateDTO();
-        requestEnderecoTerrenosCreateDTO.setId(1);
-        requestEnderecoTerrenosCreateDTO.setLogradouro("Rua das Flores");
-        requestEnderecoTerrenosCreateDTO.setNumero(123);
-        requestEnderecoTerrenosCreateDTO.setComplemento("Casa");
-        requestEnderecoTerrenosCreateDTO.setBairro("Jardim das Flores");
-        requestEnderecoTerrenosCreateDTO.setCodigoMunicipioIBGE(12345);
-        requestEnderecoTerrenosCreateDTO.setCep(12345678);
-        requestEnderecoTerrenosCreateDTO.setLocalizacao("Localização");
-        return requestEnderecoTerrenosCreateDTO;
-    }
-
-
-    public static RequestTerrenoUpdateDTO retornaRequestTerrenoUpdateDTO() {
-        RequestTerrenoUpdateDTO requestTerrenoUpdateDTO = new RequestTerrenoUpdateDTO();
-        requestTerrenoUpdateDTO.setTitulo("Terreno para Compra");
-        requestTerrenoUpdateDTO.setDescricao("Descrição do Terreno");
-        requestTerrenoUpdateDTO.setProprietarioID(2);
-        requestTerrenoUpdateDTO.setPreco(2000);
-        requestTerrenoUpdateDTO.setTamanho("1500");
-        requestTerrenoUpdateDTO.setDisponivel("S");
-        requestTerrenoUpdateDTO.setEndereco(retornaRequestEnderecoTerrenosCreateDTO());
-        return requestTerrenoUpdateDTO;
-    }
-
-    public static RequestMensalidadeCreateDTO retornaRequestMensalidade() {
-        RequestMensalidadeCreateDTO mensalidadeDTO = new RequestMensalidadeCreateDTO();
-        mensalidadeDTO.setContratoID(1); // Suponha que o ID do contrato seja 1
-        mensalidadeDTO.setValorMensal(2000);
-        mensalidadeDTO.setAnoExercicio(2024);
-
-
-        return mensalidadeDTO;
-    }
-
-    public static ResponseContratoRelatorioDTO converteContratoParaDTO(Contrato contrato) {
-        ResponseContratoRelatorioDTO contratoDTO = new ResponseContratoRelatorioDTO();
-        contratoDTO.setIdContrato(contrato.getId());
-        contratoDTO.setIdTerreno(contrato.getTerrenoID());
-        contratoDTO.setAtivo(contrato.getAtivo());
-        contratoDTO.setDataAssinatura(contrato.getDataAssinatura());
-        contratoDTO.setDataFinal(contrato.getDataFinal());
-        contratoDTO.setDataInicio(contrato.getDataInicio());
-        contratoDTO.setDataVencimentoAluguel(contrato.getDataVencimentoAluguel());
-        contratoDTO.setNomeLocatario(contrato.getLocatario().getNome());
-        contratoDTO.setSobrenomeLocatario(contrato.getLocatario().getSobrenome());
-        contratoDTO.setEmailLocatario(contrato.getLocatario().getEmail());
-
-
-        return contratoDTO;
-    }
-
-
-    public static RequestContratoCreateDTO retornaRequestContratoCreateDTO() {
-        RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
-        contrato.setTerrenoID(1);
-        contrato.setLocatario(retornaUsuario());
-        contrato.setDataInicio(LocalDate.of(2024,02,15));
-        contrato.setDataFinal(LocalDate.of(2024,02,15));
-        contrato.setDataVencimentoAluguel(5);
-        contrato.setAtivo("S");
-
-        return contrato;
-    }
 }

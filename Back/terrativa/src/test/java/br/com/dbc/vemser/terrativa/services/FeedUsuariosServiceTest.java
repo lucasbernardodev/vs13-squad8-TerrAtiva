@@ -1,15 +1,9 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.mappers.TerrenoMapper;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
-
-import static org.mockito.ArgumentMatchers.anyInt;
-
-import static org.mockito.ArgumentMatchers.any;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
-import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
@@ -24,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,9 +32,6 @@ class FeedUsuariosServiceTest {
 
     @Mock
     private ContratoRepository contratoRepository;
-
-    @Mock
-    private TerrenoMapper terrenoMapper;
 
     @Mock
     private EnderecoTerrenosService enderecoTerrenosService;
@@ -63,7 +55,6 @@ class FeedUsuariosServiceTest {
     @DisplayName("Teste mostrar terrenos do usuario")
     public void mostrarTerrenosDoUsuario() {
 
-        Usuario usuario = Entidades.retornaUsuario();
         List<Terreno> listaDeTerrenos = criarListaDeTerrenos();
 
         when(terrenoRepository.findAllByProprietarioID(anyInt())).thenReturn(listaDeTerrenos);
@@ -97,7 +88,7 @@ class FeedUsuariosServiceTest {
         when(terrenoRepository.findAllByDisponivelEqualsAndProprietarioID("N", 1)).thenReturn(criarListaDeTerrenos());
         when(enderecoTerrenosService.resgatarPorId(any())).thenReturn(criarEnderecoDTO());
 
-        FeedUsuariosService feedUsuariosService = new FeedUsuariosService(terrenoRepository, contratoRepository, terrenoMapper, enderecoTerrenosService);
+        FeedUsuariosService feedUsuariosService = new FeedUsuariosService(terrenoRepository, contratoRepository, enderecoTerrenosService);
 
         List<ResponseTerrenoDTO> responseTerrenos = feedUsuariosService.mostrarTerrenosArrendados(1);
 
@@ -113,8 +104,7 @@ class FeedUsuariosServiceTest {
     }
 
     private ResponseEnderecoTerrenosDTO criarEnderecoDTO() {
-        ResponseEnderecoTerrenosDTO enderecoDTO = new ResponseEnderecoTerrenosDTO();
-        return enderecoDTO;
+        return new ResponseEnderecoTerrenosDTO();
     }
 
     private Contrato criarContratoEntity() {
@@ -124,14 +114,6 @@ class FeedUsuariosServiceTest {
         contrato.setAtivo("S");
 
         return contrato;
-    }
-
-    private Terreno criarTerreno() {
-        Terreno terreno = new Terreno();
-        terreno.setId(1);
-        terreno.setDescricao("Descrição do terreno");
-
-        return terreno;
     }
 
     private List<Contrato> criarListaDeContratos() {

@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseMensalidadeDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
@@ -44,7 +43,7 @@ class MensalidadeServiceTest {
 
 
         when(contratoService.resgatarContratoPorId(anyInt())).thenReturn(respMock);
-        when(mensalidadeRepository.save(anyObject())).thenReturn(menMock);
+        when(mensalidadeRepository.save(any())).thenReturn(menMock);
 
         mensalidadeService.criarMensalidade(reqMock);
 
@@ -61,10 +60,10 @@ class MensalidadeServiceTest {
         ResponseContratoRelatorioDTO relatorioDTOMock = Entidades.retornaRelatorioContrato();
         ResponseMensalidadeDTO responseMensalidadeDTOMock = retornaResponseMensalidade();
 
-        doReturn(null).when(mensalidadeService).verificaUsuario(idMock);
+        doNothing().when(mensalidadeService).verificaUsuario(idMock);
         when(mensalidadeRepository.findById(anyInt())).thenReturn(Optional.of(mensalidadeMock));
         when(contratoService.resgatarContratoPorId(anyInt())).thenReturn(relatorioDTOMock);
-        when(mensalidadeRepository.save(anyObject())).thenReturn(mensalidadeMock);
+        when(mensalidadeRepository.save(any())).thenReturn(mensalidadeMock);
 
         ResponseMensalidadeDTO responseMensalidadeDTO = mensalidadeService.alterarMensalidade(idMock, createDTO);
 
@@ -80,7 +79,7 @@ class MensalidadeServiceTest {
         Mensalidade mensalidademock = Entidades.retornaMensalidade();
         ResponseMensalidadeDTO responseMock = retornaResponseMensalidade();
 
-        doReturn(null).when(mensalidadeService).verificaUsuario(idMock);
+        doNothing().when(mensalidadeService).verificaUsuario(idMock);
         when(mensalidadeRepository.findById(anyInt())).thenReturn(Optional.of(mensalidademock));
 
         ResponseMensalidadeDTO responseMensalidadeDTO = mensalidadeService.resgatarMensalidadePorId(idMock);
@@ -93,26 +92,10 @@ class MensalidadeServiceTest {
     @DisplayName("Retorna mensalidade por ID lança uma Exception")
     public void restornaMensalidadeException() throws RegraDeNegocioException {
         Integer idMock = 2;
-        Mensalidade mensalidademock = Entidades.retornaMensalidade();
 
-        doReturn(null).when(mensalidadeService).verificaUsuario(idMock);
+        doNothing().when(mensalidadeService).verificaUsuario(idMock);
 
         assertThrows(RegraDeNegocioException.class, () -> mensalidadeService.resgatarMensalidadePorId(idMock));
-    }
-
-
-    @Test
-    @DisplayName("Verifica se o usuario pode fazer as alterações que deseja no banco de dados")
-    public void verificaUsuarioComSucesso() throws RegraDeNegocioException {
-        Integer idLogger = 2;
-        Mensalidade mensalidadeMock = Entidades.retornaMensalidade();
-        Contrato contratoMock = Entidades.retornaContratoEntity();
-
-        when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idLogger);
-        when(mensalidadeRepository.findById(anyInt())).thenReturn(Optional.of(mensalidadeMock));
-        when(contratoService.findByID(anyInt())).thenReturn(contratoMock);
-
-        assertNull(mensalidadeService.verificaUsuario(idLogger));
     }
 
     @Test

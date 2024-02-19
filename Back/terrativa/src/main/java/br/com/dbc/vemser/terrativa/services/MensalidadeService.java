@@ -2,17 +2,12 @@ package br.com.dbc.vemser.terrativa.services;
 
 import br.com.dbc.vemser.terrativa.dto.mappers.MensalidadeMapper;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseMensalidadeDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
 import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.MensalidadeRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -53,13 +48,11 @@ public class MensalidadeService {
         return MensalidadeMapper.MensalidadeParaResponseMensalidade(mensalidade);
     }
 
-    public String verificaUsuario(Integer id) throws RegraDeNegocioException {
+    public void verificaUsuario(Integer id) throws RegraDeNegocioException {
         Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Mensalidade mensalidade = mensalidadeRepository.findById(id).get();
         Contrato contrato = contratoService.findByID(mensalidade.getContratoID());
-        if(Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || Objects.equals(contrato.getLocatarioID(), idUsuario)){
-            return null;
-        } else {
+        if(!Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || !Objects.equals(contrato.getLocatarioID(), idUsuario)){
             throw new RegraDeNegocioException(NOT_FOUND_DONO);
         }
     }

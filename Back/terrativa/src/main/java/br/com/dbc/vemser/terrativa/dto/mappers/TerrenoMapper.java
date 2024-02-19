@@ -6,12 +6,10 @@ import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseFeedDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.entity.Terreno;
-import org.springframework.stereotype.Component;
 
-@Component
 public class TerrenoMapper {
 
-    public final Terreno requestTerrenoParaTerreno(RequestTerrenoCreateDTO requestTerreno){
+    public static Terreno requestTerrenoParaTerreno(RequestTerrenoCreateDTO requestTerreno){
         Terreno terreno = new Terreno();
         terreno.setId(requestTerreno.getId());
         terreno.setTitulo(requestTerreno.getTitulo());
@@ -23,7 +21,7 @@ public class TerrenoMapper {
         terreno.setDisponivel(requestTerreno.getDisponivel());
         return terreno;
     }
-    public final Terreno requestTerrenoParaTerreno(RequestTerrenoUpdateDTO requestTerreno){
+    public static Terreno requestTerrenoParaTerreno(RequestTerrenoUpdateDTO requestTerreno){
         Terreno terreno = new Terreno();
         terreno.setId(requestTerreno.getId());
         terreno.setTitulo(requestTerreno.getTitulo());
@@ -36,7 +34,7 @@ public class TerrenoMapper {
         return terreno;
     }
 
-    public static final ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno, ResponseEnderecoTerrenosDTO endereco){
+    public static ResponseTerrenoDTO terrenoParaResponseTerreno(Terreno terreno, ResponseEnderecoTerrenosDTO endereco){
         ResponseTerrenoDTO responseTerreno = new ResponseTerrenoDTO();
         responseTerreno.setId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());
@@ -49,7 +47,7 @@ public class TerrenoMapper {
         return responseTerreno;
     }
 
-    public final ResponseFeedDTO terrenoToFeedDTO(Terreno terreno) {
+    public static ResponseFeedDTO terrenoToFeedDTO(Terreno terreno) {
         ResponseFeedDTO responseTerreno = new ResponseFeedDTO();
         responseTerreno.setTerrenoId(terreno.getId());
         responseTerreno.setTitulo(terreno.getTitulo());

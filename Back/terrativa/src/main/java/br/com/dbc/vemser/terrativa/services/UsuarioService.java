@@ -11,7 +11,6 @@ import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.CargoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,7 @@ public class UsuarioService {
         return UsuarioMapper.usuarioParaResponseUsuario(getLoggedUser());
     }
 
-    public ResponseEnderecoDTO resgatarEnderecoUsuario() throws RegraDeNegocioException {
+    public ResponseEnderecoDTO resgatarEnderecoUsuario() {
         return enderecoService.resgatarPorId(sessaoUsuarioService.getIdLoggedUserId());
     }
 

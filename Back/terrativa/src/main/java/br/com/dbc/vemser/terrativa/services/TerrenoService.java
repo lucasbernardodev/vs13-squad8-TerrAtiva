@@ -17,22 +17,19 @@ import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class TerrenoService {
    private final TerrenoRepository terrenoRepository;
    private final ContratoService contratoService;
-   private final TerrenoMapper terrenoMapper;
    private final UsuarioRepository usuarioRepository;
    private final EnderecoTerrenosService enderecoTerrenosService;
    private final MensalidadeService mensalidadeService;
-    private final SessaoUsuarioService sessaoUsuarioService;
+   private final SessaoUsuarioService sessaoUsuarioService;
 
     private final String NOT_FOUND_MESSAGE_TERRENO = "Terreno não encontrado";
     private final String NOT_FOUND_MESSAGE_TERRENO_EXIST = "Terreno não existe ou está alugado";
@@ -45,7 +42,7 @@ public class TerrenoService {
         if (terreno.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST );
         }
-        return terrenoMapper.terrenoParaResponseTerreno(
+        return TerrenoMapper.terrenoParaResponseTerreno(
                 terreno, enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
     }
 
@@ -58,10 +55,10 @@ public class TerrenoService {
         }
         EnderecoTerrenos enderecoTerrenos = enderecoTerrenosService.adicionarEnderecoTerrenos(requestTerreno.getEndereco());
         requestTerreno.setEnderecoID(enderecoTerrenos.getId());
-        Terreno terrenoCadastro = terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
+        Terreno terrenoCadastro = TerrenoMapper.requestTerrenoParaTerreno(requestTerreno);
         terrenoCadastro.setDono(usuarioRepository.findById(requestTerreno.getProprietarioID()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO)));
         terrenoCadastro.setEnderecoTerrenoID(enderecoTerrenos);
-        return terrenoMapper.terrenoParaResponseTerreno(
+        return TerrenoMapper.terrenoParaResponseTerreno(
                 terrenoRepository.save(terrenoCadastro), EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenos));
     }
 
@@ -78,13 +75,13 @@ public class TerrenoService {
         }
         requestTerreno.getEndereco().setId(idTerreno);
         EnderecoTerrenos responseEnderecoTerrenos = enderecoTerrenosService.alterar(requestTerreno.getEndereco());
-        Terreno terrenoCadastro =  terrenoMapper.requestTerrenoParaTerreno(requestTerreno);
+        Terreno terrenoCadastro =  TerrenoMapper.requestTerrenoParaTerreno(requestTerreno);
         terrenoCadastro.setDono(usuarioRepository.findById(terreno.getDono().getUsuarioId()).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO)));
         terrenoCadastro.setEnderecoTerrenoID(responseEnderecoTerrenos);
         terrenoCadastro.setEnderecoID(responseEnderecoTerrenos.getId());
         Terreno terrenoRetorno = terrenoRepository.save(terrenoCadastro);
 
-        return terrenoMapper.terrenoParaResponseTerreno(
+        return TerrenoMapper.terrenoParaResponseTerreno(
                 terrenoRetorno, EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(responseEnderecoTerrenos));
     }
 
@@ -102,7 +99,7 @@ public class TerrenoService {
         terrenoRepository.save(terrenoRecuperado);
     }
 
-    public void alterarTerrenosUsuarioDeletado(Integer donoID) throws RegraDeNegocioException {
+    public void alterarTerrenosUsuarioDeletado(Integer donoID) {
         List<Terreno> listaTerrenos = terrenoRepository.findAllByProprietarioID(donoID);
         if (listaTerrenos.isEmpty()){
             return;

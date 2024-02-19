@@ -15,12 +15,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class FeedService {
 
     private final TerrenoRepository terrenoRepository;
-    private final TerrenoMapper terrenoMapper;
 
     public Page<ResponseFeedDTO> listarTerrenos(Pageable pageable, String campoDebusca, Integer precoInicial, Integer precoFinal, Estados estados) {
         Integer estadosINT = null;
@@ -28,7 +26,7 @@ public class FeedService {
             estadosINT = estados.getCode();
         }
         Page<Terreno> terrenos = terrenoRepository.buscarFeedComFiltros(pageable, campoDebusca, campoDebusca, precoInicial, precoFinal, estadosINT);
-        return terrenos.map(terrenoMapper::terrenoToFeedDTO);
+        return terrenos.map(TerrenoMapper::terrenoToFeedDTO);
     }
 
     public Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable) {

@@ -4,7 +4,8 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestMensalidadeCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
-import br.com.dbc.vemser.terrativa.entity.*;
+import br.com.dbc.vemser.terrativa.entity.Contrato;
+import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
@@ -23,7 +24,6 @@ import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,9 +51,9 @@ class ContratoServiceTest {
 
         //WHEN
         when(sessaoUsuarioService.getIdLoggedUserId()).thenReturn(idUsuarioMock);
-        when(contratoRepository.findById(anyInt())).thenReturn(Optional.ofNullable(contratoMock));
+        when(contratoRepository.findById(anyInt())).thenReturn(Optional.of(contratoMock));
         when(contratoRepository.retornaContratoPorID(anyInt())).thenReturn(contratoMock);
-        when(usuarioRepository.findById(anyInt())).thenReturn(Optional.ofNullable(user));
+        when(usuarioRepository.findById(anyInt())).thenReturn(Optional.of(user));
 
         ResponseContratoRelatorioDTO rel = contratoService.resgatarContratoPorId(new Random().nextInt());
 
@@ -72,7 +72,7 @@ class ContratoServiceTest {
         ResponseContratoDTO responseContratoDTOMock = retornaResponseContratoDTO();
 
         //WHEN
-        when(contratoRepository.save(anyObject())).thenReturn(contratoMock);
+        when(contratoRepository.save(any())).thenReturn(contratoMock);
 
         ResponseContratoDTO responseContratoDTO = contratoService.createContrato(requestContratoCreateDTOMock);
 
@@ -90,9 +90,9 @@ class ContratoServiceTest {
         Integer idUsuarioMock = 2;
 
         //WHEN
-        doReturn(null).when(contratoService).verificaUsuario(idUsuarioMock);
+        doNothing().when(contratoService).verificaUsuario(idUsuarioMock);
         doReturn(contratoMock).when(contratoService).findByID(idUsuarioMock);
-        when(contratoRepository.save(anyObject())).thenReturn(contratoMock);
+        when(contratoRepository.save(any())).thenReturn(contratoMock);
 
         contratoService.deletar(2);
 
@@ -135,7 +135,7 @@ class ContratoServiceTest {
 
     @Test
     @DisplayName("Deve verificar o usuário para autorizar mudanças em apenas sem contratos.")
-    public void retornaNullCasoSucesso() throws RegraDeNegocioException {
+    public void retornaNullCasoSucesso() {
         //Given
         Integer idUsuarioMock = 2;
         Optional<Contrato> contratoMock = Optional.of(Entidades.retornaContratoEntity());
@@ -145,7 +145,7 @@ class ContratoServiceTest {
         when(contratoRepository.findById(anyInt())).thenReturn(contratoMock);
 
         //THEN
-        assertNull(contratoService.verificaUsuario(new Random().nextInt()));
+        assertDoesNotThrow(() -> contratoService.verificaUsuario(idUsuarioMock));
     }
 
     @Test
@@ -166,9 +166,9 @@ class ContratoServiceTest {
 
     public RequestContratoCreateDTO retornaContratCreate(){
         RequestContratoCreateDTO cont = new RequestContratoCreateDTO();
-        cont.setDataAssinatura(LocalDate.of(2024,02,15));
-        cont.setDataFinal(LocalDate.of(2024,02,15));
-        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataAssinatura(LocalDate.of(2024,2,15));
+        cont.setDataFinal(LocalDate.of(2024,2,15));
+        cont.setDataInicio(LocalDate.of(2025,2,15));
         cont.setDataVencimentoAluguel(new Random().nextInt());
         cont.setMensalidade(retornaCreateMensalidade());
 
@@ -187,9 +187,9 @@ class ContratoServiceTest {
         ResponseContratoDTO cont = new ResponseContratoDTO();
         cont.setId(1);
         cont.setAtivo("S");
-        cont.setDataAssinatura(LocalDate.of(2024,02,15));
-        cont.setDataFinal(LocalDate.of(2024,02,15));
-        cont.setDataInicio(LocalDate.of(2025,02,15));
+        cont.setDataAssinatura(LocalDate.of(2024,2,15));
+        cont.setDataFinal(LocalDate.of(2024,2,15));
+        cont.setDataInicio(LocalDate.of(2025,2,15));
         cont.setDataVencimentoAluguel(5);
 
         return cont;

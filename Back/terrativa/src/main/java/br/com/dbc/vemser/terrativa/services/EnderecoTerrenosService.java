@@ -35,10 +35,6 @@ public class EnderecoTerrenosService {
         return enderecoTerrenosRepository.save(enderecoTerrenos);
     }
 
-//    public ResponseEnderecoTerrenosDTO resgatarEnderecoUsuario(Integer id){
-//        return EnderecoTerrenosMapper.EnderecoTerrenosParaResponseEnderecoTerrenos(enderecoTerrenosRepository.getById(id));
-//    }
-
     public ResponseEnderecoTerrenosDTO resgatarPorId(Integer id) throws EntityNotFoundException {
         Optional<EnderecoTerrenos> enderecoTerrenosOptional = enderecoTerrenosRepository.findById(id);
         EnderecoTerrenos enderecoTerrenos = enderecoTerrenosOptional.orElseThrow(() -> new EntityNotFoundException("EnderecoTerrenos não encontrado com o ID: " + id));

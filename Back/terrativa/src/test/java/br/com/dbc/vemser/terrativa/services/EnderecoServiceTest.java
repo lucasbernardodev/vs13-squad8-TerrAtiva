@@ -17,7 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("EnderecoService - Test")
@@ -34,7 +35,7 @@ class EnderecoServiceTest {
 
     @Test
     @DisplayName("Deveria retornar o endereço de acordo com o ID passado por argumento")
-    void resgatarPorId() throws RegraDeNegocioException {
+    void resgatarPorId() {
         // Given
         Integer id = 1;
         Optional<Endereco> enderecoMock = Optional.of(Entidades.retornaEnderecoEntityMock());

@@ -64,7 +64,7 @@ public class UsuarioController implements IUsuarioController {
     }
 
     @GetMapping("/endereco")
-    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID() throws Exception {
+    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID() {
         log.info("Buscando endereço por Id.");
         ResponseEnderecoDTO endereco = usuarioService.resgatarEnderecoUsuario();
         log.info("Endereço Listado!");
