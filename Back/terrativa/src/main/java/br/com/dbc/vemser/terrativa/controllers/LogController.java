@@ -58,17 +58,6 @@ public class LogController {
         return logService.listAllByData(date);
     }
 
-    @GetMapping("/count-all-by-date")
-    public Integer countLogsByDate(String date) {
-        return logService.countLogsByDate(date);
-    }
-
-    @GetMapping("/count-all-of-today")
-    public Integer countLogsOfToday() {
-        String currentDate = LocalDate.now().toString();
-        return logService.countLogsByDate(currentDate);
-    }
-
     @GetMapping("/return-all-after-date")
     public List<LogDTO> returnAllAfterDate(String data) {
         return logService.findAllAfterDate(data);

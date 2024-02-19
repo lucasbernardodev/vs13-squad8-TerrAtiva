@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.terrativa.services;
 
+import br.com.dbc.vemser.terrativa.dto.mappers.LogMapper;
 import br.com.dbc.vemser.terrativa.dto.responses.LogContadorDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.LogDTO;
 import br.com.dbc.vemser.terrativa.entity.Log;
@@ -22,21 +23,20 @@ import java.util.stream.Collectors;
 public class LogService {
 
     private final LogRepository logRepository;
-    private final ObjectMapper objectMapper;
 
     private String NOT_FOUND_MESSAGE = "Id da pessoa não encontrado";
 
     public List<LogDTO> listAllLogs() {
-        return logRepository.findAll().stream().map(log -> objectMapper.convertValue(log, LogDTO.class)).collect(Collectors.toList());
+        return logRepository.findAll().stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
     }
 
     public Page<LogDTO> listAllLogsPageable(Pageable pageable) {
-        Page<LogDTO> all = logRepository.findAll(pageable).map(log -> objectMapper.convertValue(log, LogDTO.class));
+        Page<LogDTO> all = logRepository.findAll(pageable).map(LogMapper::EntityToDTO);
         return all;
     }
 
     public List<LogDTO> listAllLogsByTipoLog(TipoLog tipoLog) {
-        return logRepository.findAllByTipoLog(tipoLog).stream().map(log -> objectMapper.convertValue(log, LogDTO.class)).collect(Collectors.toList());
+        return logRepository.findAllByTipoLog(tipoLog).stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
     }
 
     public List<LogContadorDTO> groupByTipoLogAndCount() {
@@ -60,15 +60,11 @@ public class LogService {
             throw new Exception("Não há logs para datas futuras!");
         }
 
-        return logRepository.findAllByDataContains(date).stream().map(log -> objectMapper.convertValue(log, LogDTO.class)).collect(Collectors.toList());
+        return logRepository.findAllByDataContains(date).stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
     }
 
     public LogDTO listById(String id) throws EntidadeNaoEncontradaException {
-        return objectMapper.convertValue(retornarPeloId(id), LogDTO.class);
-    }
-
-    public Integer countLogsByDate(String date) {
-        return logRepository.countAllByDataContains(date);
+        return LogMapper.EntityToDTO(retornarPeloId(id));
     }
 
     public Log retornarPeloId(String id) throws EntidadeNaoEncontradaException {
@@ -77,7 +73,7 @@ public class LogService {
     }
 
     public List<LogDTO> findAllAfterDate(String data) {
-        return logRepository.findAllAfterDate(data).stream().map(obj -> objectMapper.convertValue(obj, LogDTO.class)).collect(Collectors.toList());
+        return logRepository.findAllAfterDate(data).stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
     }
 
     public void save(Log log) {

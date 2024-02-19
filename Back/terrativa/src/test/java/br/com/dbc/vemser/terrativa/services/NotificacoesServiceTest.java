@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,6 +24,8 @@ class NotificacoesServiceTest {
     private NotificacoesRepository notificacoesRepository;
     @Mock
     private ObjectMapper objectMapper;
+
+    @Spy
     @InjectMocks
     private NotificacoesService notificacoesService;
 
@@ -40,7 +43,9 @@ class NotificacoesServiceTest {
         ResponseNotificacoesDTO responseMock = Entidades.retornaResponseNotificacoesDTO();
         RequestNotificacoesDTO requestMock = Entidades.retornaRequestNotificacoesDTO();
 
-        when(notificacoesRepository.save(anyObject())).thenReturn(notificacoesMock);
+        when(notificacoesRepository.save(any())).thenReturn(notificacoesMock);
+        when(objectMapper.convertValue(any(), eq(Notificacoes.class))).thenReturn(notificacoesMock);
+        when(objectMapper.convertValue(any(), eq(ResponseNotificacoesDTO.class))).thenReturn(responseMock);
 
         ResponseNotificacoesDTO res = notificacoesService.enviarNotificacoes(requestMock);
 
@@ -48,4 +53,37 @@ class NotificacoesServiceTest {
         assertEquals(res, responseMock);
     }
 
+
+    @Test
+    void buscarDatasAnterior() {
+
+        when(notificacoesRepository.findAllByDataBefore(any())).thenReturn(Entidades.retornaListaNotificacoes());
+        when(objectMapper.convertValue(any(), eq(ResponseNotificacoesDTO.class))).thenReturn(Entidades.retornaResponseNotificacoesDTO());
+
+        notificacoesService.buscarDatasAnterior("2021-01-01");
+
+        verify(notificacoesRepository, times(1)).findAllByDataBefore(any());
+    }
+
+    @Test
+    void buscarDatasPosterior() {
+
+        when(notificacoesRepository.findAllByDataAfter(any())).thenReturn(Entidades.retornaListaNotificacoes());
+        when(objectMapper.convertValue(any(), eq(ResponseNotificacoesDTO.class))).thenReturn(Entidades.retornaResponseNotificacoesDTO());
+
+        notificacoesService.buscarDatasPosterior("2021-01-01");
+
+        verify(notificacoesRepository, times(1)).findAllByDataAfter(any());
+    }
+
+    @Test
+    void buscarNotificacoesUsuarios() {
+
+        when(notificacoesRepository.findAllByUsuariosContains(any())).thenReturn(Entidades.retornaListaNotificacoes());
+        when(objectMapper.convertValue(any(), eq(ResponseNotificacoesDTO.class))).thenReturn(Entidades.retornaResponseNotificacoesDTO());
+
+        notificacoesService.buscarNotificacoesUsuarios(1);
+
+        verify(notificacoesRepository, times(1)).findAllByUsuariosContains(any());
+    }
 }

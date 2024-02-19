@@ -316,4 +316,7 @@ public class Entidades {
         return res;
     }
 
+    public static List<Notificacoes> retornaListaNotificacoes() {
+        return List.of(retornaNotificacoes());
+    }
 }
