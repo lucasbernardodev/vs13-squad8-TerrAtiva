@@ -50,8 +50,9 @@ public class UsuarioController implements IUsuarioController {
     }
 
     @PostMapping("/alterarsenha")
-    public ResponseEntity<String> alterarSenha(@RequestBody @Valid RequestSenhaDTO senha) throws Exception{
-        return new ResponseEntity<>(usuarioService.alterarSenha(senha), HttpStatus.OK);
+    public ResponseEntity<String> alterarSenha(@RequestBody @Valid RequestSenhaDTO senha) throws Exception {
+        usuarioService.alterarSenha(senha);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/deletar-conta")
@@ -63,9 +64,9 @@ public class UsuarioController implements IUsuarioController {
     }
 
     @GetMapping("/endereco")
-    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID() throws Exception {
+    public ResponseEntity<ResponseEnderecoDTO> resgatarEnderecoPorID() {
         log.info("Buscando endereço por Id.");
-        ResponseEnderecoDTO endereco = usuarioService.resgatarPorId();
+        ResponseEnderecoDTO endereco = usuarioService.resgatarEnderecoUsuario();
         log.info("Endereço Listado!");
         return new ResponseEntity<>(endereco, HttpStatus.OK);
     }

@@ -26,7 +26,7 @@ public interface IFeedController {
             }
     )
     @GetMapping
-public ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
+ResponseEntity<Page<ResponseFeedDTO>> mostrarTerrenosDisponiveis(
         @PageableDefault(sort = {"criado"}, direction = Sort.Direction.DESC) Pageable pageable,
         @RequestParam(value = "campoDeBusca", required = false) String campoDebusca,
         @RequestParam(value = "precoInicial", required = false) Integer precoIncial,

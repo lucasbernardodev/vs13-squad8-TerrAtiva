@@ -58,6 +58,8 @@ public class EmailService {
                 String emailDelete = responseUsuario.getEmail();
                 sendEmail(listaPessoasDelete, templateDelete, emailDelete);
                 break;
+            default:
+                throw new Exception("Status não encontrado");
         }
     }
 
