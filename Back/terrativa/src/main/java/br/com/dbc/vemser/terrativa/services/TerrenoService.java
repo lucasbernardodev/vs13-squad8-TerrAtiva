@@ -117,11 +117,11 @@ public class TerrenoService {
         contrato.setTerrenoID(idTerreno);
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST));
         Integer usuarioId = sessaoUsuarioService.getIdLoggedUserId();
-        if (terreno.getDono().getUsuarioId().equals(usuarioId)) {
+        if (terreno.getDono() != null && terreno.getDono().getUsuarioId().equals(usuarioId)) {
             throw new RegraDeNegocioException("Usuário não pode alugar seu próprio terreno");
         }
         contrato.setTerreno(terreno);
-        contrato.setLocatario(usuarioRepository.findById(usuarioId).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_USUARIO)));
+        contrato.setLocatario(usuarioRepository.findById(usuarioId).orElseThrow(() -> new RegraDeNegocioException (NOT_FOUND_MESSAGE_USUARIO)));
         if (contrato.getLocatario().getAtivo().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_INATIVO);
         }

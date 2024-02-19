@@ -331,4 +331,44 @@ public class Entidades {
         requestTerrenoUpdateDTO.setEndereco(retornaRequestEnderecoTerrenosCreateDTO());
         return requestTerrenoUpdateDTO;
     }
+
+    public static RequestMensalidadeCreateDTO retornaRequestMensalidade() {
+        RequestMensalidadeCreateDTO mensalidadeDTO = new RequestMensalidadeCreateDTO();
+        mensalidadeDTO.setContratoID(1); // Suponha que o ID do contrato seja 1
+        mensalidadeDTO.setValorMensal(2000);
+        mensalidadeDTO.setAnoExercicio(2024);
+
+
+        return mensalidadeDTO;
+    }
+
+    public static ResponseContratoRelatorioDTO converteContratoParaDTO(Contrato contrato) {
+        ResponseContratoRelatorioDTO contratoDTO = new ResponseContratoRelatorioDTO();
+        contratoDTO.setIdContrato(contrato.getId());
+        contratoDTO.setIdTerreno(contrato.getTerrenoID());
+        contratoDTO.setAtivo(contrato.getAtivo());
+        contratoDTO.setDataAssinatura(contrato.getDataAssinatura());
+        contratoDTO.setDataFinal(contrato.getDataFinal());
+        contratoDTO.setDataInicio(contrato.getDataInicio());
+        contratoDTO.setDataVencimentoAluguel(contrato.getDataVencimentoAluguel());
+        contratoDTO.setNomeLocatario(contrato.getLocatario().getNome());
+        contratoDTO.setSobrenomeLocatario(contrato.getLocatario().getSobrenome());
+        contratoDTO.setEmailLocatario(contrato.getLocatario().getEmail());
+
+
+        return contratoDTO;
+    }
+
+
+    public static RequestContratoCreateDTO retornaRequestContratoCreateDTO() {
+        RequestContratoCreateDTO contrato = new RequestContratoCreateDTO();
+        contrato.setTerrenoID(1);
+        contrato.setLocatario(retornaUsuario());
+        contrato.setDataInicio(LocalDate.of(2024,02,15));
+        contrato.setDataFinal(LocalDate.of(2024,02,15));
+        contrato.setDataVencimentoAluguel(5);
+        contrato.setAtivo("S");
+
+        return contrato;
+    }
 }
