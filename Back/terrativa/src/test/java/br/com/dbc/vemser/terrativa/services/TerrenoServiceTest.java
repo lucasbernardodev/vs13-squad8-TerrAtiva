@@ -50,6 +50,9 @@ class TerrenoServiceTest {
     @Mock
     private SessaoUsuarioService sessaoUsuarioService;
 
+    @Mock
+    private LogService logService;
+
     @InjectMocks
     private TerrenoService terrenoService;
 
@@ -124,6 +127,7 @@ class TerrenoServiceTest {
 
         when(terrenoRepository.findById(anyInt())).thenReturn(terrenoMock);
         when(enderecoTerrenosService.resgatarPorId(anyInt())).thenReturn(enderecoTerrenosMock);
+        doNothing().when(logService).save(any());
 
         ResponseTerrenoDTO responseTerreno = terrenoService.buscarTerreno(new Random().nextInt());
 

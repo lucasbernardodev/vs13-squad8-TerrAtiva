@@ -1,18 +1,15 @@
 package br.com.dbc.vemser.terrativa.services;
 
-import br.com.dbc.vemser.terrativa.dto.requests.RequestAdminDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestEnderecoCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioCreateDTO;
-import br.com.dbc.vemser.terrativa.dto.requests.RequestUsuarioUpdateDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseAdminDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseEnderecoTerrenosDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
-import br.com.dbc.vemser.terrativa.dto.responses.ResponseUsuarioDTO;
+import br.com.dbc.vemser.terrativa.dto.requests.*;
+import br.com.dbc.vemser.terrativa.dto.responses.*;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Entidades {
@@ -293,5 +290,59 @@ public class Entidades {
 
         return cont;
     }
+
+    public static RequestNotificacoesDTO retornaRequestNotificacoesDTO(){
+        RequestNotificacoesDTO res = new RequestNotificacoesDTO();
+        res.setTitulo("Novo Terreno");
+        res.setUsuarios(List.of(1, 2 ,3));
+
+        return res;
+    }
+
+    public static ResponseNotificacoesDTO retornaResponseNotificacoesDTO(){
+        ResponseNotificacoesDTO res = new ResponseNotificacoesDTO();
+        res.setId("1");
+        res.setTitulo("Novo Terreno");
+        res.setUsuarios(List.of(1, 2 ,3));
+
+        return res;
+    }
+
+    public static Notificacoes retornaNotificacoes(){
+        Notificacoes res = new Notificacoes();
+        res.setId("1");
+        res.setTitulo("Novo Terreno");
+        res.setUsuarios(List.of(1, 2 ,3));
+        res.setData(LocalDate.now());
+
+        return res;
+    }
+
+    public static List<Notificacoes> retornaListaNotificacoes() {
+        return List.of(retornaNotificacoes());
+    }
+
+    public static Log retornaLog() {
+        Log log = new Log();
+        log.setId("1");
+        log.setTipoLog(TipoLog.USER);
+        log.setDescricao("Log de teste");
+        log.setData(LocalDate.now().toString());
+        return log;
+    }
+
+    public static Page<Log> retornaListaLog() {
+        Page<Log> logs = new PageImpl<>(List.of(retornaLog()));
+        return logs;
+    }
+
+    public static LogContador retornaLogContador() {
+        return new LogContador(TipoLog.USER, 1);
+    }
+
+    public static List<LogContador> retornaListaLogList() {
+        return List.of(retornaLogContador());
+    }
+
 
 }
