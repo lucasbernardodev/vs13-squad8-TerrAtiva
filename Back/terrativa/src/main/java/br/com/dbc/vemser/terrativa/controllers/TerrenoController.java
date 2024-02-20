@@ -6,6 +6,7 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
+import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.services.TerrenoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +69,12 @@ public class TerrenoController implements ITerrenoController {
         ResponseContratoRelatorioDTO response = terrenoService.arrendarTerreno(idTerreno, contrato);
         log.info("Terreno arrendado");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseTerrenoDTO> buscarTerreno(@PathVariable("id") Integer idTerreno) throws RegraDeNegocioException {
+            ResponseTerrenoDTO response = terrenoService.buscarTerreno(idTerreno);
+            return ResponseEntity.ok().body(response);
     }
 
 }

@@ -43,6 +43,12 @@ public class FeedService {
 
     public Page<ResponseFeedQuantidadeAnunciosDTO> quantidadeAnuncios(Pageable pageable) {
         Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("enderecoTerrenoID.codIBGE.nomeEstado").ascending());
+        Log log = new Log();
+        log.setTipoLog(TipoLog.USER);
+        log.setDescricao("Quantidade de anúncios listada com sucesso");
+        log.setData(LocalDate.now().toString());
+        logService.save(log);
         return terrenoRepository.quantidadeAnuncios(page);
     }
+
 }

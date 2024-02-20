@@ -57,4 +57,6 @@ public class LogController {
     public List<LogDTO> returnAllAfterDate(String data) {
         return logService.findAllAfterDate(data);
     }
+
+
 }
