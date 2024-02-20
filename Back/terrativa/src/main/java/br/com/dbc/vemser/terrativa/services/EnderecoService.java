@@ -18,9 +18,7 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final EstadoMunicipiosService estadoMunicipioService;
 
-    private final String NOT_FOUND_MESSAGE_END = "Endereço não encontrado";
-
-    public ResponseEnderecoDTO resgatarPorId(Integer id) throws RegraDeNegocioException {
+    public ResponseEnderecoDTO resgatarPorId(Integer id) {
         Endereco endereco = enderecoRepository.findEnderecoByUsuarioID(id);
         return EnderecoMapper.EnderecoParaResponseEndereco(endereco);
     }

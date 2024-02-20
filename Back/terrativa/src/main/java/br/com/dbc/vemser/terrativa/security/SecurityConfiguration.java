@@ -28,7 +28,7 @@ public class SecurityConfiguration {
         http.headers().frameOptions().disable().and()
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-                        .antMatchers("/", "/auth/login", "/feed/**").permitAll()
+                        .antMatchers("/", "/auth/login", "/feed/**", "/log/**", "/notificacoes/**").permitAll()
                         .antMatchers(HttpMethod.PUT, "/mensalidade/{id}").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/usuario/endereco", "/usuario/logado").hasRole("USUARIOS")
                         .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}").hasRole("ADMIN")

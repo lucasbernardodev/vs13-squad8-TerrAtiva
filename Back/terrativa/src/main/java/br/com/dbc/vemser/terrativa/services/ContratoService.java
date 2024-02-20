@@ -5,14 +5,12 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestContratoCreateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.Contrato;
-import br.com.dbc.vemser.terrativa.entity.Mensalidade;
 import br.com.dbc.vemser.terrativa.entity.Usuario;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.ContratoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +23,11 @@ public class ContratoService {
 
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final SessaoUsuarioService sessaoUsuarioService;
 
     private final String NOT_FOUND_MESSAGE = "Usuário não encontrado";
     private final String NOT_FOUND_CONTRACT = "Contrato já encerrado";
     private final String NOT_FOUND_CONTRACT_NULL = "Contrato não encontrado";
-
     private final String NOT_FOUND_DONO = "Você não tem acesso a este contrato.";
 
     public ResponseContratoRelatorioDTO resgatarContratoPorId(Integer id) throws RegraDeNegocioException {
@@ -65,18 +63,12 @@ public class ContratoService {
         return contratoRepository.findById(id).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_CONTRACT_NULL));
     }
 
-    private String verificaUsuario(Integer id) throws RegraDeNegocioException {
-        Integer idUsuario = getIdLoggedUser();
+    public void verificaUsuario(Integer id) throws RegraDeNegocioException {
+        Integer idUsuario = sessaoUsuarioService.getIdLoggedUserId();
         Contrato contrato = contratoRepository.findById(id).get();
-        if(Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || Objects.equals(contrato.getLocatarioID(), idUsuario)){
-            return null;
-        } else {
+        if(!Objects.equals(contrato.getTerreno().getDono().getUsuarioId(), idUsuario) || !Objects.equals(contrato.getLocatarioID(), idUsuario)){
             throw new RegraDeNegocioException(NOT_FOUND_DONO);
         }
-    }
-
-    private Integer getIdLoggedUser() {
-        return Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
 }

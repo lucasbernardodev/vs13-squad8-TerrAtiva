@@ -45,7 +45,6 @@ public class RequestContratoCreateDTO {
     @Schema(description = "Data de vencimento do aluguel do Contrato.", example = "5")
     private Integer dataVencimentoAluguel;
 
-
     private RequestMensalidadeCreateDTO mensalidade;
 
     @Hidden

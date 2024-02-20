@@ -8,9 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface IFeedUsuarioController {
@@ -22,7 +20,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/disponiveis/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis() throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDisponiveis();
 
     @Operation(summary = "Lista todos terrenos do usuário", description = "Lista os terrenos por ID do banco")
     @ApiResponses({
@@ -31,7 +29,7 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/todosterrenos/{id}")
-    public ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario() throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosDoUsuario();
 
     @Operation(summary = "Lista terrenos que o Usuário alugou dos outros", description = "Lista os terrenos alugados por ID do banco")
     @ApiResponses({
@@ -49,5 +47,5 @@ public interface IFeedUsuarioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(hidden = true)), description = "Foi gerada uma exceção")
     })
     @GetMapping("/arrendados/{id}")
-    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados() throws Exception;
+    ResponseEntity<List<ResponseTerrenoDTO>> mostrarTerrenosArrendados();
 }

@@ -43,8 +43,25 @@ public class FeedController implements IFeedController {
 
     @GetMapping("/quantidade/estado")
     public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnunciosPorEstado(
-            @PageableDefault(page = 0, size = 5, sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
+            @PageableDefault(size = 5, sort = {"enderecoTerrenoID.codIBGE.nomeEstado"}) Pageable pageable) {
         Page<ResponseFeedQuantidadeAnunciosDTO> resultado = feedService.quantidadeAnuncios(pageable);
         return new ResponseEntity<>(resultado, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/listar")
+    public ResponseEntity<Page<ResponseFeedDTO>> listarTerrenos(Pageable pageable,
+                                                                @RequestParam(required = false) String campoDebusca,
+                                                                @RequestParam(required = false) Integer precoInicial,
+                                                                @RequestParam(required = false) Integer precoFinal,
+                                                                @RequestParam(required = false) Estados estados) {
+        Page<ResponseFeedDTO> response = feedService.listarTerrenos(pageable, campoDebusca, precoInicial, precoFinal, estados);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/quantidade-anuncios")
+    public ResponseEntity<Page<ResponseFeedQuantidadeAnunciosDTO>> quantidadeAnuncios(Pageable pageable) {
+        Page<ResponseFeedQuantidadeAnunciosDTO> response = feedService.quantidadeAnuncios(pageable);
+        return ResponseEntity.ok().body(response);
     }
 }

@@ -61,24 +61,7 @@ public class TokenService {
                         .map(SimpleGrantedAuthority::new)
                         .toList();
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(user, null, authorities);
-                return usernamePasswordAuthenticationToken;
-            }
-        }
-        return null;
-    }
-
-    public String getUserIdFromToken(String token) {
-        if (token != null) {
-            try {
-                Claims body = Jwts.parser()
-                        .setSigningKey(secret)
-                        .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                        .getBody();
-                return body.get(Claims.ID, String.class);
-            } catch (Exception e) {
-                e.printStackTrace();
+                return new UsernamePasswordAuthenticationToken(user, null, authorities);
             }
         }
         return null;
