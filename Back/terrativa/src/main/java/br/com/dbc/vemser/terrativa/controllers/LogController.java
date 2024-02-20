@@ -23,13 +23,8 @@ public class LogController {
 
     private final LogService logService;
 
-    @GetMapping()
-    public List<LogDTO> list() {
-        return logService.listAllLogs();
-    }
-
     @GetMapping("/pageable")
-    public Page<LogDTO> listPageable(@PageableDefault(size = 10, page = 0, sort = {"data"}) Pageable pageable) {
+    public Page<LogDTO> listPageable(@PageableDefault(size = 10, page = 0, sort = {"data"}) Pageable pageable) throws EntidadeNaoEncontradaException {
         return logService.listAllLogsPageable(pageable);
     }
 

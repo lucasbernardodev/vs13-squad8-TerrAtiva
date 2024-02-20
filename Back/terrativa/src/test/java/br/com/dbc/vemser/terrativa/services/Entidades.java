@@ -4,6 +4,8 @@ import br.com.dbc.vemser.terrativa.dto.requests.*;
 import br.com.dbc.vemser.terrativa.dto.responses.*;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
 import br.com.dbc.vemser.terrativa.entity.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -319,4 +321,28 @@ public class Entidades {
     public static List<Notificacoes> retornaListaNotificacoes() {
         return List.of(retornaNotificacoes());
     }
+
+    public static Log retornaLog() {
+        Log log = new Log();
+        log.setId("1");
+        log.setTipoLog(TipoLog.USER);
+        log.setDescricao("Log de teste");
+        log.setData(LocalDate.now().toString());
+        return log;
+    }
+
+    public static Page<Log> retornaListaLog() {
+        Page<Log> logs = new PageImpl<>(List.of(retornaLog()));
+        return logs;
+    }
+
+    public static LogContador retornaLogContador() {
+        return new LogContador(TipoLog.USER, 1);
+    }
+
+    public static List<LogContador> retornaListaLogList() {
+        return List.of(retornaLogContador());
+    }
+
+
 }

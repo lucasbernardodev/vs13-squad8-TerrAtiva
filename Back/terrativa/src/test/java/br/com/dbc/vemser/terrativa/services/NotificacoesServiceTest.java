@@ -34,7 +34,6 @@ class NotificacoesServiceTest {
 
     }
 
-    // Esta quebrado - Dando erro
     @Test
     @DisplayName("Envia e retorna notificação salva no banco de dados")
     public void enviaERetoranaNotificacao(){

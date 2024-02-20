@@ -24,15 +24,11 @@ public class LogService {
 
     private final LogRepository logRepository;
 
-    private String NOT_FOUND_MESSAGE = "Id da pessoa não encontrado";
+    private final String NOT_FOUND_MESSAGE = "Id da pessoa não encontrado";
 
-    public List<LogDTO> listAllLogs() {
-        return logRepository.findAll().stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
-    }
-
-    public Page<LogDTO> listAllLogsPageable(Pageable pageable) {
-        Page<LogDTO> all = logRepository.findAll(pageable).map(LogMapper::EntityToDTO);
-        return all;
+    public Page<LogDTO> listAllLogsPageable(Pageable pageable) throws EntidadeNaoEncontradaException {
+        Page<Log> all = logRepository.findAll(pageable);
+        return all.map(LogMapper::EntityToDTO);
     }
 
     public List<LogDTO> listAllLogsByTipoLog(TipoLog tipoLog) {
@@ -52,12 +48,12 @@ public class LogService {
         }).collect(Collectors.toList());
     }
 
-    public List<LogDTO> listAllByData(String date) throws Exception {
+    public List<LogDTO> listAllByData(String date) throws EntidadeNaoEncontradaException {
         LocalDate dataAtual = LocalDate.now();
         LocalDate dataProcurada = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
 
         if(dataProcurada.isAfter(dataAtual)) {
-            throw new Exception("Não há logs para datas futuras!");
+            throw new EntidadeNaoEncontradaException("Não há logs para datas futuras!");
         }
 
         return logRepository.findAllByDataContains(date).stream().map(LogMapper::EntityToDTO).collect(Collectors.toList());
