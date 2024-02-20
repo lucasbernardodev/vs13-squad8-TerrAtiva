@@ -5,11 +5,13 @@ import br.com.dbc.vemser.terrativa.dto.responses.LogDTO;
 import br.com.dbc.vemser.terrativa.entity.TipoLog;
 import br.com.dbc.vemser.terrativa.exceptions.EntidadeNaoEncontradaException;
 import br.com.dbc.vemser.terrativa.services.LogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,41 +21,42 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/log")
+@Tag(name = "Log", description = "Operações relacionadas a logs")
 public class LogController {
 
     private final LogService logService;
 
-    @GetMapping("/pageable")
+    @GetMapping("/listar-todos")
     public Page<LogDTO> listPageable(@PageableDefault(size = 10, page = 0, sort = {"data"}) Pageable pageable) throws EntidadeNaoEncontradaException {
         return logService.listAllLogsPageable(pageable);
     }
 
-    @GetMapping("/by-id")
-    public LogDTO listById(String id) throws EntidadeNaoEncontradaException {
+    @GetMapping("/{id}")
+    public LogDTO listById(@PathVariable String id) throws EntidadeNaoEncontradaException {
         return logService.listById(id);
     }
 
-    @GetMapping("/by-tipolog")
+    @GetMapping("/tipo-log")
     public List<LogDTO> listByTipoLog(TipoLog tipoLog) {
         return logService.listAllLogsByTipoLog(tipoLog);
     }
 
-    @GetMapping("/group-by-tipolog-and-count")
+    @GetMapping("/quantidade-por-tipo")
     public List<LogContadorDTO> groupByTipoLogAndCount() {
         return logService.groupByTipoLogAndCount();
     }
 
-    @GetMapping("/group-by-date-and-count-tipolog")
+    @GetMapping("/quantidade-por-data")
     public List<LogContadorDTO> groupByDateAndCountTipoLog(String date) {
         return logService.groupByDateAndCountTipoLog(date);
     }
 
-    @GetMapping("/find-all-by-date")
+    @GetMapping("/buscar-por-data")
     public List<LogDTO> listByDate(String date) throws Exception {
         return logService.listAllByData(date);
     }
 
-    @GetMapping("/return-all-after-date")
+    @GetMapping("/buscar-apos-data")
     public List<LogDTO> returnAllAfterDate(String data) {
         return logService.findAllAfterDate(data);
     }
