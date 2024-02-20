@@ -10,15 +10,14 @@ import br.com.dbc.vemser.terrativa.dto.requests.RequestTerrenoUpdateDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseContratoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.ResponseTerrenoDTO;
 import br.com.dbc.vemser.terrativa.dto.responses.relatorios.ResponseContratoRelatorioDTO;
-import br.com.dbc.vemser.terrativa.entity.EnderecoTerrenos;
-import br.com.dbc.vemser.terrativa.entity.Terreno;
-import br.com.dbc.vemser.terrativa.entity.Usuario;
+import br.com.dbc.vemser.terrativa.entity.*;
 import br.com.dbc.vemser.terrativa.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.terrativa.repository.TerrenoRepository;
 import br.com.dbc.vemser.terrativa.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,6 +29,7 @@ public class TerrenoService {
    private final EnderecoTerrenosService enderecoTerrenosService;
    private final MensalidadeService mensalidadeService;
    private final SessaoUsuarioService sessaoUsuarioService;
+   private final LogService logService;
 
     private final String NOT_FOUND_MESSAGE_TERRENO = "Terreno não encontrado";
     private final String NOT_FOUND_MESSAGE_TERRENO_EXIST = "Terreno não existe ou está alugado";
@@ -38,13 +38,22 @@ public class TerrenoService {
 
 
     public ResponseTerrenoDTO buscarTerreno(Integer idTerreno) throws RegraDeNegocioException {
+        Log log = new Log();
+
         Terreno terreno = terrenoRepository.findById(idTerreno).orElseThrow(() -> new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO));
         if (terreno.getDisponivel().equals("N")) {
             throw new RegraDeNegocioException(NOT_FOUND_MESSAGE_TERRENO_EXIST );
         }
+        log.setTipoLog(TipoLog.USER);
+        log.setDescricao("Busca de terreno realizada com sucesso");
+        log.setData(LocalDate.now().toString());
+
+        logService.save(log);
+
         return TerrenoMapper.terrenoParaResponseTerreno(
                 terreno, enderecoTerrenosService.resgatarPorId(terreno.getEnderecoID()));
     }
+
 
     public ResponseTerrenoDTO cadastrarTerreno(RequestTerrenoCreateDTO requestTerreno) throws RegraDeNegocioException {
         requestTerreno.setId(null);
