@@ -71,10 +71,4 @@ public class TerrenoController implements ITerrenoController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseTerrenoDTO> buscarTerreno(@PathVariable("id") Integer idTerreno) throws RegraDeNegocioException {
-            ResponseTerrenoDTO response = terrenoService.buscarTerreno(idTerreno);
-            return ResponseEntity.ok().body(response);
-    }
-
 }
