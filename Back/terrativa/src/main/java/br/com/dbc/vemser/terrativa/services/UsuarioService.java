@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 
 @RequiredArgsConstructor
@@ -117,6 +118,7 @@ public class UsuarioService {
         }
         terrenoService.alterarTerrenosUsuarioDeletado(sessaoUsuarioService.getIdLoggedUserId());
         usuarioRecuperado.setAtivo("N");
+        usuarioRecuperado.setSenha(passwordEncoder.encode(Random.class.toString()));
         usuarioRepository.save(usuarioRecuperado);
     }
 
